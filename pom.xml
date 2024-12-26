@@ -73,7 +73,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.mycompany.autobackupprogram.MainApp</mainClass>
+                        <mainClass>backupmanager.MainApp</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>

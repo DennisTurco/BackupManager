@@ -1,6 +1,6 @@
 package test;
 
-import com.mycompany.autobackupprogram.Enums.ConfigKey;
+import backupmanager.Enums.ConfigKey;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

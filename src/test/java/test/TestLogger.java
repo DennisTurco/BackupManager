@@ -1,7 +1,8 @@
 package test;
 
-import com.mycompany.autobackupprogram.JSONConfigReader;
-import com.mycompany.autobackupprogram.Logger;
+import backupmanager.Json.JSONConfigReader;
+import backupmanager.Logger;
+
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 

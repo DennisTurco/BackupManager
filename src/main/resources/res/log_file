@@ -1,0 +1,53 @@
+2024-12-26T14:10:54.636460400 [DEBUG] updating backup list
+2024-12-26T14:10:41.780272200 [INFO] Event --> Next date backup setted to 2024-12-29T14:10:41.779279900
+2024-12-26T14:10:39.569866600 [INFO] Event --> automatic backup
+2024-12-26T14:10:32.247880300 [INFO] Deleting old backups if necessary
+2024-12-26T14:10:32.246391900 [DEBUG] updating backup list
+2024-12-26T14:10:32.242425200 [INFO] Backup completed!
+2024-12-26T14:10:32.236968800 [INFO] Progress: 100
+2024-12-26T14:10:32.234488 [INFO] Progress: 75
+2024-12-26T14:10:32.231016700 [INFO] Progress: 50
+2024-12-26T14:10:32.228040200 [INFO] Progress: 25
+2024-12-26T14:10:32.216633 [INFO] Starting zipping process
+2024-12-26T14:10:27.772937100 [INFO] Event --> automatic single backup started
+2024-12-26T14:10:23.201491300 [DEBUG] The application is running with administrator privileges.
+2024-12-26T14:10:22.264132700 [DEBUG] Background mode: false
+2024-12-26T14:10:22.255203600 [INFO] Application started
+2024-12-26T14:04:11.713637 [INFO] Event --> Next date backup setted to 2024-12-28T14:03:52.314473400
+2024-12-26T14:03:35.602987100 [INFO] Event --> automatic backup
+2024-12-26T14:03:27.414196800 [DEBUG] updating backup list
+2024-12-26T14:03:27.407454800 [INFO] Event --> auto backup disabled
+2024-12-26T14:03:22.075367100 [DEBUG] The application is running with administrator privileges.
+2024-12-26T14:03:21.224193600 [DEBUG] Background mode: false
+2024-12-26T14:03:21.216753900 [INFO] Application started
+2024-12-26T14:03:00.599093 [INFO] Zipping process manually interrupted
+2024-12-26T14:02:57.921661100 [INFO] Deleting old backups if necessary
+2024-12-26T14:02:57.919180200 [DEBUG] updating backup list
+2024-12-26T14:02:57.916235 [INFO] Next date backup setted to: 2024-12-27T14:02:57.914220600
+2024-12-26T14:02:57.914717200 [INFO] Backup completed!
+2024-12-26T14:02:14.476111800 [DEBUG] updating backup list
+2024-12-26T14:02:13.573682500 [INFO] Event --> Next date backup setted to 2024-12-27T14:02:13.573186300
+2024-12-26T14:02:09.234572700 [INFO] Event --> automatic backup
+2024-12-26T14:01:59.386687800 [INFO] Progress: 100
+2024-12-26T14:01:59.376244900 [INFO] Progress: 75
+2024-12-26T14:01:59.364836900 [INFO] Progress: 50
+2024-12-26T14:01:59.361858400 [INFO] Progress: 25
+2024-12-26T14:01:54.093024400 [INFO] Starting zipping process
+2024-12-26T14:01:52.425600700 [INFO] Event --> automatic single backup started
+2024-12-26T13:59:54.121674500 [INFO] Progress: 0
+2024-12-26T13:59:19.983105300 [INFO] Starting zipping process
+2024-12-26T13:58:24.700847100 [INFO] Event --> automatic single backup started
+2024-12-26T13:57:36.552443300 [INFO] Zipping process manually interrupted
+2024-12-26T13:57:27.680213800 [INFO] Progress: 0
+2024-12-26T13:57:27.478266 [INFO] Starting zipping process
+2024-12-26T13:57:27.472308300 [INFO] Event --> automatic single backup started
+2024-12-26T13:57:18.143343800 [DEBUG] The application is running with administrator privileges.
+2024-12-26T13:57:17.305790500 [DEBUG] Background mode: false
+2024-12-26T13:57:17.298350800 [INFO] Application started
+2024-12-26T13:51:17.762508200 [INFO] Event --> opening preferences dialog
+2024-12-26T13:51:06.813760900 [DEBUG] The application is running with administrator privileges.
+2024-12-26T13:51:05.938387100 [DEBUG] Background mode: false
+2024-12-26T13:51:05.931442100 [INFO] Application started
+2024-12-26T13:43:06.767652800 [DEBUG] The application is running with administrator privileges.
+2024-12-26T13:43:05.783689500 [DEBUG] Background mode: false
+2024-12-26T13:43:05.776745400 [INFO] Application started

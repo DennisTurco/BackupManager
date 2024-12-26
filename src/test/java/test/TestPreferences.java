@@ -1,10 +1,10 @@
 package test;
 
-import com.mycompany.autobackupprogram.Entities.Preferences;
-import com.mycompany.autobackupprogram.Enums.ConfigKey;
-import com.mycompany.autobackupprogram.Enums.LanguagesEnum;
-import com.mycompany.autobackupprogram.Enums.ThemesEnum;
-import com.mycompany.autobackupprogram.Logger;
+import backupmanager.Entities.Preferences;
+import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.LanguagesEnum;
+import backupmanager.Enums.ThemesEnum;
+import backupmanager.Logger;
 
 import java.io.File;
 import java.io.IOException;
