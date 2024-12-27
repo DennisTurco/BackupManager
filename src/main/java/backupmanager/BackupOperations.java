@@ -1,10 +1,5 @@
 package backupmanager;
 
-
-import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
-import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
-import static backupmanager.GUI.BackupManagerGUI.formatter;
-
 import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +26,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
+import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
+import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
+import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Entities.Backup;
 import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
@@ -79,13 +77,13 @@ public class BackupOperations {
         } catch (IOException e) {
             Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-            if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+            reEnableButtons(singleBackupBtn, autoBackupBtn);
+            return;
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-            if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-            if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+            reEnableButtons(singleBackupBtn, autoBackupBtn);
+            return;
         }
     }
 
@@ -106,8 +104,7 @@ public class BackupOperations {
            
         Logger.logMessage("Backup completed!", Logger.LogLevel.INFO);
 
-        if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-        if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+        reEnableButtons(singleBackupBtn, autoBackupBtn);
         
         // next day backup update
         if (backup.isAutoBackup() == true) {
@@ -169,15 +166,13 @@ public class BackupOperations {
         Logger.logMessage("Starting zipping process", LogLevel.INFO);
 
         File file = new File(sourceDirectoryPath.trim());
-
-        Integer filesInDirectory = countFilesInDirectory(file);
-        if (filesInDirectory == null) {
+        int totalFilesCount = file.isDirectory() ? countFilesInDirectory(file) : 1;
+        if (totalFilesCount == -1) {
+            progressBar.dispose();
             setError(ErrorTypes.ErrorCountingFiles, trayIcon, targetZipPath);
             reEnableButtons(singleBackupBtn, autoBackupBtn);
             return;
         }
-
-        int totalFilesCount = file.isDirectory() ? filesInDirectory : 1;
         
         AtomicInteger copiedFilesCount = new AtomicInteger(0);
         
@@ -261,8 +256,8 @@ public class BackupOperations {
                     });
                 }
             }  catch (IOException ioEx) {
-                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.ERROR, ioEx);
-                setError(ErrorTypes.ZippingIOError, trayIcon, targetZipPath);
+                // here we can't run setError because it happens somethimes during backups for "Documents" folder randomly
+                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.WARN);
             } catch (SecurityException secEx) {
                 Logger.logMessage("Security exception while accessing directory: " + sourceDirectoryPath + ". Error: " + secEx.getMessage(), Logger.LogLevel.ERROR, secEx);
                 setError(ErrorTypes.ZippingSecurityError, trayIcon, targetZipPath);
@@ -464,32 +459,32 @@ public class BackupOperations {
         }
     }
     
-    private static Integer countFilesInDirectory(File directory) {
-    	Integer count = 0;
+    private static int countFilesInDirectory(File directory) {
         if (directory == null) {
             Logger.logMessage("Directory is null", Logger.LogLevel.WARN);
-            return null;
+            return -1;
         }
         if (!directory.canRead()) {
             Logger.logMessage("Unable to read directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
-            return null;
+            return -1;
         }
-        if (directory.listFiles() == null) {
+        File[] files = directory.listFiles();
+        if (files == null) {
             Logger.logMessage("Unable to list files for directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
-            return null;
+            return -1;
         }
     	
-    	for (File file : directory.listFiles()) {
+    	int count = 0;
+        for (File file : files) {
             if (file.isFile()) {
                 count++;
+            } else if (file.isDirectory()) {
+                count += countFilesInDirectory(file); // Recursively count files in subdirectories.
             }
-            if (file.isDirectory()) {
-                count += countFilesInDirectory(file);
-            }
-    	}
-    	return count;
+        }
+        return count;
     }
-    
+
     public static void updateTableWithNewBackupList(List<Backup> updatedBackups) { 
         Logger.logMessage("updating backup list", Logger.LogLevel.DEBUG);
         
