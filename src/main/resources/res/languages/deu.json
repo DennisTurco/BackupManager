@@ -159,7 +159,11 @@
       "BackupListCorrectlyImportedTitle": "Menü Importieren",
       "BackupListCorrectlyImportedMessage": "Backup-Liste erfolgreich importiert!",
       "ErrorMessageForWrongFileExtensionTitle": "Ungültige Datei",
-      "ErrorMessageForWrongFileExtensionMessage": "Fehler: Bitte wählen Sie eine gültige JSON-Datei aus."
+      "ErrorMessageForWrongFileExtensionMessage": "Fehler: Bitte wählen Sie eine gültige JSON-Datei aus.",
+      "ErrorMessageCountingFiles": "Fehler beim Zählen der zu sichernden Dateien.",
+      "ErrorMessageZippingGeneric": "Fehler beim Komprimieren der Dateien.",
+      "ErrorMessageZippingIO": "Fehler beim Komprimieren der Dateien: E/A-Fehler.",
+      "ErrorMessageZippingSecurity": "Fehler beim Komprimieren der Dateien: Sicherheitsfehler."
     }
   }
   

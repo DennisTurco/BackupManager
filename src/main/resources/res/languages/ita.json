@@ -159,6 +159,10 @@
     "BackupListCorrectlyImportedTitle": "Menu Importa",
     "BackupListCorrectlyImportedMessage": "Lista di backup importata correttamente!",
     "ErrorMessageForWrongFileExtensionTitle": "File non valido",
-    "ErrorMessageForWrongFileExtensionMessage": "Errore: seleziona un file JSON valido."
+    "ErrorMessageForWrongFileExtensionMessage": "Errore: Selezionare un file JSON valido.",
+    "ErrorMessageCountingFiles": "Errore durante il calcolo dei file da eseguire il backup.",
+    "ErrorMessageZippingGeneric": "Errore durante la compressione dei file.",
+    "ErrorMessageZippingIO": "Errore durante la compressione dei file: errore di I/O.",
+    "ErrorMessageZippingSecurity": "Errore durante la compressione dei file: errore di sicurezza."
   }
 }

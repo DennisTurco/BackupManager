@@ -214,6 +214,10 @@ public class TranslationLoaderEnum {
         ERROR_MESSAGE_SAME_PATHS_GENERIC("ErrorMessageForSamePaths", "The initial path and destination path cannot be the same. Please choose different paths!"),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE("ErrorMessageForWrongFileExtensionTitle", "Invalid File"),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE("ErrorMessageForWrongFileExtensionMessage", "Error: Please select a valid JSON file."),
+        ERROR_MESSAGE_COUNTING_FILES("ErrorMessageCountingFiles", "Error occurred while calculating files to back up."),
+        ERROR_MESSAGE_ZIPPING_GENERIC("ErrorMessageZippingGeneric", "Error occurred while zipping files."),
+        ERROR_MESSAGE_ZIPPING_IO("ErrorMessageZippingIO", "Error occurred while zipping files: I/O error."),
+        ERROR_MESSAGE_ZIPPING_SECURITY("ErrorMessageZippingSecurity", "Error occurred while zipping files: Security error."),
 
         // InfoPage
         INFO_PAGE_DESCRIPTION("InfoPageDescription", "Backup automatic system for files with the option to schedule and make backups regularly."),

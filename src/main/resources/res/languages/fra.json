@@ -159,7 +159,11 @@
       "BackupListCorrectlyImportedTitle": "Menu Importer",
       "BackupListCorrectlyImportedMessage": "Liste de sauvegarde importée avec succès !",
       "ErrorMessageForWrongFileExtensionTitle": "Fichier invalide",
-      "ErrorMessageForWrongFileExtensionMessage": "Erreur : Veuillez sélectionner un fichier JSON valide."
+      "ErrorMessageForWrongFileExtensionMessage": "Erreur : Veuillez sélectionner un fichier JSON valide.",
+      "ErrorMessageCountingFiles": "Erreur lors du calcul des fichiers à sauvegarder.",
+      "ErrorMessageZippingGeneric": "Erreur lors de la compression des fichiers.",
+      "ErrorMessageZippingIO": "Erreur lors de la compression des fichiers : erreur d'E/S.",
+      "ErrorMessageZippingSecurity": "Erreur lors de la compression des fichiers : erreur de sécurité."
     }
   }
   

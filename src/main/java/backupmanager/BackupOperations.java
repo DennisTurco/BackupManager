@@ -32,6 +32,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
 import backupmanager.Entities.Backup;
+import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Entities.Preferences;
@@ -147,47 +148,37 @@ public class BackupOperations {
     public static boolean CheckInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
         //check if inputs are null
         if(path1.length() == 0 || path2.length() == 0) {
-            Logger.logMessage("Input Missing!", Logger.LogLevel.WARN);
- 
-            if (trayIcon != null) {
-                trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
-            } else {
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
+            setError(ErrorTypes.InputMissing, trayIcon, backupName);
             return false;
         }
         
         if (!Files.exists(Path.of(path1)) || !Files.exists(Path.of(path2))) {
-            Logger.logMessage("Input Error! One or both paths do not exist.", Logger.LogLevel.WARN);
-
-            if (trayIcon != null) { 
-                trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
-            } else {
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_PATH_NOT_EXISTING), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
+            setError(ErrorTypes.InputError, trayIcon, backupName);
             return false;
         }
 
         if (path1.equals(path2)) {
-            Logger.logMessage("The initial path and destination path cannot be the same. Please choose different paths", Logger.LogLevel.WARN);
-
-            if (trayIcon != null) { 
-                trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
-            } else {
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
+            setError(ErrorTypes.SamePaths, trayIcon, backupName);
             return false;
         }
 
         return true;
     }
-    
+
     public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) throws IOException { // Track copied files
         Logger.logMessage("Starting zipping process", LogLevel.INFO);
 
         File file = new File(sourceDirectoryPath.trim());
 
-        int totalFilesCount = file.isDirectory() ? countFilesInDirectory(file) : 1;
+        Integer filesInDirectory = countFilesInDirectory(file);
+        if (filesInDirectory == null) {
+            setError(ErrorTypes.ErrorCountingFiles, trayIcon, targetZipPath);
+            reEnableButtons(singleBackupBtn, autoBackupBtn);
+            return;
+        }
+
+        int totalFilesCount = file.isDirectory() ? filesInDirectory : 1;
+        
         AtomicInteger copiedFilesCount = new AtomicInteger(0);
         
         zipThread = new Thread(() -> {
@@ -201,16 +192,22 @@ public class BackupOperations {
                     Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
                         @Override
                         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                            if (file == null) {
+                                Logger.logMessage("File is null", Logger.LogLevel.WARN);
+                                return FileVisitResult.CONTINUE;
+                            }
+
                             if (Thread.currentThread().isInterrupted()) {
                                 Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-                                if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+                                reEnableButtons(singleBackupBtn, autoBackupBtn);
                                 return FileVisitResult.TERMINATE; // Stop if interrupted
                             }
 
                             // Calculate the relative path inside the zip
                             Path targetFilePath = sourceDir.relativize(file);
                             String zipEntryName = rootFolderName + "/" + targetFilePath.toString();
+
+                            Logger.logMessage("Zipping file: " + zipEntryName, Logger.LogLevel.DEBUG);
 
                             // Create a new zip entry for the file
                             zipOut.putNextEntry(new ZipEntry(zipEntryName));
@@ -236,10 +233,14 @@ public class BackupOperations {
 
                         @Override
                         public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                            if (dir == null) {
+                                Logger.logMessage("Directory is null", Logger.LogLevel.WARN);
+                                return FileVisitResult.CONTINUE;
+                            }
+
                             if (Thread.currentThread().isInterrupted()) {
                                 Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-                                if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+                                reEnableButtons(singleBackupBtn, autoBackupBtn);
                                 return FileVisitResult.TERMINATE; // Stop if interrupted
                             }
                             
@@ -251,22 +252,34 @@ public class BackupOperations {
 
                             // Create directory entry in the zip if needed
                             Path targetDir = sourceDir.relativize(dir);
-                            zipOut.putNextEntry(new ZipEntry(rootFolderName + "/" + targetDir.toString() + "/"));
+                            String name = rootFolderName + "/" + targetDir.toString() + "/";
+                            Logger.logMessage("Zipping directory: " + name, Logger.LogLevel.DEBUG);
+                            zipOut.putNextEntry(new ZipEntry(name));
                             zipOut.closeEntry();
                             return FileVisitResult.CONTINUE;
                         }
                     });
                 }
+            }  catch (IOException ioEx) {
+                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.ERROR, ioEx);
+                setError(ErrorTypes.ZippingIOError, trayIcon, targetZipPath);
+            } catch (SecurityException secEx) {
+                Logger.logMessage("Security exception while accessing directory: " + sourceDirectoryPath + ". Error: " + secEx.getMessage(), Logger.LogLevel.ERROR, secEx);
+                setError(ErrorTypes.ZippingSecurityError, trayIcon, targetZipPath);
             } catch (Exception ex) {
-                Logger.logMessage("An error occurred during zipping directory: " + ex.getMessage() , Logger.LogLevel.ERROR, ex);
-                ex.printStackTrace();
+                Logger.logMessage("Unexpected error during zipping directory: " + sourceDirectoryPath + ". Error: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                setError(ErrorTypes.ZippingGenericError, trayIcon, targetZipPath);
             } finally {
-                if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-                if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+                reEnableButtons(singleBackupBtn, autoBackupBtn);
             }
         });
 
         zipThread.start(); // Start the zipping thread
+    }
+
+    private static void reEnableButtons(JButton singleBackupBtn, JToggleButton autoBackupBtn) {
+        if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
+        if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
     }
 
     private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) throws IOException {
@@ -308,7 +321,7 @@ public class BackupOperations {
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
-            Logger.logMessage("Progress: " + value, Logger.LogLevel.INFO);
+            Logger.logMessage("Zipping progress: " + value, Logger.LogLevel.INFO);
         
         if (progressBar != null)
             progressBar.UpdateProgressBar(value);
@@ -387,6 +400,95 @@ public class BackupOperations {
         
         throw new Exception("No date found in file name: " + fileName);
     }
+
+    private static void setError(ErrorTypes error, TrayIcon trayIcon, String backupName) {
+        switch (error) {
+            case InputMissing:
+                Logger.logMessage("Input Missing!", Logger.LogLevel.WARN);
+                if (trayIcon != null) {
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case InputError:
+                Logger.logMessage("Input Error! One or both paths do not exist.", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_PATH_NOT_EXISTING), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case SamePaths:
+                Logger.logMessage("The initial path and destination path cannot be the same. Please choose different paths", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case ErrorCountingFiles:
+                Logger.logMessage("Error during counting files in directory", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_COUNTING_FILES), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case ZippingGenericError:
+                Logger.logMessage("Error during zipping directory", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case ZippingIOError:
+                Logger.logMessage("I/O error occurred while zipping directory", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_IO), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case ZippingSecurityError:
+                Logger.logMessage("Security exception while zipping directory", Logger.LogLevel.WARN);
+                if (trayIcon != null) { 
+                    trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
+                } else {
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_SECURITY), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Error type not recognized: " + error);
+        }
+    }
+    
+    private static Integer countFilesInDirectory(File directory) {
+    	Integer count = 0;
+        if (directory == null) {
+            Logger.logMessage("Directory is null", Logger.LogLevel.WARN);
+            return null;
+        }
+        if (!directory.canRead()) {
+            Logger.logMessage("Unable to read directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
+            return null;
+        }
+        if (directory.listFiles() == null) {
+            Logger.logMessage("Unable to list files for directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
+            return null;
+        }
+    	
+    	for (File file : directory.listFiles()) {
+            if (file.isFile()) {
+                count++;
+            }
+            if (file.isDirectory()) {
+                count += countFilesInDirectory(file);
+            }
+    	}
+    	return count;
+    }
     
     public static void updateTableWithNewBackupList(List<Backup> updatedBackups) { 
         Logger.logMessage("updating backup list", Logger.LogLevel.DEBUG);
@@ -407,21 +509,7 @@ public class BackupOperations {
             }
         });
     }
-    
-    private static int countFilesInDirectory(File directory) {
-    	int count = 0;
-    	
-    	for (File file : directory.listFiles()) {
-            if (file.isFile()) {
-                count++;
-            }
-            if (file.isDirectory()) {
-                count += countFilesInDirectory(file);
-            }
-    	}
-    	return count;
-    }
-    
+
     public static void StopCopyFiles() {
         zipThread.interrupt();
     }

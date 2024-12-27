@@ -159,6 +159,10 @@
     "BackupListCorrectlyImportedMessage": "Backup list successfully imported!",
     "ErrorMessageForSamePaths": "The initial path and destination path cannot be the same. Please choose different paths!",
     "ErrorMessageForWrongFileExtensionTitle": "Invalid File",
-    "ErrorMessageForWrongFileExtensionMessage": "Error: Please select a valid JSON file."
+    "ErrorMessageForWrongFileExtensionMessage": "Error: Please select a valid JSON file.",
+    "ErrorMessageCountingFiles": "Error occurred while calculating files to back up.",
+    "ErrorMessageZippingGeneric": "Error occurred while zipping files.",
+    "ErrorMessageZippingIO": "Error occurred while zipping files: I/O error.",
+    "ErrorMessageZippingSecurity": "Error occurred while zipping files: Security error."
   }
 }

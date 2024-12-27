@@ -159,7 +159,11 @@
       "BackupListCorrectlyImportedTitle": "Menú Importar",
       "BackupListCorrectlyImportedMessage": "¡Lista de copias de seguridad importada correctamente!",
       "ErrorMessageForWrongFileExtensionTitle": "Archivo no válido",
-      "ErrorMessageForWrongFileExtensionMessage": "Error: por favor selecciona un archivo JSON válido."
+      "ErrorMessageForWrongFileExtensionMessage": "Error: Seleccione un archivo JSON válido.",
+      "ErrorMessageCountingFiles": "Error al calcular los archivos para la copia de seguridad.",
+      "ErrorMessageZippingGeneric": "Error al comprimir los archivos.",
+      "ErrorMessageZippingIO": "Error al comprimir los archivos: error de E/S.",
+      "ErrorMessageZippingSecurity": "Error al comprimir los archivos: error de seguridad."
     }
   }
   
