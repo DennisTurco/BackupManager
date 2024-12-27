@@ -24,6 +24,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -58,6 +59,8 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.events.MouseEvent;
+
 import com.formdev.flatlaf.FlatClientProperties;
 
 /**
@@ -686,97 +689,116 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         String automaticBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN);
         String nextBackupDate = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN);
         String timeInterval = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN);
-        model = new DefaultTableModel(new Object[]{backupName, initialPath, destinationPath, lastBackup, automaticBackup, nextBackupDate, timeInterval}, 0) {
-
+    
+        DefaultTableModel model = new DefaultTableModel(new Object[]{
+            backupName, initialPath, destinationPath, lastBackup, automaticBackup, nextBackupDate, timeInterval}, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 4) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(columnIndex);
+                return columnIndex == 4 ? Boolean.class : super.getColumnClass(columnIndex);
             }
-
+    
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-
-        table.setModel(model);
-
-        for (int i = 0; i < backups.size(); i++) {
-            Backup backup = backups.get(i);
-
-            if (i >= model.getRowCount()) {
-                model.addRow(new Object[]{"", "", "", "", "", "", ""});
-            }
-
-            model.setValueAt(backup.getBackupName(), i, 0);
-            model.setValueAt(backup.getInitialPath(), i, 1);
-            model.setValueAt(backup.getDestinationPath(), i, 2);
-            model.setValueAt(backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "", i, 3);
-            model.setValueAt(backup.isAutoBackup(), i, 4);
-            model.setValueAt(backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "", i, 5);
-            model.setValueAt(backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "", i, 6);
+    
+        // Populate the model with backup data
+        for (Backup backup : backups) {
+            model.addRow(new Object[]{
+                backup.getBackupName(),
+                backup.getInitialPath(),
+                backup.getDestinationPath(),
+                backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
+                backup.isAutoBackup(),
+                backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "",
+                backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
+            });
         }
-
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+    
+        JTable newTable = new JTable(model) {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                if (row % 2 == 0) {
-                    c.setBackground(new Color(223, 222, 243));
-                } else {
-                    c.setBackground(Color.WHITE);
+            public String getToolTipText(java.awt.event.MouseEvent e) {
+                // Get the row and column at the mouse pointer
+                Point point = e.getPoint();
+                int row = rowAtPoint(point);
+                int col = columnAtPoint(point);
+    
+                // Show tooltip for olnly column 7
+                if (col == 6) {
+                    Object value = getValueAt(row, col);
+                    return value != null ? "dd.HH:mm" : null;
                 }
-
-                if (isSelected) {
-                    c.setBackground(table.getSelectionBackground());
-                    c.setForeground(table.getSelectionForeground());
-                } else {
-                    c.setForeground(Color.BLACK);
-                }
-
-                return c;
+                return null;
             }
         };
 
+        newTable.setRowHeight(35);
+    
+        // Copy table properties and renderers from the existing table
+        newTable.setSelectionBackground(table.getSelectionBackground());
+        newTable.setSelectionForeground(table.getSelectionForeground());
+    
+        // Re-add renderers and customizations
         TableCellRenderer checkboxRenderer = new DefaultTableCellRenderer() {
             private final JCheckBox checkBox = new JCheckBox();
-
+    
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 if (value instanceof Boolean aBoolean) {
                     checkBox.setSelected(aBoolean);
                     checkBox.setHorizontalAlignment(CENTER);
-
+    
                     if (row % 2 == 0) {
                         checkBox.setBackground(new Color(223, 222, 243));
                     } else {
                         checkBox.setBackground(Color.WHITE);
                     }
-
+    
                     if (isSelected) {
                         checkBox.setBackground(table.getSelectionBackground());
                         checkBox.setForeground(table.getSelectionForeground());
                     } else {
                         checkBox.setForeground(Color.BLACK);
                     }
-
+    
                     return checkBox;
                 }
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         };
-
-        TableColumnModel columnModel = table.getColumnModel();
+    
+        TableColumnModel columnModel = newTable.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
-            columnModel.getColumn(i).setCellRenderer(renderer);
+            columnModel.getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    
+                    if (row % 2 == 0) {
+                        c.setBackground(new Color(223, 222, 243));
+                    } else {
+                        c.setBackground(Color.WHITE);
+                    }
+    
+                    if (isSelected) {
+                        c.setBackground(table.getSelectionBackground());
+                        c.setForeground(table.getSelectionForeground());
+                    } else {
+                        c.setForeground(Color.BLACK);
+                    }
+    
+                    return c;
+                }
+            });
         }
-
         columnModel.getColumn(4).setCellRenderer(checkboxRenderer);
-        columnModel.getColumn(4).setCellEditor(table.getDefaultEditor(Boolean.class));
+        columnModel.getColumn(4).setCellEditor(newTable.getDefaultEditor(Boolean.class));
+    
+        // Replace the existing table in the GUI
+        JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
+        table = newTable; // Update the reference to the new table
+        scrollPane.setViewportView(table); // Replace the table in the scroll pane
     }
     
     // Method to properly encode the URI with special characters (spaces, symbols, etc.)
