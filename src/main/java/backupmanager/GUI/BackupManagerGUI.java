@@ -728,6 +728,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         };
         newTable.setRowHeight(35);
+        newTable.setAutoCreateRowSorter(true); // Enable column sorting
 
         // Copy table properties and renderers from the existing table
         newTable.setSelectionBackground(table.getSelectionBackground());
@@ -1473,7 +1474,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         exportAsCsvBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/csv-file.png"))); // NOI18N
         exportAsCsvBtn.setToolTipText("Export as .csv");
         exportAsCsvBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exportAsCsvBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        exportAsCsvBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        exportAsCsvBtn.setMinimumSize(new java.awt.Dimension(32, 32));
+        exportAsCsvBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         exportAsCsvBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAsCsvBtnActionPerformed(evt);
@@ -1484,7 +1487,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         exportAsPdfBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pdf.png"))); // NOI18N
         exportAsPdfBtn.setToolTipText("Export as .pdf");
         exportAsPdfBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exportAsPdfBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAsPdfBtnActionPerformed(evt);
@@ -1511,9 +1516,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)))
                 .addContainerGap())
         );
@@ -1526,9 +1531,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ExportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
