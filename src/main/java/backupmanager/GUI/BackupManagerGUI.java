@@ -15,6 +15,7 @@ import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.BackupOperations;
+import backupmanager.Exporter;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
 
@@ -48,10 +49,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -59,7 +58,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.json.simple.parser.ParseException;
-import org.w3c.dom.events.MouseEvent;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
@@ -689,20 +687,20 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         String automaticBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN);
         String nextBackupDate = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN);
         String timeInterval = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN);
-    
+
         DefaultTableModel model = new DefaultTableModel(new Object[]{
             backupName, initialPath, destinationPath, lastBackup, automaticBackup, nextBackupDate, timeInterval}, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnIndex == 4 ? Boolean.class : super.getColumnClass(columnIndex);
             }
-    
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-    
+
         // Populate the model with backup data
         for (Backup backup : backups) {
             model.addRow(new Object[]{
@@ -715,16 +713,13 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
             });
         }
-    
+
         JTable newTable = new JTable(model) {
             @Override
             public String getToolTipText(java.awt.event.MouseEvent e) {
-                // Get the row and column at the mouse pointer
                 Point point = e.getPoint();
                 int row = rowAtPoint(point);
                 int col = columnAtPoint(point);
-    
-                // Show tooltip for olnly column 7
                 if (col == 6) {
                     Object value = getValueAt(row, col);
                     return value != null ? "dd.HH:mm" : null;
@@ -732,69 +727,79 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 return null;
             }
         };
-
         newTable.setRowHeight(35);
-    
+
         // Copy table properties and renderers from the existing table
         newTable.setSelectionBackground(table.getSelectionBackground());
         newTable.setSelectionForeground(table.getSelectionForeground());
-    
+
         // Re-add renderers and customizations
         TableCellRenderer checkboxRenderer = new DefaultTableCellRenderer() {
             private final JCheckBox checkBox = new JCheckBox();
-    
+
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 if (value instanceof Boolean aBoolean) {
                     checkBox.setSelected(aBoolean);
                     checkBox.setHorizontalAlignment(CENTER);
-    
+
                     if (row % 2 == 0) {
                         checkBox.setBackground(new Color(223, 222, 243));
                     } else {
                         checkBox.setBackground(Color.WHITE);
                     }
-    
+
                     if (isSelected) {
                         checkBox.setBackground(table.getSelectionBackground());
                         checkBox.setForeground(table.getSelectionForeground());
                     } else {
                         checkBox.setForeground(Color.BLACK);
                     }
-    
+
                     return checkBox;
                 }
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         };
-    
+
         TableColumnModel columnModel = newTable.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
             columnModel.getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
                 @Override
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                     Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    
+
                     if (row % 2 == 0) {
                         c.setBackground(new Color(223, 222, 243));
                     } else {
                         c.setBackground(Color.WHITE);
                     }
-    
+
                     if (isSelected) {
                         c.setBackground(table.getSelectionBackground());
                         c.setForeground(table.getSelectionForeground());
                     } else {
                         c.setForeground(Color.BLACK);
                     }
-    
+
                     return c;
                 }
             });
         }
         columnModel.getColumn(4).setCellRenderer(checkboxRenderer);
         columnModel.getColumn(4).setCellEditor(newTable.getDefaultEditor(Boolean.class));
-    
+
+        // Add the existing mouse listener to the new table
+        newTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt); // Reuse the existing method
+            }
+        });
+
+        // Update the global model reference
+        BackupManagerGUI.model = (DefaultTableModel) newTable.getModel();
+
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
         table = newTable; // Update the reference to the new table
@@ -809,7 +814,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             return value; // If encoding fails, return the original value
         }
     }
-    
+
     public boolean Clear(boolean canMessageAppear) {
         Logger.logMessage("Event --> clear", Logger.LogLevel.INFO);
 
@@ -909,32 +914,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
-    }
-    
-    private void pathSearchWithFileChooser(JTextField textField, boolean allowFiles) {
-        Logger.logMessage("Event --> File chooser", Logger.LogLevel.INFO);
-        Logger.logMessage("File chooser: " + textField.getName() + ", files allowed: " + allowFiles, Logger.LogLevel.DEBUG);
-        
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        
-        if (allowFiles)
-            jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        else
-            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        int returnValue = jfc.showSaveDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-
-            if (selectedFile.isDirectory()) {
-                Logger.logMessage("You selected the directory: " + selectedFile, Logger.LogLevel.INFO);
-            } else if (selectedFile.isFile()) {
-                Logger.logMessage("You selected the file: " + selectedFile, Logger.LogLevel.INFO);
-            }
-
-            textField.setText(selectedFile.toString());
-        }
-        savedChanges(false);
     }
     
     private void researchInTable() {
@@ -1095,6 +1074,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         researchField = new javax.swing.JTextField();
+        exportAsCsvBtn = new javax.swing.JButton();
+        exportAsPdfBtn = new javax.swing.JButton();
+        ExportLabel = new javax.swing.JLabel();
         detailsPanel = new javax.swing.JPanel();
         detailsLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -1487,6 +1469,31 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
+        exportAsCsvBtn.setForeground(new java.awt.Color(0, 0, 0));
+        exportAsCsvBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/csv-file.png"))); // NOI18N
+        exportAsCsvBtn.setToolTipText("Export as .csv");
+        exportAsCsvBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exportAsCsvBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        exportAsCsvBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportAsCsvBtnActionPerformed(evt);
+            }
+        });
+
+        exportAsPdfBtn.setForeground(new java.awt.Color(0, 0, 0));
+        exportAsPdfBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pdf.png"))); // NOI18N
+        exportAsPdfBtn.setToolTipText("Export as .pdf");
+        exportAsPdfBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exportAsPdfBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportAsPdfBtnActionPerformed(evt);
+            }
+        });
+
+        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ExportLabel.setText("Export As:");
+
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
         tablePanelLayout.setHorizontalGroup(
@@ -1494,26 +1501,34 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                     .addGroup(tablePanelLayout.createSequentialGroup()
                         .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(tablePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)))
+                .addContainerGap())
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ExportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1799,11 +1814,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
-    private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        TabbedPane.setSelectedIndex(0);
-        NewBackup();
-    }//GEN-LAST:event_addBackupEntryButtonActionPerformed
-
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
         researchInTable();
     }//GEN-LAST:event_researchFieldKeyTyped
@@ -2051,11 +2061,21 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
     private void btnPathSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch2ActionPerformed
-        pathSearchWithFileChooser(destinationPathField, false);
+        Logger.logMessage("File chooser: " + destinationPathField.getName() + ", files allowed: " + false, Logger.LogLevel.DEBUG);
+        String text = BackupOperations.pathSearchWithFileChooser(false);
+        if (text != null) {
+            destinationPathField.setText(text);
+            savedChanges(false);
+        }
     }//GEN-LAST:event_btnPathSearch2ActionPerformed
 
     private void btnPathSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch1ActionPerformed
-        pathSearchWithFileChooser(startPathField, true);
+        Logger.logMessage("File chooser: " + startPathField.getName() + ", files allowed: " + true, Logger.LogLevel.DEBUG);
+        String text = BackupOperations.pathSearchWithFileChooser(true);
+        if (text != null) {
+            destinationPathField.setText(text);
+            savedChanges(false);
+        }
     }//GEN-LAST:event_btnPathSearch1ActionPerformed
 
     private void btnTimePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimePickerActionPerformed
@@ -2148,6 +2168,18 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         mouseWeel(evt);
     }//GEN-LAST:event_maxBackupCountSpinnerMouseWheelMoved
 
+    private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addBackupEntryButtonActionPerformed
+
+    private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
+        Exporter.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+    }//GEN-LAST:event_exportAsCsvBtnActionPerformed
+
+    private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
+        Exporter.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+    }//GEN-LAST:event_exportAsPdfBtnActionPerformed
+
     private void setTranslations() {
         try {
             backups = JSON.ReadBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
@@ -2210,7 +2242,10 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jLabel4.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP));
 
         // backup list
+        ExportLabel.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS));
         addBackupEntryButton.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.ADD_BACKUP_TOOLTIP));
+        exportAsPdfBtn.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS_PDF_TOOLTIP));
+        exportAsCsvBtn.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS_CSV_TOOLTIP));
         researchField.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.RESEARCH_BAR_TOOLTIP));
         researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.RESEARCH_BAR_PLACEHOLDER));
 
@@ -2239,6 +2274,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem DeletePopupItem;
     private javax.swing.JMenuItem DuplicatePopupItem;
     private javax.swing.JMenuItem EditPoputItem;
+    private javax.swing.JLabel ExportLabel;
     private javax.swing.JMenuItem MenuBugReport;
     private javax.swing.JMenuItem MenuClear;
     private javax.swing.JMenuItem MenuDonate;
@@ -2269,6 +2305,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JTextField destinationPathField;
     private javax.swing.JLabel detailsLabel;
     private javax.swing.JPanel detailsPanel;
+    private javax.swing.JButton exportAsCsvBtn;
+    private javax.swing.JButton exportAsPdfBtn;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

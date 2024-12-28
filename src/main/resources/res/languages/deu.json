@@ -77,6 +77,9 @@
       "NotesDetail": "Notizen",
       "MaxBackupsToKeepDetail": "MaximaleSicherungenBehalten",
       "AddBackupTooltip": "Neues Backup hinzufügen",
+      "ExportAs": "Exportieren als: ",
+      "ExportAsPdfTooltip": "Exportieren als PDF",
+      "ExportAsCsvTooltip": "Exportieren als CSV",
       "ResearchBarTooltip": "Suchleiste",
       "ResearchBarPlaceholder": "Suchen...",
       "EditPopup": "Bearbeiten",
@@ -163,7 +166,16 @@
       "ErrorMessageCountingFiles": "Fehler beim Zählen der zu sichernden Dateien.",
       "ErrorMessageZippingGeneric": "Fehler beim Komprimieren der Dateien.",
       "ErrorMessageZippingIO": "Fehler beim Komprimieren der Dateien: E/A-Fehler.",
-      "ErrorMessageZippingSecurity": "Fehler beim Komprimieren der Dateien: Sicherheitsfehler."
+      "ErrorMessageZippingSecurity": "Fehler beim Komprimieren der Dateien: Sicherheitsfehler.",
+      "SuccessGenericTitle": "Erfolg",
+      "SuccessfullyExportedToCsvMessage": "Backups erfolgreich als CSV exportiert!",
+      "SuccessfullyExportedToPdfMessage": "Backups erfolgreich als PDF exportiert!",
+      "ErrorMessageForExportingToCsv": "Fehler beim Exportieren der Backups in CSV: ",
+      "ErrorMessageForExportingToPdf": "Fehler beim Exportieren der Backups in PDF: ",
+      "CsvNameMessageInput": "Geben Sie den Namen der CSV-Datei ein.",
+      "PdfNameMessageInput": "Geben Sie den Namen der PDF-Datei ein.",
+      "DuplicatedFileNameMessage": "Datei existiert bereits. Überschreiben?",
+      "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwenden Sie nur alphanumerische Zeichen, Bindestriche und Unterstriche."
     }
   }
   

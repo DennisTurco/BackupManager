@@ -77,6 +77,9 @@
       "NotesDetail": "Notas",
       "MaxBackupsToKeepDetail": "MaximoCopiasDeSeguridadMantener",
       "AddBackupTooltip": "Agregar nueva copia de seguridad",
+      "ExportAs": "Exportar como: ",
+      "ExportAsPdfTooltip": "Exportar como PDF",
+      "ExportAsCsvTooltip": "Exportar como CSV",
       "ResearchBarTooltip": "Barra de búsqueda",
       "ResearchBarPlaceholder": "Buscar...",
       "EditPopup": "Editar",
@@ -163,7 +166,16 @@
       "ErrorMessageCountingFiles": "Error al calcular los archivos para la copia de seguridad.",
       "ErrorMessageZippingGeneric": "Error al comprimir los archivos.",
       "ErrorMessageZippingIO": "Error al comprimir los archivos: error de E/S.",
-      "ErrorMessageZippingSecurity": "Error al comprimir los archivos: error de seguridad."
+      "ErrorMessageZippingSecurity": "Error al comprimir los archivos: Error de seguridad.",
+      "SuccessGenericTitle": "Éxito",
+      "SuccessfullyExportedToCsvMessage": "¡Copias de seguridad exportadas a CSV con éxito!",
+      "SuccessfullyExportedToPdfMessage": "¡Copias de seguridad exportadas a PDF con éxito!",
+      "ErrorMessageForExportingToCsv": "Error al exportar copias de seguridad a CSV: ",
+      "ErrorMessageForExportingToPdf": "Error al exportar copias de seguridad a PDF: ",
+      "CsvNameMessageInput": "Introduce el nombre del archivo CSV.",
+      "PdfNameMessageInput": "Introduce el nombre del archivo PDF.",
+      "DuplicatedFileNameMessage": "El archivo ya existe. ¿Sobrescribir?",
+      "ErrorMessageInvalidFilename": "Nombre de archivo no válido. Usa solo caracteres alfanuméricos, guiones y guiones bajos."
     }
   }
   

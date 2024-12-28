@@ -54,7 +54,7 @@
     "SingleBackupTooltip": "Esegui il backup",
     "AutoBackupTooltip": "Attiva/Disattiva backup automatico",
     "TimePickerTooltip": "Selettore orario",
-    "MaxBackupsToKeep": "Massimo di backup da mantenere",
+    "MaxBackupsToKeep": "Massimo numero di backup da mantenere",
     "MaxBackupsToKeepTooltip": "Numero massimo di backup da conservare prima di eliminare i più vecchi."
   },
   "BackupList": {
@@ -74,9 +74,12 @@
     "CreationDateDetail": "DataCreazione",
     "LastUpdateDateDetail": "DataUltimoAggiornamento",
     "BackupCountDetail": "ConteggioBackup",
-    "MaxBackupsToKeepDetail": "MassimoBackupDaMantenere",
+    "MaxBackupsToKeepDetail": "MassimoNumeroBackupDaMantenere",
     "NotesDetail": "Note",
     "AddBackupTooltip": "Aggiungi nuovo backup",
+    "ExportAs": "Esporta come: ",
+    "ExportAsPdfTooltip": "Esporta come PDF",
+    "ExportAsCsvTooltip": "Esporta come CSV",
     "ResearchBarTooltip": "Barra di ricerca",
     "ResearchBarPlaceholder": "Cerca...",
     "EditPopup": "Modifica",
@@ -163,6 +166,15 @@
     "ErrorMessageCountingFiles": "Errore durante il calcolo dei file da eseguire il backup.",
     "ErrorMessageZippingGeneric": "Errore durante la compressione dei file.",
     "ErrorMessageZippingIO": "Errore durante la compressione dei file: errore di I/O.",
-    "ErrorMessageZippingSecurity": "Errore durante la compressione dei file: errore di sicurezza."
+    "ErrorMessageZippingSecurity": "Errore durante la compressione dei file: Errore di sicurezza.",
+    "SuccessGenericTitle": "Successo",
+    "SuccessfullyExportedToCsvMessage": "Backup esportati in CSV con successo!",
+    "SuccessfullyExportedToPdfMessage": "Backup esportati in PDF con successo!",
+    "ErrorMessageForExportingToCsv": "Errore durante l'esportazione dei backup in CSV: ",
+    "ErrorMessageForExportingToPdf": "Errore durante l'esportazione dei backup in PDF: ",
+    "CsvNameMessageInput": "Inserisci il nome del file CSV.",
+    "PdfNameMessageInput": "Inserisci il nome del file PDF.",
+    "DuplicatedFileNameMessage": "Il file esiste già. Sovrascrivere?",
+    "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo caratteri alfanumerici, trattini e underscore."
   }
 }

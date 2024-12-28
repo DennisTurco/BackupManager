@@ -1,0 +1,858 @@
+2024-12-28T17:24:11.293075800 [INFO] Exporting backups to PDF finished
+2024-12-28T17:24:08.733494200 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:24:06.593933700 [INFO] Event --> File chooser
+2024-12-28T17:24:06.590957400 [INFO] Exporting backups to PDF
+2024-12-28T17:24:04.670572500 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:24:04.002360500 [DEBUG] Background mode: false
+2024-12-28T17:24:03.988573200 [INFO] Application started
+2024-12-28T17:22:07.125443500 [INFO] Exporting backups to PDF finished
+2024-12-28T17:22:03.179682700 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:21:58.770194800 [INFO] Event --> File chooser
+2024-12-28T17:21:58.768210300 [INFO] Exporting backups to PDF
+2024-12-28T17:21:23.805458900 [INFO] Exporting backups to CSV finished
+2024-12-28T17:21:17.071990500 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:21:14.094916500 [INFO] Event --> File chooser
+2024-12-28T17:21:14.093456600 [INFO] Exporting backups to CSV
+2024-12-28T17:20:21.566427400 [INFO] Exporting backups to PDF finished
+2024-12-28T17:20:17.936428800 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:20:16.384820400 [INFO] Event --> File chooser
+2024-12-28T17:20:16.381348300 [INFO] Exporting backups to PDF
+2024-12-28T17:20:14.455771 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:20:13.832193800 [DEBUG] Background mode: false
+2024-12-28T17:20:13.822274400 [INFO] Application started
+2024-12-28T17:19:37.281727500 [INFO] Exporting backups to PDF finished
+2024-12-28T17:19:35.572333 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:19:33.895563700 [INFO] Event --> File chooser
+2024-12-28T17:19:33.892090400 [INFO] Exporting backups to PDF
+2024-12-28T17:19:31.762531200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:19:31.155070100 [DEBUG] Background mode: false
+2024-12-28T17:19:31.144654 [INFO] Application started
+2024-12-28T17:16:17.118801100 [INFO] Exporting backups to PDF finished
+2024-12-28T17:16:13.750012600 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:16:10.073888800 [INFO] Event --> File chooser
+2024-12-28T17:16:10.070912700 [INFO] Exporting backups to PDF
+2024-12-28T17:16:08.113936800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:16:07.519914700 [DEBUG] Background mode: false
+2024-12-28T17:16:07.508506300 [INFO] Application started
+2024-12-28T17:15:28.517263500 [INFO] Exporting backups to PDF finished
+2024-12-28T17:15:25.657318400 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:15:22.208388800 [INFO] Event --> File chooser
+2024-12-28T17:15:22.206928900 [INFO] Exporting backups to PDF
+2024-12-28T17:15:21.321332200 [INFO] Exporting backups to PDF cancelled
+2024-12-28T17:15:16.987690300 [INFO] Event --> File chooser
+2024-12-28T17:15:16.984714900 [INFO] Exporting backups to PDF
+2024-12-28T17:15:15.152178200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:15:14.541294600 [DEBUG] Background mode: false
+2024-12-28T17:15:14.531374900 [INFO] Application started
+2024-12-28T17:12:49.869780300 [INFO] Exporting backups to PDF finished
+2024-12-28T17:12:45.846359500 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:12:43.438858900 [INFO] Event --> File chooser
+2024-12-28T17:12:43.435882200 [INFO] Exporting backups to PDF
+2024-12-28T17:12:41.298909400 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:12:40.674202200 [DEBUG] Background mode: false
+2024-12-28T17:12:40.663786700 [INFO] Application started
+2024-12-28T17:11:54.742573200 [INFO] Exporting backups to PDF finished
+2024-12-28T17:11:51.780663400 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:11:50.143413300 [INFO] Event --> File chooser
+2024-12-28T17:11:50.140437200 [INFO] Exporting backups to PDF
+2024-12-28T17:11:47.066139700 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:11:46.360922200 [DEBUG] Background mode: false
+2024-12-28T17:11:46.348522800 [INFO] Application started
+2024-12-28T17:05:37.718723200 [INFO] Exporting backups to PDF finished
+2024-12-28T17:05:35.692403500 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T17:05:34.011967600 [INFO] Event --> File chooser
+2024-12-28T17:05:34.008992 [INFO] Exporting backups to PDF
+2024-12-28T17:05:30.866678900 [DEBUG] The application is running with administrator privileges.
+2024-12-28T17:05:30.270011800 [DEBUG] Background mode: false
+2024-12-28T17:05:30.259570500 [INFO] Application started
+2024-12-28T16:59:29.134460500 [INFO] Exporting backups to PDF finished
+2024-12-28T16:59:26.585473 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:59:24.829977 [INFO] Event --> File chooser
+2024-12-28T16:59:24.827000800 [INFO] Exporting backups to PDF
+2024-12-28T16:59:21.883172900 [INFO] Reloading preferences
+2024-12-28T16:59:21.859860700 [INFO] Theme set to: Carbon
+2024-12-28T16:59:21.856885 [INFO] Language set to: Italiano
+2024-12-28T16:59:21.855396700 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2024-12-28T16:59:18.991068600 [INFO] Event --> opening preferences dialog
+2024-12-28T16:59:15.188416200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T16:59:14.599247500 [DEBUG] Background mode: false
+2024-12-28T16:59:14.589823100 [INFO] Application started
+2024-12-28T16:47:03.429497300 [INFO] Exporting backups to CSV finished
+2024-12-28T16:46:58.242997400 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:46:56.394235800 [INFO] Event --> File chooser
+2024-12-28T16:46:56.392217800 [INFO] Exporting backups to CSV
+2024-12-28T16:46:55.484060400 [INFO] Exporting backups to CSV cancelled by user (file exists)
+2024-12-28T16:46:51.365688500 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:46:49.365341 [INFO] Event --> File chooser
+2024-12-28T16:46:49.363853300 [INFO] Exporting backups to CSV
+2024-12-28T16:46:48.607607800 [INFO] Exporting backups to CSV finished
+2024-12-28T16:46:45.552654200 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:46:43.801357500 [INFO] Event --> File chooser
+2024-12-28T16:46:43.798380900 [INFO] Exporting backups to CSV
+2024-12-28T16:46:41.701493200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T16:46:41.106788600 [DEBUG] Background mode: false
+2024-12-28T16:46:41.094389 [INFO] Application started
+2024-12-28T16:33:13.424854400 [INFO] Exporting backups to CSV cancelled
+2024-12-28T16:33:10.826261900 [INFO] Event --> File chooser
+2024-12-28T16:33:10.824278200 [INFO] Exporting backups to CSV
+2024-12-28T16:32:19.438688500 [INFO] Exporting backups to CSV finished
+2024-12-28T16:32:13.803620200 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:32:09.780867400 [INFO] Event --> File chooser
+2024-12-28T16:32:09.779379700 [INFO] Exporting backups to CSV
+2024-12-28T16:31:48.704227 [INFO] Exporting backups to CSV finished
+2024-12-28T16:31:26.495423600 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:31:22.688632 [INFO] Event --> File chooser
+2024-12-28T16:31:22.687111 [INFO] Exporting backups to CSV
+2024-12-28T16:31:21.540430 [INFO] Exporting backups to CSV cancelled
+2024-12-28T16:31:19.293937500 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:31:17.596767800 [INFO] Event --> File chooser
+2024-12-28T16:31:17.595279800 [INFO] Exporting backups to CSV
+2024-12-28T16:31:05.876220200 [INFO] Exporting backups to CSV finished
+2024-12-28T16:30:56.106848800 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:30:54.137107200 [INFO] Event --> File chooser
+2024-12-28T16:30:54.133058500 [INFO] Exporting backups to CSV
+2024-12-28T16:30:51.134030600 [DEBUG] The application is running with administrator privileges.
+2024-12-28T16:30:50.525085100 [DEBUG] Background mode: false
+2024-12-28T16:30:50.513180100 [INFO] Application started
+2024-12-28T16:22:29.985350100 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:22:27.303008400 [INFO] Event --> File chooser
+2024-12-28T16:22:27.300556800 [INFO] Exporting backups to CSV
+2024-12-28T16:22:24.291939800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T16:22:23.672631500 [DEBUG] Background mode: false
+2024-12-28T16:22:23.660727600 [INFO] Application started
+2024-12-28T16:06:07.154826400 [INFO] Exporting backups to CSV finished
+2024-12-28T16:06:01.197726100 [ERROR] Error exporting backups to CSV: C:\Users\Utente\Desktop (Accesso negato)
+2024-12-28T16:06:01.195246600 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2024-12-28T16:05:55.545502500 [INFO] Event --> File chooser
+2024-12-28T16:05:55.543026100 [INFO] Exporting backups to CSV
+2024-12-28T16:05:47.221191600 [DEBUG] The application is running with administrator privileges.
+2024-12-28T16:05:46.593389500 [DEBUG] Background mode: false
+2024-12-28T16:05:46.581486100 [INFO] Application started
+2024-12-28T15:37:13.606739400 [INFO] Exporting backups to CSV finished
+2024-12-28T15:37:08.707112400 [INFO] Exporting backups to CSV
+2024-12-28T15:37:05.212730200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T15:37:04.610686900 [DEBUG] Background mode: false
+2024-12-28T15:37:04.600271400 [INFO] Application started
+2024-12-28T15:34:41.907926800 [INFO] Exporting backups to CSV finished
+2024-12-28T15:34:41.904454700 [INFO] Exporting backups to CSV
+2024-12-28T15:34:36.377421700 [DEBUG] The application is running with administrator privileges.
+2024-12-28T15:34:35.763305800 [DEBUG] Background mode: false
+2024-12-28T15:34:35.750906 [INFO] Application started
+2024-12-28T15:32:42.051708700 [INFO] Exporting backups to CSV finished
+2024-12-28T15:32:42.047730 [INFO] Exporting backups to CSV
+2024-12-28T15:32:31.017862800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T15:32:30.378596200 [DEBUG] Background mode: false
+2024-12-28T15:32:30.367124300 [INFO] Application started
+2024-12-28T14:49:30.140918700 [DEBUG] updating backup list
+2024-12-28T14:49:30.138438700 [INFO] Event --> auto backup disabled
+2024-12-28T14:49:26.147952100 [DEBUG] updating backup list
+2024-12-28T14:49:26.145968600 [INFO] Event --> Auto Backup setted to Enabled
+2024-12-28T14:49:26.143488400 [DEBUG] updating backup list
+2024-12-28T14:49:25.537130100 [INFO] Event --> Next date backup setted to 2024-12-31T14:49:25.536633200
+2024-12-28T14:49:23.295060500 [INFO] Event --> automatic backup
+2024-12-28T14:49:23.292553400 [INFO] Event --> Changing auto backup preference
+2024-12-28T14:49:18.564077700 [DEBUG] updating backup list
+2024-12-28T14:49:18.561102600 [INFO] Event --> auto backup disabled
+2024-12-28T14:49:18.559118300 [INFO] Event --> opening backup
+2024-12-28T14:49:18.557630300 [INFO] Edit row : 13
+2024-12-28T14:49:13.392255600 [DEBUG] updating backup list
+2024-12-28T14:49:13.387791500 [INFO] Event --> duplicating backup
+2024-12-28T14:49:07.624864200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:49:07.059223800 [DEBUG] Background mode: false
+2024-12-28T14:49:07.049800600 [INFO] Application started
+2024-12-28T14:43:33.295145500 [INFO] Event --> Auto Backup setted to Enabled
+2024-12-28T14:43:32.586012200 [INFO] Event --> Next date backup setted to 2024-12-29T14:43:32.585515900
+2024-12-28T14:43:30.747148700 [INFO] Event --> automatic backup
+2024-12-28T14:43:30.745164700 [INFO] Event --> Changing auto backup preference
+2024-12-28T14:43:29.610477200 [INFO] Event --> auto backup disabled
+2024-12-28T14:43:29.607996800 [INFO] Event --> opening backup
+2024-12-28T14:43:29.605527700 [INFO] Edit row : 11
+2024-12-28T14:43:22.858131200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:43:22.269982100 [DEBUG] Background mode: false
+2024-12-28T14:43:22.260558200 [INFO] Application started
+2024-12-28T14:43:16.305543 [INFO] Event --> duplicating backup
+2024-12-28T14:43:11.071365600 [INFO] Deleting old backups if necessary
+2024-12-28T14:43:11.066901900 [INFO] Backup completed!
+2024-12-28T14:43:11.064422300 [INFO] Zipping progress: 100
+2024-12-28T14:43:11.062934500 [DEBUG] Zipping file: BackupManager/target\test-classes\test\TestPreferences.class
+2024-12-28T14:43:11.061942 [DEBUG] Zipping file: BackupManager/target\test-classes\test\TestMainApp.class
+2024-12-28T14:43:11.059958100 [DEBUG] Zipping file: BackupManager/target\test-classes\test\TestLogger.class
+2024-12-28T14:43:11.058965700 [DEBUG] Zipping file: BackupManager/target\test-classes\test\TestConfigKey.class
+2024-12-28T14:43:11.057479300 [DEBUG] Zipping file: BackupManager/target\test-classes\test\TestBackupOperations.class
+2024-12-28T14:43:11.056486200 [DEBUG] Zipping directory: BackupManager/target\test-classes\test/
+2024-12-28T14:43:11.054997600 [DEBUG] Zipping directory: BackupManager/target\test-classes/
+2024-12-28T14:43:11.053510 [DEBUG] Zipping file: BackupManager/target\surefire-reports\test.TestPreferences.txt
+2024-12-28T14:43:11.052022100 [DEBUG] Zipping file: BackupManager/target\surefire-reports\test.TestMainApp.txt
+2024-12-28T14:43:11.050534200 [DEBUG] Zipping file: BackupManager/target\surefire-reports\test.TestLogger.txt
+2024-12-28T14:43:11.049045800 [DEBUG] Zipping file: BackupManager/target\surefire-reports\test.TestConfigKey.txt
+2024-12-28T14:43:11.047558200 [DEBUG] Zipping file: BackupManager/target\surefire-reports\test.TestBackupOperations.txt
+2024-12-28T14:43:11.045573900 [DEBUG] Zipping file: BackupManager/target\surefire-reports\TEST-test.TestPreferences.xml
+2024-12-28T14:43:11.043589800 [DEBUG] Zipping file: BackupManager/target\surefire-reports\TEST-test.TestMainApp.xml
+2024-12-28T14:43:11.041605600 [DEBUG] Zipping file: BackupManager/target\surefire-reports\TEST-test.TestLogger.xml
+2024-12-28T14:43:11.039622100 [DEBUG] Zipping file: BackupManager/target\surefire-reports\TEST-test.TestConfigKey.xml
+2024-12-28T14:43:11.037637800 [DEBUG] Zipping file: BackupManager/target\surefire-reports\TEST-test.TestBackupOperations.xml
+2024-12-28T14:43:11.036646100 [DEBUG] Zipping directory: BackupManager/target\surefire-reports/
+2024-12-28T14:43:11.035157900 [DEBUG] Zipping file: BackupManager/target\maven-status\maven-compiler-plugin\testCompile\default-testCompile\inputFiles.lst
+2024-12-28T14:43:11.034165500 [DEBUG] Zipping file: BackupManager/target\maven-status\maven-compiler-plugin\testCompile\default-testCompile\createdFiles.lst
+2024-12-28T14:43:11.033174100 [DEBUG] Zipping directory: BackupManager/target\maven-status\maven-compiler-plugin\testCompile\default-testCompile/
+2024-12-28T14:43:11.031686700 [DEBUG] Zipping directory: BackupManager/target\maven-status\maven-compiler-plugin\testCompile/
+2024-12-28T14:43:11.029701700 [DEBUG] Zipping file: BackupManager/target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst
+2024-12-28T14:43:11.028213500 [DEBUG] Zipping file: BackupManager/target\maven-status\maven-compiler-plugin\compile\default-compile\createdFiles.lst
+2024-12-28T14:43:11.027717700 [DEBUG] Zipping directory: BackupManager/target\maven-status\maven-compiler-plugin\compile\default-compile/
+2024-12-28T14:43:11.026725900 [DEBUG] Zipping directory: BackupManager/target\maven-status\maven-compiler-plugin\compile/
+2024-12-28T14:43:11.025733800 [DEBUG] Zipping directory: BackupManager/target\maven-status\maven-compiler-plugin/
+2024-12-28T14:43:11.024246800 [DEBUG] Zipping directory: BackupManager/target\maven-status/
+2024-12-28T14:43:11.022758300 [DEBUG] Zipping file: BackupManager/target\maven-archiver\pom.properties
+2024-12-28T14:43:11.021270500 [DEBUG] Zipping directory: BackupManager/target\maven-archiver/
+2024-12-28T14:43:11.020773700 [DEBUG] Zipping directory: BackupManager/target\generated-test-sources\test-annotations/
+2024-12-28T14:43:11.019782100 [DEBUG] Zipping directory: BackupManager/target\generated-test-sources/
+2024-12-28T14:43:11.018789700 [DEBUG] Zipping directory: BackupManager/target\generated-sources\annotations/
+2024-12-28T14:43:11.017301700 [DEBUG] Zipping directory: BackupManager/target\generated-sources/
+2024-12-28T14:43:11.015318200 [DEBUG] Zipping file: BackupManager/target\classes\res\log_file.txt
+2024-12-28T14:43:11.013830300 [DEBUG] Zipping file: BackupManager/target\classes\res\languages\ita.json
+2024-12-28T14:43:11.011846100 [DEBUG] Zipping file: BackupManager/target\classes\res\languages\fra.json
+2024-12-28T14:43:11.010358200 [DEBUG] Zipping file: BackupManager/target\classes\res\languages\esp.json
+2024-12-28T14:43:11.009365700 [DEBUG] Zipping file: BackupManager/target\classes\res\languages\eng.json
+2024-12-28T14:43:11.007878100 [DEBUG] Zipping file: BackupManager/target\classes\res\languages\deu.json
+2024-12-28T14:43:11.006886600 [DEBUG] Zipping directory: BackupManager/target\classes\res\languages/
+2024-12-28T14:43:11.004901900 [DEBUG] Zipping file: BackupManager/target\classes\res\img\website.png
+2024-12-28T14:43:11.003413600 [DEBUG] Zipping file: BackupManager/target\classes\res\img\share.png
+2024-12-28T14:43:11.001429700 [DEBUG] Zipping file: BackupManager/target\classes\res\img\shard.png
+2024-12-28T14:43:10.999942100 [DEBUG] Zipping file: BackupManager/target\classes\res\img\search.png
+2024-12-28T14:43:10.998454100 [DEBUG] Zipping file: BackupManager/target\classes\res\img\save.png
+2024-12-28T14:43:10.996965800 [DEBUG] Zipping file: BackupManager/target\classes\res\img\remove.png
+2024-12-28T14:43:10.995974 [DEBUG] Zipping file: BackupManager/target\classes\res\img\plus.png
+2024-12-28T14:43:10.994485800 [DEBUG] Zipping file: BackupManager/target\classes\res\img\pen.png
+2024-12-28T14:43:10.992998300 [DEBUG] Zipping file: BackupManager/target\classes\res\img\pdf.png
+2024-12-28T14:43:10.991014100 [DEBUG] Zipping file: BackupManager/target\classes\res\img\logo_old.png
+2024-12-28T14:43:10.985062 [DEBUG] Zipping file: BackupManager/target\classes\res\img\logo_old.ico
+2024-12-28T14:43:10.983078100 [DEBUG] Zipping file: BackupManager/target\classes\res\img\logo.png
+2024-12-28T14:43:10.980598700 [DEBUG] Zipping file: BackupManager/target\classes\res\img\logo.ico
+2024-12-28T14:43:10.979110700 [DEBUG] Zipping file: BackupManager/target\classes\res\img\information.png
+2024-12-28T14:43:10.977126100 [DEBUG] Zipping file: BackupManager/target\classes\res\img\import.png
+2024-12-28T14:43:10.975637900 [DEBUG] Zipping file: BackupManager/target\classes\res\img\help-desk.png
+2024-12-28T14:43:10.973655200 [DEBUG] Zipping file: BackupManager/target\classes\res\img\folder.png
+2024-12-28T14:43:10.971669800 [DEBUG] Zipping file: BackupManager/target\classes\res\img\export.png
+2024-12-28T14:43:10.970182300 [DEBUG] Zipping file: BackupManager/target\classes\res\img\door.png
+2024-12-28T14:43:10.968694600 [DEBUG] Zipping file: BackupManager/target\classes\res\img\donation.png
+2024-12-28T14:43:10.966709800 [DEBUG] Zipping file: BackupManager/target\classes\res\img\diskette.png
+2024-12-28T14:43:10.964726500 [DEBUG] Zipping file: BackupManager/target\classes\res\img\csv-file.png
+2024-12-28T14:43:10.963238600 [DEBUG] Zipping file: BackupManager/target\classes\res\img\cogwheel.png
+2024-12-28T14:43:10.961254800 [DEBUG] Zipping file: BackupManager/target\classes\res\img\clock.png
+2024-12-28T14:43:10.959765900 [DEBUG] Zipping file: BackupManager/target\classes\res\img\clean.png
+2024-12-28T14:43:10.958278 [DEBUG] Zipping file: BackupManager/target\classes\res\img\chronometer.png
+2024-12-28T14:43:10.956790400 [DEBUG] Zipping file: BackupManager/target\classes\res\img\bug.png
+2024-12-28T14:43:10.954805900 [DEBUG] Zipping file: BackupManager/target\classes\res\img\bin.png
+2024-12-28T14:43:10.953318 [DEBUG] Zipping file: BackupManager/target\classes\res\img\author_logo.png
+2024-12-28T14:43:10.951830 [DEBUG] Zipping file: BackupManager/target\classes\res\img\add-file.png
+2024-12-28T14:43:10.949846 [DEBUG] Zipping directory: BackupManager/target\classes\res\img/
+2024-12-28T14:43:10.947862300 [DEBUG] Zipping file: BackupManager/target\classes\res\config\preferences.json
+2024-12-28T14:43:10.945878100 [DEBUG] Zipping file: BackupManager/target\classes\res\config\config.json
+2024-12-28T14:43:10.943894500 [DEBUG] Zipping directory: BackupManager/target\classes\res\config/
+2024-12-28T14:43:10.942406100 [DEBUG] Zipping file: BackupManager/target\classes\res\backup_list2.0.4.json
+2024-12-28T14:43:10.940918200 [DEBUG] Zipping file: BackupManager/target\classes\res\backup_list.json
+2024-12-28T14:43:10.939430200 [DEBUG] Zipping directory: BackupManager/target\classes\res/
+2024-12-28T14:43:10.936950300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Services\BackupService.class
+2024-12-28T14:43:10.934967 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Services\BackupService$BackupTask.class
+2024-12-28T14:43:10.932982100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Services\BackupService$1.class
+2024-12-28T14:43:10.931494100 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Services/
+2024-12-28T14:43:10.929510 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Managers\ThemeManager.class
+2024-12-28T14:43:10.928518200 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Managers/
+2024-12-28T14:43:10.927032700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\MainApp.class
+2024-12-28T14:43:10.924550700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Logger.class
+2024-12-28T14:43:10.922566100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Logger$LogLevel.class
+2024-12-28T14:43:10.921102500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Json\JSONConfigReader.class
+2024-12-28T14:43:10.919589800 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Json\JSONAutoBackup.class
+2024-12-28T14:43:10.918101900 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Json/
+2024-12-28T14:43:10.916615 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Interfaces\IJSONAutoBackup.class
+2024-12-28T14:43:10.915126100 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Interfaces/
+2024-12-28T14:43:10.912671 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupProgressGUI.form
+2024-12-28T14:43:10.911157700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupProgressGUI.class
+2024-12-28T14:43:10.910166400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupProgressGUI$2.class
+2024-12-28T14:43:10.908678600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupProgressGUI$1.class
+2024-12-28T14:43:10.906223100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI.form
+2024-12-28T14:43:10.902744900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI.class
+2024-12-28T14:43:10.901238300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$9.class
+2024-12-28T14:43:10.899752600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$8.class
+2024-12-28T14:43:10.897766600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$7.class
+2024-12-28T14:43:10.896278400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$6.class
+2024-12-28T14:43:10.894294 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$5.class
+2024-12-28T14:43:10.891317900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$48.class
+2024-12-28T14:43:10.889830100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$47.class
+2024-12-28T14:43:10.887846400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$46.class
+2024-12-28T14:43:10.886853900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$45.class
+2024-12-28T14:43:10.885367 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$44.class
+2024-12-28T14:43:10.884400300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$43.class
+2024-12-28T14:43:10.882886100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$42.class
+2024-12-28T14:43:10.880901900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$41.class
+2024-12-28T14:43:10.878918100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$40.class
+2024-12-28T14:43:10.877953400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$4.class
+2024-12-28T14:43:10.876438200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$39.class
+2024-12-28T14:43:10.874950700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$38.class
+2024-12-28T14:43:10.873462200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$37.class
+2024-12-28T14:43:10.872469900 [INFO] Zipping progress: 75
+2024-12-28T14:43:10.870982400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$36.class
+2024-12-28T14:43:10.870015100 [INFO] Zipping progress: 75
+2024-12-28T14:43:10.869024500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$35.class
+2024-12-28T14:43:10.868031400 [INFO] Zipping progress: 75
+2024-12-28T14:43:10.866518700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$34.class
+2024-12-28T14:43:10.865030900 [INFO] Zipping progress: 75
+2024-12-28T14:43:10.863542500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$33.class
+2024-12-28T14:43:10.862080500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$32.class
+2024-12-28T14:43:10.861063100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$31.class
+2024-12-28T14:43:10.860071 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$30.class
+2024-12-28T14:43:10.858581800 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$3.class
+2024-12-28T14:43:10.857118500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$29.class
+2024-12-28T14:43:10.855110600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$28.class
+2024-12-28T14:43:10.854117900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$27.class
+2024-12-28T14:43:10.852659800 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$26.class
+2024-12-28T14:43:10.851638100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$25.class
+2024-12-28T14:43:10.850150 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$24.class
+2024-12-28T14:43:10.848662400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$23.class
+2024-12-28T14:43:10.847173900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$22.class
+2024-12-28T14:43:10.846182100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$21.class
+2024-12-28T14:43:10.844694600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$20.class
+2024-12-28T14:43:10.843206200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$2.class
+2024-12-28T14:43:10.842214300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$19.class
+2024-12-28T14:43:10.840726400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$18.class
+2024-12-28T14:43:10.839238 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$17.class
+2024-12-28T14:43:10.837750100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$16.class
+2024-12-28T14:43:10.835766200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$15.class
+2024-12-28T14:43:10.828822200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$14.class
+2024-12-28T14:43:10.826838600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$13.class
+2024-12-28T14:43:10.825350100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$12.class
+2024-12-28T14:43:10.824358600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$11.class
+2024-12-28T14:43:10.822870500 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$10.class
+2024-12-28T14:43:10.821382300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\GUI\BackupManagerGUI$1.class
+2024-12-28T14:43:10.819893900 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\GUI/
+2024-12-28T14:43:10.818405600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\TranslationLoaderEnum.class
+2024-12-28T14:43:10.816422 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\TranslationLoaderEnum$TranslationKey.class
+2024-12-28T14:43:10.814934200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\TranslationLoaderEnum$TranslationCategory.class
+2024-12-28T14:43:10.812950 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\ThemesEnum.class
+2024-12-28T14:43:10.811958100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\MenuItems.class
+2024-12-28T14:43:10.810965800 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\LanguagesEnum.class
+2024-12-28T14:43:10.809477900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\ErrorTypes.class
+2024-12-28T14:43:10.804022300 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Enums\ConfigKey.class
+2024-12-28T14:43:10.802038 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Enums/
+2024-12-28T14:43:10.800550100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Entities\TimeInterval.class
+2024-12-28T14:43:10.798566400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Entities\Preferences.class
+2024-12-28T14:43:10.797077600 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Entities\BackupList.class
+2024-12-28T14:43:10.795590 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Entities\Backup.class
+2024-12-28T14:43:10.794102400 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Entities/
+2024-12-28T14:43:10.792613700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker.form
+2024-12-28T14:43:10.791126700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker.class
+2024-12-28T14:43:10.789639200 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$8.class
+2024-12-28T14:43:10.788150100 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$7.class
+2024-12-28T14:43:10.786662700 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$6.class
+2024-12-28T14:43:10.785173900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$5.class
+2024-12-28T14:43:10.783686400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$4.class
+2024-12-28T14:43:10.781702 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$3.class
+2024-12-28T14:43:10.780215 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$2.class
+2024-12-28T14:43:10.778756400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\TimePicker$1.class
+2024-12-28T14:43:10.776743400 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\PreferencesDialog.form
+2024-12-28T14:43:10.775253900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\PreferencesDialog.class
+2024-12-28T14:43:10.773765900 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\PreferencesDialog$3.class
+2024-12-28T14:43:10.771781800 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\PreferencesDialog$2.class
+2024-12-28T14:43:10.770790 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\Dialogs\PreferencesDialog$1.class
+2024-12-28T14:43:10.769301700 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager\Dialogs/
+2024-12-28T14:43:10.767348 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\BackupOperations.class
+2024-12-28T14:43:10.765830 [DEBUG] Zipping file: BackupManager/target\classes\backupmanager\BackupOperations$1.class
+2024-12-28T14:43:10.764342100 [DEBUG] Zipping directory: BackupManager/target\classes\backupmanager/
+2024-12-28T14:43:10.762853600 [DEBUG] Zipping directory: BackupManager/target\classes/
+2024-12-28T14:43:10.750976400 [DEBUG] Zipping file: BackupManager/target\BackupManager-1.0-SNAPSHOT.jar
+2024-12-28T14:43:10.691985500 [DEBUG] Zipping file: BackupManager/target\BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar
+2024-12-28T14:43:10.690992900 [DEBUG] Zipping directory: BackupManager/target\archive-tmp/
+2024-12-28T14:43:10.689505300 [DEBUG] Zipping directory: BackupManager/target/
+2024-12-28T14:43:10.687521400 [DEBUG] Zipping file: BackupManager/src\test\java\test\TestPreferences.java
+2024-12-28T14:43:10.686529700 [DEBUG] Zipping file: BackupManager/src\test\java\test\TestMainApp.java
+2024-12-28T14:43:10.685041200 [DEBUG] Zipping file: BackupManager/src\test\java\test\TestLogger.java
+2024-12-28T14:43:10.683553300 [DEBUG] Zipping file: BackupManager/src\test\java\test\TestConfigKey.java
+2024-12-28T14:43:10.682065300 [DEBUG] Zipping file: BackupManager/src\test\java\test\TestBackupOperations.java
+2024-12-28T14:43:10.680577400 [DEBUG] Zipping directory: BackupManager/src\test\java\test/
+2024-12-28T14:43:10.679089 [DEBUG] Zipping directory: BackupManager/src\test\java/
+2024-12-28T14:43:10.678097200 [DEBUG] Zipping directory: BackupManager/src\test/
+2024-12-28T14:43:10.675617200 [DEBUG] Zipping file: BackupManager/src\main\resources\res\log_file.txt
+2024-12-28T14:43:10.674625 [DEBUG] Zipping file: BackupManager/src\main\resources\res\languages\ita.json
+2024-12-28T14:43:10.672145100 [DEBUG] Zipping file: BackupManager/src\main\resources\res\languages\fra.json
+2024-12-28T14:43:10.670161 [DEBUG] Zipping file: BackupManager/src\main\resources\res\languages\esp.json
+2024-12-28T14:43:10.668673 [DEBUG] Zipping file: BackupManager/src\main\resources\res\languages\eng.json
+2024-12-28T14:43:10.667185 [DEBUG] Zipping file: BackupManager/src\main\resources\res\languages\deu.json
+2024-12-28T14:43:10.665697300 [DEBUG] Zipping directory: BackupManager/src\main\resources\res\languages/
+2024-12-28T14:43:10.663713400 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\website.png
+2024-12-28T14:43:10.662225500 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\share.png
+2024-12-28T14:43:10.659745 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\shard.png
+2024-12-28T14:43:10.658753700 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\search.png
+2024-12-28T14:43:10.656769400 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\save.png
+2024-12-28T14:43:10.655280900 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\remove.png
+2024-12-28T14:43:10.654288800 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\plus.png
+2024-12-28T14:43:10.652801200 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\pen.png
+2024-12-28T14:43:10.651313100 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\pdf.png
+2024-12-28T14:43:10.649825 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\logo_old.png
+2024-12-28T14:43:10.643873200 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\logo_old.ico
+2024-12-28T14:43:10.642384900 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\logo.png
+2024-12-28T14:43:10.639409800 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\logo.ico
+2024-12-28T14:43:10.637920900 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\information.png
+2024-12-28T14:43:10.636433 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\import.png
+2024-12-28T14:43:10.634945100 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\help-desk.png
+2024-12-28T14:43:10.633458500 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\folder.png
+2024-12-28T14:43:10.631970100 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\export.png
+2024-12-28T14:43:10.629985700 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\door.png
+2024-12-28T14:43:10.628497800 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\donation.png
+2024-12-28T14:43:10.627009200 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\diskette.png
+2024-12-28T14:43:10.625547 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\csv-file.png
+2024-12-28T14:43:10.624033600 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\cogwheel.png
+2024-12-28T14:43:10.622545500 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\clock.png
+2024-12-28T14:43:10.621055700 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\clean.png
+2024-12-28T14:43:10.619395400 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\chronometer.png
+2024-12-28T14:43:10.618899300 [INFO] Zipping progress: 50
+2024-12-28T14:43:10.617451400 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\bug.png
+2024-12-28T14:43:10.615963800 [INFO] Zipping progress: 50
+2024-12-28T14:43:10.614970900 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\bin.png
+2024-12-28T14:43:10.613483100 [INFO] Zipping progress: 50
+2024-12-28T14:43:10.611995600 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\author_logo.png
+2024-12-28T14:43:10.610535700 [INFO] Zipping progress: 50
+2024-12-28T14:43:10.609514800 [DEBUG] Zipping file: BackupManager/src\main\resources\res\img\add-file.png
+2024-12-28T14:43:10.608523 [DEBUG] Zipping directory: BackupManager/src\main\resources\res\img/
+2024-12-28T14:43:10.607035200 [DEBUG] Zipping file: BackupManager/src\main\resources\res\config\preferences.json
+2024-12-28T14:43:10.605547600 [DEBUG] Zipping file: BackupManager/src\main\resources\res\config\config.json
+2024-12-28T14:43:10.604059300 [DEBUG] Zipping directory: BackupManager/src\main\resources\res\config/
+2024-12-28T14:43:10.603067300 [DEBUG] Zipping file: BackupManager/src\main\resources\res\backup_list2.0.4.json
+2024-12-28T14:43:10.602075300 [DEBUG] Zipping file: BackupManager/src\main\resources\res\backup_list.json
+2024-12-28T14:43:10.600587600 [DEBUG] Zipping directory: BackupManager/src\main\resources\res/
+2024-12-28T14:43:10.599594700 [DEBUG] Zipping directory: BackupManager/src\main\resources/
+2024-12-28T14:43:10.598106800 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Services\BackupService.java
+2024-12-28T14:43:10.597115300 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Services/
+2024-12-28T14:43:10.595626800 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Managers\ThemeManager.java
+2024-12-28T14:43:10.594139400 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Managers/
+2024-12-28T14:43:10.593147500 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\MainApp.java
+2024-12-28T14:43:10.591658800 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Logger.java
+2024-12-28T14:43:10.590171500 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Json\JSONConfigReader.java
+2024-12-28T14:43:10.588187 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Json\JSONAutoBackup.java
+2024-12-28T14:43:10.586699700 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Json/
+2024-12-28T14:43:10.585211500 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Interfaces\IJSONAutoBackup.java
+2024-12-28T14:43:10.584219 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Interfaces/
+2024-12-28T14:43:10.582731200 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\GUI\BackupProgressGUI.java
+2024-12-28T14:43:10.580747 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\GUI\BackupProgressGUI.form
+2024-12-28T14:43:10.576282700 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\GUI\BackupManagerGUI.java
+2024-12-28T14:43:10.574299700 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\GUI\BackupManagerGUI.form
+2024-12-28T14:43:10.573307200 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\GUI/
+2024-12-28T14:43:10.570826800 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\TranslationLoaderEnum.java
+2024-12-28T14:43:10.569835 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\ThemesEnum.java
+2024-12-28T14:43:10.568348100 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\MenuItems.java
+2024-12-28T14:43:10.566859200 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\LanguagesEnum.java
+2024-12-28T14:43:10.565370900 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\ErrorTypes.java
+2024-12-28T14:43:10.563883600 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Enums\ConfigKey.java
+2024-12-28T14:43:10.562891700 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Enums/
+2024-12-28T14:43:10.560907900 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Entities\TimeInterval.java
+2024-12-28T14:43:10.559915500 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Entities\Preferences.java
+2024-12-28T14:43:10.558426900 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Entities\BackupList.java
+2024-12-28T14:43:10.556939100 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Entities\Backup.java
+2024-12-28T14:43:10.555451200 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Entities/
+2024-12-28T14:43:10.553963600 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Dialogs\TimePicker.java
+2024-12-28T14:43:10.552475400 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Dialogs\TimePicker.form
+2024-12-28T14:43:10.551483500 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Dialogs\PreferencesDialog.java
+2024-12-28T14:43:10.549995800 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\Dialogs\PreferencesDialog.form
+2024-12-28T14:43:10.548506900 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager\Dialogs/
+2024-12-28T14:43:10.546522700 [DEBUG] Zipping file: BackupManager/src\main\java\backupmanager\BackupOperations.java
+2024-12-28T14:43:10.545530800 [DEBUG] Zipping directory: BackupManager/src\main\java\backupmanager/
+2024-12-28T14:43:10.544539400 [DEBUG] Zipping directory: BackupManager/src\main\java/
+2024-12-28T14:43:10.543051200 [DEBUG] Zipping directory: BackupManager/src\main/
+2024-12-28T14:43:10.542059700 [DEBUG] Zipping directory: BackupManager/src/
+2024-12-28T14:43:10.540100200 [DEBUG] Zipping file: BackupManager/README.md
+2024-12-28T14:43:10.538107700 [DEBUG] Zipping file: BackupManager/pom.xml
+2024-12-28T14:43:10.537063200 [DEBUG] Zipping file: BackupManager/nbactions.xml
+2024-12-28T14:43:10.535078800 [DEBUG] Zipping file: BackupManager/nb-configuration.xml
+2024-12-28T14:43:10.533115500 [DEBUG] Zipping file: BackupManager/execute_background_service.bat
+2024-12-28T14:43:10.530613 [DEBUG] Zipping file: BackupManager/docs\imgs\ThemeLanguage.png
+2024-12-28T14:43:10.527913900 [DEBUG] Zipping file: BackupManager/docs\imgs\Home3.png
+2024-12-28T14:43:10.525900900 [DEBUG] Zipping file: BackupManager/docs\imgs\Home2.png
+2024-12-28T14:43:10.523325300 [DEBUG] Zipping file: BackupManager/docs\imgs\Home.png
+2024-12-28T14:43:10.520353400 [DEBUG] Zipping file: BackupManager/docs\imgs\CompletedBackup.png
+2024-12-28T14:43:10.376481800 [DEBUG] Zipping file: BackupManager/docs\imgs\BackupManagerPresentation.gif
+2024-12-28T14:43:10.373536 [DEBUG] Zipping file: BackupManager/docs\imgs\BackupList.png
+2024-12-28T14:43:10.370554600 [DEBUG] Zipping file: BackupManager/docs\imgs\AutoBackup.png
+2024-12-28T14:43:10.369041700 [DEBUG] Zipping directory: BackupManager/docs\imgs/
+2024-12-28T14:43:10.368074 [DEBUG] Zipping directory: BackupManager/docs/
+2024-12-28T14:43:10.366561500 [DEBUG] Zipping file: BackupManager/add_to_startup.bat
+2024-12-28T14:43:10.365073700 [DEBUG] Zipping file: BackupManager/.vscode\settings.json
+2024-12-28T14:43:10.363609900 [DEBUG] Zipping file: BackupManager/.vscode\launch.json
+2024-12-28T14:43:10.362097700 [DEBUG] Zipping directory: BackupManager/.vscode/
+2024-12-28T14:43:10.361132900 [DEBUG] Zipping file: BackupManager/.vs\VSWorkspaceState.json
+2024-12-28T14:43:10.357137500 [DEBUG] Zipping file: BackupManager/.vs\slnx.sqlite
+2024-12-28T14:43:10.355179900 [DEBUG] Zipping file: BackupManager/.vs\BackupManager\v17\DocumentLayout.json
+2024-12-28T14:43:10.353008 [DEBUG] Zipping file: BackupManager/.vs\BackupManager\v17\.wsuo
+2024-12-28T14:43:10.352043300 [DEBUG] Zipping directory: BackupManager/.vs\BackupManager\v17/
+2024-12-28T14:43:10.339119300 [DEBUG] Zipping file: BackupManager/.vs\BackupManager\FileContentIndex\4576e67e-939f-4ebe-b107-264fcfcd0806.vsidx
+2024-12-28T14:43:10.338127200 [DEBUG] Zipping directory: BackupManager/.vs\BackupManager\FileContentIndex/
+2024-12-28T14:43:10.337135800 [DEBUG] Zipping directory: BackupManager/.vs\BackupManager/
+2024-12-28T14:43:10.336144200 [DEBUG] Zipping directory: BackupManager/.vs/
+2024-12-28T14:43:10.335151700 [DEBUG] Zipping file: BackupManager/.gitignore
+2024-12-28T14:43:10.333167300 [DEBUG] Zipping file: BackupManager/.github\workflows\maven.yml
+2024-12-28T14:43:10.332672 [DEBUG] Zipping directory: BackupManager/.github\workflows/
+2024-12-28T14:43:10.331183900 [DEBUG] Zipping directory: BackupManager/.github/
+2024-12-28T14:43:10.329696100 [DEBUG] Zipping directory: BackupManager/.git\refs\tags/
+2024-12-28T14:43:10.328207800 [DEBUG] Zipping file: BackupManager/.git\refs\remotes\origin\HEAD
+2024-12-28T14:43:10.327215900 [DEBUG] Zipping file: BackupManager/.git\refs\remotes\origin\2.0.5
+2024-12-28T14:43:10.326223900 [DEBUG] Zipping directory: BackupManager/.git\refs\remotes\origin/
+2024-12-28T14:43:10.325231400 [DEBUG] Zipping directory: BackupManager/.git\refs\remotes/
+2024-12-28T14:43:10.323743800 [DEBUG] Zipping file: BackupManager/.git\refs\heads\master
+2024-12-28T14:43:10.322255400 [DEBUG] Zipping file: BackupManager/.git\refs\heads\2.0.5
+2024-12-28T14:43:10.321263400 [DEBUG] Zipping directory: BackupManager/.git\refs\heads/
+2024-12-28T14:43:10.319776200 [DEBUG] Zipping directory: BackupManager/.git\refs/
+2024-12-28T14:43:10.318287500 [DEBUG] Zipping file: BackupManager/.git\packed-refs
+2024-12-28T14:43:10.316847 [DEBUG] Zipping file: BackupManager/.git\ORIG_HEAD
+2024-12-28T14:43:09.680658200 [DEBUG] Zipping file: BackupManager/.git\objects\pack\pack-b0667c16dee0c50bb0cd6dee20cf8f1c97377873.pack
+2024-12-28T14:43:09.674706800 [DEBUG] Zipping file: BackupManager/.git\objects\pack\pack-b0667c16dee0c50bb0cd6dee20cf8f1c97377873.idx
+2024-12-28T14:43:09.673714800 [DEBUG] Zipping directory: BackupManager/.git\objects\pack/
+2024-12-28T14:43:09.671730500 [DEBUG] Zipping directory: BackupManager/.git\objects\info/
+2024-12-28T14:43:09.669747 [DEBUG] Zipping file: BackupManager/.git\objects\fe\f8b0002f41ce2e27a54d8bb889a527a8c97082
+2024-12-28T14:43:09.666770400 [DEBUG] Zipping file: BackupManager/.git\objects\fd\4688b744e7a1e392f0a47afc05d0172eda5bcc
+2024-12-28T14:43:09.665778500 [DEBUG] Zipping directory: BackupManager/.git\objects\fd/
+2024-12-28T14:43:09.663794700 [DEBUG] Zipping file: BackupManager/.git\objects\fa\d621908ac289e464178f0c52e846d25f39d393
+2024-12-28T14:43:09.662306600 [DEBUG] Zipping directory: BackupManager/.git\objects\fa/
+2024-12-28T14:43:09.660818600 [DEBUG] Zipping file: BackupManager/.git\objects\f9\61831c63dc040bb30cd43abd28c0895f7d3cfa
+2024-12-28T14:43:09.659330700 [DEBUG] Zipping directory: BackupManager/.git\objects\f9/
+2024-12-28T14:43:09.657344900 [DEBUG] Zipping file: BackupManager/.git\objects\f5\c0257d88a1b1f39693051389584c78d8ffeaaa
+2024-12-28T14:43:09.602190800 [DEBUG] Zipping file: BackupManager/.git\objects\f5\aca547c9149c3afc322a6e34de7354b51d0f59
+2024-12-28T14:43:09.601198500 [DEBUG] Zipping directory: BackupManager/.git\objects\f5/
+2024-12-28T14:43:09.599215100 [DEBUG] Zipping file: BackupManager/.git\objects\f4\4679175563183830d2d7bdb9e3b8cb21471189
+2024-12-28T14:43:09.597727400 [DEBUG] Zipping directory: BackupManager/.git\objects\f4/
+2024-12-28T14:43:09.596239100 [DEBUG] Zipping file: BackupManager/.git\objects\f3\33ec3139e4b2d9d2ba0f0a4a4c0907da826e99
+2024-12-28T14:43:09.594750600 [DEBUG] Zipping directory: BackupManager/.git\objects\f3/
+2024-12-28T14:43:09.593262400 [DEBUG] Zipping file: BackupManager/.git\objects\f0\cc783bf8af27e647326526fbec73670064de38
+2024-12-28T14:43:09.592270400 [DEBUG] Zipping directory: BackupManager/.git\objects\f0/
+2024-12-28T14:43:09.590782300 [DEBUG] Zipping file: BackupManager/.git\objects\ef\87cce357215a460342e299680504386a16d8b3
+2024-12-28T14:43:09.589791200 [DEBUG] Zipping directory: BackupManager/.git\objects\ef/
+2024-12-28T14:43:09.588302500 [DEBUG] Zipping file: BackupManager/.git\objects\ec\f6a86d63b84ffd84450346f2c130a3e8b96924
+2024-12-28T14:43:09.587310800 [DEBUG] Zipping directory: BackupManager/.git\objects\ec/
+2024-12-28T14:43:09.585822900 [DEBUG] Zipping file: BackupManager/.git\objects\ea\f45bb8420d5a9f693b67e57a14b9f4508ac2d0
+2024-12-28T14:43:09.584335400 [DEBUG] Zipping directory: BackupManager/.git\objects\ea/
+2024-12-28T14:43:09.582350500 [DEBUG] Zipping file: BackupManager/.git\objects\e5\eeabff127ac3d9b005e8f9fcc9f55d16ee6d33
+2024-12-28T14:43:09.580862700 [DEBUG] Zipping directory: BackupManager/.git\objects\e5/
+2024-12-28T14:43:09.578878900 [DEBUG] Zipping file: BackupManager/.git\objects\e4\d54f1b74230c84ee2eafea2a36f58e5baec1de
+2024-12-28T14:43:09.577886400 [DEBUG] Zipping directory: BackupManager/.git\objects\e4/
+2024-12-28T14:43:09.576398400 [DEBUG] Zipping file: BackupManager/.git\objects\e2\6871b53f7baf6b8c8102332e0e8e023d3b60f4
+2024-12-28T14:43:09.574910800 [DEBUG] Zipping directory: BackupManager/.git\objects\e2/
+2024-12-28T14:43:09.572926800 [DEBUG] Zipping file: BackupManager/.git\objects\e1\309f7663f4eea0b2a6336fece6d6143ceb1e6b
+2024-12-28T14:43:09.571438300 [DEBUG] Zipping directory: BackupManager/.git\objects\e1/
+2024-12-28T14:43:09.569950900 [DEBUG] Zipping file: BackupManager/.git\objects\dc\43c580e8697e49e7527241c482fa588690e007
+2024-12-28T14:43:09.568958700 [DEBUG] Zipping file: BackupManager/.git\objects\dc\28d5aaf993fe1c80b6c1a6e5d3b184d351d81e
+2024-12-28T14:43:09.567471100 [DEBUG] Zipping directory: BackupManager/.git\objects\dc/
+2024-12-28T14:43:09.565982800 [DEBUG] Zipping file: BackupManager/.git\objects\db\7e15b2d1a46152d7c4ba44c9cecd253354b43f
+2024-12-28T14:43:09.564494600 [DEBUG] Zipping directory: BackupManager/.git\objects\db/
+2024-12-28T14:43:09.562510700 [DEBUG] Zipping file: BackupManager/.git\objects\d2\e9a938823a60a6f770078a14a62b1c9549e367
+2024-12-28T14:43:09.561518800 [DEBUG] Zipping file: BackupManager/.git\objects\d2\49268070e3d22c4cc8a96cfa808de544d83fbc
+2024-12-28T14:43:09.560526900 [DEBUG] Zipping directory: BackupManager/.git\objects\d2/
+2024-12-28T14:43:09.559038800 [DEBUG] Zipping file: BackupManager/.git\objects\cb\da0ac82ffd958dfc9c6ebb9799712de84e95dc
+2024-12-28T14:43:09.558047 [DEBUG] Zipping directory: BackupManager/.git\objects\cb/
+2024-12-28T14:43:09.556559300 [DEBUG] Zipping file: BackupManager/.git\objects\c9\319c78a40fae1fb68b1349e2d98c0e2495bd56
+2024-12-28T14:43:09.554574700 [DEBUG] Zipping directory: BackupManager/.git\objects\c9/
+2024-12-28T14:43:09.552591 [DEBUG] Zipping file: BackupManager/.git\objects\c2\3625abcd81c0f5072ec53313bc6489f7ed70f9
+2024-12-28T14:43:09.551103100 [DEBUG] Zipping directory: BackupManager/.git\objects\c2/
+2024-12-28T14:43:09.549614700 [DEBUG] Zipping file: BackupManager/.git\objects\c0\949735da4355cce727d7dc1e2728406f332f5d
+2024-12-28T14:43:09.548126700 [DEBUG] Zipping directory: BackupManager/.git\objects\c0/
+2024-12-28T14:43:09.546638400 [DEBUG] Zipping file: BackupManager/.git\objects\be\99321af8b9cc5c805a300b462bf9eda3e6bf96
+2024-12-28T14:43:09.545646900 [DEBUG] Zipping directory: BackupManager/.git\objects\be/
+2024-12-28T14:43:09.544159100 [DEBUG] Zipping file: BackupManager/.git\objects\bc\1d81aed2160c890c182d3b2bd34f533471ca79
+2024-12-28T14:43:09.542671 [DEBUG] Zipping directory: BackupManager/.git\objects\bc/
+2024-12-28T14:43:09.541182700 [DEBUG] Zipping file: BackupManager/.git\objects\bb\4f86af03049f9e9a0443423455b00ef8cff6ca
+2024-12-28T14:43:09.539694700 [DEBUG] Zipping directory: BackupManager/.git\objects\bb/
+2024-12-28T14:43:09.538206400 [DEBUG] Zipping file: BackupManager/.git\objects\b9\fc469a0ceeddabdfb8e56919b740a99c1d759b
+2024-12-28T14:43:09.537214700 [DEBUG] Zipping file: BackupManager/.git\objects\b9\8f5531387c6316ecbc33efd7ac1d02ed0f40cf
+2024-12-28T14:43:09.535726800 [DEBUG] Zipping directory: BackupManager/.git\objects\b9/
+2024-12-28T14:43:09.534239100 [DEBUG] Zipping file: BackupManager/.git\objects\b7\2fa58e0209253b508efa8e0194c0e25ea100c5
+2024-12-28T14:43:09.532750800 [DEBUG] Zipping directory: BackupManager/.git\objects\b7/
+2024-12-28T14:43:09.530767200 [DEBUG] Zipping file: BackupManager/.git\objects\b6\ede324117af685487534a73fe2d2e6211331c9
+2024-12-28T14:43:09.529774800 [INFO] Zipping progress: 25
+2024-12-28T14:43:09.528286500 [DEBUG] Zipping file: BackupManager/.git\objects\b6\10de3f09a87bf6c5a88267bd23dc6c775527cf
+2024-12-28T14:43:09.527294700 [DEBUG] Zipping directory: BackupManager/.git\objects\b6/
+2024-12-28T14:43:09.526303200 [INFO] Zipping progress: 25
+2024-12-28T14:43:09.525310700 [DEBUG] Zipping file: BackupManager/.git\objects\b4\801001ef2ac5562cc81ac1a063225d6ff23492
+2024-12-28T14:43:09.523822700 [DEBUG] Zipping directory: BackupManager/.git\objects\b4/
+2024-12-28T14:43:09.522830800 [INFO] Zipping progress: 25
+2024-12-28T14:43:09.521342500 [DEBUG] Zipping file: BackupManager/.git\objects\b3\ead29ecffa3c32f5c7f42af231d5ba65cc2d3d
+2024-12-28T14:43:09.519854600 [DEBUG] Zipping directory: BackupManager/.git\objects\b3/
+2024-12-28T14:43:09.518862700 [INFO] Zipping progress: 25
+2024-12-28T14:43:09.517374500 [DEBUG] Zipping file: BackupManager/.git\objects\b2\609701b9d314d5ae8d9adee509c916fe8d6762
+2024-12-28T14:43:09.516383200 [DEBUG] Zipping directory: BackupManager/.git\objects\b2/
+2024-12-28T14:43:09.514398700 [DEBUG] Zipping file: BackupManager/.git\objects\b0\030b12d4e75e9c06d839963179ff858ee051ff
+2024-12-28T14:43:09.513406800 [DEBUG] Zipping directory: BackupManager/.git\objects\b0/
+2024-12-28T14:43:09.512414800 [DEBUG] Zipping file: BackupManager/.git\objects\af\c39254ef27555183160d468bbd232006c6f84b
+2024-12-28T14:43:09.511422600 [DEBUG] Zipping directory: BackupManager/.git\objects\af/
+2024-12-28T14:43:09.509934800 [DEBUG] Zipping file: BackupManager/.git\objects\ae\0330b3d2cb14d65fe89d70a5a538e48b78976c
+2024-12-28T14:43:09.508446500 [DEBUG] Zipping directory: BackupManager/.git\objects\ae/
+2024-12-28T14:43:09.506958700 [DEBUG] Zipping file: BackupManager/.git\objects\ad\d4cb9456bd00e6214f5fa574588262e2a7cd8d
+2024-12-28T14:43:09.505470500 [DEBUG] Zipping directory: BackupManager/.git\objects\ad/
+2024-12-28T14:43:09.503982300 [DEBUG] Zipping file: BackupManager/.git\objects\aa\acf80809fd92e0d24266177e77628a05168ca6
+2024-12-28T14:43:09.502494900 [DEBUG] Zipping file: BackupManager/.git\objects\aa\97548d2896e281a2835c3b9d752da4ec8ac38e
+2024-12-28T14:43:09.501502800 [DEBUG] Zipping directory: BackupManager/.git\objects\aa/
+2024-12-28T14:43:09.500015300 [DEBUG] Zipping file: BackupManager/.git\objects\a4\7e99e614cc6a2702e97dbf51ca39e458658fbc
+2024-12-28T14:43:09.498527300 [DEBUG] Zipping directory: BackupManager/.git\objects\a4/
+2024-12-28T14:43:09.496542500 [DEBUG] Zipping file: BackupManager/.git\objects\97\35cfc6dae85fa01bc071d2b70da09cdc550074
+2024-12-28T14:43:09.495550400 [DEBUG] Zipping directory: BackupManager/.git\objects\97/
+2024-12-28T14:43:09.494558500 [DEBUG] Zipping file: BackupManager/.git\objects\96\5cb921968156fdb6e62dc35973bde52d42c546
+2024-12-28T14:43:09.493566400 [DEBUG] Zipping directory: BackupManager/.git\objects\96/
+2024-12-28T14:43:09.492078800 [DEBUG] Zipping file: BackupManager/.git\objects\92\2d2f4cf0477cf9ee39b5a2a7279c8ce956ffa8
+2024-12-28T14:43:09.490591400 [DEBUG] Zipping directory: BackupManager/.git\objects\92/
+2024-12-28T14:43:09.488606400 [DEBUG] Zipping file: BackupManager/.git\objects\86\3d32844af5f29f2a5a7ff2e8540c6bf95afc02
+2024-12-28T14:43:09.487614600 [DEBUG] Zipping directory: BackupManager/.git\objects\86/
+2024-12-28T14:43:09.486126400 [DEBUG] Zipping file: BackupManager/.git\objects\85\fda888e0590c75afc1db76e72d69e82a628672
+2024-12-28T14:43:09.484638400 [DEBUG] Zipping directory: BackupManager/.git\objects\85/
+2024-12-28T14:43:09.483151100 [DEBUG] Zipping file: BackupManager/.git\objects\84\e6b1da61df645ab922d195dff0cf5bb4d9e2aa
+2024-12-28T14:43:09.482158900 [DEBUG] Zipping directory: BackupManager/.git\objects\84/
+2024-12-28T14:43:09.480174400 [DEBUG] Zipping file: BackupManager/.git\objects\83\24d2453894007dec144f958ca6ee59b85614c6
+2024-12-28T14:43:09.479183 [DEBUG] Zipping directory: BackupManager/.git\objects\83/
+2024-12-28T14:43:09.477694500 [DEBUG] Zipping file: BackupManager/.git\objects\81\4c5ebbb00a294da5b34759472aed2d76b06a31
+2024-12-28T14:43:09.476702900 [DEBUG] Zipping directory: BackupManager/.git\objects\81/
+2024-12-28T14:43:09.475215 [DEBUG] Zipping file: BackupManager/.git\objects\7f\58b1a726d02a85c076a2e92e7d3197c8333c3a
+2024-12-28T14:43:09.473726900 [DEBUG] Zipping directory: BackupManager/.git\objects\7f/
+2024-12-28T14:43:09.471742700 [DEBUG] Zipping file: BackupManager/.git\objects\7e\69fd0e1bdd7f6ae173f8928ae747da333dd6d2
+2024-12-28T14:43:09.470750600 [DEBUG] Zipping directory: BackupManager/.git\objects\7e/
+2024-12-28T14:43:09.469262300 [DEBUG] Zipping file: BackupManager/.git\objects\79\b9e877cd16a9b10d3447d59a6b3119426c5b96
+2024-12-28T14:43:09.468270600 [DEBUG] Zipping directory: BackupManager/.git\objects\79/
+2024-12-28T14:43:09.466782800 [DEBUG] Zipping file: BackupManager/.git\objects\73\9029ec41a1bc04f487043c7ce520295d7771a9
+2024-12-28T14:43:09.465294800 [DEBUG] Zipping directory: BackupManager/.git\objects\73/
+2024-12-28T14:43:09.463806800 [DEBUG] Zipping file: BackupManager/.git\objects\70\36849b4f0b853f16d1caf12159de000242c77c
+2024-12-28T14:43:09.462814500 [DEBUG] Zipping directory: BackupManager/.git\objects\70/
+2024-12-28T14:43:09.460334700 [DEBUG] Zipping file: BackupManager/.git\objects\6e\09e9512b62d6f6a0a5f6b63b6a14936d6b11ab
+2024-12-28T14:43:09.459342700 [DEBUG] Zipping directory: BackupManager/.git\objects\6e/
+2024-12-28T14:43:09.457359700 [DEBUG] Zipping file: BackupManager/.git\objects\6d\d7c59b45045430ed0bbe8d1c5db57a8c96f4fd
+2024-12-28T14:43:09.455374900 [DEBUG] Zipping directory: BackupManager/.git\objects\6d/
+2024-12-28T14:43:09.453887300 [DEBUG] Zipping file: BackupManager/.git\objects\6b\9b29733d79683cb3616dab96b596a0d30c0c9c
+2024-12-28T14:43:09.452398600 [DEBUG] Zipping directory: BackupManager/.git\objects\6b/
+2024-12-28T14:43:09.450910900 [DEBUG] Zipping file: BackupManager/.git\objects\68\f70a29069d202f13d08a6abe7236f1ff14fe02
+2024-12-28T14:43:09.449918600 [DEBUG] Zipping directory: BackupManager/.git\objects\68/
+2024-12-28T14:43:09.447935100 [DEBUG] Zipping file: BackupManager/.git\objects\66\68286f562315a98f2c081b14da8dac6273559e
+2024-12-28T14:43:09.446447300 [DEBUG] Zipping directory: BackupManager/.git\objects\66/
+2024-12-28T14:43:09.444958800 [DEBUG] Zipping file: BackupManager/.git\objects\63\89fb841d07af184347cc4c1eb61f08f028cb90
+2024-12-28T14:43:09.442478800 [DEBUG] Zipping directory: BackupManager/.git\objects\63/
+2024-12-28T14:43:09.440990700 [DEBUG] Zipping file: BackupManager/.git\objects\62\6bc1bfc3c223caa4fa9d7421e4a934e30b6028
+2024-12-28T14:43:09.439502500 [DEBUG] Zipping directory: BackupManager/.git\objects\62/
+2024-12-28T14:43:09.438015200 [DEBUG] Zipping file: BackupManager/.git\objects\61\3e3c50bc36d46c1b7f45203e76066be2cdac8e
+2024-12-28T14:43:09.437023300 [DEBUG] Zipping directory: BackupManager/.git\objects\61/
+2024-12-28T14:43:09.435039 [DEBUG] Zipping file: BackupManager/.git\objects\5f\54fdf88c0448f0215f3a8d2b9b7a5f913ff88a
+2024-12-28T14:43:09.434047100 [DEBUG] Zipping directory: BackupManager/.git\objects\5f/
+2024-12-28T14:43:09.432063300 [DEBUG] Zipping file: BackupManager/.git\objects\59\a76027108a54520dddf1a1ae4cae31f0561313
+2024-12-28T14:43:09.430574900 [DEBUG] Zipping file: BackupManager/.git\objects\59\57176013babd14319b18c7f8a2530734d3942d
+2024-12-28T14:43:09.429583200 [DEBUG] Zipping file: BackupManager/.git\objects\59\284534ae23e7230dce5592e2418a309a4981b4
+2024-12-28T14:43:09.428590900 [DEBUG] Zipping directory: BackupManager/.git\objects\59/
+2024-12-28T14:43:09.427103 [DEBUG] Zipping file: BackupManager/.git\objects\58\2faa567525b60edeb603e78d67eba828d335d7
+2024-12-28T14:43:09.426110700 [DEBUG] Zipping directory: BackupManager/.git\objects\58/
+2024-12-28T14:43:09.424622800 [DEBUG] Zipping file: BackupManager/.git\objects\56\21a32498a8e7647706f2413adf14906564c2a3
+2024-12-28T14:43:09.423630500 [DEBUG] Zipping directory: BackupManager/.git\objects\56/
+2024-12-28T14:43:09.421646700 [DEBUG] Zipping file: BackupManager/.git\objects\55\61731f69688ab76d29f5a9f3a050b24a82888b
+2024-12-28T14:43:09.420655 [DEBUG] Zipping directory: BackupManager/.git\objects\55/
+2024-12-28T14:43:09.419663 [DEBUG] Zipping file: BackupManager/.git\objects\53\4247828268301aeb87972ba46a9c77a6403de9
+2024-12-28T14:43:09.418175 [DEBUG] Zipping file: BackupManager/.git\objects\53\29891f2401dc454c748e42e29240a142266344
+2024-12-28T14:43:09.417182500 [DEBUG] Zipping directory: BackupManager/.git\objects\53/
+2024-12-28T14:43:09.415198800 [DEBUG] Zipping file: BackupManager/.git\objects\51\85c9d3d4371ce1a4b3caf5c9e03667b1e2fe4a
+2024-12-28T14:43:09.413214800 [DEBUG] Zipping file: BackupManager/.git\objects\51\687ab5fba34bfa0f72005b45ced833b5c834d2
+2024-12-28T14:43:09.412222700 [DEBUG] Zipping directory: BackupManager/.git\objects\51/
+2024-12-28T14:43:09.410735200 [DEBUG] Zipping file: BackupManager/.git\objects\50\b80db7ad2f2141e6a1ebc373b73de08da235e4
+2024-12-28T14:43:09.408750600 [DEBUG] Zipping file: BackupManager/.git\objects\50\45c957b1a852b9d44b0405121a606e4dc77ee0
+2024-12-28T14:43:09.407262800 [DEBUG] Zipping file: BackupManager/.git\objects\50\0e674c7c298c093d6a9da69051249a7d77306c
+2024-12-28T14:43:09.405278800 [DEBUG] Zipping directory: BackupManager/.git\objects\50/
+2024-12-28T14:43:09.403295100 [DEBUG] Zipping file: BackupManager/.git\objects\4e\8f1f06989f645c5ea0d9732afb80b86d624fd9
+2024-12-28T14:43:09.402302800 [DEBUG] Zipping directory: BackupManager/.git\objects\4e/
+2024-12-28T14:43:09.400319 [DEBUG] Zipping file: BackupManager/.git\objects\4c\4d8887e79ce51ce7b7e737d77bc98aabf109c7
+2024-12-28T14:43:09.399327 [DEBUG] Zipping directory: BackupManager/.git\objects\4c/
+2024-12-28T14:43:09.397838800 [DEBUG] Zipping file: BackupManager/.git\objects\4a\02f989b94a0f7271c211b8dcd6d58217d6635c
+2024-12-28T14:43:09.396350600 [DEBUG] Zipping directory: BackupManager/.git\objects\4a/
+2024-12-28T14:43:09.394366900 [DEBUG] Zipping file: BackupManager/.git\objects\48\82a779b3c2eacc09e69276ab28d5aff4e43094
+2024-12-28T14:43:09.392878400 [DEBUG] Zipping file: BackupManager/.git\objects\48\7d1ad4fa4a6ead0a784932071a4c21bcd823e5
+2024-12-28T14:43:09.391391 [DEBUG] Zipping directory: BackupManager/.git\objects\48/
+2024-12-28T14:43:09.386431200 [DEBUG] Zipping file: BackupManager/.git\objects\42\901a4f43e154d8e1b8ca7ee64514fdc3f4c8da
+2024-12-28T14:43:09.384942700 [DEBUG] Zipping file: BackupManager/.git\objects\42\1ed3f8647dfccba9120542b84374a3905e9fb0
+2024-12-28T14:43:09.383455 [DEBUG] Zipping directory: BackupManager/.git\objects\42/
+2024-12-28T14:43:09.381471 [DEBUG] Zipping file: BackupManager/.git\objects\40\b1ad4c15304fa60d0e3b529effc301377b62a3
+2024-12-28T14:43:09.379487300 [DEBUG] Zipping file: BackupManager/.git\objects\40\397e0f2a963d85867c0cdca8c362af5df29cd7
+2024-12-28T14:43:09.378494600 [DEBUG] Zipping directory: BackupManager/.git\objects\40/
+2024-12-28T14:43:09.377007200 [DEBUG] Zipping file: BackupManager/.git\objects\3f\d4ec4ad5804f2feab435fdb61bcea42bb150f7
+2024-12-28T14:43:09.375518600 [DEBUG] Zipping file: BackupManager/.git\objects\3f\2f42f21b8e939b2dd9fe52f6a10436619dd3cf
+2024-12-28T14:43:09.374526900 [DEBUG] Zipping directory: BackupManager/.git\objects\3f/
+2024-12-28T14:43:09.372543500 [DEBUG] Zipping file: BackupManager/.git\objects\36\d8489d84144f3fb8e75e9cc63239cfb26dbd89
+2024-12-28T14:43:09.371055500 [DEBUG] Zipping directory: BackupManager/.git\objects\36/
+2024-12-28T14:43:09.369567200 [DEBUG] Zipping file: BackupManager/.git\objects\31\2c38d714ca3db63c31fcfb0239225c667e3e2d
+2024-12-28T14:43:09.368078700 [DEBUG] Zipping directory: BackupManager/.git\objects\31/
+2024-12-28T14:43:09.365102600 [DEBUG] Zipping file: BackupManager/.git\objects\2f\b219d7a29123428331bbfb69c19a9248605060
+2024-12-28T14:43:09.363614400 [DEBUG] Zipping directory: BackupManager/.git\objects\2f/
+2024-12-28T14:43:09.361135600 [DEBUG] Zipping file: BackupManager/.git\objects\2b\0bbd43b3f6296687467e230eb73796248eea4e
+2024-12-28T14:43:09.360142900 [DEBUG] Zipping directory: BackupManager/.git\objects\2b/
+2024-12-28T14:43:09.358654900 [DEBUG] Zipping file: BackupManager/.git\objects\29\649d58a94f16cffad6b653d02c09fb06d606c3
+2024-12-28T14:43:09.357166900 [DEBUG] Zipping directory: BackupManager/.git\objects\29/
+2024-12-28T14:43:09.354190500 [DEBUG] Zipping file: BackupManager/.git\objects\22\dde33fe516c815f0e3db9fdc2c4304fcf5321f
+2024-12-28T14:43:09.353198800 [DEBUG] Zipping directory: BackupManager/.git\objects\22/
+2024-12-28T14:43:09.351711200 [DEBUG] Zipping file: BackupManager/.git\objects\1e\707c56c42914e4ac5570732afe72a6107da654
+2024-12-28T14:43:09.349230900 [DEBUG] Zipping file: BackupManager/.git\objects\1e\4700952973a06f1539b7f49249f2e2adc66206
+2024-12-28T14:43:09.347742800 [DEBUG] Zipping directory: BackupManager/.git\objects\1e/
+2024-12-28T14:43:09.345758800 [DEBUG] Zipping file: BackupManager/.git\objects\1b\aa440a3b9700d985dad3a8f886e678a5e47214
+2024-12-28T14:43:09.344270500 [DEBUG] Zipping directory: BackupManager/.git\objects\1b/
+2024-12-28T14:43:09.342782700 [DEBUG] Zipping file: BackupManager/.git\objects\19\8f3e617185b667a452e949b1f17ef00e3a0765
+2024-12-28T14:43:09.340798700 [DEBUG] Zipping file: BackupManager/.git\objects\19\570cf5deb49627024e6196112fce966050b2f4
+2024-12-28T14:43:09.339313500 [DEBUG] Zipping directory: BackupManager/.git\objects\19/
+2024-12-28T14:43:09.337327900 [DEBUG] Zipping file: BackupManager/.git\objects\18\b4c02a1997225f49545dfce137b749877a99d9
+2024-12-28T14:43:09.335838800 [DEBUG] Zipping directory: BackupManager/.git\objects\18/
+2024-12-28T14:43:09.333358800 [DEBUG] Zipping file: BackupManager/.git\objects\14\5806dd677d89cebdb8d0dce017e1f4e0a3402c
+2024-12-28T14:43:09.331870900 [DEBUG] Zipping directory: BackupManager/.git\objects\14/
+2024-12-28T14:43:09.329886800 [DEBUG] Zipping file: BackupManager/.git\objects\13\01077b36a3f9f3829bd2703e1c03004696be48
+2024-12-28T14:43:09.328398600 [DEBUG] Zipping directory: BackupManager/.git\objects\13/
+2024-12-28T14:43:09.326414900 [DEBUG] Zipping file: BackupManager/.git\objects\0e\3e792e5aa153d7d59403b91ae25f0f0386d0e9
+2024-12-28T14:43:09.324926600 [DEBUG] Zipping directory: BackupManager/.git\objects\0e/
+2024-12-28T14:43:09.322943100 [DEBUG] Zipping file: BackupManager/.git\objects\08\987e624a9f78562c84eb15a2854a35fcd71936
+2024-12-28T14:43:09.321454500 [DEBUG] Zipping directory: BackupManager/.git\objects\08/
+2024-12-28T14:43:09.319470800 [DEBUG] Zipping file: BackupManager/.git\objects\06\15997ac799ce3d7dd4bf2f5c0591dc92109f1a
+2024-12-28T14:43:09.317983200 [DEBUG] Zipping directory: BackupManager/.git\objects\06/
+2024-12-28T14:43:09.315999300 [DEBUG] Zipping file: BackupManager/.git\objects\05\00e24cd705d368c2755682a481377bdf84d7a8
+2024-12-28T14:43:09.313518500 [DEBUG] Zipping directory: BackupManager/.git\objects\05/
+2024-12-28T14:43:09.311534600 [DEBUG] Zipping file: BackupManager/.git\objects\04\607851c7f10c60ac905c0129fc9c731b1b4729
+2024-12-28T14:43:09.310542600 [DEBUG] Zipping directory: BackupManager/.git\objects\04/
+2024-12-28T14:43:09.309054600 [DEBUG] Zipping directory: BackupManager/.git\objects/
+2024-12-28T14:43:09.307070800 [DEBUG] Zipping file: BackupManager/.git\logs\refs\remotes\origin\HEAD
+2024-12-28T14:43:09.304094800 [DEBUG] Zipping file: BackupManager/.git\logs\refs\remotes\origin\2.0.5
+2024-12-28T14:43:09.302606700 [DEBUG] Zipping directory: BackupManager/.git\logs\refs\remotes\origin/
+2024-12-28T14:43:09.301118800 [DEBUG] Zipping directory: BackupManager/.git\logs\refs\remotes/
+2024-12-28T14:43:09.299630600 [DEBUG] Zipping file: BackupManager/.git\logs\refs\heads\master
+2024-12-28T14:43:09.296658300 [DEBUG] Zipping file: BackupManager/.git\logs\refs\heads\2.0.5
+2024-12-28T14:43:09.295663200 [DEBUG] Zipping directory: BackupManager/.git\logs\refs\heads/
+2024-12-28T14:43:09.294174700 [DEBUG] Zipping directory: BackupManager/.git\logs\refs/
+2024-12-28T14:43:09.290207100 [DEBUG] Zipping file: BackupManager/.git\logs\HEAD
+2024-12-28T14:43:09.287727600 [DEBUG] Zipping directory: BackupManager/.git\logs/
+2024-12-28T14:43:09.285744100 [DEBUG] Zipping file: BackupManager/.git\info\exclude
+2024-12-28T14:43:09.284255 [DEBUG] Zipping directory: BackupManager/.git\info/
+2024-12-28T14:43:09.282270600 [DEBUG] Zipping file: BackupManager/.git\index
+2024-12-28T14:43:09.280286700 [DEBUG] Zipping file: BackupManager/.git\hooks\update.sample
+2024-12-28T14:43:09.277806600 [DEBUG] Zipping file: BackupManager/.git\hooks\push-to-checkout.sample
+2024-12-28T14:43:09.275326500 [DEBUG] Zipping file: BackupManager/.git\hooks\prepare-commit-msg.sample
+2024-12-28T14:43:09.272847 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-receive.sample
+2024-12-28T14:43:09.270366800 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-rebase.sample
+2024-12-28T14:43:09.268382700 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-push.sample
+2024-12-28T14:43:09.266399 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-merge-commit.sample
+2024-12-28T14:43:09.263918600 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-commit.sample
+2024-12-28T14:43:09.262430800 [DEBUG] Zipping file: BackupManager/.git\hooks\pre-applypatch.sample
+2024-12-28T14:43:09.260944600 [DEBUG] Zipping file: BackupManager/.git\hooks\post-update.sample
+2024-12-28T14:43:09.258462900 [DEBUG] Zipping file: BackupManager/.git\hooks\fsmonitor-watchman.sample
+2024-12-28T14:43:09.255486700 [DEBUG] Zipping file: BackupManager/.git\hooks\commit-msg.sample
+2024-12-28T14:43:09.252510800 [DEBUG] Zipping file: BackupManager/.git\hooks\applypatch-msg.sample
+2024-12-28T14:43:09.251022800 [DEBUG] Zipping directory: BackupManager/.git\hooks/
+2024-12-28T14:43:09.249038800 [DEBUG] Zipping file: BackupManager/.git\HEAD
+2024-12-28T14:43:09.246558900 [DEBUG] Zipping file: BackupManager/.git\FETCH_HEAD
+2024-12-28T14:43:09.245567100 [INFO] Zipping progress: 0
+2024-12-28T14:43:09.243597400 [DEBUG] Zipping file: BackupManager/.git\description
+2024-12-28T14:43:09.241598600 [INFO] Zipping progress: 0
+2024-12-28T14:43:09.239118600 [DEBUG] Zipping file: BackupManager/.git\config
+2024-12-28T14:43:09.236637100 [INFO] Zipping progress: 0
+2024-12-28T14:43:09.233692800 [DEBUG] Zipping file: BackupManager/.git\COMMIT_EDITMSG
+2024-12-28T14:43:09.231672700 [DEBUG] Zipping directory: BackupManager/.git/
+2024-12-28T14:43:09.227705 [DEBUG] Zipping directory: BackupManager//
+2024-12-28T14:43:09.180605800 [INFO] Starting zipping process
+2024-12-28T14:43:09.176142400 [INFO] Event --> automatic single backup started
+2024-12-28T14:42:57.241113200 [INFO] Event --> duplicating backup
+2024-12-28T14:42:52.055150200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:42:51.491615200 [DEBUG] Background mode: false
+2024-12-28T14:42:51.485167 [INFO] Application started
+2024-12-28T14:41:55.372565 [INFO] Event --> saving backup
+2024-12-28T14:41:50.541559400 [INFO] Event --> auto backup disabled
+2024-12-28T14:41:50.539576400 [INFO] Event --> opening backup
+2024-12-28T14:41:50.538107800 [INFO] Edit row : 6
+2024-12-28T14:41:46.677038600 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:41:46.092687500 [DEBUG] Background mode: false
+2024-12-28T14:41:46.085248 [INFO] Application started
+2024-12-28T14:40:10.711156400 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:40:10.113344600 [DEBUG] Background mode: false
+2024-12-28T14:40:10.106401300 [INFO] Application started
+2024-12-28T14:39:03.110089700 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:39:02.531629400 [DEBUG] Background mode: false
+2024-12-28T14:39:02.524685400 [INFO] Application started
+2024-12-28T14:35:56.289267200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:35:55.658596900 [DEBUG] Background mode: false
+2024-12-28T14:35:55.651652300 [INFO] Application started
+2024-12-28T14:34:39.769906800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:34:39.183154600 [DEBUG] Background mode: false
+2024-12-28T14:34:39.176706100 [INFO] Application started
+2024-12-28T14:34:30.364711200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:34:29.799175 [DEBUG] Background mode: false
+2024-12-28T14:34:29.792727400 [INFO] Application started
+2024-12-28T14:33:39.510204200 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:33:38.916548 [DEBUG] Background mode: false
+2024-12-28T14:33:38.910100200 [INFO] Application started
+2024-12-28T14:33:25.008433400 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:33:24.430230 [DEBUG] Background mode: false
+2024-12-28T14:33:24.424278 [INFO] Application started
+2024-12-28T14:22:32.737302800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T14:22:31.837710 [DEBUG] Background mode: false
+2024-12-28T14:22:31.831262100 [INFO] Application started
+2024-12-28T12:07:45.799490100 [DEBUG] The application is running with administrator privileges.
+2024-12-28T12:07:45.219551500 [DEBUG] Background mode: false
+2024-12-28T12:07:45.212607 [INFO] Application started
+2024-12-28T12:06:34.524394500 [DEBUG] The application is running with administrator privileges.
+2024-12-28T12:06:33.707106 [DEBUG] Background mode: false
+2024-12-28T12:06:33.700658 [INFO] Application started
+2024-12-28T11:56:14.269826100 [DEBUG] The application is running with administrator privileges.
+2024-12-28T11:56:13.670550400 [DEBUG] Background mode: false
+2024-12-28T11:56:13.664598700 [INFO] Application started
+2024-12-28T11:55:29.932310400 [INFO] Reloading preferences
+2024-12-28T11:55:29.913957900 [INFO] Theme set to: Arc - Orange
+2024-12-28T11:55:29.911974500 [INFO] Language set to: Italiano
+2024-12-28T11:55:29.910982400 [INFO] Updating preferences -> Language: Italiano; Theme: Arc - Orange
+2024-12-28T11:55:04.666331500 [INFO] Event --> opening preferences dialog
+2024-12-28T11:54:31.575420 [DEBUG] The application is running with administrator privileges.
+2024-12-28T11:54:30.989736200 [DEBUG] Background mode: false
+2024-12-28T11:54:30.983784 [INFO] Application started
+2024-12-28T11:53:41.202889800 [DEBUG] The application is running with administrator privileges.
+2024-12-28T11:53:40.648647500 [DEBUG] Background mode: false
+2024-12-28T11:53:40.643191200 [INFO] Application started
+2024-12-28T11:53:33.487702800 [DEBUG] Background mode: false
+2024-12-28T11:53:33.481283200 [INFO] Application started
+2024-12-28T11:52:58.460196700 [DEBUG] Background mode: false
+2024-12-28T11:52:58.453740900 [INFO] Application started
+2024-12-28T11:52:25.147711 [DEBUG] The application is running with administrator privileges.
+2024-12-28T11:52:24.539396400 [DEBUG] Background mode: false
+2024-12-28T11:52:24.533444600 [INFO] Application started
+2024-12-28T11:40:50.105491100 [DEBUG] The application is running with administrator privileges.
+2024-12-28T11:40:49.497240300 [DEBUG] Background mode: false
+2024-12-28T11:40:49.492280700 [INFO] Application started
+Exception: java.io.FileNotFoundException - C:\Users\Utente\Desktop (Accesso negato)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:295)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:236)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:124)
+	at java.base/java.io.FileWriter.<init>(FileWriter.java:67)
+	at backupmanager.Exporter.exportAsCSV(Exporter.java:28)
+	at backupmanager.GUI.BackupManagerGUI.exportAsCsvBtnActionPerformed(BackupManagerGUI.java:2179)
+	at backupmanager.GUI.BackupManagerGUI$32.actionPerformed(BackupManagerGUI.java:1482)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:297)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)

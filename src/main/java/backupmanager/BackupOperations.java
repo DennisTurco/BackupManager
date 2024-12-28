@@ -22,9 +22,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileSystemView;
 
 import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
@@ -140,6 +142,32 @@ public class BackupOperations {
             Logger.logMessage("Error saving file", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static String pathSearchWithFileChooser(boolean allowFiles) {
+        Logger.logMessage("Event --> File chooser", Logger.LogLevel.INFO);
+        
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        
+        if (allowFiles)
+            jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        else
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int returnValue = jfc.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+
+            if (selectedFile.isDirectory()) {
+                Logger.logMessage("You selected the directory: " + selectedFile, Logger.LogLevel.INFO);
+            } else if (selectedFile.isFile()) {
+                Logger.logMessage("You selected the file: " + selectedFile, Logger.LogLevel.INFO);
+            }
+
+            return selectedFile.toString();
+        }
+
+        return null;
     }
     
     public static boolean CheckInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {

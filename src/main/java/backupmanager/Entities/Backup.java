@@ -67,7 +67,33 @@ public class Backup {
     
     @Override
     public String toString() {
-        return "[Name: "+_backupName + ", InitialPath: " + _initialPath + ", DestinationPath: " + _destinationPath + ", LastBackup: " + _lastBackup + ", IsAutoBackup: " + _autoBackup + ", NextDate: " + _nextDateBackup + ",  Interval: " + (_timeIntervalBackup!=null ? _timeIntervalBackup.toString(): "")+", MaxBackupsToKeep: " + _maxBackupsToKeep + "]"; 
+        return String.format("[Name: %s, InitialPath: %s, DestinationPath: %s, LastBackup: %s, IsAutoBackup: %s, NextDate: %s, Interval: %s, MaxBackupsToKeep: %d]",
+            _backupName,
+            _initialPath,
+            _destinationPath,
+            _lastBackup,
+            _autoBackup,
+            _nextDateBackup,
+            _timeIntervalBackup != null ? _timeIntervalBackup.toString() : "",
+            _maxBackupsToKeep
+        );
+    }
+
+    public String toCsvString() {
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%d",
+            _backupName,
+            _initialPath,
+            _destinationPath,
+            _lastBackup != null ? _lastBackup.toString() : "",
+            _autoBackup,
+            _nextDateBackup != null ? _nextDateBackup.toString() : "",
+            _timeIntervalBackup != null ? _timeIntervalBackup.toString() : "",
+            _maxBackupsToKeep
+        );
+    }
+
+    public static String getCSVHeader() {
+        return "BackupName,InitialPath,DestinationPath,LastBackup,IsAutoBackup,NextDate,Interval (gg.HH:mm),MaxBackupsToKeep";
     }
 
     public String getBackupName() {

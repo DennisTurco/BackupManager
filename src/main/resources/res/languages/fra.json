@@ -77,6 +77,9 @@
       "NotesDetail": "Notes",
       "MaxBackupsToKeepDetail": "NombreMaxSauvegardesConserver",
       "AddBackupTooltip": "Ajouter une nouvelle sauvegarde",
+      "ExportAs": "Exporter en tant que : ",
+      "ExportAsPdfTooltip": "Exporter en tant que PDF",
+      "ExportAsCsvTooltip": "Exporter en tant que CSV",
       "ResearchBarTooltip": "Barre de recherche",
       "ResearchBarPlaceholder": "Rechercher...",
       "EditPopup": "Modifier",
@@ -163,7 +166,16 @@
       "ErrorMessageCountingFiles": "Erreur lors du calcul des fichiers à sauvegarder.",
       "ErrorMessageZippingGeneric": "Erreur lors de la compression des fichiers.",
       "ErrorMessageZippingIO": "Erreur lors de la compression des fichiers : erreur d'E/S.",
-      "ErrorMessageZippingSecurity": "Erreur lors de la compression des fichiers : erreur de sécurité."
+      "ErrorMessageZippingSecurity": "Erreur lors de la compression des fichiers : Erreur de sécurité.",
+      "SuccessGenericTitle": "Succès",
+      "SuccessfullyExportedToCsvMessage": "Sauvegardes exportées en CSV avec succès !",
+      "SuccessfullyExportedToPdfMessage": "Sauvegardes exportées en PDF avec succès !",
+      "ErrorMessageForExportingToCsv": "Erreur lors de l'exportation des sauvegardes en CSV : ",
+      "ErrorMessageForExportingToPdf": "Erreur lors de l'exportation des sauvegardes en PDF : ",
+      "CsvNameMessageInput": "Entrez le nom du fichier CSV.",
+      "PdfNameMessageInput": "Entrez le nom du fichier PDF.",
+      "DuplicatedFileNameMessage": "Le fichier existe déjà. Écraser?",
+      "ErrorMessageInvalidFilename": "Nom de fichier invalide. Utilisez uniquement des caractères alphanumériques, des tirets et des underscores."
     }
   }
   

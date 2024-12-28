@@ -1,5 +1,5 @@
 {
-  "LOG_FILE_STRING": "log_file",
+  "LOG_FILE_STRING": "log_file.txt",
   "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
