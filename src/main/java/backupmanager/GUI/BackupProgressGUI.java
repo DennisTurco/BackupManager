@@ -28,7 +28,7 @@ public class BackupProgressGUI extends javax.swing.JFrame {
         setTranslations();
    }
     
-    public void UpdateProgressBar(int value) {
+    public void updateProgressBar(int value) {
         progressBar.setValue(value);
         percentageLabel.setText(value + " %");
         

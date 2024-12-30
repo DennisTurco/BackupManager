@@ -14,18 +14,19 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.ThemeManager;
+import backupmanager.Table.BackupTable;
+import backupmanager.Table.BackupTableModel;
+import backupmanager.Table.CheckboxCellRenderer;
+import backupmanager.Table.StripedRowRenderer;
 import backupmanager.BackupOperations;
 import backupmanager.Exporter;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -43,22 +44,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.json.simple.parser.ParseException;
-
 import com.formdev.flatlaf.FlatClientProperties;
 
 /**
@@ -73,6 +69,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private static List<Backup> backups;
     private static JSONAutoBackup JSON;
     public static DefaultTableModel model;
+    public static BackupTable backupTable;
     private BackupProgressGUI progressBar;
     private boolean saveChanged;
     private Integer selectedRow;
@@ -467,7 +464,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             SingleBackup.setEnabled(false);
             toggleAutoBackup.setEnabled(false);
 
-            BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, progressBar, SingleBackup, toggleAutoBackup);
+            BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
             
             //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
             if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
@@ -680,27 +677,18 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }
     
     private void displayBackupList(List<Backup> backups) {
-        String backupName = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_COLUMN);
-        String initialPath = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_COLUMN);
-        String destinationPath = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_COLUMN);
-        String lastBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_COLUMN);
-        String automaticBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN);
-        String nextBackupDate = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN);
-        String timeInterval = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN);
-
-        DefaultTableModel model = new DefaultTableModel(new Object[]{
-            backupName, initialPath, destinationPath, lastBackup, automaticBackup, nextBackupDate, timeInterval}, 0) {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex == 4 ? Boolean.class : super.getColumnClass(columnIndex);
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
+        String[] columnNames = {
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
         };
-
+    
+        BackupTableModel model = new BackupTableModel(columnNames, 0);
+    
         // Populate the model with backup data
         for (Backup backup : backups) {
             model.addRow(new Object[]{
@@ -713,97 +701,35 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
             });
         }
+    
+        backupTable = new BackupTable(model);
 
-        JTable newTable = new JTable(model) {
-            @Override
-            public String getToolTipText(java.awt.event.MouseEvent e) {
-                Point point = e.getPoint();
-                int row = rowAtPoint(point);
-                int col = columnAtPoint(point);
-                if (col == 6) {
-                    Object value = getValueAt(row, col);
-                    return value != null ? "dd.HH:mm" : null;
-                }
-                return null;
-            }
-        };
-        newTable.setRowHeight(35);
-        newTable.setAutoCreateRowSorter(true); // Enable column sorting
+        // Apply renderers for each column
+        TableColumnModel columnModel = backupTable.getColumnModel();
 
-        // Copy table properties and renderers from the existing table
-        newTable.setSelectionBackground(table.getSelectionBackground());
-        newTable.setSelectionForeground(table.getSelectionForeground());
-
-        // Re-add renderers and customizations
-        TableCellRenderer checkboxRenderer = new DefaultTableCellRenderer() {
-            private final JCheckBox checkBox = new JCheckBox();
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if (value instanceof Boolean aBoolean) {
-                    checkBox.setSelected(aBoolean);
-                    checkBox.setHorizontalAlignment(CENTER);
-
-                    if (row % 2 == 0) {
-                        checkBox.setBackground(new Color(223, 222, 243));
-                    } else {
-                        checkBox.setBackground(Color.WHITE);
-                    }
-
-                    if (isSelected) {
-                        checkBox.setBackground(table.getSelectionBackground());
-                        checkBox.setForeground(table.getSelectionForeground());
-                    } else {
-                        checkBox.setForeground(Color.BLACK);
-                    }
-
-                    return checkBox;
-                }
-                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            }
-        };
-
-        TableColumnModel columnModel = newTable.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
-            columnModel.getColumn(i).setCellRenderer(new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                    if (row % 2 == 0) {
-                        c.setBackground(new Color(223, 222, 243));
-                    } else {
-                        c.setBackground(Color.WHITE);
-                    }
-
-                    if (isSelected) {
-                        c.setBackground(table.getSelectionBackground());
-                        c.setForeground(table.getSelectionForeground());
-                    } else {
-                        c.setForeground(Color.BLACK);
-                    }
-
-                    return c;
-                }
-            });
+            if (i == 4) {
+                columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
+                columnModel.getColumn(i).setCellEditor(backupTable.getDefaultEditor(Boolean.class));
+            } else {
+                columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
+            }
         }
-        columnModel.getColumn(4).setCellRenderer(checkboxRenderer);
-        columnModel.getColumn(4).setCellEditor(newTable.getDefaultEditor(Boolean.class));
-
+            
         // Add the existing mouse listener to the new table
-        newTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        backupTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt); // Reuse the existing method
             }
         });
-
+    
         // Update the global model reference
-        BackupManagerGUI.model = (DefaultTableModel) newTable.getModel();
-
+        BackupManagerGUI.model = model;
+    
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
-        table = newTable; // Update the reference to the new table
+        table = backupTable; // Update the reference to the new table
         scrollPane.setViewportView(table); // Replace the table in the scroll pane
     }
     
@@ -1421,11 +1347,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         addBackupEntryButton.setToolTipText("Add new backup");
         addBackupEntryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addBackupEntryButton.setPreferredSize(new java.awt.Dimension(25, 25));
-        addBackupEntryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBackupEntryButtonActionPerformed(evt);
-            }
-        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1914,7 +1835,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             
             progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
             progressBar.setVisible(true);
-            BackupOperations.SingleBackup(backup, null, progressBar, SingleBackup, toggleAutoBackup);
+            BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
             
             // if the backup is currentBackup
             if (currentBackup.getBackupName().equals(backup.getBackupName())) 
@@ -2172,10 +2093,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private void maxBackupCountSpinnerMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_maxBackupCountSpinnerMouseWheelMoved
         mouseWeel(evt);
     }//GEN-LAST:event_maxBackupCountSpinnerMouseWheelMoved
-
-    private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
         Exporter.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());

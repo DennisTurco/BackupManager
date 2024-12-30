@@ -143,7 +143,7 @@ public class BackupService {
         private void executeBackups(List<Backup> backups) {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Backup backup : backups) {
-                    BackupOperations.SingleBackup(backup, trayIcon, null, null, null);
+                    BackupOperations.SingleBackup(backup, trayIcon, null, null, null, null);
                 }
             });
         }
