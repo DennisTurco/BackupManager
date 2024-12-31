@@ -67,6 +67,8 @@ public class BackupOperations {
 
             if(!CheckInputCorrect(backup.getBackupName(), path1, path2, trayIcon)) return;
 
+            progressBar.setVisible(true);
+
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
             String name1 = path1.substring(path1.length()-1, path1.length()-1);

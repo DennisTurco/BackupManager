@@ -1,6 +1,7 @@
 package backupmanager.Table;
 
 import java.awt.Point;
+
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
@@ -23,11 +24,16 @@ public class BackupTable extends JTable {
                     Object value = getValueAt(row, column);
                     if (value instanceof Integer && (Integer) value == 0) {
                         getColumnModel().getColumn(targetColumnIndex).setCellRenderer(new ProgressBarRenderer());
-                        repaint(); // Repaint the table to reflect the changes
+                        revalidate();  // Revalidate the table layout
+                        repaint();     // Repaint the table to reflect the changes
                     }
                 }
             }
         });
+
+        // Make sure the table is focusable
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     @Override

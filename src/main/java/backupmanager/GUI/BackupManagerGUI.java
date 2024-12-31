@@ -30,6 +30,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -43,11 +45,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -704,6 +712,37 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     
         backupTable = new BackupTable(model);
 
+        // Add key bindings using InputMap and ActionMap
+        InputMap inputMap = backupTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        ActionMap actionMap = backupTable.getActionMap();
+
+        // Handle Enter key
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterKey");
+        actionMap.put("enterKey", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = backupTable.getSelectedRow();
+                if (selectedRow == -1) return;
+
+                Logger.logMessage("Enter key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
+                OpenBackup((String) backupTable.getValueAt(selectedRow, 0));
+                TabbedPane.setSelectedIndex(0);
+            }
+        });
+
+        // Handle Delete key
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteKey");
+        actionMap.put("deleteKey", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = backupTable.getSelectedRow();
+                if (selectedRow == -1) return;
+
+                Logger.logMessage("Delete key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
+                deleteBackup(selectedRow);
+            }
+        });
+
         // Apply renderers for each column
         TableColumnModel columnModel = backupTable.getColumnModel();
 
@@ -764,7 +803,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }
         
     private void RemoveBackup(String backupName) {
-        Logger.logMessage("Event --> removing backup", Logger.LogLevel.INFO);
+        Logger.logMessage("Event --> removing backup" + backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName).toString(), Logger.LogLevel.INFO);
 
         // backup list update
         for (Backup backup : backups) {
@@ -1730,6 +1769,14 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
+        deleteBackup();
+    }//GEN-LAST:event_DeletePopupItemActionPerformed
+
+    private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
+        researchInTable();
+    }//GEN-LAST:event_researchFieldKeyTyped
+
+    private void deleteBackup() {
         Logger.logMessage("Event --> deleting backup", Logger.LogLevel.INFO);
         
         if (selectedRow != -1) {
@@ -1738,11 +1785,16 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 RemoveBackup(backups.get(selectedRow).getBackupName());
             }
         }
-    }//GEN-LAST:event_DeletePopupItemActionPerformed
+    }
 
-    private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
-        researchInTable();
-    }//GEN-LAST:event_researchFieldKeyTyped
+    private void deleteBackup(int selectedRow) {
+        Logger.logMessage("Event --> deleting backup", Logger.LogLevel.INFO);
+        
+        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            RemoveBackup(backups.get(selectedRow).getBackupName());
+        }
+    }
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         selectedRow = table.rowAtPoint(evt.getPoint()); // get index of the row
@@ -1834,7 +1886,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             Backup backup = backups.get(selectedRow);
             
             progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
-            progressBar.setVisible(true);
             BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
             
             // if the backup is currentBackup

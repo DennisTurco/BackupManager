@@ -1,6 +1,7 @@
 package backupmanager.Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
@@ -90,6 +91,15 @@ public class Backup {
             _timeIntervalBackup != null ? _timeIntervalBackup.toString() : "",
             _maxBackupsToKeep
         );
+    }
+
+    public static Backup getBackupByName(ArrayList<Backup> backups, String backupName) {
+        for (Backup backup : backups) {
+            if (backup.getBackupName().equals(backupName)) {
+                return backup;
+            }
+        }
+        return null;
     }
 
     public static String getCSVHeader() {
