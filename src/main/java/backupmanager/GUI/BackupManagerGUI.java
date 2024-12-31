@@ -170,7 +170,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             setTranslations();
         } catch (IOException | ParseException ex) {
             Logger.logMessage("An error occurred during reloading preferences operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         
         // load theme
@@ -206,7 +206,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                     desktop.open(folder);
                 } catch (IOException ex) {
                     Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-                    OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                    openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
                 }
             } else {
                 Logger.logMessage("Desktop not supported on this operating system", Logger.LogLevel.WARN);
@@ -396,7 +396,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: "  + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (HeadlessException ex) {
             Logger.logMessage("Error saving backup", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_SAVING_BACKUP_MESSAGE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -498,7 +498,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             lastBackupLabel.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.LAST_BACKUP) + last_date);
         } catch(Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 	
@@ -507,7 +507,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             updateCurrentFiedsByBackup(currentBackup);
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         setAutoBackupPreference(currentBackup.isAutoBackup());
     }
@@ -603,7 +603,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         else lastBackupLabel.setText("");
     }
     
-    public static void OpenExceptionMessage(String errorMessage, String stackTrace) {
+    public static void openExceptionMessage(String errorMessage, String stackTrace) {
         Object[] options = {TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
 
         if (errorMessage == null) {
@@ -841,7 +841,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
@@ -871,7 +871,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
@@ -1812,7 +1812,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
 
-            Logger.logMessage("Selected backup: " + backupName, Logger.LogLevel.INFO);
+            Logger.logMessage("Selected backup: " + backupName, Logger.LogLevel.DEBUG);
 
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
@@ -1983,7 +1983,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
-            
+
             renameBackup(backup);
         }
     }//GEN-LAST:event_renamePopupItemActionPerformed
@@ -2146,7 +2146,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 Preferences.updatePreferencesToJSON();
 
                 try {
-                    backups = JSON.ReadBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                    backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                     BackupOperations.updateTableWithNewBackupList(backups);
                 } catch (IOException ex) {
                     Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
@@ -2176,7 +2176,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: Access to the Desktop is denied.\nPlease check folder permissions and try again.","Export Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
             Logger.logMessage("Unexpected error: " + ex.getMessage(), Logger.LogLevel.ERROR);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }//GEN-LAST:event_MenuExportActionPerformed
 
@@ -2198,12 +2198,12 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
     private void setTranslations() {
         try {
-            backups = JSON.ReadBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
             displayBackupList(backups);
         } catch (IOException ex) {
             backups = null;
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
 
         backupOnText = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_ON);

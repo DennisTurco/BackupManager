@@ -17,7 +17,7 @@ import backupmanager.Enums.ThemesEnum;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
 
-import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 
 public class Preferences {
     private static LanguagesEnum language;
@@ -40,7 +40,7 @@ public class Preferences {
             updatePreferencesToJSON(); // Create the JSON file with default preferences
         } catch (Exception ex) {
             Logger.logMessage("An error occurred while loading preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -63,7 +63,7 @@ public class Preferences {
 
         } catch (IOException ex) {
             Logger.logMessage("An error occurred during updating preferences to json operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -144,7 +144,7 @@ public class Preferences {
             Logger.logMessage("Invalid language name: " + selectedLanguage, LogLevel.WARN);
         } catch (Exception ex) {
             Logger.logMessage("An error occurred during setting language operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     public static void setTheme(String selectedTheme) {
@@ -159,7 +159,7 @@ public class Preferences {
             Logger.logMessage("Invalid theme name: " + selectedTheme, LogLevel.WARN);
         } catch (Exception ex) {
             Logger.logMessage("An error occurred during setting theme operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

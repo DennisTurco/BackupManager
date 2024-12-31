@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.json.simple.parser.ParseException;
 
-import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
@@ -47,7 +47,7 @@ public class MainApp {
                 service.startService();
             } catch (IOException ex) {
                 Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-                OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
         }
         else if (!isBackgroundMode) {

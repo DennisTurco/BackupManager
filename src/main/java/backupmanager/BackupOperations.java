@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableColumnModel;
 
-import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import static backupmanager.GUI.BackupManagerGUI.backupTable;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
@@ -90,7 +90,7 @@ public class BackupOperations {
             return;
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
             return;
         }
@@ -128,7 +128,7 @@ public class BackupOperations {
         backup.setBackupCount(backup.getBackupCount()+1);
                     
         try {
-            List<Backup> backups = JSON.ReadBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            List<Backup> backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                         
             for (Backup b : backups) {
                 if (b.getBackupName().equals(backup.getBackupName())) {
@@ -144,7 +144,7 @@ public class BackupOperations {
             }
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (Exception e) {
             Logger.logMessage("Error saving file", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -347,7 +347,7 @@ public class BackupOperations {
     public static void updateBackupList(List<Backup> backups) {
         if (backups == null) throw new IllegalArgumentException("Backup list is null!");
             
-        JSON.UpdateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
+        JSON.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
         
         if (BackupManagerGUI.model != null)
             updateTableWithNewBackupList(backups);
@@ -356,7 +356,7 @@ public class BackupOperations {
     public static void updateBackup(List<Backup> backups, Backup updatedBackup) {
         if (updatedBackup == null) throw new IllegalArgumentException("Backup is null!");
         
-        JSON.UpdateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
+        JSON.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
         
         if (BackupManagerGUI.model != null)
             updateTableWithNewBackupList(backups);

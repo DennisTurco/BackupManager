@@ -117,7 +117,7 @@ public class BackupService {
         public void run() {
             Logger.logMessage("Checking for automatic backup...", Logger.LogLevel.INFO);
             try {
-                List<Backup> backups = json.ReadBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                List<Backup> backups = json.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                 List<Backup> needsBackup = getBackupsToDo(backups);
                 if (needsBackup != null && !needsBackup.isEmpty()) {
                     Logger.logMessage("Start backup process.", Logger.LogLevel.INFO);

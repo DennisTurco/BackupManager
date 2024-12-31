@@ -1,1 +1,146 @@
-[{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"testone","notes":"","backup_count":29,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Desktop\\DJI_20240925130642_0030_D.JPG","creation_date":"2024-12-12T21:44:37.283133900","last_backup":"2024-12-31T16:20:00.957459400","last_update_date":"2024-12-15T19:18:30.219573400"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"test2","notes":"","backup_count":9,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Desktop\\test.txt","creation_date":"2024-12-12T22:52:41.381624500","last_backup":"2024-12-12T23:29:01.963425500","last_update_date":"2024-12-31T01:07:20.544213200"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"testoso","notes":"","backup_count":1,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Desktop\\test testoso","creation_date":"2024-12-14T15:25:02.587785800","last_backup":"2024-12-14T15:55:17.694068","last_update_date":"2024-12-31T01:08:01.211757"},{"time_interval_backup":"3.0:0","destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":true,"backup_name":"Immagini","notes":"","backup_count":7,"next_date_backup":"2025-01-03T00:28:58.600541","max_backups_to_keep":3,"start_path":"D:\\Pictures","creation_date":"2024-12-25T21:09:27.794512800","last_backup":"2024-12-31T00:28:58.600541","last_update_date":"2024-12-26T14:03:27.408421600"},{"time_interval_backup":"80.0:1","destination_path":"C:\\Users\\Utente\\OneDrive","automatic_backup":true,"backup_name":"lezioni","notes":"","backup_count":8,"next_date_backup":"2025-03-21T00:22:41.536359500","max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Desktop\\lezioni","creation_date":"2024-12-26T11:39:05.784050","last_backup":"2024-12-31T00:21:41.536359500","last_update_date":"2024-12-26T11:41:22.021254900"},{"time_interval_backup":"1.0:0","destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":true,"backup_name":"Documents2","notes":"","backup_count":2,"next_date_backup":"2025-01-01T16:21:33.492806900","max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Documents","creation_date":"2024-12-27T21:03:01.013826200","last_backup":"2024-12-31T00:19:55.640416400","last_update_date":"2024-12-27T21:10:55.323080700"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"asa","notes":"","backup_count":0,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"C:\\Users\\Utente\\Desktop\\Dennis","creation_date":"2024-12-28T00:00:00.017265400","last_backup":null,"last_update_date":"2024-12-31T12:28:36.964539100"},{"time_interval_backup":null,"destination_path":"saddsa","automatic_backup":false,"backup_name":"asd","notes":"","backup_count":0,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"asdasd","creation_date":"2024-12-28T00:01:26.084230400","last_backup":null,"last_update_date":"2024-12-31T01:07:29.631928600"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"Documents1_copy","notes":"","backup_count":0,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"D:\\Documents","creation_date":"2024-12-29T13:28:19.132467600","last_backup":null,"last_update_date":"2024-12-31T16:16:07.851671"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"Documents1_copy_copy","notes":"","backup_count":0,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"D:\\Documents","creation_date":"2024-12-29T13:28:20.948181400","last_backup":null,"last_update_date":"2024-12-29T13:28:20.948181400"},{"time_interval_backup":null,"destination_path":"C:\\Users\\Utente\\Desktop","automatic_backup":false,"backup_name":"Documents1_copy","notes":"","backup_count":0,"next_date_backup":null,"max_backups_to_keep":3,"start_path":"D:\\Documents","creation_date":"2024-12-29T13:30:37.591067200","last_backup":null,"last_update_date":"2024-12-29T13:30:37.591067200"}]
+[
+  {
+    "backup_name": "testone",
+    "start_path": "C:\\Users\\Utente\\Desktop\\DJI_20240925130642_0030_D.JPG",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2024-12-31T16:20:00.957459400",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-12T21:44:37.283133900",
+    "last_update_date": "2024-12-15T19:18:30.219573400",
+    "backup_count": 29,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "test2",
+    "start_path": "C:\\Users\\Utente\\Desktop\\test.txt",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2024-12-12T23:29:01.963425500",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-12T22:52:41.381624500",
+    "last_update_date": "2024-12-31T01:07:20.544213200",
+    "backup_count": 9,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "testoso",
+    "start_path": "C:\\Users\\Utente\\Desktop\\test testoso",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2024-12-14T15:55:17.694068",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-14T15:25:02.587785800",
+    "last_update_date": "2024-12-31T01:08:01.211757",
+    "backup_count": 1,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "Immagini",
+    "start_path": "D:\\Pictures",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2024-12-31T00:28:58.600541",
+    "automatic_backup": true,
+    "next_date_backup": "2025-01-03T00:28:58.600541",
+    "time_interval_backup": "3.0:0",
+    "notes": "",
+    "creation_date": "2024-12-25T21:09:27.794512800",
+    "last_update_date": "2024-12-26T14:03:27.408421600",
+    "backup_count": 7,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "lezioni",
+    "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
+    "destination_path": "C:\\Users\\Utente\\OneDrive",
+    "last_backup": "2024-12-31T00:21:41.536359500",
+    "automatic_backup": true,
+    "next_date_backup": "2025-03-21T00:22:41.536359500",
+    "time_interval_backup": "80.0:1",
+    "notes": "",
+    "creation_date": "2024-12-26T11:39:05.784050",
+    "last_update_date": "2024-12-26T11:41:22.021254900",
+    "backup_count": 8,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "Documents2",
+    "start_path": "C:\\Users\\Utente\\Documents",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2024-12-31T00:19:55.640416400",
+    "automatic_backup": true,
+    "next_date_backup": "2025-01-01T16:21:33.492806900",
+    "time_interval_backup": "1.0:0",
+    "notes": "",
+    "creation_date": "2024-12-27T21:03:01.013826200",
+    "last_update_date": "2024-12-27T21:10:55.323080700",
+    "backup_count": 2,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "asa",
+    "start_path": "C:\\Users\\Utente\\Desktop\\Dennis",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-28T00:00:00.017265400",
+    "last_update_date": "2024-12-31T12:28:36.964539100",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "asd",
+    "start_path": "asdasd",
+    "destination_path": "saddsa",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-28T00:01:26.084230400",
+    "last_update_date": "2024-12-31T01:07:29.631928600",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "Documents1_copy",
+    "start_path": "D:\\Documents",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-29T13:28:19.132467600",
+    "last_update_date": "2024-12-31T18:41:13.639901600",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "Documents1_copy_copy",
+    "start_path": "D:\\Documents",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-29T13:28:20.948181400",
+    "last_update_date": "2024-12-29T13:28:20.948181400",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "Documents1_copy",
+    "start_path": "D:\\Documents",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-29T13:30:37.591067200",
+    "last_update_date": "2024-12-29T13:30:37.591067200",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "sad",
+    "start_path": "saddsa",
+    "destination_path": "dsadasd",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2024-12-31T18:41:30.563494900",
+    "last_update_date": "2024-12-31T18:41:35.196839800",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  }
+]

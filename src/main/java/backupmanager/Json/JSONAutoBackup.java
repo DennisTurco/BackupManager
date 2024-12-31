@@ -4,91 +4,90 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.lang.reflect.Type;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
-import static backupmanager.GUI.BackupManagerGUI.OpenExceptionMessage;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Interfaces.IJSONAutoBackup;
 import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
 
 public class JSONAutoBackup implements IJSONAutoBackup {
     @Override
-    public List<Backup> ReadBackupListFromJSON(String directoryPath, String filename) throws IOException {
+    public List<Backup> readBackupListFromJSON(String directoryPath, String filename) throws IOException {
         List<Backup> backupList = new ArrayList<>();
-        
-        // check if the directory is correct, otherwise we have to reset to default
+    
+        // Check if the directory is correct, otherwise reset to default
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
-            Logger.logMessage("Directory of the backup list file doesn't exists (" + directoryPath + "), resetted to default value.", LogLevel.INFO);
+            Logger.logMessage("Directory of the backup list file doesn't exist (" + directoryPath + "), reset to default value.", Logger.LogLevel.INFO);
             Preferences.setBackupList(Preferences.getDefaultBackupList());
             Preferences.updatePreferencesToJSON();
             directoryPath = Preferences.getBackupList().getDirectory();
         }
-
+    
         String filePath = directoryPath + filename;
         File file = new File(filePath);
-
+    
         // Check if the file exists and is not empty
         if (!file.exists()) {
             file.createNewFile();
-            Logger.logMessage("New backup list created with name: " + filePath, LogLevel.INFO);
+            Logger.logMessage("New backup list created with name: " + filePath, Logger.LogLevel.INFO);
         }
         if (file.length() == 0) {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("[]");
-                Logger.logMessage("File initialized with empty JSON array: []", LogLevel.INFO);
+                Logger.logMessage("File initialized with empty JSON array: []", Logger.LogLevel.INFO);
             } catch (IOException e) {
-                Logger.logMessage("Error initializing file: " + e.getMessage(), LogLevel.ERROR, e);
+                Logger.logMessage("Error initializing file: " + e.getMessage(), Logger.LogLevel.ERROR, e);
                 throw e;
             }
         }
-
-        JSONParser parser = new JSONParser();
-
-        try (FileReader reader = new FileReader(filePath)) {
-            JSONArray backupArray = (JSONArray) parser.parse(reader);
-
-            for (Object obj : backupArray) {
-                JSONObject backupObj = (JSONObject) obj;
-
-                String backupNameValue = (String) backupObj.get("backup_name");
-                String startPathValue = (String) backupObj.get("start_path");
-                String destinationPathValue = (String) backupObj.get("destination_path");
-                String lastBackupStr = (String) backupObj.get("last_backup");
-                String notesValue = (String) backupObj.get("notes");
-                String creationDateStr = (String) backupObj.get("creation_date");
-                String lastUpdateDateStr = (String) backupObj.get("last_update_date");
-                int backupCountValue = Math.toIntExact((Long) backupObj.get("backup_count"));
-                int maxBackupsToKeepValue = Math.toIntExact((Long) backupObj.get("max_backups_to_keep"));
-
-                Object value = backupObj.get("automatic_backup");
-                Boolean automaticBackupValue = null;
-                if (value instanceof Boolean aBoolean) {
-                    automaticBackupValue = aBoolean;
-                } else if (value instanceof String string) {
-                    automaticBackupValue = Boolean.valueOf(string);
-                } else if (value instanceof Integer integer) {
-                    automaticBackupValue = (integer == 1);
-                }
-                String nextDateBackupStr = (String) backupObj.get("next_date_backup");
-                String daysIntervalBackupStr = (String) backupObj.get("time_interval_backup");
-
+    
+        try (Reader reader = new FileReader(filePath)) {
+            JsonArray backupArray = JsonParser.parseReader(reader).getAsJsonArray();
+    
+            for (JsonElement element : backupArray) {
+                JsonObject backupObj = element.getAsJsonObject();
+    
+                String backupNameValue = getStringOrNull(backupObj, "backup_name");
+                String startPathValue = getStringOrNull(backupObj, "start_path");
+                String destinationPathValue = getStringOrNull(backupObj, "destination_path");
+                String lastBackupStr = getStringOrNull(backupObj, "last_backup");
+                String notesValue = getStringOrNull(backupObj, "notes");
+                String creationDateStr = getStringOrNull(backupObj, "creation_date");
+                String lastUpdateDateStr = getStringOrNull(backupObj, "last_update_date");
+                int backupCountValue = backupObj.has("backup_count") ? backupObj.get("backup_count").getAsInt() : 0;
+                int maxBackupsToKeepValue = backupObj.has("max_backups_to_keep") ? backupObj.get("max_backups_to_keep").getAsInt() : 0;
+    
+                Boolean automaticBackupValue = backupObj.has("automatic_backup") && !backupObj.get("automatic_backup").isJsonNull() 
+                    ? backupObj.get("automatic_backup").getAsBoolean() 
+                    : null;
+    
+                String nextDateBackupStr = getStringOrNull(backupObj, "next_date_backup");
+                String daysIntervalBackupStr = getStringOrNull(backupObj, "time_interval_backup");
+    
                 LocalDateTime lastBackupValue = lastBackupStr != null ? LocalDateTime.parse(lastBackupStr) : null;
                 LocalDateTime nextDateBackupValue = nextDateBackupStr != null ? LocalDateTime.parse(nextDateBackupStr) : null;
                 LocalDateTime creationDateValue = creationDateStr != null ? LocalDateTime.parse(creationDateStr) : null;
                 LocalDateTime lastUpdateDateValue = lastUpdateDateStr != null ? LocalDateTime.parse(lastUpdateDateStr) : null;
-
+    
                 backupList.add(new Backup(
                     backupNameValue,
                     startPathValue,
@@ -97,91 +96,103 @@ public class JSONAutoBackup implements IJSONAutoBackup {
                     automaticBackupValue,
                     nextDateBackupValue,
                     TimeInterval.getTimeIntervalFromString(daysIntervalBackupStr),
-                    notesValue,    
+                    notesValue,
                     creationDateValue,
                     lastUpdateDateValue,
                     backupCountValue,
                     maxBackupsToKeepValue
                 ));
             }
-
-        } catch (IOException | ParseException | NullPointerException ex) {
+    
+        } catch (IOException | JsonSyntaxException | NullPointerException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return backupList;
     }
     
+    // Helper method to safely retrieve a string or null
+    private String getStringOrNull(JsonObject obj, String property) {
+        return obj.has(property) && !obj.get(property).isJsonNull() ? obj.get(property).getAsString() : null;
+    }
+    
     @Override
-    public void UpdateBackupListJSON(String directoryPath, String filename, List<Backup> backups) {
+    public void updateBackupListJSON(String directoryPath, String filename, List<Backup> backups) {
         String filePath = directoryPath + filename;
-        
-        JSONArray updatedBackupArray = new JSONArray();
-        for (Backup backup : backups) {
-            JSONObject backupObject = new JSONObject();
-            backupObject.put("backup_name", backup.getBackupName());
-            backupObject.put("start_path", backup.getInitialPath());
-            backupObject.put("destination_path", backup.getDestinationPath());
-            backupObject.put("last_backup", backup.getLastBackup() != null ? backup.getLastBackup().toString() : null);
-            backupObject.put("automatic_backup", backup.isAutoBackup());
-            backupObject.put("next_date_backup", backup.getNextDateBackup() != null ? backup.getNextDateBackup().toString() : null);
-            backupObject.put("time_interval_backup", backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : null);
-            backupObject.put("notes", backup.getNotes());
-            backupObject.put("creation_date", backup.getCreationDate() != null ? backup.getCreationDate().toString() : null);
-            backupObject.put("last_update_date", backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().toString() : null);
-            backupObject.put("backup_count", backup.getBackupCount());
-            backupObject.put("max_backups_to_keep", backup.getMaxBackupsToKeep());
 
-            updatedBackupArray.add(backupObject);
-        }
+        try (Writer writer = new FileWriter(filePath)) {
+            // Use Gson to convert the list of backups into a JSON array
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonArray updatedBackupArray = new JsonArray();
 
-        try (FileWriter file = new FileWriter(filePath)) {
-            file.write(updatedBackupArray.toJSONString());
-            file.flush();
+            for (Backup backup : backups) {
+                JsonObject backupObject = new JsonObject();
+                backupObject.addProperty("backup_name", backup.getBackupName());
+                backupObject.addProperty("start_path", backup.getInitialPath());
+                backupObject.addProperty("destination_path", backup.getDestinationPath());
+                backupObject.addProperty("last_backup", backup.getLastBackup() != null ? backup.getLastBackup().toString() : null);
+                backupObject.addProperty("automatic_backup", backup.isAutoBackup());
+                backupObject.addProperty("next_date_backup", backup.getNextDateBackup() != null ? backup.getNextDateBackup().toString() : null);
+                backupObject.addProperty("time_interval_backup", backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : null);
+                backupObject.addProperty("notes", backup.getNotes());
+                backupObject.addProperty("creation_date", backup.getCreationDate() != null ? backup.getCreationDate().toString() : null);
+                backupObject.addProperty("last_update_date", backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().toString() : null);
+                backupObject.addProperty("backup_count", backup.getBackupCount());
+                backupObject.addProperty("max_backups_to_keep", backup.getMaxBackupsToKeep());
+
+                updatedBackupArray.add(backupObject);
+            }
+
+            // Write the JSON array to the file
+            gson.toJson(updatedBackupArray, writer);
         } catch (IOException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
     @Override
-    public void UpdateSingleBackupInJSON(String directoryPath, String filename, Backup updatedBackup) {
+    public void updateSingleBackupInJSON(String directoryPath, String filename, Backup updatedBackup) {
         String filePath = directoryPath + filename;
 
-        try (FileReader reader = new FileReader(filePath)) {
-            JSONParser jsonParser = new JSONParser();
-            JSONArray backupArray = (JSONArray) jsonParser.parse(reader);
+        try (Reader reader = new FileReader(filePath)) {
+            // Parse JSON file into a list of Backup objects using Gson
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Type listType = new TypeToken<List<JsonObject>>() {}.getType();
+            List<JsonObject> backupList = gson.fromJson(reader, listType);
 
-            for (Object obj : backupArray) {
-                JSONObject backupObject = (JSONObject) obj;
-
-                String backupName = (String) backupObject.get("backup_name");
+            // Find and update the specific backup
+            for (JsonObject backupObject : backupList) {
+                String backupName = backupObject.get("backup_name").getAsString();
                 if (backupName.equals(updatedBackup.getBackupName())) {
-                    backupObject.put("start_path", updatedBackup.getInitialPath());
-                    backupObject.put("destination_path", updatedBackup.getDestinationPath());
-                    backupObject.put("last_backup", updatedBackup.getLastBackup() != null ? updatedBackup.getLastBackup().toString() : null);
-                    backupObject.put("automatic_backup", updatedBackup.isAutoBackup());
-                    backupObject.put("next_date_backup", updatedBackup.getNextDateBackup() != null ? updatedBackup.getNextDateBackup().toString() : null);
-                    backupObject.put("time_interval_backup", updatedBackup.getTimeIntervalBackup() != null ? updatedBackup.getTimeIntervalBackup().toString() : null);
-                    backupObject.put("notes", updatedBackup.getNotes());
-                    backupObject.put("creation_date", updatedBackup.getCreationDate() != null ? updatedBackup.getCreationDate().toString() : null);
-                    backupObject.put("last_update_date", updatedBackup.getLastUpdateDate() != null ? updatedBackup.getLastUpdateDate().toString() : null);
-                    backupObject.put("backup_count", updatedBackup.getBackupCount());
-                    backupObject.put("max_backups_to_keep", updatedBackup.getMaxBackupsToKeep());
+                    backupObject.addProperty("start_path", updatedBackup.getInitialPath());
+                    backupObject.addProperty("destination_path", updatedBackup.getDestinationPath());
+                    backupObject.addProperty("last_backup", updatedBackup.getLastBackup() != null ? updatedBackup.getLastBackup().toString() : null);
+                    backupObject.addProperty("automatic_backup", updatedBackup.isAutoBackup());
+                    backupObject.addProperty("next_date_backup", updatedBackup.getNextDateBackup() != null ? updatedBackup.getNextDateBackup().toString() : null);
+                    backupObject.addProperty("time_interval_backup", updatedBackup.getTimeIntervalBackup() != null ? updatedBackup.getTimeIntervalBackup().toString() : null);
+                    backupObject.addProperty("notes", updatedBackup.getNotes());
+                    backupObject.addProperty("creation_date", updatedBackup.getCreationDate() != null ? updatedBackup.getCreationDate().toString() : null);
+                    backupObject.addProperty("last_update_date", updatedBackup.getLastUpdateDate() != null ? updatedBackup.getLastUpdateDate().toString() : null);
+                    backupObject.addProperty("backup_count", updatedBackup.getBackupCount());
+                    backupObject.addProperty("max_backups_to_keep", updatedBackup.getMaxBackupsToKeep());
                     break;
                 }
             }
 
-            try (FileWriter file = new FileWriter(filePath)) {
-                file.write(backupArray.toJSONString());
-                file.flush();
+            // Write updated list back to the JSON file
+            try (Writer writer = new FileWriter(filePath)) {
+                gson.toJson(backupList, writer);
             } catch (IOException ex) {
-                OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
 
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            OpenExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        } catch (JsonSyntaxException ex) {
+            Logger.logMessage("Invalid JSON format: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }
