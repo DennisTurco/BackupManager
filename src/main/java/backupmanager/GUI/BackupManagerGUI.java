@@ -101,14 +101,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         saveChanged = true;
         
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
-        
-        File file = new File(System.getProperty("os.name").toLowerCase().contains("win") ? "C:\\Windows\\System32" : "/root");
-        if (file.canWrite()) {
-            Logger.logMessage("The application is running with administrator privileges.", Logger.LogLevel.DEBUG);
-        } else {
-            Logger.logMessage("The application does NOT have administrator privileges.", Logger.LogLevel.DEBUG);
-        }
-        
+
         customListeners();
         
         // load Menu items
@@ -413,7 +406,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private String getBackupName(boolean canOverwrite) {
         String backup_name;
         do {
-            
             backup_name = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT)); // pop-up message
             for (Backup backup : backups) {
                 if (backup.getBackupName().equals(backup_name) && canOverwrite) {
@@ -809,10 +801,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         for (Backup backup : backups) {
             if (backupName.equals(backup.getBackupName())) {
                 backups.remove(backup);
+                Logger.logMessage("Backup removed successfully: " + backup.toString(), Logger.LogLevel.INFO);
                 break;
             }
         }
-        
+
         BackupOperations.updateBackupList(backups);
     }
     
@@ -1762,8 +1755,12 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
         if (selectedRow != -1) {
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
             Logger.logMessage("Edit row : " + selectedRow, Logger.LogLevel.INFO);
-            OpenBackup(backups.get(selectedRow).getBackupName());
+            OpenBackup(backup.getBackupName());
             TabbedPane.setSelectedIndex(0);
         }
     }//GEN-LAST:event_EditPoputItemActionPerformed
@@ -1782,7 +1779,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         if (selectedRow != -1) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                RemoveBackup(backups.get(selectedRow).getBackupName());
+                // get correct backup
+                String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+                Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+                RemoveBackup(backup.getBackupName());
             }
         }
     }
@@ -1792,7 +1793,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         
         int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
-            RemoveBackup(backups.get(selectedRow).getBackupName());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            RemoveBackup(backup.getBackupName());
         }
     }
 
@@ -1803,9 +1808,15 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             table.clearSelection(); // deselect any selected row
             detailsLabel.setText(""); // clear the label
         } else {
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            Logger.logMessage("Selected backup: " + backupName, Logger.LogLevel.INFO);
+
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
-                AutoBackupMenuItem.setSelected(backups.get(selectedRow).isAutoBackup());
+                AutoBackupMenuItem.setSelected(backup.isAutoBackup());
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
             }
@@ -1813,36 +1824,36 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 Logger.logMessage("Edit row : " + selectedRow, Logger.LogLevel.INFO);
-                OpenBackup(backups.get(selectedRow).getBackupName());
+                OpenBackup(backupName);
                 TabbedPane.setSelectedIndex(0);
             }
 
             // Handling single left mouse button click
             else if (SwingUtilities.isLeftMouseButton(evt)) {
-                String backupName = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_DETAIL);
-                String initialPath = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_DETAIL);
-                String destinationPath = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_DETAIL);
-                String lastBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_DETAIL);
-                String nextBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_DETAIL);
-                String timeIntervalBackup = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
-                String creationDate = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
-                String lastUpdateDate = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
-                String backupCount = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_COUNT_DETAIL);
-                String notes = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NOTES_DETAIL);
-                String maxBackupsToKeep = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
+                String backupNameStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_DETAIL);
+                String initialPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_DETAIL);
+                String destinationPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_DETAIL);
+                String lastBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_DETAIL);
+                String nextBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_DETAIL);
+                String timeIntervalBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
+                String creationDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
+                String lastUpdateDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
+                String backupCountStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_COUNT_DETAIL);
+                String notesStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NOTES_DETAIL);
+                String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
                 detailsLabel.setText(
-                    "<html><b>" + backupName + ":</b> " + backups.get(selectedRow).getBackupName() + ", " +
-                    "<b>" + initialPath + ":</b> " + backups.get(selectedRow).getInitialPath() + ", " +
-                    "<b>" + destinationPath + ":</b> " + backups.get(selectedRow).getDestinationPath() + ", " +
-                    "<b>" + lastBackup + ":</b> " + (backups.get(selectedRow).getLastBackup() != null ? backups.get(selectedRow).getLastBackup().format(formatter) : "") + ", " +
-                    "<b>" + nextBackup + ":</b> " + (backups.get(selectedRow).getNextDateBackup() != null ? backups.get(selectedRow).getNextDateBackup().format(formatter) : "_") + ", " +
-                    "<b>" + timeIntervalBackup + ":</b> " + (backups.get(selectedRow).getTimeIntervalBackup() != null ? backups.get(selectedRow).getTimeIntervalBackup().toString() : "_") + ", " +
-                    "<b>" + creationDate + ":</b> " + (backups.get(selectedRow).getCreationDate() != null ? backups.get(selectedRow).getCreationDate().format(formatter) : "_") + ", " +
-                    "<b>" + lastUpdateDate + ":</b> " + (backups.get(selectedRow).getLastUpdateDate() != null ? backups.get(selectedRow).getLastUpdateDate().format(formatter) : "_") + ", " +
-                    "<b>" + backupCount + ":</b> " + (backups.get(selectedRow).getBackupCount()) + ", " +
-                    "<b>" + maxBackupsToKeep + ":</b> " + (backups.get(selectedRow).getMaxBackupsToKeep()) + ", " +
-                    "<b>" + notes + ":</b> " + (backups.get(selectedRow).getNotes()) +
+                    "<html><b>" + backupNameStr + ":</b> " + backup.getBackupName() + ", " +
+                    "<b>" + initialPathStr + ":</b> " + backup.getInitialPath() + ", " +
+                    "<b>" + destinationPathStr + ":</b> " + backup.getDestinationPath() + ", " +
+                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "") + ", " +
+                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "_") + ", " +
+                    "<b>" + timeIntervalBackupStr + ":</b> " + (backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "_") + ", " +
+                    "<b>" + creationDateStr + ":</b> " + (backup.getCreationDate() != null ? backup.getCreationDate().format(formatter) : "_") + ", " +
+                    "<b>" + lastUpdateDateStr + ":</b> " + (backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().format(formatter) : "_") + ", " +
+                    "<b>" + backupCountStr + ":</b> " + (backup.getBackupCount()) + ", " +
+                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxBackupsToKeep()) + ", " +
+                    "<b>" + notesStr + ":</b> " + (backup.getNotes()) +
                     "</html>"
                 );
             }
@@ -1857,8 +1868,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
         Logger.logMessage("Event --> duplicating backup", Logger.LogLevel.INFO);
         
-        if (selectedRow != -1) {        
-            Backup backup = backups.get(selectedRow);
+        if (selectedRow != -1) {
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
             LocalDateTime dateNow = LocalDateTime.now();
             Backup newBackup = new Backup(
                     backup.getBackupName() + "_copy",
@@ -1883,7 +1897,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private void RunBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunBackupPopupItemActionPerformed
         if (selectedRow != -1) {
             
-            Backup backup = backups.get(selectedRow);
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
             
             progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
             BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
@@ -1896,28 +1912,43 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
     private void CopyBackupNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyBackupNamePopupItemActionPerformed
         if (selectedRow != -1) {
-            StringSelection selection = new StringSelection(backups.get(selectedRow).getBackupName());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            StringSelection selection = new StringSelection(backup.getBackupName());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }//GEN-LAST:event_CopyBackupNamePopupItemActionPerformed
 
     private void CopyInitialPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyInitialPathPopupItemActionPerformed
         if (selectedRow != -1) {
-            StringSelection selection = new StringSelection(backups.get(selectedRow).getInitialPath());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            StringSelection selection = new StringSelection(backup.getInitialPath());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }//GEN-LAST:event_CopyInitialPathPopupItemActionPerformed
 
     private void CopyDestinationPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyDestinationPathPopupItemActionPerformed
         if (selectedRow != -1) {
-            StringSelection selection = new StringSelection(backups.get(selectedRow).getDestinationPath());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            StringSelection selection = new StringSelection(backup.getDestinationPath());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }//GEN-LAST:event_CopyDestinationPathPopupItemActionPerformed
 
     private void AutoBackupMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutoBackupMenuItemActionPerformed
         if (selectedRow != -1) {
-            Backup backup = backups.get(selectedRow);
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
             boolean res = !backup.isAutoBackup();
             setAutoBackupPreference(backup, res);
             AutoBackupMenuItem.setSelected(res);
@@ -1929,19 +1960,31 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
     private void OpenInitialFolderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialFolderItemActionPerformed
         if (selectedRow != -1) {
-            OpenFolder(backups.get(selectedRow).getInitialPath());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            OpenFolder(backup.getInitialPath());
         }
     }//GEN-LAST:event_OpenInitialFolderItemActionPerformed
 
     private void OpenInitialDestinationItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialDestinationItemActionPerformed
         if (selectedRow != -1) {
-            OpenFolder(backups.get(selectedRow).getDestinationPath());
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+            OpenFolder(backup.getDestinationPath());
         }
     }//GEN-LAST:event_OpenInitialDestinationItemActionPerformed
 
     private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
         if (selectedRow != -1) {
-            renameBackup(backups.get(selectedRow));
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+            
+            renameBackup(backup);
         }
     }//GEN-LAST:event_renamePopupItemActionPerformed
 

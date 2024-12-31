@@ -55,7 +55,7 @@ public class BackupOperations {
     public static void SingleBackup(Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
-        Logger.logMessage("Event --> automatic single backup started", Logger.LogLevel.INFO);
+        Logger.logMessage("Event --> manual backup started", Logger.LogLevel.INFO);
 
         if (singleBackupBtn != null) singleBackupBtn.setEnabled(false);
         if (autoBackupBtn != null) autoBackupBtn.setEnabled(false);
@@ -82,7 +82,7 @@ public class BackupOperations {
 
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
-            zipDirectory(path1, path2+".zip", backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);
+            zipDirectory(path1, path2 + ".zip", backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);
         } catch (IOException e) {
             Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -364,7 +364,7 @@ public class BackupOperations {
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
-            Logger.logMessage("Zipping progress: " + value, Logger.LogLevel.INFO);
+            Logger.logMessage("Zipping progress: " + value + "%", Logger.LogLevel.INFO);
         
         if (progressBar != null) {
             progressBar.updateProgressBar(value);
