@@ -7,7 +7,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-12T21:44:37.283133900",
-    "last_update_date": "2024-12-15T19:18:30.219573400",
+    "last_update_date": "2025-01-05T18:14:25.744958600",
     "backup_count": 29,
     "max_backups_to_keep": 3
   },
@@ -19,7 +19,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-12T22:52:41.381624500",
-    "last_update_date": "2024-12-31T01:07:20.544213200",
+    "last_update_date": "2024-12-31T18:48:55.479483800",
     "backup_count": 9,
     "max_backups_to_keep": 3
   },
@@ -53,14 +53,14 @@
     "backup_name": "lezioni",
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
     "destination_path": "C:\\Users\\Utente\\OneDrive",
-    "last_backup": "2024-12-31T00:21:41.536359500",
+    "last_backup": "2024-12-31T18:49:11.000314900",
     "automatic_backup": true,
-    "next_date_backup": "2025-03-21T00:22:41.536359500",
+    "next_date_backup": "2025-03-21T18:50:11.000314900",
     "time_interval_backup": "80.0:1",
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
     "last_update_date": "2024-12-26T11:41:22.021254900",
-    "backup_count": 8,
+    "backup_count": 9,
     "max_backups_to_keep": 3
   },
   {
@@ -84,7 +84,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-28T00:00:00.017265400",
-    "last_update_date": "2024-12-31T12:28:36.964539100",
+    "last_update_date": "2024-12-31T18:48:59.249568500",
     "backup_count": 0,
     "max_backups_to_keep": 3
   },

@@ -18,6 +18,7 @@ import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
+import backupmanager.Table.TableDataManager;
 import backupmanager.BackupOperations;
 import backupmanager.Exporter;
 import backupmanager.Logger;
@@ -471,7 +472,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 currentBackup.setInitialPath(GetStartPathField());
                 currentBackup.setDestinationPath(GetDestinationPathField());
                 currentBackup.setLastBackup(LocalDateTime.now());
-
             }
             
         } catch (IOException e) {
@@ -891,7 +891,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         }
         
-        BackupOperations.updateTableWithNewBackupList(tempBackups);
+        TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
     }
     
     private void updateCurrentFiedsByBackup(Backup backup) {
@@ -1379,6 +1379,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         addBackupEntryButton.setToolTipText("Add new backup");
         addBackupEntryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addBackupEntryButton.setPreferredSize(new java.awt.Dimension(25, 25));
+        addBackupEntryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBackupEntryButtonActionPerformed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2147,7 +2152,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
                 try {
                     backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-                    BackupOperations.updateTableWithNewBackupList(backups);
+                    TableDataManager.updateTableWithNewBackupList(backups, formatter);
                 } catch (IOException ex) {
                     Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
                 }
@@ -2195,6 +2200,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
         Exporter.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
+
+    private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
+        NewBackup();
+        TabbedPane.setSelectedIndex(0);
+    }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void setTranslations() {
         try {

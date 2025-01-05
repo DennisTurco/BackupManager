@@ -25,9 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.TableColumnModel;
 
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import static backupmanager.GUI.BackupManagerGUI.backupTable;
@@ -44,8 +42,7 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Logger.LogLevel;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Table.BackupTable;
-import backupmanager.Table.ProgressBarRenderer;
-import backupmanager.Table.StripedRowRenderer;
+import backupmanager.Table.TableDataManager;
 
 public class BackupOperations {
     
@@ -311,18 +308,8 @@ public class BackupOperations {
         if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
         if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
 
-        if (backupTable != null) {
-            // remove the progress bar renderer
-            backupTable.getColumnModel().getColumn(3).setCellRenderer(new StripedRowRenderer());
-    
-            // Set last backup value in the table
-            backupTable.getModel().setValueAt(
-                    backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                    findBackupRowIndex(backup, backupTable), 3);
-            
-            backupTable.repaint();  // Repaints the whole table
-            backupTable.revalidate(); // Revalidates the table layout
-        }
+        if (backupTable != null) 
+            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backup, backupTable, formatter);
     }
 
     private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, BackupTable backupTable) throws IOException {
@@ -350,7 +337,7 @@ public class BackupOperations {
         JSON.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
         
         if (BackupManagerGUI.model != null)
-            updateTableWithNewBackupList(backups);
+            TableDataManager.updateTableWithNewBackupList(backups, formatter);
     }
     
     public static void updateBackup(List<Backup> backups, Backup updatedBackup) {
@@ -359,7 +346,7 @@ public class BackupOperations {
         JSON.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
         
         if (BackupManagerGUI.model != null)
-            updateTableWithNewBackupList(backups);
+        TableDataManager.updateTableWithNewBackupList(backups, formatter);
     }
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
@@ -370,47 +357,14 @@ public class BackupOperations {
             progressBar.updateProgressBar(value);
         }
 
-        SwingUtilities.invokeLater(() -> {
-            // Locate the row index of the backup in the table
-            int rowIndex = findBackupRowIndex(backup, table);
-            if (rowIndex != -1) {
-                TableColumnModel columnModel = table.getColumnModel();
-                int targetColumnIndex = 3;
-
-                // Swap the column renderer to ProgressBarRenderer at the start
-                if (value == 0) {
-                    columnModel.getColumn(targetColumnIndex).setCellRenderer(new ProgressBarRenderer());
-                    table.repaint();
-                }
-
-                // Update the value of the progress in the table
-                table.getModel().setValueAt(value, rowIndex, targetColumnIndex);
-
-                // Restore the original renderer after completion
-                if (value == 100) {
-                    backupTable.getModel().setValueAt(
-                        backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                        rowIndex,
-                        targetColumnIndex
-                    );
-                    table.repaint();
-                }
-            }
-        });
+        if (table != null) {
+            TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
+        }
 
         if (value == 100) {
             updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn);
             deleteOldBackupsIfNecessary(backup.getMaxBackupsToKeep(), path2);
         }
-    }
-
-    private static int findBackupRowIndex(Backup backup, BackupTable table) {
-        for (int i = 0; i < table.getRowCount(); i++) {
-            if (table.getValueAt(i, 0).equals(backup.getBackupName())) { // first column holds unique backup names
-                return i;
-            }
-        }
-        return -1;
     }
 
     private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
@@ -567,26 +521,6 @@ public class BackupOperations {
             }
         }
         return count;
-    }
-
-    public static void updateTableWithNewBackupList(List<Backup> updatedBackups) { 
-        Logger.logMessage("updating backup list", Logger.LogLevel.DEBUG);
-        
-        SwingUtilities.invokeLater(() -> {
-            BackupManagerGUI.model.setRowCount(0);
-
-            for (Backup backup : updatedBackups) {
-                BackupManagerGUI.model.addRow(new Object[]{
-                    backup.getBackupName(),
-                    backup.getInitialPath(),
-                    backup.getDestinationPath(),
-                    backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                    backup.isAutoBackup(),
-                    backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "",
-                    backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
-                });
-            }
-        });
     }
 
     public static void StopCopyFiles() {

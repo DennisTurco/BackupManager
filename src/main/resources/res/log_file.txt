@@ -1,0 +1,63 @@
+2025-01-05T18:14:30.949816300 [WARN] Input Error! One or both paths do not exist.
+2025-01-05T18:14:30.946840200 [INFO] Event --> manual backup started
+2025-01-05T18:14:27.773174500 [DEBUG] Selected backup: sad
+2025-01-05T18:14:27.460223500 [DEBUG] Selected backup: sad
+2025-01-05T18:14:25.766216300 [DEBUG] updating backup list
+2025-01-05T18:14:25.744462700 [INFO] Event --> auto backup disabled
+2025-01-05T18:14:25.742478900 [INFO] Event --> opening backup
+2025-01-05T18:14:25.741486200 [INFO] Edit row : 0
+2025-01-05T18:14:25.739998200 [DEBUG] Selected backup: testone
+2025-01-05T18:14:25.543487800 [DEBUG] Selected backup: testone
+2025-01-05T18:14:24.630057400 [DEBUG] Selected backup: testone
+2025-01-05T18:14:21.853359 [DEBUG] Background mode: false
+2025-01-05T18:14:21.846911200 [INFO] Application started
+2024-12-31T18:49:11.016683300 [INFO] Deleting old backups if necessary
+2024-12-31T18:49:11.015691 [DEBUG] updating backup list
+2024-12-31T18:49:11.003786700 [INFO] Next date backup setted to: 2025-03-21T18:50:11.000314900
+2024-12-31T18:49:11.000810600 [INFO] Backup completed!
+2024-12-31T18:49:10.997834400 [INFO] Zipping progress: 100%
+2024-12-31T18:49:10.990890900 [DEBUG] Zipping file: lezioni/test.csv
+2024-12-31T18:49:10.988906700 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2024-12-31T18:49:10.983947100 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2024-12-31T18:49:10.979482800 [INFO] Zipping progress: 75%
+2024-12-31T18:49:10.976011 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2024-12-31T18:49:10.970058500 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2024-12-31T18:49:10.966587500 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2024-12-31T18:49:10.965099100 [INFO] Zipping progress: 50%
+2024-12-31T18:49:10.959146200 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2024-12-31T18:49:10.955674500 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2024-12-31T18:49:10.951706700 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2024-12-31T18:49:10.949723200 [INFO] Zipping progress: 25%
+2024-12-31T18:49:10.946746700 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2024-12-31T18:49:10.943771300 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2024-12-31T18:49:10.939802800 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2024-12-31T18:49:10.937322800 [DEBUG] Zipping directory: lezioni//
+2024-12-31T18:49:10.926410500 [INFO] Starting zipping process
+2024-12-31T18:49:10.913514800 [INFO] Event --> manual backup started
+2024-12-31T18:49:09.054215400 [DEBUG] Selected backup: lezioni
+2024-12-31T18:49:08.759365800 [DEBUG] Selected backup: lezioni
+2024-12-31T18:49:03.453739200 [DEBUG] Selected backup: asd
+2024-12-31T18:48:59.251552400 [DEBUG] updating backup list
+2024-12-31T18:48:59.249098600 [INFO] Event --> auto backup disabled
+2024-12-31T18:48:59.248080800 [INFO] Event --> opening backup
+2024-12-31T18:48:59.247089100 [INFO] Edit row : 6
+2024-12-31T18:48:59.246096300 [DEBUG] Selected backup: asa
+2024-12-31T18:48:59.078524200 [DEBUG] Selected backup: asa
+2024-12-31T18:48:56.791052700 [DEBUG] updating backup list
+2024-12-31T18:48:56.788078800 [INFO] Event --> auto backup disabled
+2024-12-31T18:48:56.786589100 [INFO] Event --> clear
+2024-12-31T18:48:56.785597300 [INFO] Event --> new backup
+2024-12-31T18:48:55.484939700 [DEBUG] updating backup list
+2024-12-31T18:48:55.478988400 [INFO] Event --> auto backup disabled
+2024-12-31T18:48:55.477499900 [INFO] Event --> opening backup
+2024-12-31T18:48:55.476508 [INFO] Edit row : 1
+2024-12-31T18:48:55.475019900 [DEBUG] Selected backup: test2
+2024-12-31T18:48:55.335564300 [DEBUG] Selected backup: test2
+2024-12-31T18:48:52.212934600 [DEBUG] Background mode: false
+2024-12-31T18:48:52.206983600 [INFO] Application started
+2024-12-31T18:46:32.684099500 [DEBUG] updating backup list
+2024-12-31T18:46:32.677183600 [INFO] Event --> auto backup disabled
+2024-12-31T18:46:32.675667900 [INFO] Event --> clear
+2024-12-31T18:46:32.674179300 [INFO] Event --> new backup
+2024-12-31T18:46:29.729407800 [DEBUG] Background mode: false
+2024-12-31T18:46:29.722960100 [INFO] Application started
