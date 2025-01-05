@@ -63,7 +63,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.json.simple.parser.ParseException;
 import com.formdev.flatlaf.FlatClientProperties;
 
 /**
@@ -169,7 +168,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         try {
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
             setTranslations();
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             Logger.logMessage("An error occurred during reloading preferences operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }

@@ -1,10 +1,8 @@
 package backupmanager.Json;
 
-import java.io.IOException;
+import com.google.gson.*;
 import java.io.FileReader;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.io.IOException;
 
 import backupmanager.Logger;
 
@@ -12,7 +10,7 @@ public class JSONConfigReader {
 
     private final String filename;
     private final String directoryPath;
-    private JSONObject config;
+    private JsonObject config;
 
     public JSONConfigReader(String filename, String directoryPath) {
         this.filename = filename;
@@ -26,24 +24,24 @@ public class JSONConfigReader {
             return false;
         }
 
-        JSONObject logService = (JSONObject) config.get("LogService");
+        JsonObject logService = config.getAsJsonObject("LogService");
         if (logService != null) {
-            Boolean isEnabled = (Boolean) logService.get(level);
-            return isEnabled != null && isEnabled;
+            JsonElement isEnabled = logService.get(level);
+            return isEnabled != null && isEnabled.getAsBoolean();
         }
         return false; // Default to false if LogService or level is missing
     }
-    
+
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
             Logger.logMessage("Configuration not loaded. Cannot check menu items", Logger.LogLevel.ERROR);
             return false;
         }
 
-        JSONObject menuService = (JSONObject) config.get("MenuItems");
+        JsonObject menuService = config.getAsJsonObject("MenuItems");
         if (menuService != null) {
-            Boolean isEnabled = (Boolean) menuService.get(menuItem);
-            return isEnabled != null && isEnabled;
+            JsonElement isEnabled = menuService.get(menuItem);
+            return isEnabled != null && isEnabled.getAsBoolean();
         }
         return true; // Default to true
     }
@@ -61,55 +59,54 @@ public class JSONConfigReader {
     }
 
     public int readCheckForBackupTimeInterval() throws IOException {
-        int timeInterval;
         try {
-            JSONObject backupService = getBackupServiceConfig();
-            Long interval = (Long) backupService.get("value");
+            JsonObject backupService = getBackupServiceConfig();
+            JsonElement interval = backupService.get("value");
 
             // if the interval is null, set to default of 5 minutes
-            timeInterval = (interval != null) ? interval.intValue() : 5;
+            int timeInterval = (interval != null) ? interval.getAsInt() : 5;
+
+            Logger.logMessage("Time interval set to " + timeInterval + " minutes", Logger.LogLevel.INFO);
+            return timeInterval;
         } catch (NullPointerException e) {
             Logger.logMessage("Error retrieving backup time interval, defaulting to 5 minutes: " + e.getMessage(), Logger.LogLevel.ERROR);
-            timeInterval = 5;
+            return 5; // Default to 5 minutes
         }
-
-        Logger.logMessage("Time interval set to " + timeInterval + " minutes", Logger.LogLevel.INFO);
-        return timeInterval;
     }
-    
+
     private int getConfigValue(String key, int defaultValue) {
         try {
-            JSONObject logService = getLogServiceConfig();
-            JSONObject configValue = (JSONObject) logService.get(key);
-            Long value = (Long) configValue.get("value");
-            return (value != null) ? value.intValue() : defaultValue;
+            JsonObject logService = getLogServiceConfig();
+            JsonElement value = logService.get(key);
+
+            return (value != null && value.isJsonPrimitive()) ? value.getAsInt() : defaultValue;
         } catch (IOException | NullPointerException e) {
             Logger.logMessage("Error retrieving config value for " + key + ": " + e.getMessage(), Logger.LogLevel.ERROR);
             return defaultValue;
         }
     }
-    
+
     private void loadConfig() {
         String filePath = directoryPath + filename;
         try (FileReader reader = new FileReader(filePath)) {
-            JSONParser parser = new JSONParser();
-            config = (JSONObject) parser.parse(reader);
-        } catch (IOException | ParseException e) {
+            Gson gson = new Gson();
+            config = gson.fromJson(reader, JsonObject.class);
+        } catch (IOException e) {
             Logger.logMessage("Failed to load configuration: " + e.getMessage(), Logger.LogLevel.ERROR);
         }
     }
 
-    private JSONObject getLogServiceConfig() throws IOException {
+    private JsonObject getLogServiceConfig() throws IOException {
         if (config == null) {
             throw new IOException("Configuration not loaded.");
         }
-        return (JSONObject) config.get("LogService");
+        return config.getAsJsonObject("LogService");
     }
 
-    private JSONObject getBackupServiceConfig() throws IOException {
+    private JsonObject getBackupServiceConfig() throws IOException {
         if (config == null) {
             throw new IOException("Configuration not loaded.");
         }
-        return (JSONObject) config.get("BackupService");
+        return config.getAsJsonObject("BackupService");
     }
 }

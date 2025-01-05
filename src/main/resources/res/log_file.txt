@@ -1,3 +1,22 @@
+2025-01-05T18:32:16.415871100 [INFO] Reloading preferences
+2025-01-05T18:32:16.396526900 [INFO] Theme set to: Cyan light
+2025-01-05T18:32:16.395067900 [INFO] Language set to: Italiano
+2025-01-05T18:32:16.393550900 [INFO] Updating preferences -> Language: Italiano; Theme: Cyan light
+2025-01-05T18:32:14.067307400 [INFO] Reloading preferences
+2025-01-05T18:32:14.050490600 [INFO] Theme set to: Dark
+2025-01-05T18:32:14.048506100 [INFO] Language set to: Italiano
+2025-01-05T18:32:14.046993200 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-05T18:32:11.373388400 [INFO] Event --> opening preferences dialog
+2025-01-05T18:32:05.203829300 [DEBUG] updating backup list
+2025-01-05T18:32:05.192421500 [INFO] Event --> auto backup disabled
+2025-01-05T18:32:05.190437100 [INFO] Event --> opening backup
+2025-01-05T18:32:05.189445300 [INFO] Edit row : 2
+2025-01-05T18:32:05.187957700 [DEBUG] Selected backup: testoso
+2025-01-05T18:32:05.010205800 [DEBUG] Selected backup: testoso
+2025-01-05T18:31:32.180788800 [DEBUG] Background mode: false
+2025-01-05T18:31:32.169273800 [INFO] Application started
+2025-01-05T18:27:37.941900 [DEBUG] Background mode: false
+2025-01-05T18:27:37.934956 [INFO] Application started
 2025-01-05T18:14:30.949816300 [WARN] Input Error! One or both paths do not exist.
 2025-01-05T18:14:30.946840200 [INFO] Event --> manual backup started
 2025-01-05T18:14:27.773174500 [DEBUG] Selected backup: sad

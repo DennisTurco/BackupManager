@@ -2,7 +2,6 @@ package backupmanager;
 
 import java.io.IOException;
 import java.util.Arrays;
-import org.json.simple.parser.ParseException;
 
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Preferences;
@@ -25,7 +24,7 @@ public class MainApp {
         try {
             Preferences.loadPreferencesFromJSON();
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             Logger.logMessage("An error occurred during loading preferences: ", LogLevel.DEBUG, ex);
         }
 

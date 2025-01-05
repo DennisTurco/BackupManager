@@ -17,7 +17,6 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
-import org.json.simple.parser.ParseException;
 
 public class PreferencesDialog extends javax.swing.JDialog {
 
@@ -151,7 +150,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
             // update globally
             Preferences.updatePreferencesToJSON();
             mainGui.reloadPreferences();
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             Logger.logMessage("An error occurred during applying preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }  

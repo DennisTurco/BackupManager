@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public enum ConfigKey {
     LOG_FILE_STRING,
@@ -31,15 +30,14 @@ public enum ConfigKey {
     private static final Map<ConfigKey, String> configValues = new EnumMap<>(ConfigKey.class);
 
     public static void loadFromJson(String filePath) {
-        JSONParser parser = new JSONParser();
         try (FileReader reader = new FileReader(filePath)) {
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             for (ConfigKey key : ConfigKey.values()) {
-                if (jsonObject.containsKey(key.name())) {
-                    configValues.put(key, (String) jsonObject.get(key.name()));
+                if (jsonObject.has(key.name())) {
+                    configValues.put(key, jsonObject.get(key.name()).getAsString());
                 }
             }
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }

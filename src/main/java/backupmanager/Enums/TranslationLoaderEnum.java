@@ -7,9 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class TranslationLoaderEnum {
 
@@ -277,20 +278,20 @@ public class TranslationLoaderEnum {
         }
     }
 
-    public static void loadTranslations(String filePath) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-    
+    public static void loadTranslations(String filePath) throws IOException {
+        Gson gson = new Gson();
+
         try (FileReader reader = new FileReader(filePath)) {
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-    
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
             for (TranslationCategory category : TranslationCategory.values()) {
-                JSONObject categoryTranslations = (JSONObject) jsonObject.get(category.getCategoryName());
-    
+                JsonObject categoryTranslations = jsonObject.getAsJsonObject(category.getCategoryName());
+
                 if (categoryTranslations != null) {
-                    for (Object keyObj : categoryTranslations.keySet()) {
-                        String key = (String) keyObj;
-                        String value = (String) categoryTranslations.get(key);
-    
+                    for (Map.Entry<String, JsonElement> entry : categoryTranslations.entrySet()) {
+                        String key = entry.getKey();
+                        String value = entry.getValue().getAsString();
+
                         // Use fromKeyName to get the TranslationKey from the JSON key
                         TranslationKey translationKey = TranslationKey.fromKeyName(key);
                         if (translationKey != null) {
@@ -307,7 +308,7 @@ public class TranslationLoaderEnum {
             }
         }
     }
-    
+
     public static String getTranslation(TranslationCategory category, TranslationKey key) {
         return category.translations.getOrDefault(key, key.getDefaultValue()); // Use default value if not found
     }
@@ -318,9 +319,9 @@ public class TranslationLoaderEnum {
             loadTranslations("src/main/resources/res/languages/ita.json");
 
             System.out.println(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
-            System.out.println(TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE));
+            System.out.println(TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE));
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
