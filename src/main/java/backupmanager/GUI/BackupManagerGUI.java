@@ -123,11 +123,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         MenuImport.setVisible(config.isMenuItemEnabled(MenuItems.Import.name()));
         MenuExport.setVisible(config.isMenuItemEnabled(MenuItems.Export.name()));
         
-        // set app size
+        // set app sizes
         setScreenSize();
 
         // icons
-        researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new javax.swing.ImageIcon(getClass().getResource("/res/img/search.png")));
+        researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new com.formdev.flatlaf.extras.FlatSVGIcon("res/img/search.svg", 16, 16));
 
         // translations
         setTranslations();
@@ -138,6 +138,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         interruptBackupPopupItem.setEnabled(false);
 
         lastBackupLabel.setText("");
+        
+        // set all svg images
+        setSvgImages();
     }
     
     public void showWindow() {
@@ -182,6 +185,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         // load theme
         ThemeManager.updateThemeFrame(this);
         ThemeManager.refreshPopup(TablePopup);
+        setSvgImages();
     }
     
     private void renameBackup(Backup backup) {
@@ -277,8 +281,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
             currentBackup.setTimeIntervalBackup(timeInterval);
             currentBackup.setNextDateBackup(nextDateBackup);
-            btnTimePicker.setToolTipText(timeInterval.toString());
-            btnTimePicker.setEnabled(true);
+            btnPathSearch2.setToolTipText(timeInterval.toString());
+            btnPathSearch2.setEnabled(true);
 
             Logger.logMessage("Event --> Next date backup setted to " + nextDateBackup, Logger.LogLevel.INFO);
 
@@ -318,8 +322,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
             backup.setTimeIntervalBackup(timeInterval);
             backup.setNextDateBackup(nextDateBackup);
-            btnTimePicker.setToolTipText(timeInterval.toString());
-            btnTimePicker.setEnabled(true);
+            btnPathSearch2.setToolTipText(timeInterval.toString());
+            btnPathSearch2.setEnabled(true);
 
             Logger.logMessage("Event --> Next date backup setted to " + nextDateBackup, Logger.LogLevel.INFO);
 
@@ -909,11 +913,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         setCurrentBackupMaxBackupsToKeep(backup.getMaxBackupsToKeep());
         
         if (backup.getTimeIntervalBackup() != null) {
-            btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
-            btnTimePicker.setEnabled(true);
+            btnPathSearch2.setToolTipText(backup.getTimeIntervalBackup().toString());
+            btnPathSearch2.setEnabled(true);
         } else {
-            btnTimePicker.setToolTipText("");
-            btnTimePicker.setEnabled(false);
+            btnPathSearch2.setToolTipText("");
+            btnPathSearch2.setEnabled(false);
         }  
     }
     
@@ -955,8 +959,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         
         // if the backup is the current backup i have to update the main panel
         if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            btnTimePicker.setToolTipText("");
-            btnTimePicker.setEnabled(false);
+            btnPathSearch2.setToolTipText("");
+            btnPathSearch2.setEnabled(false);
         }
     }
     
@@ -1019,56 +1023,55 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         txtTitle = new javax.swing.JLabel();
         currentFileLabel = new javax.swing.JLabel();
         startPathField = new javax.swing.JTextField();
-        btnPathSearch1 = new javax.swing.JButton();
         destinationPathField = new javax.swing.JTextField();
-        btnPathSearch2 = new javax.swing.JButton();
         lastBackupLabel = new javax.swing.JLabel();
         SingleBackup = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         backupNoteTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        btnTimePicker = new javax.swing.JButton();
         toggleAutoBackup = new javax.swing.JToggleButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
         jLabel4 = new javax.swing.JLabel();
         maxBackupCountSpinner = new javax.swing.JSpinner();
+        btnPathSearch1 = new backupmanager.svg.SVGButton();
+        btnPathSearch2 = new backupmanager.svg.SVGButton();
+        btnTimePicker = new backupmanager.svg.SVGButton();
         jPanel2 = new javax.swing.JPanel();
         tablePanel = new javax.swing.JPanel();
-        addBackupEntryButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         researchField = new javax.swing.JTextField();
-        exportAsCsvBtn = new javax.swing.JButton();
-        exportAsPdfBtn = new javax.swing.JButton();
         ExportLabel = new javax.swing.JLabel();
+        exportAsCsvBtn = new backupmanager.svg.SVGButton();
+        exportAsPdfBtn = new backupmanager.svg.SVGButton();
+        addBackupEntryButton = new backupmanager.svg.SVGButton();
         detailsPanel = new javax.swing.JPanel();
         detailsLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        MenuNew = new javax.swing.JMenuItem();
-        MenuSave = new javax.swing.JMenuItem();
-        MenuSaveWithName = new javax.swing.JMenuItem();
+        MenuNew = new backupmanager.svg.SVGMenuItem();
+        MenuSave = new backupmanager.svg.SVGMenuItem();
+        MenuSaveWithName = new backupmanager.svg.SVGMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        MenuImport = new javax.swing.JMenuItem();
-        MenuExport = new javax.swing.JMenuItem();
+        MenuImport = new backupmanager.svg.SVGMenuItem();
+        MenuExport = new backupmanager.svg.SVGMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        MenuClear = new javax.swing.JMenuItem();
-        MenuHistory = new javax.swing.JMenuItem();
+        MenuClear = new backupmanager.svg.SVGMenuItem();
+        MenuHistory = new backupmanager.svg.SVGMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        MenuPreferences = new javax.swing.JMenuItem();
-        MenuQuit = new javax.swing.JMenuItem();
+        MenuPreferences = new backupmanager.svg.SVGMenuItem();
+        MenuQuit = new backupmanager.svg.SVGMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        MenuWebsite = new javax.swing.JMenuItem();
-        MenuInfoPage = new javax.swing.JMenuItem();
-        MenuShare = new javax.swing.JMenuItem();
-        MenuDonate = new javax.swing.JMenuItem();
+        MenuWebsite = new backupmanager.svg.SVGMenuItem();
+        MenuInfoPage = new backupmanager.svg.SVGMenuItem();
+        MenuShare = new backupmanager.svg.SVGMenuItem();
+        MenuDonate = new backupmanager.svg.SVGMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        MenuBugReport = new javax.swing.JMenuItem();
-        MenuSupport = new javax.swing.JMenuItem();
+        MenuBugReport = new backupmanager.svg.SVGMenuItem();
+        MenuSupport = new backupmanager.svg.SVGMenuItem();
 
-        EditPoputItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pen.png"))); // NOI18N
         EditPoputItem.setText("Edit");
         EditPoputItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1077,7 +1080,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         TablePopup.add(EditPoputItem);
 
-        DeletePopupItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/bin.png"))); // NOI18N
         DeletePopupItem.setText("Delete");
         DeletePopupItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1086,7 +1088,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         TablePopup.add(DeletePopupItem);
 
-        interruptBackupPopupItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pause.png"))); // NOI18N
         interruptBackupPopupItem.setText("Interrupt");
         interruptBackupPopupItem.setToolTipText("");
         interruptBackupPopupItem.addActionListener(new java.awt.event.ActionListener() {
@@ -1208,16 +1209,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         startPathField.setMinimumSize(new java.awt.Dimension(465, 26));
         startPathField.setPreferredSize(new java.awt.Dimension(465, 26));
 
-        btnPathSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/folder.png"))); // NOI18N
-        btnPathSearch1.setToolTipText("Open file explorer");
-        btnPathSearch1.setBorderPainted(false);
-        btnPathSearch1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPathSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPathSearch1ActionPerformed(evt);
-            }
-        });
-
         destinationPathField.setToolTipText("(Required) Destination path");
         destinationPathField.setActionCommand("<Not Set>");
         destinationPathField.setAlignmentX(0.0F);
@@ -1225,16 +1216,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         destinationPathField.setMaximumSize(new java.awt.Dimension(465, 26));
         destinationPathField.setMinimumSize(new java.awt.Dimension(465, 26));
         destinationPathField.setPreferredSize(new java.awt.Dimension(465, 26));
-
-        btnPathSearch2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/folder.png"))); // NOI18N
-        btnPathSearch2.setToolTipText("Open file explorer");
-        btnPathSearch2.setBorderPainted(false);
-        btnPathSearch2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPathSearch2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPathSearch2ActionPerformed(evt);
-            }
-        });
 
         lastBackupLabel.setText("last backup: ");
 
@@ -1257,17 +1238,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(backupNoteTextArea);
 
         jLabel2.setText("notes:");
-
-        btnTimePicker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/chronometer.png"))); // NOI18N
-        btnTimePicker.setToolTipText("time picker");
-        btnTimePicker.setBorderPainted(false);
-        btnTimePicker.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTimePicker.setEnabled(false);
-        btnTimePicker.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimePickerActionPerformed(evt);
-            }
-        });
 
         toggleAutoBackup.setText("Auto Backup");
         toggleAutoBackup.setToolTipText("Enable/Disable automatic backup");
@@ -1294,13 +1264,49 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPathSearch1.setToolTipText("");
+        btnPathSearch1.setMaximumSize(new java.awt.Dimension(35, 35));
+        btnPathSearch1.setMinimumSize(new java.awt.Dimension(35, 35));
+        btnPathSearch1.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnPathSearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathSearch1ActionPerformed(evt);
+            }
+        });
+
+        btnPathSearch2.setToolTipText("Open file explorer");
+        btnPathSearch2.setMaximumSize(new java.awt.Dimension(35, 35));
+        btnPathSearch2.setMinimumSize(new java.awt.Dimension(35, 35));
+        btnPathSearch2.setPreferredSize(new java.awt.Dimension(35, 35));
+        btnPathSearch2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathSearch2ActionPerformed(evt);
+            }
+        });
+
+        btnTimePicker.setToolTipText("Time picker");
+        btnTimePicker.setMaximumSize(new java.awt.Dimension(36, 36));
+        btnTimePicker.setMinimumSize(new java.awt.Dimension(36, 36));
+        btnTimePicker.setPreferredSize(new java.awt.Dimension(36, 36));
+        btnTimePicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimePickerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(248, 248, 248)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lastBackupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(currentFileLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1309,19 +1315,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                                     .addComponent(destinationPathField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(startPathField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(4, 4, 4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPathSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(btnPathSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lastBackupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(currentFileLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(211, Short.MAX_VALUE))
+                            .addComponent(btnPathSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPathSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1330,13 +1328,13 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(maxBackupCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 387, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(SingleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(toggleAutoBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(351, 351, 351))
+                .addComponent(btnTimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(345, 345, 345))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1352,12 +1350,15 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 .addComponent(currentFileLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startPathField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPathSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(destinationPathField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPathSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(startPathField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPathSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(destinationPathField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnPathSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1367,9 +1368,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(SingleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toggleAutoBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnTimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toggleAutoBackup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxBackupCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1387,17 +1388,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         tablePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablePanelMouseClicked(evt);
-            }
-        });
-
-        addBackupEntryButton.setForeground(new java.awt.Color(0, 0, 0));
-        addBackupEntryButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/plus.png"))); // NOI18N
-        addBackupEntryButton.setToolTipText("Add new backup");
-        addBackupEntryButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addBackupEntryButton.setPreferredSize(new java.awt.Dimension(25, 25));
-        addBackupEntryButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBackupEntryButtonActionPerformed(evt);
             }
         });
 
@@ -1444,34 +1434,35 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        exportAsCsvBtn.setForeground(new java.awt.Color(0, 0, 0));
-        exportAsCsvBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/csv-file.png"))); // NOI18N
+        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ExportLabel.setText("Export As:");
+
         exportAsCsvBtn.setToolTipText("Export as .csv");
-        exportAsCsvBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exportAsCsvBtn.setMaximumSize(new java.awt.Dimension(32, 32));
         exportAsCsvBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        exportAsCsvBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         exportAsCsvBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAsCsvBtnActionPerformed(evt);
             }
         });
 
-        exportAsPdfBtn.setForeground(new java.awt.Color(0, 0, 0));
-        exportAsPdfBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pdf.png"))); // NOI18N
         exportAsPdfBtn.setToolTipText("Export as .pdf");
-        exportAsPdfBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
         exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        exportAsPdfBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportAsPdfBtnActionPerformed(evt);
             }
         });
 
-        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ExportLabel.setText("Export As:");
+        addBackupEntryButton.setToolTipText("Add new backup");
+        addBackupEntryButton.setMaximumSize(new java.awt.Dimension(32, 32));
+        addBackupEntryButton.setMinimumSize(new java.awt.Dimension(32, 32));
+        addBackupEntryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBackupEntryButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
@@ -1482,14 +1473,14 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                     .addGroup(tablePanelLayout.createSequentialGroup()
-                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1500,14 +1491,15 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ExportLabel)))
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1560,7 +1552,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         MenuNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MenuNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/add-file.png"))); // NOI18N
         MenuNew.setText("New");
         MenuNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1570,7 +1561,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.add(MenuNew);
 
         MenuSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MenuSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/diskette.png"))); // NOI18N
         MenuSave.setText("Save");
         MenuSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1579,7 +1569,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu1.add(MenuSave);
 
-        MenuSaveWithName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/save.png"))); // NOI18N
         MenuSaveWithName.setText("Save with name");
         MenuSaveWithName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1589,7 +1578,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.add(MenuSaveWithName);
         jMenu1.add(jSeparator4);
 
-        MenuImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/import.png"))); // NOI18N
         MenuImport.setText("Import backup list");
         MenuImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1598,7 +1586,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu1.add(MenuImport);
 
-        MenuExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/export.png"))); // NOI18N
         MenuExport.setText("Export backup list");
         MenuExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1609,7 +1596,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.add(jSeparator5);
 
         MenuClear.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MenuClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/clean.png"))); // NOI18N
         MenuClear.setText("Clear");
         MenuClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1618,7 +1604,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu1.add(MenuClear);
 
-        MenuHistory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/clock.png"))); // NOI18N
         MenuHistory.setText("History");
         MenuHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1631,7 +1616,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
         jMenu2.setText("Options");
 
-        MenuPreferences.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/cogwheel.png"))); // NOI18N
         MenuPreferences.setText("Preferences");
         MenuPreferences.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1641,7 +1625,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu2.add(MenuPreferences);
 
         MenuQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenuQuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/remove.png"))); // NOI18N
         MenuQuit.setText("Quit");
         MenuQuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1654,7 +1637,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
         jMenu3.setText("About");
 
-        MenuWebsite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/website.png"))); // NOI18N
         MenuWebsite.setText("Website");
         MenuWebsite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1663,7 +1645,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu3.add(MenuWebsite);
 
-        MenuInfoPage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/information.png"))); // NOI18N
         MenuInfoPage.setText("Info");
         MenuInfoPage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1672,7 +1653,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu3.add(MenuInfoPage);
 
-        MenuShare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/share.png"))); // NOI18N
         MenuShare.setText("Share");
         MenuShare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1681,7 +1661,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu3.add(MenuShare);
 
-        MenuDonate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/donation.png"))); // NOI18N
         MenuDonate.setText("Donate");
         MenuDonate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1694,7 +1673,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
         jMenu5.setText("Help");
 
-        MenuBugReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/bug.png"))); // NOI18N
         MenuBugReport.setText("Report a bug");
         MenuBugReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1703,7 +1681,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         });
         jMenu5.add(MenuBugReport);
 
-        MenuSupport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/help-desk.png"))); // NOI18N
         MenuSupport.setText("Support");
         MenuSupport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2111,49 +2088,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         openWebSite(ConfigKey.INFO_PAGE_LINK.getValue());
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
-    private void btnPathSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch2ActionPerformed
-        Logger.logMessage("File chooser: " + destinationPathField.getName() + ", files allowed: " + false, Logger.LogLevel.DEBUG);
-        String text = BackupOperations.pathSearchWithFileChooser(false);
-        if (text != null) {
-            destinationPathField.setText(text);
-            savedChanges(false);
-        }
-    }//GEN-LAST:event_btnPathSearch2ActionPerformed
-
-    private void btnPathSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch1ActionPerformed
-        Logger.logMessage("File chooser: " + startPathField.getName() + ", files allowed: " + true, Logger.LogLevel.DEBUG);
-        String text = BackupOperations.pathSearchWithFileChooser(true);
-        if (text != null) {
-            destinationPathField.setText(text);
-            savedChanges(false);
-        }
-    }//GEN-LAST:event_btnPathSearch1ActionPerformed
-
-    private void btnTimePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimePickerActionPerformed
-        TimeInterval timeInterval = openTimePicker(currentBackup.getTimeIntervalBackup());
-        if (timeInterval == null) return;
-
-        btnTimePicker.setToolTipText(timeInterval.toString());
-        LocalDateTime nextDateBackup = LocalDateTime.now().plusDays(timeInterval.getDays())
-        .plusHours(timeInterval.getHours())
-        .plusMinutes(timeInterval.getMinutes());
-
-        currentBackup.setTimeIntervalBackup(timeInterval);
-        currentBackup.setNextDateBackup(nextDateBackup);
-        currentBackup.setInitialPath(GetStartPathField());
-        currentBackup.setDestinationPath(GetDestinationPathField());
-        for (Backup b : backups) {
-            if (b.getBackupName().equals(currentBackup.getBackupName())) {
-                b.UpdateBackup(currentBackup);
-                break;
-            }
-        }
-        BackupOperations.updateBackupList(backups);
-
-        openBackupActivationMessage(timeInterval, null);
-
-    }//GEN-LAST:event_btnTimePickerActionPerformed
-
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
         openPreferences();
     }//GEN-LAST:event_MenuPreferencesActionPerformed
@@ -2219,6 +2153,24 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         mouseWeel(evt);
     }//GEN-LAST:event_maxBackupCountSpinnerMouseWheelMoved
 
+    private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
+        if (selectedRow != -1) {
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+            BackupOperations.interruptBackupProcess(SingleBackup, toggleAutoBackup, backup, backupTable, progressBar, interruptBackupPopupItem, DeletePopupItem);
+        }
+    }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
+
+    private void btnPathSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch1ActionPerformed
+        Logger.logMessage("File chooser: " + startPathField.getName() + ", files allowed: " + true, Logger.LogLevel.DEBUG);
+        String text = BackupOperations.pathSearchWithFileChooser(true);
+        if (text != null) {
+            startPathField.setText(text);
+            savedChanges(false);
+        }
+    }//GEN-LAST:event_btnPathSearch1ActionPerformed
+
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
         Exporter.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
@@ -2228,18 +2180,46 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        NewBackup();
-        TabbedPane.setSelectedIndex(0);
+        Logger.logMessage("File chooser: " + startPathField.getName() + ", files allowed: " + true, Logger.LogLevel.DEBUG);
+        String text = BackupOperations.pathSearchWithFileChooser(true);
+        if (text != null) {
+            destinationPathField.setText(text);
+            savedChanges(false);
+        }
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
-    private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
-        if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
-            BackupOperations.interruptBackupProcess(SingleBackup, toggleAutoBackup, backup, backupTable, progressBar, interruptBackupPopupItem, DeletePopupItem);
+    private void btnTimePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimePickerActionPerformed
+        TimeInterval timeInterval = openTimePicker(currentBackup.getTimeIntervalBackup());
+        if (timeInterval == null) return;
+
+        btnTimePicker.setToolTipText(timeInterval.toString());
+        LocalDateTime nextDateBackup = LocalDateTime.now().plusDays(timeInterval.getDays())
+        .plusHours(timeInterval.getHours())
+        .plusMinutes(timeInterval.getMinutes());
+
+        currentBackup.setTimeIntervalBackup(timeInterval);
+        currentBackup.setNextDateBackup(nextDateBackup);
+        currentBackup.setInitialPath(GetStartPathField());
+        currentBackup.setDestinationPath(GetDestinationPathField());
+        for (Backup b : backups) {
+            if (b.getBackupName().equals(currentBackup.getBackupName())) {
+                b.UpdateBackup(currentBackup);
+                break;
+            }
         }
-    }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
+        BackupOperations.updateBackupList(backups);
+
+        openBackupActivationMessage(timeInterval, null);
+    }//GEN-LAST:event_btnTimePickerActionPerformed
+
+    private void btnPathSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearch2ActionPerformed
+        Logger.logMessage("File chooser: " + destinationPathField.getName() + ", files allowed: " + false, Logger.LogLevel.DEBUG);
+        String text = BackupOperations.pathSearchWithFileChooser(false);
+        if (text != null) {
+            destinationPathField.setText(text);
+            savedChanges(false);
+        }
+    }//GEN-LAST:event_btnPathSearch2ActionPerformed
 
     private void setTranslations() {
         try {
@@ -2326,6 +2306,30 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         AutoBackupMenuItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTO_BACKUP_POPUP));
         Backup.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_POPUP));
     }
+    
+    private void setSvgImages() {
+        btnPathSearch1.setSvgImage("res/img/folder.svg", 30, 30);
+        btnPathSearch2.setSvgImage("res/img/folder.svg", 30, 30);
+        exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
+        exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
+        addBackupEntryButton.setSvgImage("res/img/add.svg", 30, 30);
+        btnTimePicker.setSvgImage("res/img/timer.svg", 30, 30);
+        MenuSave.setSvgImage("res/img/save.svg", 16, 16);
+        MenuSaveWithName.setSvgImage("res/img/save_as.svg", 16, 16);
+        MenuImport.setSvgImage("res/img/import.svg", 16, 16);
+        MenuExport.setSvgImage("res/img/export.svg", 16, 16);
+        MenuNew.setSvgImage("res/img/new_file.svg", 16, 16);
+        MenuBugReport.setSvgImage("res/img/bug.svg", 16, 16);
+        MenuClear.setSvgImage("res/img/clear.svg", 16, 16);
+        MenuHistory.setSvgImage("res/img/history.svg", 16, 16);
+        MenuDonate.setSvgImage("res/img/donate.svg", 16, 16);
+        MenuPreferences.setSvgImage("res/img/settings.svg", 16, 16);
+        MenuShare.setSvgImage("res/img/share.svg", 16, 16);
+        MenuSupport.setSvgImage("res/img/support.svg", 16, 16);
+        MenuWebsite.setSvgImage("res/img/website.svg", 16, 16);
+        MenuQuit.setSvgImage("res/img/quit.svg", 16, 16);
+        MenuInfoPage.setSvgImage("res/img/info.svg", 16, 16);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem AutoBackupMenuItem;
@@ -2337,38 +2341,38 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem DuplicatePopupItem;
     private javax.swing.JMenuItem EditPoputItem;
     private javax.swing.JLabel ExportLabel;
-    private javax.swing.JMenuItem MenuBugReport;
-    private javax.swing.JMenuItem MenuClear;
-    private javax.swing.JMenuItem MenuDonate;
-    private javax.swing.JMenuItem MenuExport;
-    private javax.swing.JMenuItem MenuHistory;
-    private javax.swing.JMenuItem MenuImport;
-    private javax.swing.JMenuItem MenuInfoPage;
-    private javax.swing.JMenuItem MenuNew;
-    private javax.swing.JMenuItem MenuPreferences;
-    private javax.swing.JMenuItem MenuQuit;
-    private javax.swing.JMenuItem MenuSave;
-    private javax.swing.JMenuItem MenuSaveWithName;
-    private javax.swing.JMenuItem MenuShare;
-    private javax.swing.JMenuItem MenuSupport;
-    private javax.swing.JMenuItem MenuWebsite;
+    private backupmanager.svg.SVGMenuItem MenuBugReport;
+    private backupmanager.svg.SVGMenuItem MenuClear;
+    private backupmanager.svg.SVGMenuItem MenuDonate;
+    private backupmanager.svg.SVGMenuItem MenuExport;
+    private backupmanager.svg.SVGMenuItem MenuHistory;
+    private backupmanager.svg.SVGMenuItem MenuImport;
+    private backupmanager.svg.SVGMenuItem MenuInfoPage;
+    private backupmanager.svg.SVGMenuItem MenuNew;
+    private backupmanager.svg.SVGMenuItem MenuPreferences;
+    private backupmanager.svg.SVGMenuItem MenuQuit;
+    private backupmanager.svg.SVGMenuItem MenuSave;
+    private backupmanager.svg.SVGMenuItem MenuSaveWithName;
+    private backupmanager.svg.SVGMenuItem MenuShare;
+    private backupmanager.svg.SVGMenuItem MenuSupport;
+    private backupmanager.svg.SVGMenuItem MenuWebsite;
     private javax.swing.JMenuItem OpenInitialDestinationItem;
     private javax.swing.JMenuItem OpenInitialFolderItem;
     private javax.swing.JMenuItem RunBackupPopupItem;
     private javax.swing.JButton SingleBackup;
     private javax.swing.JTabbedPane TabbedPane;
     private javax.swing.JPopupMenu TablePopup;
-    private javax.swing.JButton addBackupEntryButton;
+    private backupmanager.svg.SVGButton addBackupEntryButton;
     private javax.swing.JTextArea backupNoteTextArea;
-    private javax.swing.JButton btnPathSearch1;
-    private javax.swing.JButton btnPathSearch2;
-    private javax.swing.JButton btnTimePicker;
+    private backupmanager.svg.SVGButton btnPathSearch1;
+    private backupmanager.svg.SVGButton btnPathSearch2;
+    private backupmanager.svg.SVGButton btnTimePicker;
     private javax.swing.JLabel currentFileLabel;
     private javax.swing.JTextField destinationPathField;
     private javax.swing.JLabel detailsLabel;
     private javax.swing.JPanel detailsPanel;
-    private javax.swing.JButton exportAsCsvBtn;
-    private javax.swing.JButton exportAsPdfBtn;
+    private backupmanager.svg.SVGButton exportAsCsvBtn;
+    private backupmanager.svg.SVGButton exportAsPdfBtn;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JMenuItem interruptBackupPopupItem;
     private javax.swing.JLabel jLabel1;

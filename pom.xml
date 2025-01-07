@@ -52,6 +52,11 @@
             <artifactId>flatlaf</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency> <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf-extras -->
+            <groupId>com.formdev</groupId> 
+            <artifactId>flatlaf-extras</artifactId> <!-- for svg icons -->
+            <version>3.5.4</version>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>

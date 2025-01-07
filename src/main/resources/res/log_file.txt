@@ -1,3 +1,308 @@
+2025-01-08T00:46:05.583283100 [INFO] Event --> bug report
+2025-01-08T00:45:59.295557300 [INFO] Event --> shard website
+2025-01-08T00:45:51.354678300 [DEBUG] Background mode: false
+2025-01-08T00:45:51.343269900 [INFO] Application started
+2025-01-08T00:44:05.937777600 [DEBUG] Background mode: false
+2025-01-08T00:44:05.928353400 [INFO] Application started
+2025-01-08T00:43:19.148157800 [INFO] Reloading preferences
+2025-01-08T00:43:19.133697800 [INFO] Theme set to: Light
+2025-01-08T00:43:19.131192500 [INFO] Language set to: Italiano
+2025-01-08T00:43:19.129739600 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-08T00:43:16.151053 [INFO] Event --> opening preferences dialog
+2025-01-08T00:43:10.644272900 [INFO] Reloading preferences
+2025-01-08T00:43:10.625578600 [INFO] Theme set to: Dark
+2025-01-08T00:43:10.622103800 [INFO] Language set to: Italiano
+2025-01-08T00:43:10.619610900 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-08T00:43:08.616352500 [INFO] Event --> opening preferences dialog
+2025-01-08T00:43:03.638644600 [DEBUG] Background mode: false
+2025-01-08T00:43:03.629716 [INFO] Application started
+2025-01-08T00:41:55.320606200 [DEBUG] Background mode: false
+2025-01-08T00:41:55.310190 [INFO] Application started
+2025-01-08T00:40:39.743557400 [DEBUG] Background mode: false
+2025-01-08T00:40:39.734031500 [INFO] Application started
+2025-01-08T00:39:30.229743800 [DEBUG] Selected backup: Documents1_copy_copy
+2025-01-08T00:39:24.009637100 [INFO] Right click on row: 1
+2025-01-08T00:39:24.007157100 [DEBUG] Selected backup: test2
+2025-01-08T00:39:23.825045200 [DEBUG] Selected backup: test2
+2025-01-08T00:39:21.215383300 [DEBUG] Background mode: false
+2025-01-08T00:39:21.204471500 [INFO] Application started
+2025-01-08T00:38:03.371992400 [INFO] Reloading preferences
+2025-01-08T00:38:03.357112600 [INFO] Theme set to: Arc Dark - Orange
+2025-01-08T00:38:03.355128500 [INFO] Language set to: Italiano
+2025-01-08T00:38:03.353640600 [INFO] Updating preferences -> Language: Italiano; Theme: Arc Dark - Orange
+2025-01-08T00:38:00.856161800 [INFO] Event --> opening preferences dialog
+2025-01-08T00:37:57.877394700 [DEBUG] Selected backup: Documents1_copy
+2025-01-08T00:37:57.367681400 [DEBUG] Selected backup: Documents1_copy
+2025-01-08T00:37:40.217427400 [INFO] Reloading preferences
+2025-01-08T00:37:40.191635 [INFO] Theme set to: High contrast
+2025-01-08T00:37:40.189651 [INFO] Language set to: Italiano
+2025-01-08T00:37:40.188195500 [INFO] Updating preferences -> Language: Italiano; Theme: High contrast
+2025-01-08T00:37:37.643454800 [INFO] Event --> opening preferences dialog
+2025-01-08T00:37:32.375749800 [INFO] Reloading preferences
+2025-01-08T00:37:32.358371500 [INFO] Theme set to: Dark
+2025-01-08T00:37:32.354899600 [INFO] Language set to: Italiano
+2025-01-08T00:37:32.352419500 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-08T00:37:30.130579900 [INFO] Event --> opening preferences dialog
+2025-01-08T00:37:26.975188300 [DEBUG] Background mode: false
+2025-01-08T00:37:26.966012300 [INFO] Application started
+2025-01-08T00:36:31.024847900 [INFO] Reloading preferences
+2025-01-08T00:36:31.010959200 [INFO] Theme set to: Light
+2025-01-08T00:36:31.008975500 [INFO] Language set to: Italiano
+2025-01-08T00:36:31.007488 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-08T00:36:28.935966300 [INFO] Event --> opening preferences dialog
+2025-01-08T00:36:18.237582500 [INFO] Reloading preferences
+2025-01-08T00:36:18.217896700 [INFO] Theme set to: Dark
+2025-01-08T00:36:18.215389200 [INFO] Language set to: Italiano
+2025-01-08T00:36:18.212941100 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-08T00:36:16.044045500 [INFO] Event --> opening preferences dialog
+2025-01-08T00:35:58.339394700 [DEBUG] Background mode: false
+2025-01-08T00:35:58.329841500 [INFO] Application started
+2025-01-08T00:34:00.858908200 [DEBUG] Background mode: false
+2025-01-08T00:34:00.848988500 [INFO] Application started
+2025-01-08T00:31:05.077098300 [DEBUG] Background mode: false
+2025-01-08T00:31:05.061226400 [INFO] Application started
+2025-01-08T00:29:43.301607300 [DEBUG] Background mode: false
+2025-01-08T00:29:43.289703300 [INFO] Application started
+2025-01-08T00:28:39.869045400 [DEBUG] Background mode: false
+2025-01-08T00:28:39.859621600 [INFO] Application started
+2025-01-08T00:27:36.458082600 [DEBUG] Background mode: false
+2025-01-08T00:27:36.444690200 [INFO] Application started
+2025-01-08T00:27:14.259826700 [DEBUG] Background mode: false
+2025-01-08T00:27:14.249410500 [INFO] Application started
+2025-01-08T00:27:09.558748 [INFO] Reloading preferences
+2025-01-08T00:27:09.537915300 [INFO] Theme set to: Light
+2025-01-08T00:27:09.534481500 [INFO] Language set to: Italiano
+2025-01-08T00:27:09.531988400 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-08T00:27:05.620297500 [INFO] Event --> opening preferences dialog
+2025-01-08T00:26:48.099713800 [DEBUG] Background mode: false
+2025-01-08T00:26:48.089671600 [INFO] Application started
+2025-01-08T00:24:50.751254 [DEBUG] Background mode: false
+2025-01-08T00:24:50.722485400 [INFO] Application started
+2025-01-08T00:17:56.306978800 [DEBUG] Background mode: false
+2025-01-08T00:17:56.296066800 [INFO] Application started
+2025-01-08T00:16:05.496028900 [DEBUG] Background mode: false
+2025-01-08T00:16:05.486604800 [INFO] Application started
+2025-01-08T00:15:28.204093400 [DEBUG] Background mode: false
+2025-01-08T00:15:28.177805500 [INFO] Application started
+2025-01-08T00:08:21.191718600 [INFO] You selected the directory: C:\Users\Utente\Desktop\BackupManager
+2025-01-08T00:08:18.385859300 [INFO] Event --> File chooser
+2025-01-08T00:08:18.383874900 [DEBUG] File chooser: null, files allowed: true
+2025-01-08T00:08:16.376291700 [DEBUG] updating backup list
+2025-01-08T00:08:16.368355400 [INFO] Event --> auto backup disabled
+2025-01-08T00:08:16.365875300 [INFO] Event --> clear
+2025-01-08T00:08:16.363395300 [INFO] Event --> new backup
+2025-01-08T00:08:12.834126100 [DEBUG] Background mode: false
+2025-01-08T00:08:12.825694900 [INFO] Application started
+2025-01-08T00:08:05.627773 [WARN] Unable to save the file. Both the initial and destination paths must be specified and cannot be empty
+2025-01-08T00:08:05.625293 [INFO] Event --> saving backup
+2025-01-08T00:07:57.040672900 [DEBUG] updating backup list
+2025-01-08T00:07:57.033730 [INFO] Event --> auto backup disabled
+2025-01-08T00:07:57.031248900 [INFO] Event --> clear
+2025-01-08T00:07:57.029264900 [INFO] Event --> new backup
+2025-01-08T00:07:50.181485900 [DEBUG] Background mode: false
+2025-01-08T00:07:50.172388700 [INFO] Application started
+2025-01-08T00:06:49.160684100 [DEBUG] Background mode: false
+2025-01-08T00:06:49.151261100 [INFO] Application started
+2025-01-07T23:58:09.181828900 [INFO] Event --> File chooser
+2025-01-07T23:58:09.178350300 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T23:58:07.322226900 [INFO] Reloading preferences
+2025-01-07T23:58:07.309824400 [INFO] Theme set to: Arc Dark - Orange
+2025-01-07T23:58:07.307842800 [INFO] Language set to: Italiano
+2025-01-07T23:58:07.306352500 [INFO] Updating preferences -> Language: Italiano; Theme: Arc Dark - Orange
+2025-01-07T23:58:04.783498500 [INFO] Reloading preferences
+2025-01-07T23:58:04.770106800 [INFO] Theme set to: Arc - Orange
+2025-01-07T23:58:04.768123500 [INFO] Language set to: Italiano
+2025-01-07T23:58:04.767130600 [INFO] Updating preferences -> Language: Italiano; Theme: Arc - Orange
+2025-01-07T23:58:02.560194600 [INFO] Reloading preferences
+2025-01-07T23:58:02.548786600 [INFO] Theme set to: Light
+2025-01-07T23:58:02.547794700 [INFO] Language set to: Italiano
+2025-01-07T23:58:02.546330500 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T23:58:00.519064100 [INFO] Reloading preferences
+2025-01-07T23:58:00.507160200 [INFO] Theme set to: Dark
+2025-01-07T23:58:00.505176100 [INFO] Language set to: Italiano
+2025-01-07T23:58:00.503688100 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-07T23:57:55.974036700 [INFO] Reloading preferences
+2025-01-07T23:57:55.960995100 [INFO] Theme set to: Arc - Orange
+2025-01-07T23:57:55.959507200 [INFO] Language set to: Italiano
+2025-01-07T23:57:55.958020 [INFO] Updating preferences -> Language: Italiano; Theme: Arc - Orange
+2025-01-07T23:57:53.419682400 [INFO] Reloading preferences
+2025-01-07T23:57:53.406116600 [INFO] Theme set to: Arc Dark - Orange
+2025-01-07T23:57:53.404628300 [INFO] Language set to: Italiano
+2025-01-07T23:57:53.403140300 [INFO] Updating preferences -> Language: Italiano; Theme: Arc Dark - Orange
+2025-01-07T23:57:49.350471400 [INFO] Reloading preferences
+2025-01-07T23:57:49.334103500 [INFO] Theme set to: Solarized light
+2025-01-07T23:57:49.332615300 [INFO] Language set to: Italiano
+2025-01-07T23:57:49.331127300 [INFO] Updating preferences -> Language: Italiano; Theme: Solarized light
+2025-01-07T23:57:45.962981400 [INFO] Reloading preferences
+2025-01-07T23:57:45.945622100 [INFO] Theme set to: Solarized dark
+2025-01-07T23:57:45.943637700 [INFO] Language set to: Italiano
+2025-01-07T23:57:45.942149600 [INFO] Updating preferences -> Language: Italiano; Theme: Solarized dark
+2025-01-07T23:57:43.353138400 [INFO] Reloading preferences
+2025-01-07T23:57:43.324877600 [INFO] Theme set to: Nord
+2025-01-07T23:57:43.322882200 [INFO] Language set to: Italiano
+2025-01-07T23:57:43.321394800 [INFO] Updating preferences -> Language: Italiano; Theme: Nord
+2025-01-07T23:57:40.173051500 [INFO] Reloading preferences
+2025-01-07T23:57:40.154202700 [INFO] Theme set to: Light
+2025-01-07T23:57:40.150731500 [INFO] Language set to: Italiano
+2025-01-07T23:57:40.148251700 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T23:57:37.501206100 [INFO] Event --> opening preferences dialog
+2025-01-07T23:57:34.905625800 [DEBUG] Background mode: false
+2025-01-07T23:57:34.897193300 [INFO] Application started
+2025-01-07T23:56:43.617237400 [DEBUG] Background mode: false
+2025-01-07T23:56:43.608337300 [INFO] Application started
+2025-01-07T23:56:01.555366300 [INFO] Reloading preferences
+2025-01-07T23:56:01.536973300 [INFO] Theme set to: Dark
+2025-01-07T23:56:01.533997400 [INFO] Language set to: Italiano
+2025-01-07T23:56:01.531517400 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-07T23:55:58.915158 [INFO] Event --> opening preferences dialog
+2025-01-07T23:55:50.587903400 [DEBUG] Background mode: false
+2025-01-07T23:55:50.579966900 [INFO] Application started
+2025-01-07T23:54:40.636962800 [DEBUG] Background mode: false
+2025-01-07T23:54:40.629026800 [INFO] Application started
+2025-01-07T23:49:17.128204900 [DEBUG] Background mode: false
+2025-01-07T23:49:17.118815900 [INFO] Application started
+2025-01-07T23:29:51.211415800 [DEBUG] Selected backup: testoso
+2025-01-07T23:29:49.864964200 [INFO] Right click on row: 1
+2025-01-07T23:29:49.861942700 [DEBUG] Selected backup: test2
+2025-01-07T23:29:49.643540 [DEBUG] Selected backup: test2
+2025-01-07T23:29:34.752449300 [DEBUG] Background mode: false
+2025-01-07T23:29:34.743522200 [INFO] Application started
+2025-01-07T23:29:04.706963400 [INFO] Event --> File chooser
+2025-01-07T23:29:04.704509100 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T23:28:59.782024200 [INFO] Event --> File chooser
+2025-01-07T23:28:59.779048200 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T23:28:57.474615 [DEBUG] Background mode: false
+2025-01-07T23:28:57.465687600 [INFO] Application started
+2025-01-07T23:27:39.106655300 [DEBUG] Background mode: false
+2025-01-07T23:27:39.097728 [INFO] Application started
+2025-01-07T23:25:23.986624300 [DEBUG] Background mode: false
+2025-01-07T23:25:23.977199 [INFO] Application started
+2025-01-07T23:18:41.260038800 [INFO] Reloading preferences
+2025-01-07T23:18:41.246670700 [INFO] Theme set to: Light
+2025-01-07T23:18:41.244167500 [INFO] Language set to: Italiano
+2025-01-07T23:18:41.242678800 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T23:18:34.134899800 [INFO] Event --> opening preferences dialog
+2025-01-07T23:18:30.662286300 [INFO] Reloading preferences
+2025-01-07T23:18:30.644913500 [INFO] Theme set to: Dark
+2025-01-07T23:18:30.641961700 [INFO] Language set to: Italiano
+2025-01-07T23:18:30.640448600 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-07T23:18:28.457085400 [INFO] Event --> opening preferences dialog
+2025-01-07T23:18:13.604726800 [DEBUG] Background mode: false
+2025-01-07T23:18:13.595797500 [INFO] Application started
+2025-01-07T23:17:28.582295900 [DEBUG] Background mode: false
+2025-01-07T23:17:28.572871300 [INFO] Application started
+2025-01-07T23:12:08.618876800 [INFO] Exporting backups to CSV cancelled
+2025-01-07T23:12:06.835833300 [INFO] Event --> File chooser
+2025-01-07T23:12:06.832857900 [INFO] Exporting backups to CSV
+2025-01-07T23:12:02.792068500 [DEBUG] Background mode: false
+2025-01-07T23:12:02.784132600 [INFO] Application started
+2025-01-07T23:11:29.677262800 [DEBUG] Background mode: false
+2025-01-07T23:11:29.668831600 [INFO] Application started
+2025-01-07T23:11:11.926639900 [DEBUG] Background mode: false
+2025-01-07T23:11:11.915727200 [INFO] Application started
+2025-01-07T23:08:41.540694900 [DEBUG] Background mode: false
+2025-01-07T23:08:41.531767100 [INFO] Application started
+2025-01-07T23:02:00.872484800 [DEBUG] Background mode: false
+2025-01-07T23:02:00.864052700 [INFO] Application started
+2025-01-07T23:01:36.404286800 [INFO] Event --> File chooser
+2025-01-07T23:01:36.402332700 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T23:01:34.968871900 [INFO] You selected the file: C:\Users\Utente\Desktop\DJI_20240925130642_0030_D.JPG
+2025-01-07T23:01:29.432734900 [INFO] Event --> File chooser
+2025-01-07T23:01:29.429726700 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T23:01:23.668784200 [DEBUG] Background mode: false
+2025-01-07T23:01:23.660352900 [INFO] Application started
+2025-01-07T22:56:13.694409300 [INFO] Reloading preferences
+2025-01-07T22:56:13.682505500 [INFO] Theme set to: Light
+2025-01-07T22:56:13.680521500 [INFO] Language set to: Italiano
+2025-01-07T22:56:13.679033700 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T22:56:11.520775700 [INFO] Event --> opening preferences dialog
+2025-01-07T22:56:00.687750200 [INFO] Reloading preferences
+2025-01-07T22:56:00.662933800 [INFO] Theme set to: Carbon
+2025-01-07T22:56:00.661446300 [INFO] Language set to: Italiano
+2025-01-07T22:56:00.659958300 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2025-01-07T22:55:58.195308600 [INFO] Event --> opening preferences dialog
+2025-01-07T22:55:23.444056700 [INFO] Reloading preferences
+2025-01-07T22:55:23.424712200 [INFO] Theme set to: Light
+2025-01-07T22:55:23.421240300 [INFO] Language set to: Italiano
+2025-01-07T22:55:23.419256800 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T22:55:20.015643200 [INFO] Event --> opening preferences dialog
+2025-01-07T22:55:15.590504300 [DEBUG] Background mode: false
+2025-01-07T22:55:15.578104600 [INFO] Application started
+2025-01-07T22:51:25.626346800 [INFO] Reloading preferences
+2025-01-07T22:51:25.614433900 [INFO] Theme set to: Dark
+2025-01-07T22:51:25.612474300 [INFO] Language set to: Italiano
+2025-01-07T22:51:25.610991700 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-07T22:51:22.408697300 [INFO] Event --> opening preferences dialog
+2025-01-07T22:51:15.675533300 [INFO] Reloading preferences
+2025-01-07T22:51:15.658272300 [INFO] Theme set to: Carbon
+2025-01-07T22:51:15.656263800 [INFO] Language set to: Italiano
+2025-01-07T22:51:15.654791300 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2025-01-07T22:51:12.793746100 [INFO] Reloading preferences
+2025-01-07T22:51:12.766254200 [INFO] Theme set to: Arc - Orange
+2025-01-07T22:51:12.763783600 [INFO] Language set to: Italiano
+2025-01-07T22:51:12.761770800 [INFO] Updating preferences -> Language: Italiano; Theme: Arc - Orange
+2025-01-07T22:51:10.518616900 [INFO] Event --> opening preferences dialog
+2025-01-07T22:50:56.099059500 [INFO] Event --> File chooser
+2025-01-07T22:50:56.096111500 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T22:50:46.346798600 [DEBUG] Background mode: false
+2025-01-07T22:50:46.338362800 [INFO] Application started
+2025-01-07T22:50:33.894227 [INFO] Event --> File chooser
+2025-01-07T22:50:33.891252700 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T22:50:28.962250600 [DEBUG] Background mode: false
+2025-01-07T22:50:28.953816900 [INFO] Application started
+2025-01-07T22:49:09.309895500 [DEBUG] Background mode: false
+2025-01-07T22:49:09.301433600 [INFO] Application started
+2025-01-07T22:48:54.288097100 [DEBUG] Background mode: false
+2025-01-07T22:48:54.280161500 [INFO] Application started
+2025-01-07T22:48:41.854005400 [INFO] Event --> File chooser
+2025-01-07T22:48:41.850508600 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T22:48:36.480424400 [DEBUG] Background mode: false
+2025-01-07T22:48:36.466535900 [INFO] Application started
+2025-01-07T21:52:26.967397 [INFO] Event --> File chooser
+2025-01-07T21:52:26.964421100 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T21:52:19.351983300 [DEBUG] Background mode: false
+2025-01-07T21:52:19.343552 [INFO] Application started
+2025-01-07T21:51:03.698761800 [INFO] Event --> File chooser
+2025-01-07T21:51:03.696281900 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T21:50:27.249157200 [DEBUG] Background mode: false
+2025-01-07T21:50:27.239236900 [INFO] Application started
+2025-01-07T21:47:27.754006400 [INFO] Reloading preferences
+2025-01-07T21:47:27.733173900 [INFO] Theme set to: Light
+2025-01-07T21:47:27.729702 [INFO] Language set to: Italiano
+2025-01-07T21:47:27.727221500 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-07T21:47:25.556633 [INFO] Event --> opening preferences dialog
+2025-01-07T21:47:13.555672700 [DEBUG] Background mode: false
+2025-01-07T21:47:13.547265600 [INFO] Application started
+2025-01-07T21:46:55.139263500 [INFO] Event --> File chooser
+2025-01-07T21:46:55.135792700 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T21:46:52.848113900 [DEBUG] Background mode: false
+2025-01-07T21:46:52.838689400 [INFO] Application started
+2025-01-07T21:45:31.623750400 [INFO] Reloading preferences
+2025-01-07T21:45:31.601927400 [INFO] Theme set to: Carbon
+2025-01-07T21:45:31.598951 [INFO] Language set to: Italiano
+2025-01-07T21:45:31.597462300 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2025-01-07T21:45:29.387435700 [INFO] Event --> opening preferences dialog
+2025-01-07T21:45:21.245830 [INFO] Event --> File chooser
+2025-01-07T21:45:21.242358 [DEBUG] File chooser: null, files allowed: true
+2025-01-07T21:45:18.902356500 [DEBUG] Background mode: false
+2025-01-07T21:45:18.893924400 [INFO] Application started
+2025-01-07T21:44:58.888702700 [DEBUG] Background mode: false
+2025-01-07T21:44:58.880767200 [INFO] Application started
+2025-01-07T21:17:06.283896500 [DEBUG] Background mode: false
+2025-01-07T21:17:06.274472600 [INFO] Application started
+2025-01-07T21:16:43.900852600 [INFO] Reloading preferences
+2025-01-07T21:16:43.878089300 [INFO] Theme set to: Solarized dark
+2025-01-07T21:16:43.876066800 [INFO] Language set to: Italiano
+2025-01-07T21:16:43.874579 [INFO] Updating preferences -> Language: Italiano; Theme: Solarized dark
+2025-01-07T21:16:40.225934500 [INFO] Reloading preferences
+2025-01-07T21:16:40.207767400 [INFO] Theme set to: Dark
+2025-01-07T21:16:40.205782700 [INFO] Language set to: Italiano
+2025-01-07T21:16:40.204295200 [INFO] Updating preferences -> Language: Italiano; Theme: Dark
+2025-01-07T21:16:37.424246800 [INFO] Event --> opening preferences dialog
+2025-01-07T21:16:33.797669100 [INFO] Event --> File chooser
+2025-01-07T21:16:33.794693 [DEBUG] File chooser: null, files allowed: false
+2025-01-07T21:16:31.283365400 [DEBUG] Background mode: false
+2025-01-07T21:16:31.274436800 [INFO] Application started
 2025-01-07T21:14:20.095215900 [DEBUG] Selected backup: Documents1_copy_copy
 2025-01-07T21:14:19.496429700 [DEBUG] Selected backup: Documents1_copy
 2025-01-07T21:14:18.945696800 [INFO] Right click on row: 8
