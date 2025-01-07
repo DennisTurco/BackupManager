@@ -2,6 +2,7 @@
   "LOG_FILE_STRING": "log_file.txt",
   "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
+  "RUNNING_BACKUPS_FILE_STRING": "running_backups.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
   "RES_DIRECTORY_STRING": "src/main/resources/res/",
   "LANGUAGES_DIRECTORY_STRING": "src/main/resources/res/languages/",

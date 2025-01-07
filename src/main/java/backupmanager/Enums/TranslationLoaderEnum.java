@@ -133,6 +133,7 @@ public class TranslationLoaderEnum {
         RESEARCH_BAR_PLACEHOLDER("ResearchBarPlaceholder", "Search..."),
         EDIT_POPUP("EditPopup", "Edit"),
         DELETE_POPUP("DeletePopup", "Delete"),
+        INTERRUPT_POPUP("InterruptPopup", "Interrupt"),
         DUPLICATE_POPUP("DuplicatePopup", "Duplicate"),
         RENAME_BACKUP_POPUP("RenameBackupPopup", "Rename backup"),
         OPEN_INITIAL_FOLDER_POPUP("OpenInitialFolderPopup", "Open initial path"),

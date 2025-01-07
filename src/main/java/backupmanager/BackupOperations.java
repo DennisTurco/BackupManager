@@ -23,6 +23,7 @@ import java.util.zip.ZipOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.filechooser.FileSystemView;
@@ -36,6 +37,7 @@ import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Entities.Preferences;
+import backupmanager.Entities.RunningBackups;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Entities.TimeInterval;
@@ -49,14 +51,14 @@ public class BackupOperations {
     private static final JSONAutoBackup JSON = new JSONAutoBackup();
     private static Thread zipThread;
     
-    public static void SingleBackup(Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
+    public static void SingleBackup(Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
         Logger.logMessage("Event --> manual backup started", Logger.LogLevel.INFO);
 
         if (singleBackupBtn != null) singleBackupBtn.setEnabled(false);
         if (autoBackupBtn != null) autoBackupBtn.setEnabled(false);
-        
+
         try {
             String temp = "\\";
             String path1 = backup.getInitialPath();
@@ -79,16 +81,16 @@ public class BackupOperations {
 
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
-            zipDirectory(path1, path2 + ".zip", backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);
+            zipDirectory(path1, path2 + ".zip", backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
         } catch (IOException e) {
             Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             return;
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             return;
         }
     }
@@ -101,7 +103,7 @@ public class BackupOperations {
         return fileName;
     }
     
-    private static void updateAfterBackup(String path1, String path2, Backup backup, TrayIcon trayIcon, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
+    private static void updateAfterBackup(String path1, String path2, Backup backup, TrayIcon trayIcon, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         if (path1 == null) throw new IllegalArgumentException("Initial path cannot be null!");
         if (path2 == null) throw new IllegalArgumentException("Destination path cannot be null!");
@@ -110,7 +112,7 @@ public class BackupOperations {
            
         Logger.logMessage("Backup completed!", Logger.LogLevel.INFO);
 
-        reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+        reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
         
         // next day backup update
         if (backup.isAutoBackup() == true) {
@@ -194,7 +196,7 @@ public class BackupOperations {
         return true;
     }
 
-    public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) throws IOException { // Track copied files
+    public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) throws IOException { // Track copied files
         Logger.logMessage("Starting zipping process", LogLevel.INFO);
 
         File file = new File(sourceDirectoryPath.trim());
@@ -202,7 +204,7 @@ public class BackupOperations {
         if (totalFilesCount == -1) {
             progressBar.dispose();
             setError(ErrorTypes.ErrorCountingFiles, trayIcon, targetZipPath);
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             return;
         }
         
@@ -214,7 +216,7 @@ public class BackupOperations {
 
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(targetZipPath))) {
                 if (file.isFile()) {
-                    addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, file.toPath(), file.getName(), copiedFilesCount, totalFilesCount, backup, trayIcon, progressBar, singleBackupBtn, autoBackupBtn, backupTable);
+                    addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, file.toPath(), file.getName(), copiedFilesCount, totalFilesCount, backup, trayIcon, progressBar, singleBackupBtn, autoBackupBtn, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
                 } else {
                     Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
                         @Override
@@ -226,7 +228,7 @@ public class BackupOperations {
 
                             if (Thread.currentThread().isInterrupted()) {
                                 Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+                                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
                                 return FileVisitResult.TERMINATE; // Stop if interrupted
                             }
 
@@ -253,7 +255,7 @@ public class BackupOperations {
                             // Update progress
                             int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
                             int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-                            UpdateProgressPercentage(actualProgress, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);  // Update progress percentage
+                            UpdateProgressPercentage(actualProgress, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);  // Update progress percentage
 
                             return FileVisitResult.CONTINUE;
                         }
@@ -267,13 +269,13 @@ public class BackupOperations {
 
                             if (Thread.currentThread().isInterrupted()) {
                                 Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+                                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
                                 return FileVisitResult.TERMINATE; // Stop if interrupted
                             }
                             
                             // case when the initial folder is empty
                             if (totalFilesCount == 0) {
-                                UpdateProgressPercentage(100, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);
+                                UpdateProgressPercentage(100, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
                                 return FileVisitResult.TERMINATE;
                             }
 
@@ -297,22 +299,37 @@ public class BackupOperations {
                 Logger.logMessage("Unexpected error during zipping directory: " + sourceDirectoryPath + ". Error: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
                 //setError(ErrorTypes.ZippingGenericError, trayIcon, targetZipPath);
             } finally {
-                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable);
+                reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             }
         });
 
         zipThread.start(); // Start the zipping thread
     }
 
-    private static void reEnableButtonsAndTable(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable) {
+    public static void interruptBackupProcess(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, BackupProgressGUI progressDialog, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
+        Logger.logMessage("Event --> interrupt backup process", Logger.LogLevel.INFO);
+        reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+        if (zipThread != null) {
+            StopCopyFiles();
+        }
+        if (progressDialog != null) {
+            progressDialog.dispose();
+        }
+    }
+
+    private static void reEnableButtonsAndTable(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
         if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
+        if (interruptBackupPopupItem != null) autoBackupBtn.setEnabled(false);
+        if (deleteBackupPopuopItem != null) autoBackupBtn.setEnabled(true);
+
+        RunningBackups.deleteBackupFromJSON(backup.getBackupName());
 
         if (backupTable != null) 
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backup, backupTable, formatter);
     }
 
-    private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, BackupTable backupTable) throws IOException {
+    private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) throws IOException {
         if (zipEntryName == null || zipEntryName.isEmpty()) {
             zipEntryName = file.getFileName().toString();
         }    
@@ -328,7 +345,7 @@ public class BackupOperations {
         
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        UpdateProgressPercentage(actualProgress, sourceDirectoryPath, destinationDirectoryPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn);
+        UpdateProgressPercentage(actualProgress, sourceDirectoryPath, destinationDirectoryPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
     }
     
     public static void updateBackupList(List<Backup> backups) {
@@ -346,10 +363,10 @@ public class BackupOperations {
         JSON.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
         
         if (BackupManagerGUI.model != null)
-        TableDataManager.updateTableWithNewBackupList(backups, formatter);
+            TableDataManager.updateTableWithNewBackupList(backups, formatter);
     }
     
-    public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn) {
+    public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             Logger.logMessage("Zipping progress: " + value + "%", Logger.LogLevel.INFO);
         
@@ -361,8 +378,10 @@ public class BackupOperations {
             TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
         }
 
+        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), value));
+
         if (value == 100) {
-            updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn);
+            updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
             deleteOldBackupsIfNecessary(backup.getMaxBackupsToKeep(), path2);
         }
     }

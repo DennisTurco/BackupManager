@@ -6,6 +6,7 @@ import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
+import backupmanager.Entities.RunningBackups;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
@@ -132,6 +133,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         setTranslations();
 
         setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
+
+        // disable interruption backup operation option
+        interruptBackupPopupItem.setEnabled(false);
+
+        lastBackupLabel.setText("");
     }
     
     public void showWindow() {
@@ -433,7 +439,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         String temp = "\\";
 
         //------------------------------INPUT CONTROL ERRORS------------------------------
-        if(!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(), path1, path2, null)) return;
+        if (!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(), path1, path2, null)) return;
 
         //------------------------------TO GET THE CURRENT DATE------------------------------
         LocalDateTime dateNow = LocalDateTime.now();
@@ -464,7 +470,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             SingleBackup.setEnabled(false);
             toggleAutoBackup.setEnabled(false);
 
-            BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
+            BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, DeletePopupItem, DeletePopupItem);
             
             //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
             if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
@@ -993,6 +999,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         TablePopup = new javax.swing.JPopupMenu();
         EditPoputItem = new javax.swing.JMenuItem();
         DeletePopupItem = new javax.swing.JMenuItem();
+        interruptBackupPopupItem = new javax.swing.JMenuItem();
         DuplicatePopupItem = new javax.swing.JMenuItem();
         renamePopupItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -1078,6 +1085,16 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
         TablePopup.add(DeletePopupItem);
+
+        interruptBackupPopupItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/pause.png"))); // NOI18N
+        interruptBackupPopupItem.setText("Interrupt");
+        interruptBackupPopupItem.setToolTipText("");
+        interruptBackupPopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                interruptBackupPopupItemActionPerformed(evt);
+            }
+        });
+        TablePopup.add(interruptBackupPopupItem);
 
         DuplicatePopupItem.setText("Duplicate");
         DuplicatePopupItem.addActionListener(new java.awt.event.ActionListener() {
@@ -1820,14 +1837,24 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
+                Logger.logMessage("Right click on row: " + selectedRow, Logger.LogLevel.INFO);
                 AutoBackupMenuItem.setSelected(backup.isAutoBackup());
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
+
+                // check if the backup is running
+                if (RunningBackups.readBackupFromJSON(backupName) == null) {
+                    DeletePopupItem.setEnabled(true);
+                    interruptBackupPopupItem.setEnabled(false);
+                } else {
+                    DeletePopupItem.setEnabled(false);
+                    interruptBackupPopupItem.setEnabled(true);
+                }
             }
 
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
-                Logger.logMessage("Edit row : " + selectedRow, Logger.LogLevel.INFO);
+                Logger.logMessage("Double-click on row: " + selectedRow, Logger.LogLevel.INFO);
                 OpenBackup(backupName);
                 TabbedPane.setSelectedIndex(0);
             }
@@ -1906,7 +1933,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
             
             progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
-            BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup);
+            BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, DeletePopupItem);
             
             // if the backup is currentBackup
             if (currentBackup.getBackupName().equals(backup.getBackupName())) 
@@ -2205,6 +2232,15 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         TabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
+    private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
+        if (selectedRow != -1) {
+            // get correct backup
+            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+            BackupOperations.interruptBackupProcess(SingleBackup, toggleAutoBackup, backup, backupTable, progressBar, interruptBackupPopupItem, DeletePopupItem);
+        }
+    }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
+
     private void setTranslations() {
         try {
             backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
@@ -2280,6 +2316,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         RunBackupPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.SINGLE_BACKUP_POPUP));
         CopyInitialPathPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_INITIAL_PATH_POPUP));
         DeletePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DELETE_POPUP));
+        interruptBackupPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INTERRUPT_POPUP));
         DuplicatePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
         EditPoputItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EDIT_POPUP));
         OpenInitialDestinationItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.OPEN_DESTINATION_FOLDER_POPUP));
@@ -2333,6 +2370,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JButton exportAsCsvBtn;
     private javax.swing.JButton exportAsPdfBtn;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JMenuItem interruptBackupPopupItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

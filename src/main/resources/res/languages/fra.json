@@ -84,6 +84,7 @@
       "ResearchBarPlaceholder": "Rechercher...",
       "EditPopup": "Modifier",
       "DeletePopup": "Supprimer",
+      "InterruptPopup": "Interrompre",
       "DuplicatePopup": "Dupliquer",
       "RenameBackupPopup": "Renommer la sauvegarde",
       "OpenInitialFolderPopup": "Ouvrir le chemin initial",

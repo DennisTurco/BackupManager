@@ -67,14 +67,14 @@
     "backup_name": "Documents2",
     "start_path": "C:\\Users\\Utente\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2024-12-31T00:19:55.640416400",
+    "last_backup": "2025-01-05T20:47:06.613821",
     "automatic_backup": true,
-    "next_date_backup": "2025-01-01T16:21:33.492806900",
+    "next_date_backup": "2025-01-06T20:47:06.613821",
     "time_interval_backup": "1.0:0",
     "notes": "",
     "creation_date": "2024-12-27T21:03:01.013826200",
     "last_update_date": "2024-12-27T21:10:55.323080700",
-    "backup_count": 2,
+    "backup_count": 3,
     "max_backups_to_keep": 3
   },
   {
@@ -84,7 +84,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-28T00:00:00.017265400",
-    "last_update_date": "2024-12-31T18:48:59.249568500",
+    "last_update_date": "2025-01-05T20:24:35.957024200",
     "backup_count": 0,
     "max_backups_to_keep": 3
   },
@@ -103,11 +103,12 @@
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2025-01-06T01:34:03.129407700",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
     "last_update_date": "2024-12-31T18:41:13.639901600",
-    "backup_count": 0,
+    "backup_count": 1,
     "max_backups_to_keep": 3
   },
   {
