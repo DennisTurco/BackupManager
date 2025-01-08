@@ -18,3 +18,13 @@ For this project i'm using some dependencies:
 * **Gson** for manage json data
 * **itextpdf** for pdf export
 * **flatlaf-extras** to use svg images ([website]( https://mvnrepository.com/artifact/com.formdev/flatlaf-extras))
+
+## Threads
+### [BackgroundService](../../java/backupmanager/Services/BackupService.java)
+This thread is executed only on PC startup. <br>
+It is used for
+
+### [RunningBackupObserver](../../java/backupmanager/Services/RunningBackupObserver.java)
+I need a thread that constantly checks if there are something running and i can't use a simple method calls instead because
+if a backup starts caused by the BackugroundService and we open the GUI, thre are 2 different instance of this program, 
+so we need something like an observer that constantly checks if there are some backups in progress.

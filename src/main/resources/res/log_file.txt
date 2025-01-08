@@ -1,3 +1,11 @@
+2025-01-08T15:16:51.585843700 [INFO] Observer for running backups stopped explicitly
+2025-01-08T15:16:51.583326100 [INFO] Observer for running backups stopped
+2025-01-08T15:16:51.573972300 [ERROR] An error occurred: Unable to make field private final java.time.LocalDate java.time.LocalDateTime.date accessible: module java.base does not "opens java.time" to unnamed module @5a1e2ec3
+2025-01-08T15:16:51.529317100 [INFO] Observer for running backups started
+2025-01-08T15:16:50.754595800 [DEBUG] Background mode: false
+2025-01-08T15:16:50.739111800 [INFO] Application started
+2025-01-08T15:15:35.323756600 [DEBUG] Background mode: false
+2025-01-08T15:15:35.311445800 [INFO] Application started
 2025-01-08T13:03:07.415005400 [DEBUG] updating backup list
 2025-01-08T13:03:07.410460200 [INFO] Backup removed successfully: [Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
 2025-01-08T13:03:07.408374200 [INFO] Event --> removing backup[Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
@@ -50,3 +58,24 @@
 2025-01-08T13:02:17.241334900 [DEBUG] Selected backup: asd
 2025-01-08T13:02:13.060144300 [DEBUG] Background mode: false
 2025-01-08T13:02:13.048599500 [INFO] Application started
+Exception: java.lang.reflect.InaccessibleObjectException - Unable to make field private final java.time.LocalDate java.time.LocalDateTime.date accessible: module java.base does not "opens java.time" to unnamed module @5a1e2ec3
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:388)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:364)
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:312)
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183)
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177)
+	at com.google.gson.internal.reflect.UnsafeReflectionAccessor.makeAccessible(UnsafeReflectionAccessor.java:44)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:159)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+	at com.google.gson.Gson.getAdapter(Gson.java:489)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+	at com.google.gson.Gson.getAdapter(Gson.java:489)
+	at com.google.gson.internal.bind.CollectionTypeAdapterFactory.create(CollectionTypeAdapterFactory.java:53)
+	at com.google.gson.Gson.getAdapter(Gson.java:489)
+	at com.google.gson.Gson.fromJson(Gson.java:962)
+	at com.google.gson.Gson.fromJson(Gson.java:928)
+	at backupmanager.Entities.RunningBackups.readBackupListFromJSON(RunningBackups.java:30)
+	at backupmanager.Services.RunningBackupObserver.run(RunningBackupObserver.java:35)
+	at java.base/java.lang.Thread.run(Thread.java:1575)

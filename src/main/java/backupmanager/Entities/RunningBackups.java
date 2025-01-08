@@ -16,9 +16,9 @@ import backupmanager.Enums.ConfigKey;
 // this entity is used to store the information of the backups that are currently running
 // i use this object to know wich backups are currently running across the instances
 public class RunningBackups extends Backup {
-    private float progress;
+    private int progress;
 
-    public RunningBackups(Backup backup, float progress) {
+    public RunningBackups(Backup backup, int progress) {
         super(backup);
         this.progress = progress;
     }
@@ -85,11 +85,11 @@ public class RunningBackups extends Backup {
         }
     }
 
-    public float getProgress() {
+    public int getProgress() {
         return progress;
     }
 
-    public void setProgress(float progress) {
+    public void setProgress(int progress) {
         this.progress = progress;
     }
 }   

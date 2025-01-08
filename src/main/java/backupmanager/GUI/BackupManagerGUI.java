@@ -64,7 +64,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import com.formdev.flatlaf.FlatClientProperties;
+
+import backupmanager.Services.RunningBackupObserver;
 
 /**
  * @author Dennis Turco
@@ -75,6 +78,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
     public static Backup currentBackup;
+    private RunningBackupObserver observer;
     private static List<Backup> backups;
     private static JSONAutoBackup JSON;
     public static DefaultTableModel model;
@@ -84,7 +88,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private Integer selectedRow;
     private String backupOnText;
     private String backupOffText;
-    private String currentVersion;
+    private final String currentVersion;
     
     public BackupManagerGUI() {
         ThemeManager.updateThemeFrame(this);
@@ -104,6 +108,10 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
 
         customListeners();
+
+        // start observer thread
+        observer = new RunningBackupObserver(backupTable, dateForfolderNameFormatter, 3000);
+        observer.start();
         
         // load Menu items
         JSONConfigReader config = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
@@ -1729,6 +1737,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
         Logger.logMessage("Event --> exit", Logger.LogLevel.INFO);
+        observer.stop();
         System.exit(EXIT_ON_CLOSE);
     }//GEN-LAST:event_MenuQuitActionPerformed
 

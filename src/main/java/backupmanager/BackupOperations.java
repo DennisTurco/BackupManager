@@ -318,8 +318,8 @@ public class BackupOperations {
     private static void reEnableButtonsAndTable(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
         if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
-        if (interruptBackupPopupItem != null) autoBackupBtn.setEnabled(false);
-        if (deleteBackupPopuopItem != null) autoBackupBtn.setEnabled(true);
+        if (interruptBackupPopupItem != null) interruptBackupPopupItem.setEnabled(false);
+        if (deleteBackupPopuopItem != null) deleteBackupPopuopItem.setEnabled(true);
 
         RunningBackups.deleteBackupFromJSON(backup.getBackupName());
 
