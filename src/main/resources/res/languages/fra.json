@@ -176,7 +176,9 @@
       "CsvNameMessageInput": "Entrez le nom du fichier CSV.",
       "PdfNameMessageInput": "Entrez le nom du fichier PDF.",
       "DuplicatedFileNameMessage": "Le fichier existe déjà. Écraser?",
-      "ErrorMessageInvalidFilename": "Nom de fichier invalide. Utilisez uniquement des caractères alphanumériques, des tirets et des underscores."
+      "ErrorMessageInvalidFilename": "Nom de fichier invalide. Utilisez uniquement des caractères alphanumériques, des tirets et des underscores.",
+      "ConfirmationDeletionTitle": "Confirmer la suppression",
+      "ConfirmationDeletionMessage": "Êtes-vous sûr de vouloir supprimer les lignes sélectionnées ?"
     }
   }
   

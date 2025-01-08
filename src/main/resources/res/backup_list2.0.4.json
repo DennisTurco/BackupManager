@@ -19,7 +19,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-12T22:52:41.381624500",
-    "last_update_date": "2024-12-31T18:48:55.479483800",
+    "last_update_date": "2025-01-08T12:41:12.466783800",
     "backup_count": 9,
     "max_backups_to_keep": 3
   },
@@ -37,15 +37,15 @@
   },
   {
     "backup_name": "Immagini",
-    "start_path": "D:\\Pictures",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "start_path": "C:\\Users\\d.turco\\Desktop\\1728444935042.gif",
+    "destination_path": "C:\\Users\\d.turco\\Desktop",
     "last_backup": "2024-12-31T00:28:58.600541",
     "automatic_backup": true,
     "next_date_backup": "2025-01-03T00:28:58.600541",
     "time_interval_backup": "3.0:0",
     "notes": "",
     "creation_date": "2024-12-25T21:09:27.794512800",
-    "last_update_date": "2024-12-26T14:03:27.408421600",
+    "last_update_date": "2025-01-08T12:36:31.263912600",
     "backup_count": 7,
     "max_backups_to_keep": 3
   },
@@ -112,17 +112,6 @@
     "max_backups_to_keep": 3
   },
   {
-    "backup_name": "Documents1_copy_copy",
-    "start_path": "D:\\Documents",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
-    "automatic_backup": false,
-    "notes": "",
-    "creation_date": "2024-12-29T13:28:20.948181400",
-    "last_update_date": "2024-12-29T13:28:20.948181400",
-    "backup_count": 0,
-    "max_backups_to_keep": 3
-  },
-  {
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
@@ -134,13 +123,13 @@
     "max_backups_to_keep": 3
   },
   {
-    "backup_name": "sad",
-    "start_path": "saddsa",
-    "destination_path": "dsadasd",
+    "backup_name": "asd_copy",
+    "start_path": "asdasd",
+    "destination_path": "saddsa",
     "automatic_backup": false,
     "notes": "",
-    "creation_date": "2024-12-31T18:41:30.563494900",
-    "last_update_date": "2024-12-31T18:41:35.196839800",
+    "creation_date": "2025-01-08T13:02:22.396939",
+    "last_update_date": "2025-01-08T13:02:22.396939",
     "backup_count": 0,
     "max_backups_to_keep": 3
   }

@@ -50,8 +50,13 @@ public class Backup {
         this._backupCount = backupCount;
         this._maxBackupsToKeep = maxBackupsToKeep;
     }
+
+    public Backup(Backup backup) {
+        UpdateBackup(backup);
+    }
     
-    public void UpdateBackup(Backup backupUpdated) {
+    // make it final to avoid the warning (now this method cannot be overrided by the subclasses)
+    public final void UpdateBackup(Backup backupUpdated) {
         this._backupName = backupUpdated.getBackupName();
         this._initialPath = backupUpdated.getInitialPath();
         this._destinationPath = backupUpdated.getDestinationPath();

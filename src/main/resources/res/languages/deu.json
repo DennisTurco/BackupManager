@@ -176,7 +176,9 @@
       "CsvNameMessageInput": "Geben Sie den Namen der CSV-Datei ein.",
       "PdfNameMessageInput": "Geben Sie den Namen der PDF-Datei ein.",
       "DuplicatedFileNameMessage": "Datei existiert bereits. Überschreiben?",
-      "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwenden Sie nur alphanumerische Zeichen, Bindestriche und Unterstriche."
+      "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwenden Sie nur alphanumerische Zeichen, Bindestriche und Unterstriche.",
+      "ConfirmationDeletionTitle": "Löschen bestätigen",
+      "ConfirmationDeletionMessage": "Sind Sie sicher, dass Sie die ausgewählten Zeilen löschen möchten?"
     }
   }
   

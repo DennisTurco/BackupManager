@@ -86,12 +86,10 @@ public class BackupOperations {
             Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-            return;
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-            return;
         }
     }
 
@@ -378,7 +376,7 @@ public class BackupOperations {
             TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
         }
 
-        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), value));
+        RunningBackups.updateBackupToJSON(new RunningBackups(backup, value));
 
         if (value == 100) {
             updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);

@@ -727,7 +727,10 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
                 Logger.logMessage("Enter key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
                 OpenBackup((String) backupTable.getValueAt(selectedRow, 0));
-                TabbedPane.setSelectedIndex(0);
+
+                if (TabbedPane != null) {
+                    TabbedPane.setSelectedIndex(0);
+                }
             }
         });
 
@@ -736,11 +739,19 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         actionMap.put("deleteKey", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = backupTable.getSelectedRow();
-                if (selectedRow == -1) return;
+                int[] selectedRows = backupTable.getSelectedRows();
+                if (selectedRows.length == 0) return;
+        
+                Logger.logMessage("Delete key pressed on rows: " + Arrays.toString(selectedRows), Logger.LogLevel.DEBUG);
 
-                Logger.logMessage("Delete key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
-                deleteBackup(selectedRow);
+                int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (response != JOptionPane.YES_OPTION) {
+                    return;
+                }
+
+                for (int row : selectedRows) {
+                    deleteBackup(row, false);
+                }
             }
         });
 
@@ -1786,17 +1797,21 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         }
     }
 
-    private void deleteBackup(int selectedRow) {
+    private void deleteBackup(int selectedRow, boolean isConfermationRequired) {
         Logger.logMessage("Event --> deleting backup", Logger.LogLevel.INFO);
         
-        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
-
-            RemoveBackup(backup.getBackupName());
+        if (isConfermationRequired) {
+            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response != JOptionPane.YES_OPTION) {
+                return;
+            }
         }
+
+        // get correct backup
+        String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+        Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+
+        RemoveBackup(backup.getBackupName());
     }
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -2180,12 +2195,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        Logger.logMessage("File chooser: " + startPathField.getName() + ", files allowed: " + true, Logger.LogLevel.DEBUG);
-        String text = BackupOperations.pathSearchWithFileChooser(true);
-        if (text != null) {
-            destinationPathField.setText(text);
-            savedChanges(false);
-        }
+        TabbedPane.setSelectedIndex(0);
+        NewBackup();
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void btnTimePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimePickerActionPerformed
@@ -2279,7 +2290,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         startPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.INITIAL_PATH_PLACEHOLDER));
         destinationPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.DESTINATION_PATH_PLACEHOLDER));
         btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
-        maxBackupCountSpinner.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_TOOLTIP).toString() + "\n" + TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP).toString());
+        maxBackupCountSpinner.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_TOOLTIP) + "\n" + TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
         jLabel4.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP));
 
         // backup list

@@ -1,8 +1,9 @@
 package backupmanager.svg;
 
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
 import java.awt.Component;
+
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 public class SVGManager extends Component {
 

@@ -1,8 +1,5 @@
 package backupmanager.Enums;
 
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,6 +8,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import backupmanager.Logger;
+import backupmanager.Logger.LogLevel;
 
 public class TranslationLoaderEnum {
 
@@ -231,7 +231,9 @@ public class TranslationLoaderEnum {
         CSV_NAME_MESSAGE_INPUT("CsvNameMessageInput", "Enter the name of the CSV file."),
         PDF_NAME_MESSAGE_INPUT("PdfNameMessageInput", "Enter the name of the PDF file."),
         DUPLICATED_FILE_NAME_MESSAGE("DuplicatedFileNameMessage", "File already exists. Overwrite?"),
-        ERROR_MESSAGE_INVALID_FILENAME("ErrorMessageInvalidFilename","Invalid file name. Use only alphanumeric characters, dashes, and underscores."),
+        ERROR_MESSAGE_INVALID_FILENAME("ErrorMessageInvalidFilename", "Invalid file name. Use only alphanumeric characters, dashes, and underscores."),
+        CONFIRMATION_DELETION_TITLE("ConfirmationDeletionTitle", "Confirm Deletion"),
+        CONFIRMATION_DELETION_MESSAGE("ConfirmationDeletionMessage", "Are you sure you want to delete the selected rows?"),
 
         // InfoPage
         INFO_PAGE_DESCRIPTION("InfoPageDescription", "Backup automatic system for files with the option to schedule and make backups regularly."),

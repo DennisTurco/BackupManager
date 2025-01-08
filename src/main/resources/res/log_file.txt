@@ -1,14 +1,52 @@
-2025-01-08T12:11:02.581333600 [INFO] Reloading preferences
-2025-01-08T12:11:02.548910800 [INFO] Theme set to: Carbon
-2025-01-08T12:11:02.544879800 [INFO] Language set to: Italiano
-2025-01-08T12:11:02.542883400 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
-2025-01-08T12:10:59.872305200 [INFO] Event --> opening preferences dialog
-2025-01-08T12:10:24.004105400 [INFO] Exporting backups to CSV cancelled
-2025-01-08T12:10:21.649370 [INFO] Event --> File chooser
-2025-01-08T12:10:21.646361300 [INFO] Exporting backups to CSV
-2025-01-08T12:10:11.538715100 [DEBUG] Background mode: false
-2025-01-08T12:10:11.531939900 [INFO] Application started
-2025-01-08T10:47:27.916710300 [DEBUG] Background mode: false
-2025-01-08T10:47:27.908689400 [INFO] Application started
-2025-01-08T10:47:04.407424400 [DEBUG] Background mode: false
-2025-01-08T10:47:04.398400 [INFO] Application started
+2025-01-08T13:03:07.415005400 [DEBUG] updating backup list
+2025-01-08T13:03:07.410460200 [INFO] Backup removed successfully: [Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
+2025-01-08T13:03:07.408374200 [INFO] Event --> removing backup[Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
+2025-01-08T13:03:07.406124300 [INFO] Event --> deleting backup
+2025-01-08T13:03:07.405117200 [DEBUG] updating backup list
+2025-01-08T13:03:07.401062800 [INFO] Backup removed successfully: [Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
+2025-01-08T13:03:07.399047300 [INFO] Event --> removing backup[Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
+2025-01-08T13:03:07.396362100 [INFO] Event --> deleting backup
+2025-01-08T13:03:03.744660 [DEBUG] Delete key pressed on rows: [2, 3]
+2025-01-08T13:03:02.775110400 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:03:02.111985900 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:03:00.633297300 [INFO] Right click on row: 3
+2025-01-08T13:03:00.631297100 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:03:00.135670800 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:58.984030700 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:58.391511800 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:47.681423100 [DEBUG] Delete key pressed on rows: [10, 11]
+2025-01-08T13:02:43.664528500 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:42.856984600 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:38.754096900 [DEBUG] Delete key pressed on rows: [10, 11, 12]
+2025-01-08T13:02:36.977395800 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:33.632533100 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:33.289241400 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:32.832716 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:32.002109600 [DEBUG] Selected backup: asa
+2025-01-08T13:02:31.704854700 [DEBUG] Selected backup: Documents1_copy
+2025-01-08T13:02:31.329365100 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:30.040698800 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:29.609612500 [DEBUG] Selected backup: Documents1_copy
+2025-01-08T13:02:29.137184900 [DEBUG] Selected backup: asd
+2025-01-08T13:02:28.497071900 [DEBUG] Selected backup: testoso
+2025-01-08T13:02:27.936681700 [DEBUG] Selected backup: lezioni
+2025-01-08T13:02:26.624617900 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:25.776928500 [DEBUG] Selected backup: Documents1_copy
+2025-01-08T13:02:24.898674500 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:24.033649200 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:23.529910 [DEBUG] Selected backup: asd_copy
+2025-01-08T13:02:22.400304400 [DEBUG] updating backup list
+2025-01-08T13:02:22.395434800 [INFO] Event --> duplicating backup
+2025-01-08T13:02:21.483173300 [INFO] Right click on row: 7
+2025-01-08T13:02:21.481170900 [DEBUG] Selected backup: asd
+2025-01-08T13:02:20.591287600 [DEBUG] updating backup list
+2025-01-08T13:02:20.585909700 [INFO] Event --> duplicating backup
+2025-01-08T13:02:19.276790500 [INFO] Right click on row: 7
+2025-01-08T13:02:19.274791700 [DEBUG] Selected backup: asd
+2025-01-08T13:02:18.662397400 [DEBUG] updating backup list
+2025-01-08T13:02:18.650960800 [INFO] Event --> duplicating backup
+2025-01-08T13:02:17.556729 [INFO] Right click on row: 7
+2025-01-08T13:02:17.553728800 [DEBUG] Selected backup: asd
+2025-01-08T13:02:17.241334900 [DEBUG] Selected backup: asd
+2025-01-08T13:02:13.060144300 [DEBUG] Background mode: false
+2025-01-08T13:02:13.048599500 [INFO] Application started

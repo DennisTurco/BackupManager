@@ -1,10 +1,5 @@
 package backupmanager.Entities;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import backupmanager.Enums.ConfigKey;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,15 +7,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import backupmanager.Enums.ConfigKey;
+
 // this class contains only the RunningBackups entity
 // this entity is used to store the information of the backups that are currently running
 // i use this object to know wich backups are currently running across the instances
-public class RunningBackups {
-    private String backupName;
+public class RunningBackups extends Backup {
     private float progress;
 
-    public RunningBackups(String backupName, float progress) {
-        this.backupName = backupName;
+    public RunningBackups(Backup backup, float progress) {
+        super(backup);
         this.progress = progress;
     }
 
@@ -86,16 +85,10 @@ public class RunningBackups {
         }
     }
 
-    public String getBackupName() {
-        return backupName;
-    }
     public float getProgress() {
         return progress;
     }
 
-    public void setBackupName(String backupName) {
-        this.backupName = backupName;
-    }
     public void setProgress(float progress) {
         this.progress = progress;
     }

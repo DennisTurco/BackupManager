@@ -176,7 +176,9 @@
       "CsvNameMessageInput": "Introduce el nombre del archivo CSV.",
       "PdfNameMessageInput": "Introduce el nombre del archivo PDF.",
       "DuplicatedFileNameMessage": "El archivo ya existe. ¿Sobrescribir?",
-      "ErrorMessageInvalidFilename": "Nombre de archivo no válido. Usa solo caracteres alfanuméricos, guiones y guiones bajos."
+      "ErrorMessageInvalidFilename": "Nombre de archivo no válido. Usa solo caracteres alfanuméricos, guiones y guiones bajos.",
+      "ConfirmationDeletionTitle": "Confirmar Eliminación",
+      "ConfirmationDeletionMessage": "¿Está seguro de que desea eliminar las filas seleccionadas?"
     }
   }
   

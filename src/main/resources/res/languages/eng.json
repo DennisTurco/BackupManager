@@ -176,6 +176,8 @@
     "CsvNameMessageInput":"Enter the name of the CSV file.",
     "PdfNameMessageInput":"Enter the name of the PDF file.",
     "DuplicatedFileNameMessage":"File already exists. Overwrite?",
-    "ErrorMessageInvalidFilename":"Invalid file name. Use only alphanumeric characters, dashes, and underscores."
+    "ErrorMessageInvalidFilename":"Invalid file name. Use only alphanumeric characters, dashes, and underscores.",
+    "ConfirmationDeletionTitle":"Confirm Deletion",
+    "ConfirmationDeletionMessage":"Are you sure you want to delete the selected rows?"
   }
 }
