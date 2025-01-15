@@ -1,81 +1,1040 @@
-2025-01-08T15:16:51.585843700 [INFO] Observer for running backups stopped explicitly
-2025-01-08T15:16:51.583326100 [INFO] Observer for running backups stopped
-2025-01-08T15:16:51.573972300 [ERROR] An error occurred: Unable to make field private final java.time.LocalDate java.time.LocalDateTime.date accessible: module java.base does not "opens java.time" to unnamed module @5a1e2ec3
-2025-01-08T15:16:51.529317100 [INFO] Observer for running backups started
-2025-01-08T15:16:50.754595800 [DEBUG] Background mode: false
-2025-01-08T15:16:50.739111800 [INFO] Application started
-2025-01-08T15:15:35.323756600 [DEBUG] Background mode: false
-2025-01-08T15:15:35.311445800 [INFO] Application started
-2025-01-08T13:03:07.415005400 [DEBUG] updating backup list
-2025-01-08T13:03:07.410460200 [INFO] Backup removed successfully: [Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-2025-01-08T13:03:07.408374200 [INFO] Event --> removing backup[Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-2025-01-08T13:03:07.406124300 [INFO] Event --> deleting backup
-2025-01-08T13:03:07.405117200 [DEBUG] updating backup list
-2025-01-08T13:03:07.401062800 [INFO] Backup removed successfully: [Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-2025-01-08T13:03:07.399047300 [INFO] Event --> removing backup[Name: asd_copy, InitialPath: asdasd, DestinationPath: saddsa, LastBackup: null, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-2025-01-08T13:03:07.396362100 [INFO] Event --> deleting backup
-2025-01-08T13:03:03.744660 [DEBUG] Delete key pressed on rows: [2, 3]
-2025-01-08T13:03:02.775110400 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:03:02.111985900 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:03:00.633297300 [INFO] Right click on row: 3
-2025-01-08T13:03:00.631297100 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:03:00.135670800 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:58.984030700 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:58.391511800 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:47.681423100 [DEBUG] Delete key pressed on rows: [10, 11]
-2025-01-08T13:02:43.664528500 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:42.856984600 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:38.754096900 [DEBUG] Delete key pressed on rows: [10, 11, 12]
-2025-01-08T13:02:36.977395800 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:33.632533100 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:33.289241400 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:32.832716 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:32.002109600 [DEBUG] Selected backup: asa
-2025-01-08T13:02:31.704854700 [DEBUG] Selected backup: Documents1_copy
-2025-01-08T13:02:31.329365100 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:30.040698800 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:29.609612500 [DEBUG] Selected backup: Documents1_copy
-2025-01-08T13:02:29.137184900 [DEBUG] Selected backup: asd
-2025-01-08T13:02:28.497071900 [DEBUG] Selected backup: testoso
-2025-01-08T13:02:27.936681700 [DEBUG] Selected backup: lezioni
-2025-01-08T13:02:26.624617900 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:25.776928500 [DEBUG] Selected backup: Documents1_copy
-2025-01-08T13:02:24.898674500 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:24.033649200 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:23.529910 [DEBUG] Selected backup: asd_copy
-2025-01-08T13:02:22.400304400 [DEBUG] updating backup list
-2025-01-08T13:02:22.395434800 [INFO] Event --> duplicating backup
-2025-01-08T13:02:21.483173300 [INFO] Right click on row: 7
-2025-01-08T13:02:21.481170900 [DEBUG] Selected backup: asd
-2025-01-08T13:02:20.591287600 [DEBUG] updating backup list
-2025-01-08T13:02:20.585909700 [INFO] Event --> duplicating backup
-2025-01-08T13:02:19.276790500 [INFO] Right click on row: 7
-2025-01-08T13:02:19.274791700 [DEBUG] Selected backup: asd
-2025-01-08T13:02:18.662397400 [DEBUG] updating backup list
-2025-01-08T13:02:18.650960800 [INFO] Event --> duplicating backup
-2025-01-08T13:02:17.556729 [INFO] Right click on row: 7
-2025-01-08T13:02:17.553728800 [DEBUG] Selected backup: asd
-2025-01-08T13:02:17.241334900 [DEBUG] Selected backup: asd
-2025-01-08T13:02:13.060144300 [DEBUG] Background mode: false
-2025-01-08T13:02:13.048599500 [INFO] Application started
-Exception: java.lang.reflect.InaccessibleObjectException - Unable to make field private final java.time.LocalDate java.time.LocalDateTime.date accessible: module java.base does not "opens java.time" to unnamed module @5a1e2ec3
-	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:388)
-	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:364)
-	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:312)
-	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183)
-	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177)
-	at com.google.gson.internal.reflect.UnsafeReflectionAccessor.makeAccessible(UnsafeReflectionAccessor.java:44)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:159)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
-	at com.google.gson.Gson.getAdapter(Gson.java:489)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
-	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
-	at com.google.gson.Gson.getAdapter(Gson.java:489)
-	at com.google.gson.internal.bind.CollectionTypeAdapterFactory.create(CollectionTypeAdapterFactory.java:53)
-	at com.google.gson.Gson.getAdapter(Gson.java:489)
-	at com.google.gson.Gson.fromJson(Gson.java:962)
-	at com.google.gson.Gson.fromJson(Gson.java:928)
-	at backupmanager.Entities.RunningBackups.readBackupListFromJSON(RunningBackups.java:30)
-	at backupmanager.Services.RunningBackupObserver.run(RunningBackupObserver.java:35)
-	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-01-15T23:11:21.762441500 [INFO] No backup needed at this time.
+2025-01-15T23:11:21.757481400 [INFO] Checking for automatic backup...
+2025-01-15T23:10:21.936708900 [INFO] Deleted old backup: lezioni (Backup 15-01-2025 23.05.05).zip
+2025-01-15T23:10:21.933236700 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-15T23:10:21.927781600 [INFO] Deleting old backups if necessary
+2025-01-15T23:10:21.907941 [INFO] Next date backup setted to: 2025-01-15T23:11:21.904965
+2025-01-15T23:10:21.905956600 [INFO] Backup completed!
+2025-01-15T23:10:21.901492500 [INFO] Zipping progress: 100%
+2025-01-15T23:10:21.895540800 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:10:21.891572600 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:10:21.885620500 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:10:21.882148300 [INFO] Zipping progress: 75%
+2025-01-15T23:10:21.878677500 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:10:21.870741 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:10:21.865781100 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:10:21.861317200 [INFO] Zipping progress: 50%
+2025-01-15T23:10:21.855861 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:10:21.849908500 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:10:21.842965 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:10:21.838996600 [INFO] Zipping progress: 25%
+2025-01-15T23:10:21.835525 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:10:21.820148700 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:10:21.806260700 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:10:21.802789400 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:10:21.790884600 [INFO] Starting zipping process
+2025-01-15T23:10:21.773524900 [INFO] Event --> manual backup started
+2025-01-15T23:10:21.766609900 [INFO] Start backup process.
+2025-01-15T23:10:21.756165100 [INFO] Checking for automatic backup...
+2025-01-15T23:10:21.748256400 [INFO] Time interval set to 1 minutes
+2025-01-15T23:10:21.741780400 [INFO] TrayIcon added
+2025-01-15T23:10:21.500437800 [INFO] Backup service starting in the background
+2025-01-15T23:10:21.497958200 [DEBUG] Background mode: true
+2025-01-15T23:10:21.492004500 [INFO] Application started
+2025-01-15T23:10:21.482101400 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:10:21.471685300 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-15T23:10:05.765094 [INFO] Reloading preferences
+2025-01-15T23:10:05.763108 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:10:05.746643500 [INFO] Theme set to: Light
+2025-01-15T23:10:05.744135900 [INFO] Language set to: Italiano
+2025-01-15T23:10:05.742149900 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T23:10:02.745512800 [INFO] Reloading preferences
+2025-01-15T23:10:02.743032600 [INFO] Preferences updated to JSON file: language = ita.json, theme = Carbon
+2025-01-15T23:10:02.717202600 [INFO] Theme set to: Carbon
+2025-01-15T23:10:02.714722300 [INFO] Language set to: Italiano
+2025-01-15T23:10:02.712242800 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2025-01-15T23:09:58.336391800 [INFO] Event --> opening preferences dialog
+2025-01-15T23:09:56.232748900 [INFO] Observer for running backups started
+2025-01-15T23:09:55.591043 [DEBUG] Background mode: false
+2025-01-15T23:09:55.581014200 [INFO] Application started
+2025-01-15T23:09:55.565639100 [INFO] Preferences updated to JSON file: language = deu.json, theme = Carbon
+2025-01-15T23:09:55.550262500 [DEBUG] Preferences loaded from JSON file: language = deu.json, theme = Carbon
+2025-01-15T23:09:43.176336100 [INFO] Background service stopped
+2025-01-15T23:09:43.174352500 [DEBUG] Stopping background service
+2025-01-15T23:09:17.733988500 [INFO] Deleted old backup: lezioni (Backup 15-01-2025 23.05.03).zip
+2025-01-15T23:09:17.731012800 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-15T23:09:17.727569300 [INFO] Deleting old backups if necessary
+2025-01-15T23:09:17.716629 [INFO] Next date backup setted to: 2025-01-15T23:10:17.707205
+2025-01-15T23:09:17.708197400 [INFO] Backup completed!
+2025-01-15T23:09:17.704253300 [INFO] Zipping progress: 100%
+2025-01-15T23:09:17.697780500 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:09:17.693837 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:09:17.688357100 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:09:17.684909200 [INFO] Zipping progress: 75%
+2025-01-15T23:09:17.682429600 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:09:17.675988200 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:09:17.670957100 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:09:17.667498900 [INFO] Zipping progress: 50%
+2025-01-15T23:09:17.662011700 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:09:17.657062200 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:09:17.651126600 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:09:17.647155400 [INFO] Zipping progress: 25%
+2025-01-15T23:09:17.644155 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:09:17.639195300 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:09:17.634259100 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:09:17.631779700 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:09:17.628283700 [INFO] Starting zipping process
+2025-01-15T23:09:17.625804500 [INFO] Event --> manual backup started
+2025-01-15T23:09:17.620455600 [INFO] Start backup process.
+2025-01-15T23:09:17.615994600 [INFO] Checking for automatic backup...
+2025-01-15T23:08:17.615720800 [INFO] No backup needed at this time.
+2025-01-15T23:08:17.611767 [INFO] Checking for automatic backup...
+2025-01-15T23:07:17.806404400 [INFO] Deleted old backup: lezioni (Backup 15-01-2025 23.05.02).zip
+2025-01-15T23:07:17.801444300 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-15T23:07:17.796485400 [INFO] Deleting old backups if necessary
+2025-01-15T23:07:17.773172900 [INFO] Next date backup setted to: 2025-01-15T23:08:17.768708500
+2025-01-15T23:07:17.769700500 [INFO] Backup completed!
+2025-01-15T23:07:17.766228100 [INFO] Zipping progress: 100%
+2025-01-15T23:07:17.759780500 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:07:17.756308700 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:07:17.749860300 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:07:17.746389100 [INFO] Zipping progress: 75%
+2025-01-15T23:07:17.743908200 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:07:17.736469 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:07:17.731536500 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:07:17.727540100 [INFO] Zipping progress: 50%
+2025-01-15T23:07:17.722084600 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:07:17.716132300 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:07:17.710180800 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:07:17.706213 [INFO] Zipping progress: 25%
+2025-01-15T23:07:17.703236700 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:07:17.686373200 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:07:17.671988400 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:07:17.667524500 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:07:17.655620800 [INFO] Starting zipping process
+2025-01-15T23:07:17.633832700 [INFO] Event --> manual backup started
+2025-01-15T23:07:17.627349 [INFO] Start backup process.
+2025-01-15T23:07:17.613460200 [INFO] Checking for automatic backup...
+2025-01-15T23:07:17.607013300 [INFO] Time interval set to 1 minutes
+2025-01-15T23:07:17.597588300 [INFO] TrayIcon added
+2025-01-15T23:07:17.281190500 [INFO] Backup service starting in the background
+2025-01-15T23:07:17.278174300 [DEBUG] Background mode: true
+2025-01-15T23:07:17.270237500 [INFO] Application started
+2025-01-15T23:07:17.260813400 [INFO] Preferences updated to JSON file: language = deu.json, theme = Carbon
+2025-01-15T23:07:17.249909900 [DEBUG] Preferences loaded from JSON file: language = deu.json, theme = Carbon
+2025-01-15T23:05:38.431818200 [DEBUG] updating backup list
+2025-01-15T23:05:29.501142800 [INFO] Event --> opening backup
+2025-01-15T23:05:29.499654800 [INFO] Double-click on row: 4
+2025-01-15T23:05:29.498166600 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:29.330977400 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:24.157223600 [INFO] Right click on row: 4
+2025-01-15T23:05:24.155239400 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:23.625033300 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:20.582515600 [INFO] Right click on row: 4
+2025-01-15T23:05:20.581041200 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:20.330098800 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:18.765270200 [INFO] Event --> opening folder
+2025-01-15T23:05:17.731753900 [INFO] Right click on row: 4
+2025-01-15T23:05:17.730266700 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:17.519207900 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:13.268084500 [INFO] Event --> opening folder
+2025-01-15T23:05:11.749115200 [INFO] Right click on row: 4
+2025-01-15T23:05:11.747651400 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:11.545890900 [DEBUG] Selected backup: lezioni
+2025-01-15T23:05:05.504562900 [INFO] Deleted old backup: lezioni (Backup 15-01-2025 23.05.00).zip
+2025-01-15T23:05:05.502579100 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-15T23:05:05.500099400 [INFO] Deleting old backups if necessary
+2025-01-15T23:05:05.498611500 [DEBUG] updating backup list
+2025-01-15T23:05:05.494643400 [INFO] Next date backup setted to: 2025-04-05T23:06:05.488692
+2025-01-15T23:05:05.489683700 [INFO] Backup completed!
+2025-01-15T23:05:05.485218800 [INFO] Zipping progress: 100%
+2025-01-15T23:05:05.479267 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:05:05.467363900 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:05:05.460916 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:05:05.457939900 [INFO] Zipping progress: 75%
+2025-01-15T23:05:05.455460300 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:05:05.449011500 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:05:05.444052300 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:05:05.441075200 [INFO] Zipping progress: 50%
+2025-01-15T23:05:05.436611700 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:05:05.433139900 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:05:05.428179900 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:05:05.424707200 [INFO] Zipping progress: 25%
+2025-01-15T23:05:05.422228100 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:05:05.416772 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:05:05.413299900 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:05:05.410820400 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:05:05.407844400 [INFO] Starting zipping process
+2025-01-15T23:05:05.386502600 [INFO] date backup: 15-01-2025 23.05.05
+2025-01-15T23:05:05.385014200 [INFO] Event --> single backup
+2025-01-15T23:05:03.908183800 [INFO] Deleted old backup: lezioni (Backup 31-12-2024 18.49.10).zip
+2025-01-15T23:05:03.904216 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-15T23:05:03.901239600 [INFO] Deleting old backups if necessary
+2025-01-15T23:05:03.899255300 [DEBUG] updating backup list
+2025-01-15T23:05:03.894294900 [INFO] Next date backup setted to: 2025-04-05T23:06:03.889832300
+2025-01-15T23:05:03.890328400 [INFO] Backup completed!
+2025-01-15T23:05:03.884871200 [INFO] Zipping progress: 100%
+2025-01-15T23:05:03.878421200 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:05:03.867810 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:05:03.862352800 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:05:03.859376800 [INFO] Zipping progress: 75%
+2025-01-15T23:05:03.856897200 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:05:03.849953500 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:05:03.845488900 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:05:03.842017400 [INFO] Zipping progress: 50%
+2025-01-15T23:05:03.837553200 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:05:03.833585600 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:05:03.828625300 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:05:03.825153100 [INFO] Zipping progress: 25%
+2025-01-15T23:05:03.822673800 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:05:03.817713500 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:05:03.813249 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:05:03.810768900 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:05:03.806802400 [INFO] Starting zipping process
+2025-01-15T23:05:03.787499200 [INFO] date backup: 15-01-2025 23.05.03
+2025-01-15T23:05:03.786010700 [INFO] Event --> single backup
+2025-01-15T23:05:02.571601100 [INFO] Deleting old backups if necessary
+2025-01-15T23:05:02.570113 [DEBUG] updating backup list
+2025-01-15T23:05:02.564657400 [INFO] Next date backup setted to: 2025-04-05T23:06:02.558706200
+2025-01-15T23:05:02.559697600 [INFO] Backup completed!
+2025-01-15T23:05:02.554241 [INFO] Zipping progress: 100%
+2025-01-15T23:05:02.548290100 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:05:02.543825400 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:05:02.531923 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:05:02.527953400 [INFO] Zipping progress: 75%
+2025-01-15T23:05:02.525473 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:05:02.518033300 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:05:02.514065700 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:05:02.510593700 [INFO] Zipping progress: 50%
+2025-01-15T23:05:02.506130300 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:05:02.495713100 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:05:02.484802 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:05:02.480819200 [INFO] Zipping progress: 25%
+2025-01-15T23:05:02.478353600 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:05:02.473393600 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:05:02.469426 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:05:02.466450100 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:05:02.460001500 [INFO] Starting zipping process
+2025-01-15T23:05:02.441153100 [INFO] date backup: 15-01-2025 23.05.02
+2025-01-15T23:05:02.438673300 [INFO] Event --> single backup
+2025-01-15T23:05:01.030100900 [INFO] Deleting old backups if necessary
+2025-01-15T23:05:01.027621700 [DEBUG] updating backup list
+2025-01-15T23:05:01.019189300 [INFO] Next date backup setted to: 2025-04-05T23:06:01.011749600
+2025-01-15T23:05:01.012741600 [INFO] Backup completed!
+2025-01-15T23:05:01.006789600 [INFO] Zipping progress: 100%
+2025-01-15T23:05:00.999349600 [DEBUG] Zipping file: lezioni/test.csv
+2025-01-15T23:05:00.995381100 [DEBUG] Zipping file: lezioni/Nuovo documento di testo (2).txt
+2025-01-15T23:05:00.988437 [DEBUG] Zipping file: lezioni/lezioni2024.png
+2025-01-15T23:05:00.984965 [INFO] Zipping progress: 75%
+2025-01-15T23:05:00.981493400 [DEBUG] Zipping file: lezioni/lezioni2024.csv
+2025-01-15T23:05:00.974053500 [DEBUG] Zipping file: lezioni/lezioni2023.png
+2025-01-15T23:05:00.968597200 [DEBUG] Zipping file: lezioni/lezioni2023.csv
+2025-01-15T23:05:00.965125400 [INFO] Zipping progress: 50%
+2025-01-15T23:05:00.959669100 [DEBUG] Zipping file: lezioni/lezioni2022.png
+2025-01-15T23:05:00.946773100 [DEBUG] Zipping file: lezioni/lezioni2022.csv
+2025-01-15T23:05:00.939333500 [DEBUG] Zipping file: lezioni/lezioni2021.png
+2025-01-15T23:05:00.934869300 [INFO] Zipping progress: 25%
+2025-01-15T23:05:00.930405100 [DEBUG] Zipping file: lezioni/lezioni2021.csv
+2025-01-15T23:05:00.922965400 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia.csv
+2025-01-15T23:05:00.913541100 [DEBUG] Zipping file: lezioni/lezioni2021 - Copia - Copia.txt
+2025-01-15T23:05:00.910069100 [DEBUG] Zipping directory: lezioni//
+2025-01-15T23:05:00.899652900 [INFO] Starting zipping process
+2025-01-15T23:05:00.871870900 [INFO] date backup: 15-01-2025 23.05.00
+2025-01-15T23:05:00.865380200 [INFO] Event --> single backup
+2025-01-15T23:04:58.934921700 [INFO] Event --> opening backup
+2025-01-15T23:04:58.931425400 [INFO] Double-click on row: 4
+2025-01-15T23:04:58.926987900 [DEBUG] Selected backup: lezioni
+2025-01-15T23:04:03.477027600 [INFO] Observer for running backups started
+2025-01-15T23:04:02.858210500 [DEBUG] Background mode: false
+2025-01-15T23:04:02.850274300 [INFO] Application started
+2025-01-15T23:04:02.842338700 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:04:02.829449700 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-15T23:02:42.559218400 [INFO] Reloading preferences
+2025-01-15T23:02:42.556737600 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:02:42.539873500 [INFO] Theme set to: Light
+2025-01-15T23:02:42.537394100 [INFO] Language set to: Italiano
+2025-01-15T23:02:42.535905400 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T23:02:39.769650700 [INFO] Reloading preferences
+2025-01-15T23:02:39.767170300 [INFO] Preferences updated to JSON file: language = fra.json, theme = Light
+2025-01-15T23:02:39.750306400 [INFO] Theme set to: Light
+2025-01-15T23:02:39.746834800 [INFO] Language set to: Français
+2025-01-15T23:02:39.744354400 [INFO] Updating preferences -> Language: Français; Theme: Light
+2025-01-15T23:02:38.038342900 [INFO] Event --> opening preferences dialog
+2025-01-15T23:02:34.286941 [INFO] Reloading preferences
+2025-01-15T23:02:34.284956800 [INFO] Preferences updated to JSON file: language = deu.json, theme = Light
+2025-01-15T23:02:34.264646500 [INFO] Theme set to: Light
+2025-01-15T23:02:34.261645 [INFO] Language set to: Deutsch
+2025-01-15T23:02:34.259660500 [INFO] Updating preferences -> Language: Deutsch; Theme: Light
+2025-01-15T23:02:32.438037700 [INFO] Event --> opening preferences dialog
+2025-01-15T23:02:30.164817600 [INFO] Observer for running backups started
+2025-01-15T23:02:29.520479400 [DEBUG] Background mode: false
+2025-01-15T23:02:29.512047300 [INFO] Application started
+2025-01-15T23:02:29.502623300 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:02:29.488240200 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-15T23:01:24.100532400 [DEBUG] Selected backup: testone
+2025-01-15T23:01:22.961398500 [INFO] Reloading preferences
+2025-01-15T23:01:22.959414800 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:01:22.944536400 [INFO] Theme set to: Light
+2025-01-15T23:01:22.942032500 [INFO] Language set to: Italiano
+2025-01-15T23:01:22.940049 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T23:01:20.802189100 [INFO] Event --> opening preferences dialog
+2025-01-15T23:01:17.291302700 [DEBUG] Selected backup: asd
+2025-01-15T23:01:16.970900200 [DEBUG] Selected backup: Documents2
+2025-01-15T23:01:16.613302400 [DEBUG] Selected backup: test2
+2025-01-15T23:01:14.780041900 [INFO] Reloading preferences
+2025-01-15T23:01:14.778085300 [INFO] Preferences updated to JSON file: language = deu.json, theme = Light
+2025-01-15T23:01:14.757722600 [INFO] Theme set to: Light
+2025-01-15T23:01:14.755241500 [INFO] Language set to: Deutsch
+2025-01-15T23:01:14.753257700 [INFO] Updating preferences -> Language: Deutsch; Theme: Light
+2025-01-15T23:01:12.624821200 [INFO] Event --> opening preferences dialog
+2025-01-15T23:01:07.470495800 [INFO] Observer for running backups started
+2025-01-15T23:01:06.745556200 [DEBUG] Background mode: false
+2025-01-15T23:01:06.737620 [INFO] Application started
+2025-01-15T23:01:06.727203900 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T23:01:06.712323500 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-15T22:51:24.884714500 [INFO] Reloading preferences
+2025-01-15T22:51:24.882234800 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T22:51:24.861898500 [INFO] Theme set to: Light
+2025-01-15T22:51:24.858426500 [INFO] Language set to: Italiano
+2025-01-15T22:51:24.856442600 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T22:51:21.365101500 [INFO] Event --> opening preferences dialog
+2025-01-15T22:51:16.380971400 [INFO] Observer for running backups started
+2025-01-15T22:51:15.539260100 [DEBUG] Background mode: false
+2025-01-15T22:51:15.531819600 [INFO] Application started
+2025-01-15T22:51:15.523387400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-15T22:51:15.506524200 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-15T22:50:19.059287300 [DEBUG] Background mode: false
+2025-01-15T22:50:19.052343600 [INFO] Application started
+2025-01-15T22:50:19.043911200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-15T22:50:19.029528 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-15T22:46:13.563330100 [INFO] Reloading preferences
+2025-01-15T22:46:13.560849900 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-15T22:46:13.539521900 [INFO] Theme set to: Light
+2025-01-15T22:46:13.537041700 [INFO] Language set to: English
+2025-01-15T22:46:13.534562500 [INFO] Updating preferences -> Language: English; Theme: Light
+2025-01-15T22:46:11.276337900 [INFO] Event --> opening preferences dialog
+2025-01-15T22:46:06.729740500 [INFO] Observer for running backups started
+2025-01-15T22:46:06.064447700 [DEBUG] Background mode: false
+2025-01-15T22:46:06.056015500 [INFO] Application started
+2025-01-15T22:46:06.048079700 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T22:46:06.035680300 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-15T22:46:01.995029 [DEBUG] Selected backup: Immagini
+2025-01-15T22:45:58.273646600 [INFO] Reloading preferences
+2025-01-15T22:45:58.272186300 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T22:45:58.258294700 [INFO] Theme set to: Light
+2025-01-15T22:45:58.256286900 [INFO] Language set to: Italiano
+2025-01-15T22:45:58.254798900 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T22:45:55.451645 [INFO] Event --> opening preferences dialog
+2025-01-15T22:45:49.676141900 [INFO] Event --> shard website
+2025-01-15T22:45:18.300584400 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:17.038260 [INFO] Right click on row: 8
+2025-01-15T22:45:17.036772 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:16.404271600 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:13.854876300 [DEBUG] updating backup list
+2025-01-15T22:45:13.851898100 [INFO] Event --> saving backup
+2025-01-15T22:45:10.890174900 [DEBUG] updating backup list
+2025-01-15T22:45:10.886225500 [INFO] Event --> auto backup disabled
+2025-01-15T22:45:10.884755600 [INFO] Event --> opening backup
+2025-01-15T22:45:10.882238800 [INFO] Double-click on row: 8
+2025-01-15T22:45:10.879758700 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:10.706882300 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:09.932408 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:07.281518 [INFO] Right click on row: 8
+2025-01-15T22:45:07.279756900 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:06.913335700 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:45:06.388374500 [DEBUG] Selected backup: asd
+2025-01-15T22:45:03.934094900 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:44:56.142096200 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:53.127217400 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:50.113778200 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:47.102850 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:44.087549800 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:41.070142500 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:38.059383100 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:35.043243400 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:33.783514700 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0\Published\CookedPC\Maps\CuChi\VNTE-AussieCuChi.roe
+2025-01-15T22:44:33.782026800 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0\Published\CookedPC\Maps\CuChi/
+2025-01-15T22:44:33.780539200 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0\Published\CookedPC\Maps/
+2025-01-15T22:44:33.779051 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0\Published\CookedPC/
+2025-01-15T22:44:33.777067400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0\Published/
+2025-01-15T22:44:33.775083200 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997\0/
+2025-01-15T22:44:33.773594900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1214908997/
+2025-01-15T22:44:33.329872500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-15T22:44:33.227420400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save127_1C601610M4D725F44656E6E61_Commonwealth_020117_20171202194129_38_2.fos
+2025-01-15T22:44:32.065524900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save27_BF76982F_44656E6E61_Commonwealth_000958_20240426091453_16_2.fos
+2025-01-15T22:44:32.029317800 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:31.308133200 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783\0\Published\CookedPC\Maps\VNTE-Perimeter.roe
+2025-01-15T22:44:31.304661100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783\0\Published\CookedPC\Maps/
+2025-01-15T22:44:31.303669500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783\0\Published\CookedPC/
+2025-01-15T22:44:31.301687500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783\0\Published/
+2025-01-15T22:44:31.300197100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783\0/
+2025-01-15T22:44:31.298709600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1155892783/
+2025-01-15T22:44:30.264512 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save126_1C601610M4D725F44656E6E61_Commonwealth_020051_20171202191508_38_2.fos
+2025-01-15T22:44:29.763552100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-15T22:44:29.015199600 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:28.664279400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save26_BF76982F_44656E6E61_Commonwealth_000909_20240426082508_15_2.fos
+2025-01-15T22:44:28.101924800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save125_1C601610M4D725F44656E6E61_RailroadHQ01_020043_20171202185840_37_2.fos
+2025-01-15T22:44:26.004889900 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:25.954297700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-15T22:44:25.551204100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save25_BF76982F_44656E6E61_PrydwenHull01_000808_20240425122630_14_2.fos
+2025-01-15T22:44:25.429682900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save124_1C601610M4D725F44656E6E61_Commonwealth_020010_20171202135845_37_2.fos
+2025-01-15T22:44:22.987009200 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:22.480819900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-15T22:44:22.477347300 [DEBUG] Zipping directory: Documents/My Games\Fallout4\Saves/
+2025-01-15T22:44:22.475859500 [DEBUG] Zipping directory: Documents/My Games\Fallout4/
+2025-01-15T22:44:22.474371200 [DEBUG] Zipping directory: Documents/My Games/
+2025-01-15T22:44:22.431715900 [DEBUG] Zipping file: Documents/log_file
+2025-01-15T22:44:22.430228200 [DEBUG] Zipping directory: Documents/Lightshot/
+2025-01-15T22:44:22.394516 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save123_1C601610M4D725F44656E6E61_Commonwealth_012333_20171130191434_37_2.fos
+2025-01-15T22:44:21.867220800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save24_BF76982F_44656E6E61_PrydwenHull02_000759_20240425121753_14_2.fos
+2025-01-15T22:44:20.057142500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save122_1C601610M4D725F44656E6E61_Commonwealth_012332_20171130191316_37_2.fos
+2025-01-15T22:44:19.972822200 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:18.334408400 [INFO] Background service stopped
+2025-01-15T22:44:18.259569300 [DEBUG] Stopping background service
+2025-01-15T22:44:17.206190700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save23_BF76982F_44656E6E61_Commonwealth_000746_20240425120500_13_2.fos
+2025-01-15T22:44:16.913890600 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:16.381150900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save121_1C601610M4D725F44656E6E61_Commonwealth_012205_20171119100104_36_2.fos
+2025-01-15T22:44:15.022530800 [INFO] Right click on row: 8
+2025-01-15T22:44:14.341212600 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:44:14.081018400 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:44:13.901535600 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:11.615911 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save120_1C601610M4D725F44656E6E61_Commonwealth_012119_20171025124734_35_2.fos
+2025-01-15T22:44:11.098413500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save22_BF76982F_44656E6E61_Commonwealth_000740_20240425115013_13_2.fos
+2025-01-15T22:44:10.888131100 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:08.043736300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save11_BF76982F_44656E6E61_HardwareTown01_000455_20240422172922_11_2.fos
+2025-01-15T22:44:08.041751900 [INFO] Zipping progress: 25%
+2025-01-15T22:44:07.876088400 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:07.511945 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save21_BF76982F_44656E6E61_CombatZone01_000737_20240425114551_13_2.fos
+2025-01-15T22:44:04.958136300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save119_1C601610M4D725F44656E6E61_RailroadHQ01_012043_20171021113404_35_2.fos
+2025-01-15T22:44:04.862904300 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:04.123404200 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save20_BF76982F_44656E6E61_Commonwealth_000702_20240425080944_13_2.fos
+2025-01-15T22:44:02.009493500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save118_1C601610M4D725F44656E6E61_Switchboard_012033_20171021112410_35_2.fos
+2025-01-15T22:44:01.848004200 [DEBUG] Observer has found a running backup
+2025-01-15T22:44:01.259559800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save1_BF76982F__SanctuaryHillsWorld_000022_20240420141633_1_2.fos
+2025-01-15T22:43:59.571778700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save117_1C601610M4D725F44656E6E61_Commonwealth_012016_20171021110214_35_2.fos
+2025-01-15T22:43:58.835439300 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:58.200970500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save19_BF76982F_44656E6E61_FortHagen02_000609_20240423173431_12_2.fos
+2025-01-15T22:43:56.301165500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save10_BF76982F_44656E6E61_DiamondCity_000439_20240422153456_10_2.fos
+2025-01-15T22:43:55.821360600 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:55.362887200 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save18_BF76982F_44656E6E61_FortHagen01_000556_20240423121948_12_2.fos
+2025-01-15T22:43:52.826565100 [DEBUG] updating backup list
+2025-01-15T22:43:52.810197400 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:51.986841900 [INFO] Event --> auto backup disabled
+2025-01-15T22:43:51.347973100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Quicksave0_BF76982F_44656E6E61_Commonwealth_001029_20240426094614_16_2.fos
+2025-01-15T22:43:50.132679100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save17_BF76982F_44656E6E61_FortHagen01_000549_20240423121154_12_2.fos
+2025-01-15T22:43:49.928299600 [INFO] Right click on row: 8
+2025-01-15T22:43:49.926811900 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:48.684922800 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:46.809213 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Quicksave0_1C601610M4D725F44656E6E61_Commonwealth_020858_20180126145302_43_2.fos
+2025-01-15T22:43:46.661405 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save16_BF76982F_44656E6E61_Commonwealth_000537_20240423120029_11_2.fos
+2025-01-15T22:43:46.149533200 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide.one
+2025-01-15T22:43:46.044381200 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-15T22:43:45.868797400 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-15T22:43:45.864333300 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Note rapide/
+2025-01-15T22:43:45.673373500 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:45.305341300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-15T22:43:44.890189700 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-15T22:43:44.615405600 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-15T22:43:44.562829800 [INFO] Right click on row: 8
+2025-01-15T22:43:44.560350200 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:44.532078100 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-15T22:43:44.496862400 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\fghfhf/
+2025-01-15T22:43:44.268702200 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:44.154125900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-15T22:43:43.863966 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0\Published\CookedPC\Maps\JungleSwamp_VNTE\VNTE-JungleSwamp.roe
+2025-01-15T22:43:43.862478300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0\Published\CookedPC\Maps\JungleSwamp_VNTE/
+2025-01-15T22:43:43.860493900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0\Published\CookedPC\Maps/
+2025-01-15T22:43:43.858510500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0\Published\CookedPC/
+2025-01-15T22:43:43.849085900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0\Published/
+2025-01-15T22:43:43.831230300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070\0/
+2025-01-15T22:43:43.824781500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1199090070/
+2025-01-15T22:43:43.664078300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-15T22:43:43.655149800 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-15T22:43:43.617950300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save15_BF76982F_44656E6E61_Commonwealth_000534_20240423115717_11_2.fos
+2025-01-15T22:43:43.131869800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_BF76982F_44656E6E61_Commonwealth_001141_20240427081326_17_2.fos
+2025-01-15T22:43:42.711261900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-15T22:43:42.690926200 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-15T22:43:42.672574300 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-15T22:43:42.660173900 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:42.656206100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote/
+2025-01-15T22:43:42.621982700 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-15T22:43:42.614046100 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-15T22:43:42.186990200 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\2\Published\CookedPC\Phan Cong\VNTE-PhanCong.roe
+2025-01-15T22:43:42.183519 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\2\Published\CookedPC\Phan Cong/
+2025-01-15T22:43:42.161197900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\2\Published\CookedPC/
+2025-01-15T22:43:42.156734600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\2\Published/
+2025-01-15T22:43:42.155742200 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\2/
+2025-01-15T22:43:42.154254 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\1\Published\CookedPC\Phan Cong/
+2025-01-15T22:43:42.153262 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\1\Published\CookedPC/
+2025-01-15T22:43:42.151774300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\1\Published/
+2025-01-15T22:43:42.150285900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\1/
+2025-01-15T22:43:42.148798 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\0\Published\CookedPC\Phan Cong/
+2025-01-15T22:43:42.119038100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\0\Published\CookedPC/
+2025-01-15T22:43:42.063486600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\0\Published/
+2025-01-15T22:43:42.061998 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455\0/
+2025-01-15T22:43:42.039182400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1122477455/
+2025-01-15T22:43:42.036702100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache/
+2025-01-15T22:43:41.949406 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame/
+2025-01-15T22:43:41.947422400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\Binaries\win64/
+2025-01-15T22:43:41.732158100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\Binaries/
+2025-01-15T22:43:41.660238800 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2/
+2025-01-15T22:43:41.606670500 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\last.dat
+2025-01-15T22:43:41.475230400 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav600.dat
+2025-01-15T22:43:41.139438600 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav500.dat
+2025-01-15T22:43:41.098766300 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\1\Published\CookedPC\Maps\VNTE-Resort.roe
+2025-01-15T22:43:41.097278400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\1\Published\CookedPC\Maps/
+2025-01-15T22:43:41.094798600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\1\Published\CookedPC/
+2025-01-15T22:43:41.092318500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\1\Published/
+2025-01-15T22:43:41.090334700 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\1/
+2025-01-15T22:43:41.086862600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\0\Published\CookedPC\Maps/
+2025-01-15T22:43:41.080910300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\0\Published\CookedPC/
+2025-01-15T22:43:41.077934800 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\0\Published/
+2025-01-15T22:43:41.074959400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050\0/
+2025-01-15T22:43:41.058590300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1287991050/
+2025-01-15T22:43:40.975262500 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav400.dat
+2025-01-15T22:43:40.973774100 [INFO] Zipping progress: 75%
+2025-01-15T22:43:40.898880 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav300.dat
+2025-01-15T22:43:40.770414300 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav200.dat
+2025-01-15T22:43:40.739166300 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav100.dat
+2025-01-15T22:43:40.653854700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save14_BF76982F_44656E6E61_Commonwealth_000531_20240423115416_11_2.fos
+2025-01-15T22:43:40.611199 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\sav1.dat
+2025-01-15T22:43:40.485214500 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983\profile.dat
+2025-01-15T22:43:40.483726500 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition\Saves\76561198159240983/
+2025-01-15T22:43:40.481247500 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition\Saves/
+2025-01-15T22:43:40.447518400 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Data\vfs.bin
+2025-01-15T22:43:40.399902700 [INFO] Event --> opening backup
+2025-01-15T22:43:40.398414600 [INFO] Double-click on row: 8
+2025-01-15T22:43:40.395934900 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:40.278382800 [DEBUG] Zipping file: Documents/My Games\Mafia II Definitive Edition\Data\profiles\76561198159240983\settings.xml
+2025-01-15T22:43:40.273918600 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition\Data\profiles\76561198159240983/
+2025-01-15T22:43:40.271438700 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition\Data\profiles/
+2025-01-15T22:43:40.268959500 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition\Data/
+2025-01-15T22:43:40.265486700 [DEBUG] Zipping directory: Documents/My Games\Mafia II Definitive Edition/
+2025-01-15T22:43:40.258542500 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Saves\videoconfig.cfg
+2025-01-15T22:43:40.253582400 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Saves\launcconfig.cfg
+2025-01-15T22:43:40.249118600 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Saves/
+2025-01-15T22:43:40.236223100 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\stats.bin
+2025-01-15T22:43:40.221838500 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:39.773951 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\profile_videosettings.pf
+2025-01-15T22:43:39.771471 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\profile_language.pf
+2025-01-15T22:43:39.700542800 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\profile_data_storage_persistantdata.pf
+2025-01-15T22:43:39.698558400 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\profile_audiosettings.pf
+2025-01-15T22:43:39.696574400 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\my2k_game_stats.pf
+2025-01-15T22:43:39.694590500 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\map_filter.pf
+2025-01-15T22:43:39.645983300 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:39.505118800 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\garage.pf
+2025-01-15T22:43:39.418814600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_BF76982FM44656E6E61_DiamondCity_000317_20240422114937_8_2.fos
+2025-01-15T22:43:38.931246700 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\gamesettings.pf
+2025-01-15T22:43:38.872223600 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\gameinputmodule.pf
+2025-01-15T22:43:38.549783500 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:38.330054900 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\bslot.pf
+2025-01-15T22:43:38.149015600 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile\aslot.pf
+2025-01-15T22:43:38.147528400 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles\temporaryprofile/
+2025-01-15T22:43:38.146039200 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves\profiles/
+2025-01-15T22:43:38.107351900 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-15T22:43:38.094455600 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves\default\aslot\save2.sav
+2025-01-15T22:43:38.048327200 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves\default\aslot\save1.sav
+2025-01-15T22:43:38.031463500 [DEBUG] Zipping file: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves\default\aslot\save0.sav
+2025-01-15T22:43:38.029975500 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves\default\aslot/
+2025-01-15T22:43:38.028487900 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves\default/
+2025-01-15T22:43:38.026007100 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves\gamesaves/
+2025-01-15T22:43:38.024519300 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data\Saves/
+2025-01-15T22:43:38.022039100 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition\Data/
+2025-01-15T22:43:38.019559100 [DEBUG] Zipping directory: Documents/My Games\Mafia Definitive Edition/
+2025-01-15T22:43:38.015095100 [DEBUG] Zipping file: Documents/My Games\Far Cry 6\rendercapslog.txt
+2025-01-15T22:43:37.999224200 [DEBUG] Zipping file: Documents/My Games\Far Cry 6\gamerprofile.xml
+2025-01-15T22:43:37.995751400 [DEBUG] Zipping file: Documents/My Games\Far Cry 6\check.txt
+2025-01-15T22:43:37.984839100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save13_BF76982F_44656E6E61_Commonwealth_000523_20240422175838_11_2.fos
+2025-01-15T22:43:36.635242 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:34.733697100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save131_1C601610M4D725F44656E6E61_Commonwealth_020706_20180105155741_43_2.fos
+2025-01-15T22:43:34.046942100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_1C601610_4D725F44656E6E61_Commonwealth_020906_20240420135148_43_2.fos
+2025-01-15T22:43:33.699245900 [INFO] Reloading preferences
+2025-01-15T22:43:33.697262100 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-15T22:43:33.679902200 [INFO] Theme set to: Light
+2025-01-15T22:43:33.677918600 [INFO] Language set to: Italiano
+2025-01-15T22:43:33.675934 [INFO] Updating preferences -> Language: Italiano; Theme: Light
+2025-01-15T22:43:33.621870 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:32.292189600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save130_1C601610M4D725F44656E6E61_Commonwealth_020319_20171203094943_40_2.fos
+2025-01-15T22:43:32.091804800 [INFO] Reloading preferences
+2025-01-15T22:43:32.089821100 [INFO] Preferences updated to JSON file: language = ita.json, theme = Carbon
+2025-01-15T22:43:32.065517 [INFO] Theme set to: Carbon
+2025-01-15T22:43:31.642406100 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-15T22:43:31.641414200 [DEBUG] Zipping directory: Documents/Backup Mondo Valheim 09-09-21/
+2025-01-15T22:43:31.618102200 [INFO] Language set to: Italiano
+2025-01-15T22:43:31.616614300 [INFO] Updating preferences -> Language: Italiano; Theme: Carbon
+2025-01-15T22:43:31.119785200 [DEBUG] Zipping file: Documents/Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-15T22:43:31.118297800 [DEBUG] Zipping directory: Documents/Adobe\Photoshop Cloud Associate/
+2025-01-15T22:43:31.116809200 [DEBUG] Zipping directory: Documents/Adobe/
+2025-01-15T22:43:31.115320900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Samples/
+2025-01-15T22:43:31.113833300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-15T22:43:31.112344900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-15T22:43:31.110361300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-15T22:43:31.108872700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-15T22:43:31.107385 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-15T22:43:31.105897200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-15T22:43:31.104411 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-15T22:43:31.101929600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-15T22:43:31.099449 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-15T22:43:31.098457300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects/
+2025-01-15T22:43:31.096473600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-15T22:43:31.094984900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Tension/
+2025-01-15T22:43:31.093001100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-15T22:43:31.091512700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-15T22:43:31.090025400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Operator/
+2025-01-15T22:43:31.087545 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-15T22:43:31.084569600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-15T22:43:31.083080900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-15T22:43:31.082088800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-15T22:43:31.080601200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Electric/
+2025-01-15T22:43:31.079112800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-15T22:43:31.077625700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Collision/
+2025-01-15T22:43:31.076136800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Analog/
+2025-01-15T22:43:31.074649300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments/
+2025-01-15T22:43:31.072665200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-15T22:43:31.070681200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-15T22:43:31.068697600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-15T22:43:31.066217900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-15T22:43:31.065225 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-15T22:43:31.063737800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-15T22:43:31.062249100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-15T22:43:31.060761200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-15T22:43:31.059272700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-15T22:43:31.057784800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-15T22:43:31.055305 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-15T22:43:31.052825400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-15T22:43:31.050841 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-15T22:43:31.049848700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-15T22:43:31.048856700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-15T22:43:31.047369 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-15T22:43:31.046376800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-15T22:43:31.044888800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-15T22:43:31.043897200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-15T22:43:31.041912700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-15T22:43:31.040920900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-15T22:43:31.039928800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-15T22:43:31.038937600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-15T22:43:31.037945400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-15T22:43:31.036457200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-15T22:43:31.034969300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-15T22:43:31.033481300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-15T22:43:31.032489200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-15T22:43:31.030504900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-15T22:43:31.029512800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-15T22:43:31.028521600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-15T22:43:31.027033 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-15T22:43:31.025545200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-15T22:43:31.024552800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-15T22:43:31.023064900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-15T22:43:31.021576800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-15T22:43:31.020585200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-15T22:43:31.019097200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-15T22:43:31.017609200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-15T22:43:31.016121 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-15T22:43:31.014137700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects/
+2025-01-15T22:43:31.011656900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets/
+2025-01-15T22:43:31.008680800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Grooves/
+2025-01-15T22:43:31.006696800 [DEBUG] Zipping file: Documents/Ableton\User Library\Desktop.ini
+2025-01-15T22:43:31.004713200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Slicing/
+2025-01-15T22:43:31.001240900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-15T22:43:30.999753700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-15T22:43:30.998761500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples/
+2025-01-15T22:43:30.997274 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-15T22:43:30.995785 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-15T22:43:30.994297100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-15T22:43:30.991816700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-15T22:43:30.990825100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults/
+2025-01-15T22:43:30.989337 [DEBUG] Zipping directory: Documents/Ableton\User Library\Clips/
+2025-01-15T22:43:30.987353100 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-15T22:43:30.985369 [INFO] Zipping progress: 0%
+2025-01-15T22:43:30.608865900 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:30.578530600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_1C601610M4D725F44656E6E61_Commonwealth_020857_20180110180647_43_2.fos
+2025-01-15T22:43:30.482714900 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-15T22:43:30.481226700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Ableton Project Info/
+2025-01-15T22:43:30.479738600 [DEBUG] Zipping directory: Documents/Ableton\User Library/
+2025-01-15T22:43:30.477755400 [DEBUG] Zipping directory: Documents/Ableton\Live Recordings/
+2025-01-15T22:43:30.476267300 [DEBUG] Zipping directory: Documents/Ableton\Factory Packs/
+2025-01-15T22:43:30.474283400 [DEBUG] Zipping directory: Documents/Ableton/
+2025-01-15T22:43:30.472794800 [DEBUG] Zipping directory: Documents//
+2025-01-15T22:43:30.459403700 [INFO] Starting zipping process
+2025-01-15T22:43:30.457914500 [INFO] Event --> manual backup started
+2025-01-15T22:43:30.456427300 [INFO] Start backup process.
+2025-01-15T22:43:30.453968500 [INFO] Checking for automatic backup...
+2025-01-15T22:43:29.172035800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save12_BF76982F_44656E6E61_Commonwealth_000516_20240422175140_11_2.fos
+2025-01-15T22:43:28.891329400 [INFO] Event --> opening preferences dialog
+2025-01-15T22:43:27.594139200 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:26.783963600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
+2025-01-15T22:43:26.336291500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save129_1C601610M4D725F44656E6E61_Commonwealth_020254_20171203092503_40_2.fos
+2025-01-15T22:43:24.579385 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:24.349239300 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1\Published\CookedPC\Maps\VNTE-JungleRaidBeta\VNTE-JungleRaid.roe
+2025-01-15T22:43:24.348247600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1\Published\CookedPC\Maps\VNTE-JungleRaidBeta/
+2025-01-15T22:43:24.346759200 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1\Published\CookedPC\Maps/
+2025-01-15T22:43:24.345767200 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1\Published\CookedPC/
+2025-01-15T22:43:24.344776 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1\Published/
+2025-01-15T22:43:24.342791500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\1/
+2025-01-15T22:43:24.341303400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\0\Published\CookedPC\Maps\VNTE-JungleRaidBeta/
+2025-01-15T22:43:24.339815 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\0\Published\CookedPC\Maps/
+2025-01-15T22:43:24.338328100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\0\Published\CookedPC/
+2025-01-15T22:43:24.335351600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\0\Published/
+2025-01-15T22:43:24.333367100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811\0/
+2025-01-15T22:43:24.321959300 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1148354811/
+2025-01-15T22:43:23.861245800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save128_1C601610M4D725F44656E6E61_DiamondCity_020236_20171203090607_39_2.fos
+2025-01-15T22:43:23.071524800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
+2025-01-15T22:43:21.565461700 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:21.148325500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save127_1C601610M4D725F44656E6E61_Commonwealth_020117_20171202194129_38_2.fos
+2025-01-15T22:43:21.005477900 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0\Published\CookedPC\Maps\VNTE-NinhPhu\VNTE-NinhPhu_1032.roe
+2025-01-15T22:43:21.003990 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0\Published\CookedPC\Maps\VNTE-NinhPhu/
+2025-01-15T22:43:21.001013700 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0\Published\CookedPC\Maps/
+2025-01-15T22:43:21.000021600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0\Published\CookedPC/
+2025-01-15T22:43:20.999030100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0\Published/
+2025-01-15T22:43:20.998037900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817\0/
+2025-01-15T22:43:20.996550 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1150510817/
+2025-01-15T22:43:18.888068800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-15T22:43:18.557436200 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:18.512795500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save126_1C601610M4D725F44656E6E61_Commonwealth_020051_20171202191508_38_2.fos
+2025-01-15T22:43:18.505852300 [INFO] Right click on row: 8
+2025-01-15T22:43:18.503867800 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:18.306134300 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:43:16.180686700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save125_1C601610M4D725F44656E6E61_RailroadHQ01_020043_20171202185840_37_2.fos
+2025-01-15T22:43:15.537789400 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:15.421726100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-15T22:43:13.620910300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save124_1C601610M4D725F44656E6E61_Commonwealth_020010_20171202135845_37_2.fos
+2025-01-15T22:43:12.524371400 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:12.442103300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-15T22:43:11.062657800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save123_1C601610M4D725F44656E6E61_Commonwealth_012333_20171130191434_37_2.fos
+2025-01-15T22:43:09.510625300 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:09.087040600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-15T22:43:09.085553300 [DEBUG] Zipping directory: Documents/My Games\Fallout4\Saves/
+2025-01-15T22:43:09.084064900 [DEBUG] Zipping directory: Documents/My Games\Fallout4/
+2025-01-15T22:43:09.082576700 [DEBUG] Zipping directory: Documents/My Games/
+2025-01-15T22:43:08.973952600 [DEBUG] Zipping file: Documents/log_file
+2025-01-15T22:43:08.971968700 [DEBUG] Zipping directory: Documents/Lightshot/
+2025-01-15T22:43:08.654808400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save122_1C601610M4D725F44656E6E61_Commonwealth_012332_20171130191316_37_2.fos
+2025-01-15T22:43:06.495907700 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:05.424456900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save121_1C601610M4D725F44656E6E61_Commonwealth_012205_20171119100104_36_2.fos
+2025-01-15T22:43:03.480691500 [DEBUG] Observer has found a running backup
+2025-01-15T22:43:02.611680700 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062\0\Published\CookedPC\Maps\VNTE-DeathHills.roe
+2025-01-15T22:43:02.610192600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062\0\Published\CookedPC\Maps/
+2025-01-15T22:43:02.609200600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062\0\Published\CookedPC/
+2025-01-15T22:43:02.607713800 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062\0\Published/
+2025-01-15T22:43:02.606721100 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062\0/
+2025-01-15T22:43:02.605232900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1185218062/
+2025-01-15T22:43:01.403737500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save120_1C601610M4D725F44656E6E61_Commonwealth_012119_20171025124734_35_2.fos
+2025-01-15T22:43:00.466823100 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:58.555555400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save11_BF76982F_44656E6E61_HardwareTown01_000455_20240422172922_11_2.fos
+2025-01-15T22:42:58.553571400 [INFO] Zipping progress: 25%
+2025-01-15T22:42:57.454542100 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:55.740136700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save119_1C601610M4D725F44656E6E61_RailroadHQ01_012043_20171021113404_35_2.fos
+2025-01-15T22:42:55.417390700 [DEBUG] Zipping file: Documents/My Games\Far Cry 6\46-30-36-41-34-31-41-30-32-45-41-39-39-41-45-46_pipelines.bin
+2025-01-15T22:42:55.415903 [DEBUG] Zipping directory: Documents/My Games\Far Cry 6/
+2025-01-15T22:42:55.411935100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\steam_autocloud.vdf
+2025-01-15T22:42:54.439351800 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:53.870579500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save118_1C601610M4D725F44656E6E61_Switchboard_012033_20171021112410_35_2.fos
+2025-01-15T22:42:52.290485700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save9_BF76982F_44656E6E61_Commonwealth_000338_20240422122015_9_2.fos
+2025-01-15T22:42:51.557058500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save117_1C601610M4D725F44656E6E61_Commonwealth_012016_20171021110214_35_2.fos
+2025-01-15T22:42:51.425360600 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:49.258503900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save8_BF76982F_44656E6E61_DiamondCity_000314_20240421081828_8_2.fos
+2025-01-15T22:42:48.502389400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save10_BF76982F_44656E6E61_DiamondCity_000439_20240422153456_10_2.fos
+2025-01-15T22:42:48.411394700 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:46.201887700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save7_BF76982F_44656E6E61_DiamondCity_000257_20240421080056_7_2.fos
+2025-01-15T22:42:45.396312 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:45.079316900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide.one
+2025-01-15T22:42:44.965598500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-15T22:42:44.585659100 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-15T22:42:44.583674500 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Note rapide/
+2025-01-15T22:42:44.569291 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Quicksave0_BF76982F_44656E6E61_Commonwealth_001029_20240426094614_16_2.fos
+2025-01-15T22:42:44.066799400 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-15T22:42:43.908079400 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-15T22:42:43.791138300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-15T22:42:43.680748900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-15T22:42:43.679757300 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\fghfhf/
+2025-01-15T22:42:43.512606900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-15T22:42:43.366774300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-15T22:42:43.365286500 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-15T22:42:43.080008 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save6_BF76982F_44656E6E61_Commonwealth_000216_20240421071844_7_2.fos
+2025-01-15T22:42:42.439221900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-15T22:42:42.382108100 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:42.304234900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-15T22:42:42.302757900 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-15T22:42:42.301754600 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote/
+2025-01-15T22:42:42.299770900 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-15T22:42:42.297786500 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-15T22:42:41.273352900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Quicksave0_1C601610M4D725F44656E6E61_Commonwealth_020858_20180126145302_43_2.fos
+2025-01-15T22:42:40.242114200 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save5_BF76982F_44656E6E61_ArcjetSystems01_000203_20240421070532_6_2.fos
+2025-01-15T22:42:39.367402300 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:37.603241400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_BF76982F_44656E6E61_Commonwealth_001141_20240427081326_17_2.fos
+2025-01-15T22:42:37.202382800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save4_BF76982F_44656E6E61_CambridgePD01_000137_20240420153958_6_2.fos
+2025-01-15T22:42:37.200398400 [INFO] Zipping progress: 50%
+2025-01-15T22:42:37.102296300 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-15T22:42:36.354098700 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:33.542494300 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_BF76982FM44656E6E61_DiamondCity_000317_20240422114937_8_2.fos
+2025-01-15T22:42:33.342747400 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:33.097336900 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save3_BF76982F_44656E6E61_Commonwealth_000048_20240420144257_2_2.fos
+2025-01-15T22:42:33.095352 [INFO] Zipping progress: 50%
+2025-01-15T22:42:31.547798500 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-15T22:42:31.545814800 [DEBUG] Zipping directory: Documents/Backup Mondo Valheim 09-09-21/
+2025-01-15T22:42:30.977458400 [DEBUG] Zipping file: Documents/Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-15T22:42:30.975474600 [DEBUG] Zipping directory: Documents/Adobe\Photoshop Cloud Associate/
+2025-01-15T22:42:30.971506100 [DEBUG] Zipping directory: Documents/Adobe/
+2025-01-15T22:42:30.970018400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Samples/
+2025-01-15T22:42:30.968531 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-15T22:42:30.967042 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-15T22:42:30.965555400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-15T22:42:30.964066200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-15T22:42:30.961586600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-15T22:42:30.959602 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-15T22:42:30.958114200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-15T22:42:30.955633800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-15T22:42:30.954146400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-15T22:42:30.952162400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects/
+2025-01-15T22:42:30.950674300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-15T22:42:30.949682200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Tension/
+2025-01-15T22:42:30.948690100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-15T22:42:30.947202 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-15T22:42:30.945714100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Operator/
+2025-01-15T22:42:30.942738200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-15T22:42:30.941250300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-15T22:42:30.939761900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-15T22:42:30.938274300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-15T22:42:30.936786400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Electric/
+2025-01-15T22:42:30.934306200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-15T22:42:30.933314600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Collision/
+2025-01-15T22:42:30.931330300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Analog/
+2025-01-15T22:42:30.929346 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments/
+2025-01-15T22:42:30.928354 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-15T22:42:30.926866600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-15T22:42:30.924882400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-15T22:42:30.915954200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-15T22:42:30.914465800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-15T22:42:30.913474400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-15T22:42:30.911490 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-15T22:42:30.910001800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-15T22:42:30.909010800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-15T22:42:30.907522700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-15T22:42:30.906531 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-15T22:42:30.905538 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-15T22:42:30.904050100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-15T22:42:30.902562300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-15T22:42:30.901074 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-15T22:42:30.899586400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-15T22:42:30.898593800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-15T22:42:30.896609900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-15T22:42:30.893634 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-15T22:42:30.892641800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-15T22:42:30.891153800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-15T22:42:30.890162700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-15T22:42:30.889170500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-15T22:42:30.887682100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-15T22:42:30.884706200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-15T22:42:30.883714 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-15T22:42:30.882225900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-15T22:42:30.880242100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-15T22:42:30.879249800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-15T22:42:30.877266300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-15T22:42:30.875778300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-15T22:42:30.874786 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-15T22:42:30.873298 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-15T22:42:30.871809800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-15T22:42:30.870817900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-15T22:42:30.869330100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-15T22:42:30.867842 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-15T22:42:30.783713 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-15T22:42:30.782721 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-15T22:42:30.781728900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-15T22:42:30.780241 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects/
+2025-01-15T22:42:30.779248700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets/
+2025-01-15T22:42:30.777760900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Grooves/
+2025-01-15T22:42:30.775776800 [DEBUG] Zipping file: Documents/Ableton\User Library\Desktop.ini
+2025-01-15T22:42:30.774784900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Slicing/
+2025-01-15T22:42:30.772304900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-15T22:42:30.771312700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-15T22:42:30.770321 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples/
+2025-01-15T22:42:30.768833400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-15T22:42:30.767344800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-15T22:42:30.764865100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-15T22:42:30.763377 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-15T22:42:30.761393300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults/
+2025-01-15T22:42:30.760400800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Clips/
+2025-01-15T22:42:30.757921300 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-15T22:42:30.755936600 [INFO] Zipping progress: 0%
+2025-01-15T22:42:30.518127200 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-15T22:42:30.516639200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Ableton Project Info/
+2025-01-15T22:42:30.513167500 [DEBUG] Zipping directory: Documents/Ableton\User Library/
+2025-01-15T22:42:30.511183400 [DEBUG] Zipping directory: Documents/Ableton\Live Recordings/
+2025-01-15T22:42:30.504734900 [DEBUG] Zipping directory: Documents/Ableton\Factory Packs/
+2025-01-15T22:42:30.494319100 [DEBUG] Zipping directory: Documents/Ableton/
+2025-01-15T22:42:30.491342900 [DEBUG] Zipping directory: Documents//
+2025-01-15T22:42:30.471007300 [INFO] Starting zipping process
+2025-01-15T22:42:30.470016400 [INFO] Event --> manual backup started
+2025-01-15T22:42:30.469023200 [INFO] Start backup process.
+2025-01-15T22:42:30.466047700 [INFO] Checking for automatic backup...
+2025-01-15T22:42:30.327433800 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:30.006200600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save31_BF76982F_44656E6E61_Commonwealth_001141_20240427081321_17_2.fos
+2025-01-15T22:42:29.112096600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_1C601610_4D725F44656E6E61_Commonwealth_020906_20240420135148_43_2.fos
+2025-01-15T22:42:27.315464700 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:27.040655600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save30_BF76982F_44656E6E61_Commonwealth_001129_20240426104933_17_2.fos
+2025-01-15T22:42:25.844306600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Exitsave0_1C601610M4D725F44656E6E61_Commonwealth_020857_20180110180647_43_2.fos
+2025-01-15T22:42:24.775074800 [DEBUG] Zipping file: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218\0\Published\CookedPC\Maps\VNTE-Neon_V2.roe
+2025-01-15T22:42:24.774083400 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218\0\Published\CookedPC\Maps/
+2025-01-15T22:42:24.773090500 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218\0\Published\CookedPC/
+2025-01-15T22:42:24.771602900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218\0\Published/
+2025-01-15T22:42:24.770611600 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218\0/
+2025-01-15T22:42:24.769618900 [DEBUG] Zipping directory: Documents/My Games\Rising Storm 2\ROGame\Cache\1267737218/
+2025-01-15T22:42:24.310527700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save2_BF76982F_44656E6E61_Vault111Cryo_000039_20240420143414_1_2.fos
+2025-01-15T22:42:24.302591600 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:22.917159700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
+2025-01-15T22:42:21.483399400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save29_BF76982F_44656E6E61_Commonwealth_001042_20240426095911_16_2.fos
+2025-01-15T22:42:21.289090500 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:19.828928800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
+2025-01-15T22:42:18.503894400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save28_BF76982F_44656E6E61_praBusModHomeCell_001006_20240426092317_16_2.fos
+2025-01-15T22:42:18.276713900 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:16.939934800 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-15T22:42:16.323981100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save27_BF76982F_44656E6E61_Commonwealth_000958_20240426091453_16_2.fos
+2025-01-15T22:42:15.264085900 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:14.290624100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-15T22:42:13.300736100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save26_BF76982F_44656E6E61_Commonwealth_000909_20240426082508_15_2.fos
+2025-01-15T22:42:12.249933900 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:10.520233600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-15T22:42:09.923088 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Save25_BF76982F_44656E6E61_PrydwenHull01_000808_20240425122630_14_2.fos
+2025-01-15T22:42:09.144326900 [DEBUG] Observer has found a running backup
+2025-01-15T22:42:07.467214100 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-15T22:42:07.466221600 [DEBUG] Zipping directory: Documents/My Games\Fallout4\Saves/
+2025-01-15T22:29:03.070730700 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide.one
+2025-01-15T22:29:03.050710900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-15T22:29:03.030374800 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-15T22:29:03.028886300 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Note rapide/
+2025-01-15T22:29:02.743460800 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-15T22:29:02.610494300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-15T22:29:02.542542900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-15T22:29:02.521694 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-15T22:29:02.520206 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\fghfhf/
+2025-01-15T22:29:02.435223800 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-15T22:29:02.414393200 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-15T22:29:02.412903100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-15T22:29:01.997512900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-15T22:29:01.967753300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-15T22:29:01.966265800 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-15T22:29:01.964282100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote/
+2025-01-15T22:29:01.959817200 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-15T22:29:01.951385300 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-15T22:29:01.389418 [DEBUG] Observer has found a running backup
+2025-01-15T22:29:00.980071700 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-15T22:28:59.823359 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-15T22:28:59.821870700 [DEBUG] Zipping directory: Documents/Backup Mondo Valheim 09-09-21/
+2025-01-15T22:28:59.796574900 [DEBUG] Zipping file: Documents/Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-15T22:28:59.794095300 [DEBUG] Zipping directory: Documents/Adobe\Photoshop Cloud Associate/
+2025-01-15T22:28:59.791614500 [DEBUG] Zipping directory: Documents/Adobe/
+2025-01-15T22:28:59.790126500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Samples/
+2025-01-15T22:28:59.788143500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-15T22:28:59.785663200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-15T22:28:59.783680500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-15T22:28:59.781198700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-15T22:28:59.779711600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-15T22:28:59.777231800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-15T22:28:59.775246900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-15T22:28:59.773758400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-15T22:28:59.771775100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-15T22:28:59.769791500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects/
+2025-01-15T22:28:59.767310700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-15T22:28:59.765327700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Tension/
+2025-01-15T22:28:59.762848100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-15T22:28:59.759870800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-15T22:28:59.757887300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Operator/
+2025-01-15T22:28:59.755903200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-15T22:28:59.753919300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-15T22:28:59.750943200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-15T22:28:59.749455 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-15T22:28:59.746975300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Electric/
+2025-01-15T22:28:59.744495700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-15T22:28:59.741023600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Collision/
+2025-01-15T22:28:59.738047800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Analog/
+2025-01-15T22:28:59.735070800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments/
+2025-01-15T22:28:59.732095300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-15T22:28:59.727134900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-15T22:28:59.724159200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-15T22:28:59.721184100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-15T22:28:59.719199100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-15T22:28:59.713743 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-15T22:28:59.711759900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-15T22:28:59.709279900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-15T22:28:59.707295100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-15T22:28:59.705311700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-15T22:28:59.702831700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-15T22:28:59.700846900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-15T22:28:59.698863600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-15T22:28:59.695886700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-15T22:28:59.693903400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-15T22:28:59.691423300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-15T22:28:59.689438700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-15T22:28:59.687455 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-15T22:28:59.685471 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-15T22:28:59.683487100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-15T22:28:59.681502500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-15T22:28:59.680014700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-15T22:28:59.678030800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-15T22:28:59.675550900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-15T22:28:59.673566700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-15T22:28:59.672078500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-15T22:28:59.670590200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-15T22:28:59.669102600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-15T22:28:59.666622600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-15T22:28:59.663648400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-15T22:28:59.661167400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-15T22:28:59.658687500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-15T22:28:59.656703 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-15T22:28:59.654719100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-15T22:28:59.652239600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-15T22:28:59.650254600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-15T22:28:59.648767600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-15T22:28:59.646784200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-15T22:28:59.642319100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-15T22:28:59.639840100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-15T22:28:59.637855300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects/
+2025-01-15T22:28:59.634878400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets/
+2025-01-15T22:28:59.631903500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Grooves/
+2025-01-15T22:28:59.618015100 [DEBUG] Zipping file: Documents/Ableton\User Library\Desktop.ini
+2025-01-15T22:28:59.616031200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Slicing/
+2025-01-15T22:28:59.614048300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-15T22:28:59.612062800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-15T22:28:59.610080100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples/
+2025-01-15T22:28:59.608095400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-15T22:28:59.606110600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-15T22:28:59.604623400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-15T22:28:59.602143900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-15T22:28:59.599663400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults/
+2025-01-15T22:28:59.596191200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Clips/
+2025-01-15T22:28:59.579823700 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-15T22:28:59.571390200 [INFO] Zipping progress: 0%
+2025-01-15T22:28:59.535989800 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-15T22:28:59.533199300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Ableton Project Info/
+2025-01-15T22:28:59.531214800 [DEBUG] Zipping directory: Documents/Ableton\User Library/
+2025-01-15T22:28:59.528734700 [DEBUG] Zipping directory: Documents/Ableton\Live Recordings/
+2025-01-15T22:28:59.524270200 [DEBUG] Zipping directory: Documents/Ableton\Factory Packs/
+2025-01-15T22:28:59.522286400 [DEBUG] Zipping directory: Documents/Ableton/
+2025-01-15T22:28:59.518814800 [DEBUG] Zipping directory: Documents//
+2025-01-15T22:28:59.360591800 [INFO] Starting zipping process
+2025-01-15T22:28:59.348190500 [INFO] Event --> manual backup started
+2025-01-15T22:28:57.444978100 [INFO] Right click on row: 8
+2025-01-15T22:28:57.443986500 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:28:55.522587100 [DEBUG] Selected backup: Documents1_copy
+2025-01-15T22:28:47.541893500 [DEBUG] Selected backup: Documents2
+2025-01-15T22:28:46.676241200 [DEBUG] Selected backup: asa
+2025-01-15T22:28:34.258541500 [INFO] Observer for running backups started
+2025-01-15T22:28:33.121371300 [DEBUG] Background mode: false
+2025-01-15T22:28:33.115914400 [INFO] Application started
+2025-01-15T22:28:33.110955 [INFO] Preferences updated to JSON file: language = ita.json, theme = Arc - Orange
+2025-01-15T22:28:33.099050300 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Arc - Orange
+file: language = ita.json, theme = Arc - Orange
+Exception: com.google.gson.JsonSyntaxException - com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 1 column 49 path $
+	at com.google.gson.Gson.assertFullConsumption(Gson.java:939)
+	at com.google.gson.Gson.fromJson(Gson.java:929)
+	at backupmanager.Entities.RunningBackups.readBackupListFromJSON(RunningBackups.java:31)
+	at backupmanager.Entities.RunningBackups.updateBackupToJSON(RunningBackups.java:50)
+	at backupmanager.BackupOperations.UpdateProgressPercentage(BackupOperations.java:380)
+	at backupmanager.BackupOperations$1.visitFile(BackupOperations.java:257)
+	at backupmanager.BackupOperations$1.visitFile(BackupOperations.java:220)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2791)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2862)
+	at backupmanager.BackupOperations.lambda$zipDirectory$0(BackupOperations.java:220)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+Exception: com.google.gson.JsonSyntaxException - com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 1 column 49 path $
+	at com.google.gson.Gson.assertFullConsumption(Gson.java:939)
+	at com.google.gson.Gson.fromJson(Gson.java:929)
+	at backupmanager.Entities.RunningBackups.readBackupListFromJSON(RunningBackups.java:31)
+	at backupmanager.Entities.RunningBackups.updateBackupToJSON(RunningBackups.java:50)
+	at backupmanager.BackupOperations.UpdateProgressPercentage(BackupOperations.java:380)
+	at backupmanager.BackupOperations$1.visitFile(BackupOperations.java:257)
+	at backupmanager.BackupOperations$1.visitFile(BackupOperations.java:220)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2791)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2862)
+	at backupmanager.BackupOperations.lambda$zipDirectory$0(BackupOperations.java:220)
+	at java.base/java.lang.Thread.run(Thread.java:1570)

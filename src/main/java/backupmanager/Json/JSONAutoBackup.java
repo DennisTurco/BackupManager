@@ -30,7 +30,8 @@ public class JSONAutoBackup implements IJSONAutoBackup {
         // Check if the directory is correct, otherwise reset to default
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
-            Logger.logMessage("Directory of the backup list file doesn't exist (" + directoryPath + "), reset to default value.", Logger.LogLevel.INFO);
+            //Logger.logMessage("Directory of the backup list file doesn't exist (" + directoryPath + "), reset to default value.", Logger.LogLevel.INFO);
+            Logger.logMessage("Directory of the backup list file doesn't exist, reset to default value.", Logger.LogLevel.INFO);
             Preferences.setBackupList(Preferences.getDefaultBackupList());
             Preferences.updatePreferencesToJSON();
             directoryPath = Preferences.getBackupList().getDirectory();

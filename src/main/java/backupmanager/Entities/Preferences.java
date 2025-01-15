@@ -33,6 +33,8 @@ public class Preferences {
             theme = getThemeFromJson(jsonObject);
             backupList = getBackupListFromJson(jsonObject);
 
+            Logger.logMessage("Preferences loaded from JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName(), Logger.LogLevel.DEBUG);
+
             updatePreferencesToJSON();
 
         } catch (FileNotFoundException e) {
@@ -60,6 +62,8 @@ public class Preferences {
             // Convert JsonObject to JSON string using Gson
             Gson gson = new Gson();
             gson.toJson(jsonObject, writer);
+
+            Logger.logMessage("Preferences updated to JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName() , Logger.LogLevel.INFO);
 
         } catch (IOException ex) {
             Logger.logMessage("An error occurred during updating preferences to json operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);

@@ -66,7 +66,8 @@ public class BackupOperations {
 
             if(!CheckInputCorrect(backup.getBackupName(), path1, path2, trayIcon)) return;
 
-            progressBar.setVisible(true);
+            if (progressBar != null)
+                progressBar.setVisible(true);
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
@@ -376,7 +377,7 @@ public class BackupOperations {
             TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
         }
 
-        RunningBackups.updateBackupToJSON(new RunningBackups(backup, value));
+        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), value));
 
         if (value == 100) {
             updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);

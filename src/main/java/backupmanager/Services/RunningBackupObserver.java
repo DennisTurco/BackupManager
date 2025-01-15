@@ -3,6 +3,7 @@ package backupmanager.Services;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import backupmanager.Entities.Backup;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Logger;
 import backupmanager.Table.BackupTable;
@@ -37,11 +38,13 @@ public class RunningBackupObserver implements Runnable {
                     Logger.logMessage("Observer has found a running backup", Logger.LogLevel.DEBUG);
 
                     for (RunningBackups backup : runningBackups) {
+                        Backup backupEntity = Backup.getBackupByName(backup.getBackupName());
+
                         int value = backup.getProgress();
                         if (value < 100) {
-                            TableDataManager.updateProgressBarPercentage(backupTable, backup, value, formatter);
+                            TableDataManager.updateProgressBarPercentage(backupTable, backupEntity, value, formatter);
                         } else if (value == 100) {
-                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backup, backupTable, formatter);
+                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, backupTable, formatter);
                         }
                     }
                 }

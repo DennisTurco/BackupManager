@@ -12,6 +12,9 @@ graph TD
   n3 -->|exit| n6(Shutdown Backup Service)
 ```
 
+## Link
+* [SVG](https://www.svgrepo.com/)
+
 ## Dependecies
 For this project i'm using some dependencies:
 * **Flatlaf** for multi theme ([demo](https://www.formdev.com/flatlaf/#demo), [themes](https://www.formdev.com/flatlaf/themes/), [github](https://github.com/JFormDesigner/FlatLaf/tree/main/flatlaf-intellij-themes)) 

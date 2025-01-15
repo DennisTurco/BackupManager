@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
-
+ 
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
@@ -22,7 +22,7 @@ import backupmanager.Json.JSONConfigReader;
 import backupmanager.Logger;
 import backupmanager.BackupOperations;
 
-public class BackupService {
+public class BackugrundService {
     private ScheduledExecutorService scheduler;
     private final JSONAutoBackup json = new JSONAutoBackup();
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());

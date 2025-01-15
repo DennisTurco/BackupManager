@@ -42,14 +42,7 @@ public class TableDataManager {
                 TableColumnModel columnModel = table.getColumnModel();
                 int targetColumnIndex = 3;
 
-                // Swap the column renderer to ProgressBarRenderer at the start
-                if (value == 0) {
-                    columnModel.getColumn(targetColumnIndex).setCellRenderer(new ProgressBarRenderer());
-                    table.repaint();
-                }
-
-                // Update the value of the progress in the table
-                table.getModel().setValueAt(value, rowIndex, targetColumnIndex);
+                columnModel.getColumn(targetColumnIndex).setCellRenderer(new ProgressBarRenderer());
 
                 // Restore the original renderer after completion
                 if (value == 100) {
@@ -58,8 +51,12 @@ public class TableDataManager {
                         rowIndex,
                         targetColumnIndex
                     );
-                    table.repaint();
+                } else {
+                    // Update the value of the progress in the table
+                    table.getModel().setValueAt(value, rowIndex, targetColumnIndex);
                 }
+
+                table.repaint();
             }
         });
     }

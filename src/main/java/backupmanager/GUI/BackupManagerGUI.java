@@ -83,6 +83,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     private static JSONAutoBackup JSON;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
+    public static BackupTableModel tableModel;
     private BackupProgressGUI progressBar;
     private boolean saveChanged;
     private Integer selectedRow;
@@ -108,10 +109,6 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
 
         customListeners();
-
-        // start observer thread
-        observer = new RunningBackupObserver(backupTable, dateForfolderNameFormatter, 3000);
-        observer.start();
         
         // load Menu items
         JSONConfigReader config = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
@@ -139,6 +136,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
         // translations
         setTranslations();
+
+        // first initialize the table, then start observer thread
+        initializeTable();
+        observer = new RunningBackupObserver(backupTable, dateForfolderNameFormatter, 3000);
+        observer.start();
 
         setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
 
@@ -694,17 +696,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }
     
     private void displayBackupList(List<Backup> backups) {
-        String[] columnNames = {
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
-        };
-    
-        BackupTableModel model = new BackupTableModel(columnNames, 0);
+        BackupTableModel model = new BackupTableModel(getColumnTranslations(), 0);
     
         // Populate the model with backup data
         for (Backup backup : backups) {
@@ -2242,14 +2234,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPathSearch2ActionPerformed
 
     private void setTranslations() {
-        try {
-            backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+        // update table translations
+        if (backups != null)
             displayBackupList(backups);
-        } catch (IOException ex) {
-            backups = null;
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
 
         backupOnText = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_ON);
         backupOffText = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_OFF);
@@ -2325,6 +2312,30 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         jMenu4.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_TEXT_POPUP));
         AutoBackupMenuItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTO_BACKUP_POPUP));
         Backup.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_POPUP));
+    }
+
+    private String[] getColumnTranslations() {
+        String[] columnNames = {
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN),
+            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
+        };
+        return columnNames;
+    }
+
+    private void initializeTable() {
+        try {
+            backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            displayBackupList(backups);
+        } catch (IOException ex) {
+            backups = null;
+            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
     }
     
     private void setSvgImages() {

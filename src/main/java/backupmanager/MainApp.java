@@ -9,7 +9,7 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Services.BackupService;
+import backupmanager.Services.BackugrundService;
 import backupmanager.Logger.LogLevel;
 
 public class MainApp {
@@ -41,7 +41,7 @@ public class MainApp {
         
         if (isBackgroundMode) {
             Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
-            BackupService service = new BackupService();
+            BackugrundService service = new BackugrundService();
             try {
                 service.startService();
             } catch (IOException ex) {

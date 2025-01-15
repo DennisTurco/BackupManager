@@ -1,9 +1,17 @@
 package backupmanager.Entities;
 
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
+
+import java.io.IOException;
+import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import backupmanager.Logger;
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 
 public class Backup {
@@ -104,6 +112,23 @@ public class Backup {
                 return backup;
             }
         }
+        return null;
+    }
+
+    public static Backup getBackupByName(String backupName) {
+        List<Backup> backups;
+        try {
+            backups = new JSONAutoBackup().readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            for (Backup backup : backups) {
+                if (backup.getBackupName().equals(backupName)) {
+                    return backup;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
+
         return null;
     }
 
