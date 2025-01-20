@@ -1,30 +1,5 @@
 package backupmanager.GUI;
 
-import backupmanager.Entities.TimeInterval;
-import backupmanager.Dialogs.PreferencesDialog;
-import backupmanager.Dialogs.TimePicker;
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.BackupList;
-import backupmanager.Entities.Preferences;
-import backupmanager.Entities.RunningBackups;
-import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.MenuItems;
-import backupmanager.Enums.TranslationLoaderEnum;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONAutoBackup;
-import backupmanager.Json.JSONConfigReader;
-import backupmanager.Managers.ThemeManager;
-import backupmanager.Table.BackupTable;
-import backupmanager.Table.BackupTableModel;
-import backupmanager.Table.CheckboxCellRenderer;
-import backupmanager.Table.StripedRowRenderer;
-import backupmanager.Table.TableDataManager;
-import backupmanager.BackupOperations;
-import backupmanager.Exporter;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
-
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -59,15 +34,39 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import backupmanager.BackupOperations;
+import backupmanager.Dialogs.PreferencesDialog;
+import backupmanager.Dialogs.TimePicker;
+import backupmanager.Entities.Backup;
+import backupmanager.Entities.BackupList;
+import backupmanager.Entities.Preferences;
+import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.TimeInterval;
+import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.MenuItems;
+import backupmanager.Enums.TranslationLoaderEnum;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Exporter;
+import backupmanager.Json.JSONAutoBackup;
+import backupmanager.Json.JSONConfigReader;
+import backupmanager.Logger;
+import backupmanager.Logger.LogLevel;
+import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.RunningBackupObserver;
+import backupmanager.Table.BackupTable;
+import backupmanager.Table.BackupTableModel;
+import backupmanager.Table.CheckboxCellRenderer;
+import backupmanager.Table.StripedRowRenderer;
+import backupmanager.Table.TableDataManager;
 
 /**
  * @author Dennis Turco
@@ -107,6 +106,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         saveChanged = true;
         
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
+        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
 
         customListeners();
         
@@ -251,6 +251,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     public void setAutoBackupPreference(boolean option) {         
         toggleAutoBackup.setSelected(option);
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
+        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
         currentBackup.setAutoBackup(option);
         
         if (!option) {
@@ -267,6 +268,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             disableAutoBackup(backup);
         }
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
+        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
     }
     
     // it returns true if is correctly setted, false otherwise
@@ -927,7 +929,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
             btnTimePicker.setEnabled(true);
         } else {
-            btnTimePicker.setToolTipText("");
+            btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
             btnTimePicker.setEnabled(false);
         }  
     }
@@ -970,7 +972,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         
         // if the backup is the current backup i have to update the main panel
         if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            btnTimePicker.setToolTipText("");
+            btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
             btnTimePicker.setEnabled(false);
         }
     }
@@ -2040,12 +2042,14 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         // checks
         if (!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) {
             toggleAutoBackup.setSelected(false);
+            btnTimePicker.setEnabled(false);
             return;
         }
         if (currentBackup.isAutoBackup()) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 toggleAutoBackup.setSelected(false);
+                btnTimePicker.setEnabled(false);
                 return;
             } 
         }
@@ -2063,6 +2067,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         }
         
         toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
+        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
         currentBackup.setAutoBackup(enabled);
         BackupOperations.updateBackupList(backups);
     }//GEN-LAST:event_toggleAutoBackupActionPerformed
