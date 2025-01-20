@@ -16,6 +16,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import backupmanager.BackupOperations;
+import backupmanager.Logger;
+import backupmanager.Logger.LogLevel;
 import backupmanager.Enums.ConfigKey;
 
 // this class contains only the RunningBackups entity
@@ -117,14 +119,13 @@ public class RunningBackups {
         Iterator<RunningBackups> iterator = backups.iterator();
         while (iterator.hasNext()) {
             RunningBackups runningBackup = iterator.next();
-    
-            if (runningBackup.getProgress() != 100) {
-                boolean removed = BackupOperations.deletePartialBackup(runningBackup.getPath());
+            
+            Logger.logMessage("Deleting partial backup: " + runningBackup.getPath(), LogLevel.INFO);
 
-                if (removed)
-                    iterator.remove();  // Safely remove using Iterator's remove() method
+            if (runningBackup.getProgress() != 100 && BackupOperations.deletePartialBackup(runningBackup.getPath())) {
+                iterator.remove();
             } else if (runningBackup.getProgress() == 100 && runningBackup.getBackupName().equals(backupName)) {
-                iterator.remove();  // Safely remove using Iterator's remove() method
+                iterator.remove();
             }
         }
     
@@ -148,10 +149,10 @@ public class RunningBackups {
             RunningBackups backup = iterator.next();
             
             // Call the delete method if necessary
-            BackupOperations.deletePartialBackup(backup.getPath());
-    
-            // If you need to remove the backup from the list after deletion, you can do so safely
-            iterator.remove(); // This ensures no ConcurrentModificationException occurs
+            if (BackupOperations.deletePartialBackup(backup.getPath())) {
+                // If you need to remove the backup from the list after deletion, you can do so safely
+                iterator.remove(); // This ensures no ConcurrentModificationException occurs
+            }
         }
     
         updateBackupsToJSON(backups);

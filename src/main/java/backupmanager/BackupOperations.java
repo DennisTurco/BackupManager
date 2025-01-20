@@ -501,25 +501,37 @@ public class BackupOperations {
     }
 
     public static boolean deletePartialBackup(String filePath) {
-        Logger.logMessage("Searching for partial backups to delete", LogLevel.INFO);
-    
-        if (filePath != null && !filePath.isEmpty()) {
-            File file = new File(filePath);
-    
-            // Check if the file exists and is a valid file
-            if (file.exists() && file.isFile()) {
-                if (file.delete()) {
-                    Logger.logMessage("Partial backup deleted: " + file.getName(), LogLevel.INFO);
-                    return true;
-                } else {
-                    Logger.logMessage("Failed to delete partial backup: " + file.getName(), LogLevel.WARN);
+        Logger.logMessage("Attempting to delete partial backup: " + filePath, LogLevel.INFO);
+        
+        if (filePath == null || filePath.isEmpty()) {
+            Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
+            return false;
+        }
+
+        File file = new File(filePath);
+
+        // Check if the file exists and is a valid file
+        if (file.exists()) {
+            if (file.isFile()) {
+                try {
+                    if (file.delete()) {
+                        Logger.logMessage("Partial backup deleted successfully: " + file.getName(), LogLevel.INFO);
+                        return true;
+                    } else {
+                        Logger.logMessage("Failed to delete partial backup (delete failed): " + file.getName(), LogLevel.WARN);
+                    }
+                } catch (SecurityException e) {
+                    Logger.logMessage("Security exception occurred while attempting to delete: " + file.getName(), LogLevel.ERROR, e);
+                } catch (Exception e) {
+                    Logger.logMessage("Unexpected error while attempting to delete: " + file.getName(), LogLevel.ERROR, e);
                 }
             } else {
-                Logger.logMessage("The file does not exist or is invalid: " + filePath, LogLevel.WARN);
+                Logger.logMessage("The path points to a directory, not a file: " + filePath, LogLevel.WARN);
             }
         } else {
-            Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
+            Logger.logMessage("The file does not exist: " + filePath, LogLevel.WARN);
         }
+
         return false;
     }
 
