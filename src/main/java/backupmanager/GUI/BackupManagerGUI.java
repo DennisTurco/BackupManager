@@ -485,7 +485,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             toggleAutoBackup.setEnabled(false);
 
             BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, DeletePopupItem, DeletePopupItem);
-            
+
             //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
             if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
                 currentBackup.setInitialPath(GetStartPathField());
@@ -924,11 +924,11 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         setCurrentBackupMaxBackupsToKeep(backup.getMaxBackupsToKeep());
         
         if (backup.getTimeIntervalBackup() != null) {
-            btnPathSearch2.setToolTipText(backup.getTimeIntervalBackup().toString());
-            btnPathSearch2.setEnabled(true);
+            btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
+            btnTimePicker.setEnabled(true);
         } else {
-            btnPathSearch2.setToolTipText("");
-            btnPathSearch2.setEnabled(false);
+            btnTimePicker.setToolTipText("");
+            btnTimePicker.setEnabled(false);
         }  
     }
     
@@ -970,8 +970,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         
         // if the backup is the current backup i have to update the main panel
         if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            btnPathSearch2.setToolTipText("");
-            btnPathSearch2.setEnabled(false);
+            btnTimePicker.setToolTipText("");
+            btnTimePicker.setEnabled(false);
         }
     }
     
@@ -1509,8 +1509,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ExportLabel)))
-                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())

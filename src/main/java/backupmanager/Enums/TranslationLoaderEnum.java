@@ -302,9 +302,7 @@ public class TranslationLoaderEnum {
                             String translationValue = (value != null && !value.isEmpty()) ? value : translationKey.getDefaultValue();
                             category.addTranslation(translationKey, translationValue);
                         } else {
-                            // If the key is not recognized in the enum, log it and use the default value
                             Logger.logMessage("Warning: Unrecognized key in JSON: " + key + ", using default value.", LogLevel.WARN);
-                            category.addTranslation(translationKey, translationKey.getDefaultValue());
                         }
                     }
                 }

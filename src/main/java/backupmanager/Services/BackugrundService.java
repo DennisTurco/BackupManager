@@ -21,6 +21,7 @@ import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Logger;
 import backupmanager.BackupOperations;
+import backupmanager.Entities.RunningBackups;
 
 public class BackugrundService {
     private ScheduledExecutorService scheduler;
@@ -33,6 +34,9 @@ public class BackugrundService {
         if (trayIcon == null) {
             createHiddenIcon();
         }
+        
+        // clear running backups json file (if last execution stopped brutally we have to delete the partial backups)
+        RunningBackups.deletePartialBackupsStuckedJSONFile();
         
         scheduler = Executors.newSingleThreadScheduledExecutor();
         long interval = jsonConfig.readCheckForBackupTimeInterval();

@@ -45,11 +45,12 @@ import backupmanager.Logger.LogLevel;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
+import java.util.ArrayList;
 
 public class BackupOperations {
     
     private static final JSONAutoBackup JSON = new JSONAutoBackup();
-    private static Thread zipThread;
+    public static Thread zipThread;
     
     public static void SingleBackup(Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
@@ -201,8 +202,17 @@ public class BackupOperations {
         File file = new File(sourceDirectoryPath.trim());
         int totalFilesCount = file.isDirectory() ? countFilesInDirectory(file) : 1;
         if (totalFilesCount == -1) {
+            Logger.logMessage("No files to zip in: " + sourceDirectoryPath, Logger.LogLevel.WARN);
             progressBar.dispose();
             setError(ErrorTypes.ErrorCountingFiles, trayIcon, targetZipPath);
+            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+            return;
+        }
+        
+        File sourceFile = new File(sourceDirectoryPath.trim());
+        if (!sourceFile.exists()) {
+            Logger.logMessage("Source directory does not exist: " + sourceDirectoryPath, Logger.LogLevel.ERROR);
+            setError(ErrorTypes.ZippingIOError, trayIcon, targetZipPath);
             reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             return;
         }
@@ -233,6 +243,14 @@ public class BackupOperations {
 
                             // Calculate the relative path inside the zip
                             Path targetFilePath = sourceDir.relativize(file);
+                            
+                            if (rootFolderName == null || rootFolderName.isEmpty()) {
+                                Logger.logMessage("Root folder name is null or empty", Logger.LogLevel.ERROR);
+                            }
+                            if (targetFilePath == null) {
+                                Logger.logMessage("Target file path is null", Logger.LogLevel.ERROR);
+                            }
+                            
                             String zipEntryName = rootFolderName + "/" + targetFilePath.toString();
 
                             Logger.logMessage("Zipping file: " + zipEntryName, Logger.LogLevel.DEBUG);
@@ -274,6 +292,7 @@ public class BackupOperations {
                             
                             // case when the initial folder is empty
                             if (totalFilesCount == 0) {
+                                Logger.logMessage("Directory is empty: " + sourceDirectoryPath, Logger.LogLevel.WARN);
                                 UpdateProgressPercentage(100, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
                                 return FileVisitResult.TERMINATE;
                             }
@@ -290,14 +309,16 @@ public class BackupOperations {
                 }
             }  catch (IOException ioEx) {
                 // here we can't run setError because it happens somethimes during backups for "Documents" folder randomly
-                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.WARN);
+                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.ERROR, ioEx);
             } catch (SecurityException secEx) {
                 Logger.logMessage("Security exception while accessing directory: " + sourceDirectoryPath + ". Error: " + secEx.getMessage(), Logger.LogLevel.ERROR, secEx);
                 setError(ErrorTypes.ZippingSecurityError, trayIcon, targetZipPath);
             } catch (Exception ex) {
                 Logger.logMessage("Unexpected error during zipping directory: " + sourceDirectoryPath + ". Error: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                ex.printStackTrace();
                 //setError(ErrorTypes.ZippingGenericError, trayIcon, targetZipPath);
             } finally {
+                Logger.logMessage("Finalizing zipping process", Logger.LogLevel.INFO);
                 reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
             }
         });
@@ -322,11 +343,11 @@ public class BackupOperations {
         if (interruptBackupPopupItem != null) interruptBackupPopupItem.setEnabled(false);
         if (deleteBackupPopuopItem != null) deleteBackupPopuopItem.setEnabled(true);
 
-        RunningBackups.deleteBackupFromJSON(backup.getBackupName());
+        RunningBackups.cleanRunningBackupsFromJSON(backup.getBackupName());
 
         if (backupTable != null) 
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backup, backupTable, formatter);
-    }
+    } 
 
     private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) throws IOException {
         if (zipEntryName == null || zipEntryName.isEmpty()) {
@@ -368,7 +389,7 @@ public class BackupOperations {
     public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             Logger.logMessage("Zipping progress: " + value + "%", Logger.LogLevel.INFO);
-        
+
         if (progressBar != null) {
             progressBar.updateProgressBar(value);
         }
@@ -377,7 +398,7 @@ public class BackupOperations {
             TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
         }
 
-        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), value));
+        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), path2, value));
 
         if (value == 100) {
             updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
@@ -385,6 +406,44 @@ public class BackupOperations {
         }
     }
 
+    public static void renameBackupFolder(String backupName, String zipFilePath) {
+        File backupFile = new File(backupName);
+        String baseName = backupFile.getName();
+    
+        File zipFile = new File(zipFilePath);
+        File directory = zipFile.getParentFile();
+    
+        if (directory == null || !directory.isDirectory()) {
+            Logger.logMessage("The provided path is not a valid directory: " + zipFilePath, LogLevel.WARN);
+            return;
+        }
+    
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                String fileName = file.getName();
+    
+                if (fileName.contains(baseName) && fileName.contains("PartialBackup")) {
+                    // removing "Partial"
+                    String newFileName = fileName.replace("Partial", "");
+    
+                    Logger.logMessage("Renaming: " + fileName + " -> " + newFileName, LogLevel.DEBUG);
+    
+                    File renamedFile = new File(directory, newFileName);
+    
+                    // renaming the file
+                    if (file.renameTo(renamedFile)) {
+                        Logger.logMessage("Renamed: " + fileName + " -> " + newFileName, LogLevel.DEBUG);
+                    } else {
+                        Logger.logMessage("Failed to rename: " + fileName + "\nCheck if the file is locked or if you have sufficient permissions", LogLevel.WARN);
+                    }
+                }
+            }
+        } else {
+            Logger.logMessage("Failed to list files in directory: " + directory.getAbsolutePath(), LogLevel.WARN);
+        }
+    }
+    
     private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
         Logger.logMessage("Deleting old backups if necessary", LogLevel.INFO);
 
@@ -439,6 +498,29 @@ public class BackupOperations {
         } else {
             Logger.logMessage("Destination path is not a directory: " + destinationPath, LogLevel.ERROR);
         }
+    }
+
+    public static boolean deletePartialBackup(String filePath) {
+        Logger.logMessage("Searching for partial backups to delete", LogLevel.INFO);
+    
+        if (filePath != null && !filePath.isEmpty()) {
+            File file = new File(filePath);
+    
+            // Check if the file exists and is a valid file
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    Logger.logMessage("Partial backup deleted: " + file.getName(), LogLevel.INFO);
+                    return true;
+                } else {
+                    Logger.logMessage("Failed to delete partial backup: " + file.getName(), LogLevel.WARN);
+                }
+            } else {
+                Logger.logMessage("The file does not exist or is invalid: " + filePath, LogLevel.WARN);
+            }
+        } else {
+            Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
+        }
+        return false;
     }
 
     private static String extractDateFromFileName(String fileName, String pattern) throws Exception {

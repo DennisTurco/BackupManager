@@ -43,36 +43,34 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-25T21:09:27.794512800",
-    "last_update_date": "2025-01-08T21:40:03.403963700",
+    "last_update_date": "2025-01-20T12:33:41.847867500",
     "backup_count": 7,
     "max_backups_to_keep": 3
   },
   {
     "backup_name": "lezioni",
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
-    "destination_path": "C:\\Users\\Utente\\OneDrive",
-    "last_backup": "2025-01-15T23:10:21.904965",
-    "automatic_backup": true,
-    "next_date_backup": "2025-01-15T23:11:21.904965",
-    "time_interval_backup": "0.0:1",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "last_backup": "2025-01-20T13:54:51.054882400",
+    "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
-    "last_update_date": "2024-12-26T11:41:22.021254900",
-    "backup_count": 16,
+    "last_update_date": "2025-01-20T13:59:53.534166600",
+    "backup_count": 21,
     "max_backups_to_keep": 3
   },
   {
     "backup_name": "Documents2",
     "start_path": "C:\\Users\\Utente\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-15T22:34:30.694426200",
+    "last_backup": "2025-01-20T13:55:35.523161200",
     "automatic_backup": true,
-    "next_date_backup": "2025-01-16T22:34:30.694426200",
+    "next_date_backup": "2025-01-21T13:55:35.523161200",
     "time_interval_backup": "1.0:0",
     "notes": "",
     "creation_date": "2024-12-27T21:03:01.013826200",
     "last_update_date": "2024-12-27T21:10:55.323080700",
-    "backup_count": 5,
+    "backup_count": 7,
     "max_backups_to_keep": 3
   },
   {
@@ -101,12 +99,12 @@
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-08T22:17:33.365391400",
+    "last_backup": "2025-01-20T10:08:53.686823300",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-01-15T22:45:13.853388200",
-    "backup_count": 3,
+    "last_update_date": "2025-01-20T14:33:46.580604500",
+    "backup_count": 5,
     "max_backups_to_keep": 1
   },
   {
@@ -129,6 +127,18 @@
     "creation_date": "2025-01-08T13:02:22.396939",
     "last_update_date": "2025-01-08T13:02:22.396939",
     "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "testooooo",
+    "start_path": "C:\\Users\\Utente\\Desktop\\gg",
+    "destination_path": "C:\\Users\\Utente\\Desktop\\TEST\\",
+    "last_backup": "2025-01-20T14:25:33.992429800",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2025-01-19T23:35:07.002086800",
+    "last_update_date": "2025-01-20T12:16:40.635955700",
+    "backup_count": 85,
     "max_backups_to_keep": 3
   }
 ]
