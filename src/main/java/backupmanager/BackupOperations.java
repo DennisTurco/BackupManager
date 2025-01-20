@@ -45,7 +45,6 @@ import backupmanager.Logger.LogLevel;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
-import java.util.ArrayList;
 
 public class BackupOperations {
     
@@ -502,6 +501,9 @@ public class BackupOperations {
 
     public static boolean deletePartialBackup(String filePath) {
         Logger.logMessage("Attempting to delete partial backup: " + filePath, LogLevel.INFO);
+
+        if (BackupOperations.zipThread.isAlive())
+            BackupOperations.StopCopyFiles();
         
         if (filePath == null || filePath.isEmpty()) {
             Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
@@ -636,6 +638,7 @@ public class BackupOperations {
     }
 
     public static void StopCopyFiles() {
-        zipThread.interrupt();
+        if (zipThread.isAlive())
+            zipThread.interrupt();
     }
 }

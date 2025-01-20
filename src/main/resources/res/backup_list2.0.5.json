@@ -99,12 +99,12 @@
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-20T23:24:32.029379900",
+    "last_backup": "2025-01-20T23:46:12.081800",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
     "last_update_date": "2025-01-20T14:33:46.580604500",
-    "backup_count": 7,
+    "backup_count": 8,
     "max_backups_to_keep": 1
   },
   {
