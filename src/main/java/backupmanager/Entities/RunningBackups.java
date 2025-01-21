@@ -43,7 +43,7 @@ public class RunningBackups {
             
             // Try to parse the JSON string into a valid list of objects
             if (!fileContent.trim().startsWith("[")) {
-                System.out.println("Malformed JSON file. Attempting to fix...");
+                Logger.logMessage("Malformed JSON file. Attempting to fix...", LogLevel.WARN);
                 // Attempt to fix the malformed JSON file
                 fileContent = "[" + fileContent.replaceAll("(?<=})\\s*(?=\\{)", ",") + "]";
                 Files.write(Paths.get(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue()), fileContent.getBytes());
@@ -54,11 +54,11 @@ public class RunningBackups {
             
             return backups != null ? backups : new ArrayList<>();
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            Logger.logMessage("Error reading file: " + e.getMessage(), LogLevel.ERROR, e);
             e.printStackTrace();
             return new ArrayList<>();
         } catch (JsonSyntaxException e) {
-            System.out.println("Malformed JSON in file: " + e.getMessage());
+            Logger.logMessage("Malformed JSON in file: " + e.getMessage(), LogLevel.ERROR, e);
             e.printStackTrace();
             return new ArrayList<>();
         }
@@ -110,7 +110,7 @@ public class RunningBackups {
             gson.toJson(backups, writer);
             writer.flush();  // Make sure the data is written to the file
         } catch (IOException e) {
-            System.out.println("Error writing to JSON file: " + e.getMessage());
+            Logger.logMessage("Error writing to JSON file: " + e.getMessage(), LogLevel.ERROR, e);
             e.printStackTrace();
         }
     }

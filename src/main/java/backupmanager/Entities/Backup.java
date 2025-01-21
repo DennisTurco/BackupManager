@@ -3,7 +3,6 @@ package backupmanager.Entities;
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;

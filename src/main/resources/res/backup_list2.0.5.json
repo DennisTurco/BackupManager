@@ -51,12 +51,12 @@
     "backup_name": "lezioni",
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-20T13:54:51.054882400",
+    "last_backup": "2025-01-21T10:48:20.803359700",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
-    "last_update_date": "2025-01-20T16:37:58.755382100",
-    "backup_count": 21,
+    "last_update_date": "2025-01-21T10:48:19.907545200",
+    "backup_count": 26,
     "max_backups_to_keep": 3
   },
   {
@@ -103,7 +103,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-01-20T14:33:46.580604500",
+    "last_update_date": "2025-01-21T10:48:26.519837100",
     "backup_count": 8,
     "max_backups_to_keep": 1
   },

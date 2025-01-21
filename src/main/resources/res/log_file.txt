@@ -1,3 +1,1148 @@
+2025-01-21T10:48:36.990141900 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.48.27).zip
+2025-01-21T10:48:36.975261200 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.48.27).zip
+2025-01-21T10:48:36.973746300 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.48.27).zip
+2025-01-21T10:48:36.969808300 [INFO] Finalizing zipping process
+2025-01-21T10:48:36.957377100 [INFO] Zipping process manually interrupted
+2025-01-21T10:48:36.786783700 [DEBUG] Observer has found a running backup
+2025-01-21T10:48:33.773061600 [DEBUG] Observer has found a running backup
+2025-01-21T10:48:33.479956500 [WARN] executorService did not terminate after forced shutdown
+2025-01-21T10:48:32.465139700 [WARN] executorService did not terminate in the given time. Forcing shutdown...
+2025-01-21T10:48:30.775242 [DEBUG] Observer has found a running backup
+2025-01-21T10:48:30.656203200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:48:30.651767 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:48:30.648790400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:48:30.646777900 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:48:30.457306400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:48:30.378944100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:48:30.343243500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:48:30.339754500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:48:30.337771 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:48:30.283736400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:48:30.279272600 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:48:30.277755200 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:48:29.935514700 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:48:29.931549600 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:48:29.929091900 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:48:29.927083600 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:48:29.923611400 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:48:29.920138900 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:48:28.975477700 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:48:28.014728800 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:48:28.012743200 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:48:28.009271 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:48:28.007784200 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:48:28.004807200 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:48:28.003319300 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:48:28.000344400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:48:27.996870900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:48:27.994887300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:48:27.992903400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:48:27.990920300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:48:27.988438700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:48:27.986950900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:48:27.985462800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:48:27.983479400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:48:27.980503 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:48:27.979015 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:48:27.977527 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:48:27.975543200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:48:27.972567700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:48:27.971078900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:48:27.969095100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:48:27.967111 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:48:27.965128300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:48:27.962647100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:48:27.961159600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:48:27.958678900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:48:27.955702900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:48:27.954215600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:48:27.952726800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:48:27.950249100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:48:27.946775200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:48:27.945287300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:48:27.943303200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:48:27.941815 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:48:27.939336 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:48:27.937351 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:48:27.935862800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:48:27.933879600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:48:27.931400900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:48:27.929414800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:48:27.927431100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:48:27.925447800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:48:27.922968300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:48:27.920983600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:48:27.918999600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:48:27.916024300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:48:27.913047200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:48:27.911559400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:48:27.909575400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:48:27.907095700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:48:27.904615200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:48:27.902135900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:48:27.898168 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:48:27.895687 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:48:27.893208200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:48:27.891226400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:48:27.888743100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:48:27.886263700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:48:27.883784100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:48:27.880807800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:48:27.878327400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:48:27.876343700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:48:27.873367600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:48:27.870887400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:48:27.868902900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:48:27.866423500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:48:27.863943400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:48:27.861463700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:48:27.859480 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:48:27.857495500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:48:27.855015200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:48:27.852536300 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:48:27.846087300 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:48:27.844599300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:48:27.842119800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:48:27.839639600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:48:27.837655200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:48:27.835671 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:48:27.833687600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:48:27.830711700 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:48:27.828727300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:48:27.826743200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:48:27.824759300 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:48:27.819799100 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:48:27.816895200 [INFO] Zipping progress: 0%
+2025-01-21T10:48:27.625407900 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:48:27.620447500 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:48:27.618463400 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:48:27.615984100 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:48:27.613007500 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:48:27.610527300 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:48:27.607552300 [DEBUG] Adding directory to zip: /
+2025-01-21T10:48:27.591183500 [INFO] Starting zipping process
+2025-01-21T10:48:27.566923 [INFO] date backup: 21-01-2025 10.48.27
+2025-01-21T10:48:27.565096500 [INFO] Event --> single backup
+2025-01-21T10:48:26.522813600 [DEBUG] updating backup list
+2025-01-21T10:48:26.518846500 [INFO] Event --> auto backup disabled
+2025-01-21T10:48:26.515146300 [INFO] Event --> opening backup
+2025-01-21T10:48:26.513161 [INFO] Double-click on row: 8
+2025-01-21T10:48:26.511176400 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:48:26.345512700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:48:20.826175500 [INFO] Finalizing zipping process
+2025-01-21T10:48:20.819727700 [INFO] Deleting old backups if necessary
+2025-01-21T10:48:20.817247700 [DEBUG] updating backup list
+2025-01-21T10:48:20.804669200 [INFO] Backup completed!
+2025-01-21T10:48:20.798896500 [INFO] Zipping progress: 100%
+2025-01-21T10:48:20.791952200 [DEBUG] Adding file to zip: test.csv
+2025-01-21T10:48:20.787487900 [DEBUG] Adding file to zip: Nuovo documento di testo (2).txt
+2025-01-21T10:48:20.780543300 [DEBUG] Adding file to zip: lezioni2024.png
+2025-01-21T10:48:20.776079800 [INFO] Zipping progress: 75%
+2025-01-21T10:48:20.771615600 [DEBUG] Adding file to zip: lezioni2024.csv
+2025-01-21T10:48:20.760703500 [DEBUG] Adding file to zip: lezioni2023.png
+2025-01-21T10:48:20.754751600 [DEBUG] Adding file to zip: lezioni2023.csv
+2025-01-21T10:48:20.746319700 [INFO] Zipping progress: 50%
+2025-01-21T10:48:20.740913600 [DEBUG] Adding file to zip: lezioni2022.png
+2025-01-21T10:48:20.735407400 [DEBUG] Adding file to zip: lezioni2022.csv
+2025-01-21T10:48:20.727967800 [DEBUG] Adding file to zip: lezioni2021.png
+2025-01-21T10:48:20.721519800 [INFO] Zipping progress: 25%
+2025-01-21T10:48:20.718729700 [DEBUG] Adding file to zip: lezioni2021.csv
+2025-01-21T10:48:20.709616 [DEBUG] Adding file to zip: lezioni2021 - Copia.csv
+2025-01-21T10:48:20.700191500 [DEBUG] Adding file to zip: lezioni2021 - Copia - Copia.txt
+2025-01-21T10:48:20.695727600 [DEBUG] Adding directory to zip: /
+2025-01-21T10:48:20.688287600 [INFO] Starting zipping process
+2025-01-21T10:48:20.660511500 [INFO] date backup: 21-01-2025 10.48.20
+2025-01-21T10:48:20.655055200 [INFO] Event --> single backup
+2025-01-21T10:48:19.914489800 [DEBUG] updating backup list
+2025-01-21T10:48:19.906056800 [INFO] Event --> auto backup disabled
+2025-01-21T10:48:19.903577 [INFO] Event --> opening backup
+2025-01-21T10:48:19.901593100 [INFO] Double-click on row: 4
+2025-01-21T10:48:19.899113 [DEBUG] Selected backup: lezioni
+2025-01-21T10:48:19.760548 [DEBUG] Selected backup: lezioni
+2025-01-21T10:48:15.768645300 [INFO] Observer for running backups started
+2025-01-21T10:48:15.069445600 [DEBUG] Background mode: false
+2025-01-21T10:48:15.061014100 [INFO] Application started
+2025-01-21T10:48:15.051590800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:48:15.035717700 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:45:21.433482400 [ERROR] An error occurred: Task java.util.concurrent.FutureTask@732c5a2[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@51c0b4cc[Wrapped task = backupmanager.Services.ZippingThread$$Lambda$347/0x000000080121bb90@254faba3]] rejected from java.util.concurrent.ThreadPoolExecutor@7e821e5b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 5]
+2025-01-21T10:45:21.420584200 [INFO] Starting zipping process
+2025-01-21T10:45:21.411655800 [INFO] Event --> manual backup started
+2025-01-21T10:45:20.372572300 [INFO] Right click on row: 8
+2025-01-21T10:45:20.370964500 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:45:20.204324200 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:45:18.962964400 [INFO] Right click on row: 8
+2025-01-21T10:45:18.960979 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:45:13.266224700 [ERROR] An error occurred: Task java.util.concurrent.FutureTask@f7cefc8[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@fc1c9b1[Wrapped task = backupmanager.Services.ZippingThread$$Lambda$347/0x000000080121bb90@3a39f522]] rejected from java.util.concurrent.ThreadPoolExecutor@7e821e5b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 5]
+2025-01-21T10:45:13.254320700 [INFO] Starting zipping process
+2025-01-21T10:45:13.247385700 [INFO] Event --> manual backup started
+2025-01-21T10:45:11.636360900 [INFO] Right click on row: 8
+2025-01-21T10:45:11.634377100 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:45:11.442471100 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:44:42.465383800 [INFO] Starting zipping process
+2025-01-21T10:44:42.445542600 [INFO] date backup: 21-01-2025 10.44.42
+2025-01-21T10:44:42.443062800 [INFO] Event --> single backup
+2025-01-21T10:44:41.756027600 [DEBUG] updating backup list
+2025-01-21T10:44:41.753023500 [INFO] Event --> auto backup disabled
+2025-01-21T10:44:41.750543600 [INFO] Event --> opening backup
+2025-01-21T10:44:41.749055500 [INFO] Double-click on row: 8
+2025-01-21T10:44:41.747567600 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:44:41.602155300 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:44:35.344048500 [INFO] Right click on row: 8
+2025-01-21T10:44:35.342588700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:44:10.837961500 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.44.01).zip
+2025-01-21T10:44:10.819609100 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.44.01).zip
+2025-01-21T10:44:10.818122400 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.44.01).zip
+2025-01-21T10:44:10.802884500 [INFO] Finalizing zipping process
+2025-01-21T10:44:10.788996600 [INFO] Zipping process manually interrupted
+2025-01-21T10:44:08.835661600 [DEBUG] Observer has found a running backup
+2025-01-21T10:44:08.527121700 [WARN] executorService did not terminate after forced shutdown
+2025-01-21T10:44:07.512307500 [WARN] executorService did not terminate in the given time. Forcing shutdown...
+2025-01-21T10:44:05.837318 [DEBUG] Observer has found a running backup
+2025-01-21T10:44:04.512504500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:44:04.509031600 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:44:04.506055200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:44:04.504072100 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:44:04.309639900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:44:04.231271500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:44:04.194567900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:44:04.191095500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:44:04.189112800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:44:04.132070200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:44:04.127139700 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:44:04.125156500 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:44:03.776964100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:44:03.772995800 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:44:03.771509 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:44:03.770020500 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:44:03.765556700 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:44:03.762084200 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:44:02.838938700 [DEBUG] Observer has found a running backup
+2025-01-21T10:44:02.802731 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:44:01.830076900 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:44:01.828588700 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:44:01.823628300 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:44:01.822140400 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:44:01.820652100 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:44:01.819164200 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:44:01.816684800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:44:01.815196300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:44:01.813708200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:44:01.812220100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:44:01.810732100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:44:01.808748700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:44:01.806269500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:44:01.804284700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:44:01.801309 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:44:01.799324200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:44:01.797340700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:44:01.795356900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:44:01.792380900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:44:01.790396600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:44:01.788908100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:44:01.786924800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:44:01.783949 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:44:01.781469100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:44:01.779484500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:44:01.777005800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:44:01.775020200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:44:01.773532200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:44:01.772044200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:44:01.770556300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:44:01.768076700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:44:01.766092300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:44:01.764604400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:44:01.763116700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:44:01.761132300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:44:01.759148800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:44:01.757660200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:44:01.756172300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:44:01.754684300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:44:01.753196200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:44:01.751708400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:44:01.749724700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:44:01.748236200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:44:01.747244400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:44:01.745756200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:44:01.744268200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:44:01.742285400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:44:01.741292200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:44:01.739804500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:44:01.738812200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:44:01.737324100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:44:01.735836500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:44:01.733356200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:44:01.731868300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:44:01.730380300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:44:01.728892300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:44:01.727900300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:44:01.725917400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:44:01.724428300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:44:01.723436200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:44:01.721948400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:44:01.720460600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:44:01.718477600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:44:01.716492200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:44:01.715004400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:44:01.713516500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:44:01.712524200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:44:01.710540400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:44:01.709053200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:44:01.707564300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:44:01.705580900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:44:01.704092300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:44:01.702108800 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:44:01.696156500 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:44:01.692685400 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:44:01.690205100 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:44:01.685741600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:44:01.683260500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:44:01.681276300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:44:01.679292300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:44:01.676813500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:44:01.673836900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:44:01.671852900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:44:01.668876600 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:44:01.663916400 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:44:01.660940700 [INFO] Zipping progress: 0%
+2025-01-21T10:44:01.653501300 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:44:01.651021700 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:44:01.648540500 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:44:01.646556700 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:44:01.644076700 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:44:01.641596900 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:44:01.639612300 [DEBUG] Adding directory to zip: /
+2025-01-21T10:44:01.624236400 [INFO] Starting zipping process
+2025-01-21T10:44:01.614812400 [INFO] Event --> manual backup started
+2025-01-21T10:44:00.389311800 [INFO] Right click on row: 8
+2025-01-21T10:44:00.387823 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:44:00.236016700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:43:52.742809700 [INFO] Finalizing zipping process
+2025-01-21T10:43:52.739833400 [INFO] Deleted old backup: lezioni (Backup 21-01-2025 10.43.21).zip
+2025-01-21T10:43:52.737353800 [INFO] Found 4 matching files, exceeding max allowed: 3
+2025-01-21T10:43:52.735370 [INFO] Deleting old backups if necessary
+2025-01-21T10:43:52.732890 [DEBUG] updating backup list
+2025-01-21T10:43:52.726938500 [INFO] Backup completed!
+2025-01-21T10:43:52.721481200 [INFO] Zipping progress: 100%
+2025-01-21T10:43:52.714538 [DEBUG] Adding file to zip: test.csv
+2025-01-21T10:43:52.711392400 [DEBUG] Adding file to zip: Nuovo documento di testo (2).txt
+2025-01-21T10:43:52.705610100 [DEBUG] Adding file to zip: lezioni2024.png
+2025-01-21T10:43:52.702137800 [INFO] Zipping progress: 75%
+2025-01-21T10:43:52.699161400 [DEBUG] Adding file to zip: lezioni2024.csv
+2025-01-21T10:43:52.691722 [DEBUG] Adding file to zip: lezioni2023.png
+2025-01-21T10:43:52.687258100 [DEBUG] Adding file to zip: lezioni2023.csv
+2025-01-21T10:43:52.682298200 [INFO] Zipping progress: 50%
+2025-01-21T10:43:52.678330100 [DEBUG] Adding file to zip: lezioni2022.png
+2025-01-21T10:43:52.673865600 [DEBUG] Adding file to zip: lezioni2022.csv
+2025-01-21T10:43:52.668906300 [DEBUG] Adding file to zip: lezioni2021.png
+2025-01-21T10:43:52.665029900 [INFO] Zipping progress: 25%
+2025-01-21T10:43:52.663046400 [DEBUG] Adding file to zip: lezioni2021.csv
+2025-01-21T10:43:52.658086200 [DEBUG] Adding file to zip: lezioni2021 - Copia.csv
+2025-01-21T10:43:52.654614200 [DEBUG] Adding file to zip: lezioni2021 - Copia - Copia.txt
+2025-01-21T10:43:52.651638200 [DEBUG] Adding directory to zip: /
+2025-01-21T10:43:52.648662200 [INFO] Starting zipping process
+2025-01-21T10:43:52.641247 [INFO] Event --> manual backup started
+2025-01-21T10:43:51.553734200 [INFO] Right click on row: 4
+2025-01-21T10:43:51.551254900 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:51.401526400 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:48.942655100 [INFO] Finalizing zipping process
+2025-01-21T10:43:48.937199900 [INFO] Deleting old backups if necessary
+2025-01-21T10:43:48.935215800 [DEBUG] updating backup list
+2025-01-21T10:43:48.928271400 [INFO] Backup completed!
+2025-01-21T10:43:48.921822600 [INFO] Zipping progress: 100%
+2025-01-21T10:43:48.915375100 [DEBUG] Adding file to zip: test.csv
+2025-01-21T10:43:48.911902700 [DEBUG] Adding file to zip: Nuovo documento di testo (2).txt
+2025-01-21T10:43:48.905951400 [DEBUG] Adding file to zip: lezioni2024.png
+2025-01-21T10:43:48.901983900 [INFO] Zipping progress: 75%
+2025-01-21T10:43:48.899006500 [DEBUG] Adding file to zip: lezioni2024.csv
+2025-01-21T10:43:48.892063300 [DEBUG] Adding file to zip: lezioni2023.png
+2025-01-21T10:43:48.887598600 [DEBUG] Adding file to zip: lezioni2023.csv
+2025-01-21T10:43:48.884129300 [INFO] Zipping progress: 50%
+2025-01-21T10:43:48.879662500 [DEBUG] Adding file to zip: lezioni2022.png
+2025-01-21T10:43:48.875198800 [DEBUG] Adding file to zip: lezioni2022.csv
+2025-01-21T10:43:48.868752700 [DEBUG] Adding file to zip: lezioni2021.png
+2025-01-21T10:43:48.864782700 [INFO] Zipping progress: 25%
+2025-01-21T10:43:48.862302500 [DEBUG] Adding file to zip: lezioni2021.csv
+2025-01-21T10:43:48.857838600 [DEBUG] Adding file to zip: lezioni2021 - Copia.csv
+2025-01-21T10:43:48.854366600 [DEBUG] Adding file to zip: lezioni2021 - Copia - Copia.txt
+2025-01-21T10:43:48.851392100 [DEBUG] Adding directory to zip: /
+2025-01-21T10:43:48.848415100 [INFO] Starting zipping process
+2025-01-21T10:43:48.841471100 [INFO] Event --> manual backup started
+2025-01-21T10:43:47.721794900 [INFO] Right click on row: 4
+2025-01-21T10:43:47.720334700 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:47.553744100 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:27.721521600 [INFO] Finalizing zipping process
+2025-01-21T10:43:27.716065700 [INFO] Deleting old backups if necessary
+2025-01-21T10:43:27.714082300 [DEBUG] updating backup list
+2025-01-21T10:43:27.703666900 [INFO] Backup completed!
+2025-01-21T10:43:27.698209600 [INFO] Zipping progress: 100%
+2025-01-21T10:43:27.689778400 [DEBUG] Adding file to zip: test.csv
+2025-01-21T10:43:27.685313700 [DEBUG] Adding file to zip: Nuovo documento di testo (2).txt
+2025-01-21T10:43:27.677378100 [DEBUG] Adding file to zip: lezioni2024.png
+2025-01-21T10:43:27.672914100 [INFO] Zipping progress: 75%
+2025-01-21T10:43:27.668946 [DEBUG] Adding file to zip: lezioni2024.csv
+2025-01-21T10:43:27.662002 [DEBUG] Adding file to zip: lezioni2023.png
+2025-01-21T10:43:27.655553900 [DEBUG] Adding file to zip: lezioni2023.csv
+2025-01-21T10:43:27.652082900 [INFO] Zipping progress: 50%
+2025-01-21T10:43:27.647618300 [DEBUG] Adding file to zip: lezioni2022.png
+2025-01-21T10:43:27.642162100 [DEBUG] Adding file to zip: lezioni2022.csv
+2025-01-21T10:43:27.633730300 [DEBUG] Adding file to zip: lezioni2021.png
+2025-01-21T10:43:27.630257800 [INFO] Zipping progress: 25%
+2025-01-21T10:43:27.627778200 [DEBUG] Adding file to zip: lezioni2021.csv
+2025-01-21T10:43:27.621329700 [DEBUG] Adding file to zip: lezioni2021 - Copia.csv
+2025-01-21T10:43:27.615873400 [DEBUG] Adding file to zip: lezioni2021 - Copia - Copia.txt
+2025-01-21T10:43:27.613393800 [DEBUG] Adding directory to zip: /
+2025-01-21T10:43:27.610419300 [INFO] Starting zipping process
+2025-01-21T10:43:27.602093700 [INFO] Event --> manual backup started
+2025-01-21T10:43:26.046275 [INFO] Right click on row: 4
+2025-01-21T10:43:26.044788300 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:25.869334300 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:21.679154900 [INFO] Finalizing zipping process
+2025-01-21T10:43:21.670723300 [INFO] Deleting old backups if necessary
+2025-01-21T10:43:21.667251400 [DEBUG] updating backup list
+2025-01-21T10:43:21.654354700 [INFO] Backup completed!
+2025-01-21T10:43:21.648402900 [INFO] Zipping progress: 100%
+2025-01-21T10:43:21.639475400 [DEBUG] Adding file to zip: test.csv
+2025-01-21T10:43:21.630546900 [DEBUG] Adding file to zip: Nuovo documento di testo (2).txt
+2025-01-21T10:43:21.617154900 [DEBUG] Adding file to zip: lezioni2024.png
+2025-01-21T10:43:21.610707700 [INFO] Zipping progress: 75%
+2025-01-21T10:43:21.605250900 [DEBUG] Adding file to zip: lezioni2024.csv
+2025-01-21T10:43:21.592356100 [DEBUG] Adding file to zip: lezioni2023.png
+2025-01-21T10:43:21.582930900 [DEBUG] Adding file to zip: lezioni2023.csv
+2025-01-21T10:43:21.577475 [INFO] Zipping progress: 50%
+2025-01-21T10:43:21.569043400 [DEBUG] Adding file to zip: lezioni2022.png
+2025-01-21T10:43:21.561604 [DEBUG] Adding file to zip: lezioni2022.csv
+2025-01-21T10:43:21.552675500 [DEBUG] Adding file to zip: lezioni2021.png
+2025-01-21T10:43:21.542755400 [INFO] Zipping progress: 25%
+2025-01-21T10:43:21.537794900 [DEBUG] Adding file to zip: lezioni2021.csv
+2025-01-21T10:43:21.515971100 [DEBUG] Adding file to zip: lezioni2021 - Copia.csv
+2025-01-21T10:43:21.501091 [DEBUG] Adding file to zip: lezioni2021 - Copia - Copia.txt
+2025-01-21T10:43:21.497619100 [DEBUG] Adding directory to zip: /
+2025-01-21T10:43:21.487202400 [INFO] Starting zipping process
+2025-01-21T10:43:21.473339700 [INFO] Event --> manual backup started
+2025-01-21T10:43:20.013342500 [INFO] Right click on row: 4
+2025-01-21T10:43:20.011357700 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:19.844459800 [DEBUG] Selected backup: lezioni
+2025-01-21T10:43:11.824563600 [INFO] Observer for running backups started
+2025-01-21T10:43:11.132133300 [DEBUG] Background mode: false
+2025-01-21T10:43:11.124196500 [INFO] Application started
+2025-01-21T10:43:11.116260900 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:43:11.099397400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:38:16.913086500 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.38.07).zip
+2025-01-21T10:38:16.898702400 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.38.07).zip
+2025-01-21T10:38:16.897214400 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.38.07).zip
+2025-01-21T10:38:16.894238100 [INFO] Finalizing zipping process
+2025-01-21T10:38:16.881342100 [INFO] Zipping process manually interrupted
+2025-01-21T10:38:16.017311900 [DEBUG] Observer has found a running backup
+2025-01-21T10:38:13.019521100 [DEBUG] Observer has found a running backup
+2025-01-21T10:38:10.826679 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:38:10.822214500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:38:10.818246200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:38:10.816262300 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:38:10.630262700 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:38:10.556375500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:38:10.521655200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:38:10.518708 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:38:10.517191600 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:38:10.464144500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:38:10.459159100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:38:10.457204500 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:38:10.126121100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:38:10.122649800 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:38:10.120169300 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:38:10.118184800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:38:10.115236700 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:38:10.111241 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:38:10.021465100 [DEBUG] Observer has found a running backup
+2025-01-21T10:38:09.195130100 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:38:08.242315900 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:38:08.240827600 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:38:08.236859700 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:38:08.235371700 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:38:08.233883800 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:38:08.231899700 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:38:08.230411700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:38:08.228923500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:38:08.227435700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:38:08.225947900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:38:08.224459500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:38:08.222971400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:38:08.221483800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:38:08.219499600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:38:08.218011800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:38:08.217019300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:38:08.215531800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:38:08.214043800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:38:08.212556 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:38:08.211067800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:38:08.209579800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:38:08.208091900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:38:08.206603300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:38:08.205115300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:38:08.204123500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:38:08.202635500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:38:08.201147800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:38:08.199163500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:38:08.197675400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:38:08.196187900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:38:08.194699900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:38:08.193211700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:38:08.191724100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:38:08.190235500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:38:08.188747600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:38:08.187259900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:38:08.185771800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:38:08.183787500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:38:08.182299800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:38:08.180315900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:38:08.178827700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:38:08.177339300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:38:08.175851900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:38:08.173867900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:38:08.172379300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:38:08.170395400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:38:08.168907500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:38:08.166428700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:38:08.164939600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:38:08.162459400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:38:08.160971400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:38:08.158987800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:38:08.157003700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:38:08.155515700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:38:08.153532300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:38:08.152043800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:38:08.150059700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:38:08.148075300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:38:08.146091400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:38:08.144107400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:38:08.142123400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:38:08.140635200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:38:08.138155600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:38:08.136171500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:38:08.133691400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:38:08.131707700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:38:08.129723500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:38:08.127739400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:38:08.125259700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:38:08.118315700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:38:08.115340 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:38:08.110380200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:38:08.104924100 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:38:08.097483400 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:38:08.091531800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:38:08.089549 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:38:08.087564500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:38:08.084091600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:38:08.082107700 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:38:08.079628200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:38:08.076652100 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:38:08.069212 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:38:08.066731800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:38:08.064251700 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:38:08.055323900 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:38:08.046892300 [INFO] Zipping progress: 0%
+2025-01-21T10:38:08.038460 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:38:08.035980 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:38:08.033500400 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:38:08.030524 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:38:08.027547600 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:38:08.025564600 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:38:08.022092600 [DEBUG] Adding directory to zip: /
+2025-01-21T10:38:08.004237100 [INFO] Starting zipping process
+2025-01-21T10:38:07.992189 [INFO] Event --> manual backup started
+2025-01-21T10:38:06.168893700 [INFO] Right click on row: 8
+2025-01-21T10:38:06.166941300 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:38:06.036693500 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:38:01.004517700 [INFO] Observer for running backups started
+2025-01-21T10:38:00.383724700 [DEBUG] Background mode: false
+2025-01-21T10:38:00.377277200 [INFO] Application started
+2025-01-21T10:38:00.369341300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:38:00.357437100 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:36:58.124965 [DEBUG] Selected backup: asd_copy
+2025-01-21T10:36:57.532835800 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:56.917046500 [INFO] Right click on row: 7
+2025-01-21T10:36:56.916054 [DEBUG] Selected backup: asd
+2025-01-21T10:36:55.903486900 [INFO] Right click on row: 8
+2025-01-21T10:36:55.901997700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:55.100867800 [DEBUG] Selected backup: asd
+2025-01-21T10:36:54.805101 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:53.843882200 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:53.320790700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:42.030157500 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.36.26).zip
+2025-01-21T10:36:42.011805800 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.36.26).zip
+2025-01-21T10:36:42.009821200 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.36.26).zip
+2025-01-21T10:36:42.006845300 [INFO] Finalizing zipping process
+2025-01-21T10:36:41.992957100 [INFO] Zipping process manually interrupted
+2025-01-21T10:36:41.329718500 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_BF76982F_44656E6E61_Commonwealth_001141_20240427081326_17_2.fos
+2025-01-21T10:36:40.765270500 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_BF76982FM44656E6E61_DiamondCity_000317_20240422114937_8_2.fos
+2025-01-21T10:36:40.598118600 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:39.968696700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610_4D725F44656E6E61_Commonwealth_020906_20240420135148_43_2.fos
+2025-01-21T10:36:39.398793600 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610M4D725F44656E6E61_Commonwealth_020857_20180110180647_43_2.fos
+2025-01-21T10:36:38.774562900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
+2025-01-21T10:36:38.186802900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
+2025-01-21T10:36:37.599539800 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:37.564820400 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-21T10:36:37.001782900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-21T10:36:36.365416300 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-21T10:36:35.782122100 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-21T10:36:35.780632800 [DEBUG] Adding directory to zip: My Games\Fallout4\Saves/
+2025-01-21T10:36:35.779144900 [DEBUG] Adding directory to zip: My Games\Fallout4/
+2025-01-21T10:36:35.777657200 [DEBUG] Adding directory to zip: My Games/
+2025-01-21T10:36:35.772696600 [DEBUG] Adding file to zip: log_file
+2025-01-21T10:36:35.771208600 [DEBUG] Adding directory to zip: Lightshot/
+2025-01-21T10:36:34.601161 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:31.602950700 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:29.520493 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:36:29.516500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:36:29.513028 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:36:29.511071600 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:36:29.324052300 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:36:29.250148500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:36:29.214435900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:36:29.209972400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:36:29.207988400 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:36:29.152933100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:36:29.149459900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:36:29.146980200 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:36:28.811685400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:36:28.808212600 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:36:28.806725100 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:36:28.804244600 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:36:28.800805 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:36:28.797328800 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:36:28.604356300 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:27.872758400 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:36:26.919943700 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:36:26.917959300 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:36:26.912998900 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:36:26.911511100 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:36:26.910023 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:36:26.908535200 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:36:26.906551400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:36:26.904567400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:36:26.903575300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:36:26.902087300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:36:26.900599800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:36:26.898483100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:36:26.896135300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:36:26.894647300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:36:26.893159300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:36:26.891672 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:36:26.889688600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:36:26.887703300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:36:26.886215800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:36:26.884231800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:36:26.881751300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:36:26.879767200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:36:26.878280 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:36:26.876791500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:36:26.874807400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:36:26.873319400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:36:26.871335600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:36:26.869351200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:36:26.867367500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:36:26.865383200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:36:26.863895500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:36:26.861911800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:36:26.859927300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:36:26.857943 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:36:26.856455500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:36:26.854471500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:36:26.852983500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:36:26.850999 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:36:26.849511300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:36:26.847031500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:36:26.845543700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:36:26.843559600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:36:26.842071400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:36:26.840088400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:36:26.838103700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:36:26.836120100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:36:26.834631500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:36:26.832648500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:36:26.830167800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:36:26.828679200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:36:26.827687 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:36:26.825703400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:36:26.823224 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:36:26.820743900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:36:26.818759400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:36:26.816775900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:36:26.814791800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:36:26.813303300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:36:26.811815800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:36:26.809831300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:36:26.807847400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:36:26.805864 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:36:26.803383300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:36:26.800903100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:36:26.794951400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:36:26.792967900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:36:26.789000600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:36:26.787015400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:36:26.785032200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:36:26.783048500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:36:26.779575200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:36:26.777591700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:36:26.775111800 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:36:26.769656100 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:36:26.767671600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:36:26.765687500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:36:26.762711700 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:36:26.758743800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:36:26.756263800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:36:26.753783300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:36:26.751799500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:36:26.749320800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:36:26.746839900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:36:26.744359 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:36:26.737911600 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:36:26.733943400 [INFO] Zipping progress: 0%
+2025-01-21T10:36:26.725511800 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:36:26.723031700 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:36:26.720584800 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:36:26.718595400 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:36:26.716114700 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:36:26.713610400 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:36:26.710660500 [DEBUG] Adding directory to zip: /
+2025-01-21T10:36:26.692775400 [INFO] Starting zipping process
+2025-01-21T10:36:26.681371100 [INFO] Event --> manual backup started
+2025-01-21T10:36:25.606508100 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:25.267959700 [INFO] Right click on row: 8
+2025-01-21T10:36:25.265974700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:25.091549900 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:36:22.644952600 [DEBUG] Observer has found a running backup
+2025-01-21T10:36:22.592871800 [INFO] Observer for running backups started
+2025-01-21T10:36:21.904964600 [DEBUG] Background mode: false
+2025-01-21T10:36:21.899013300 [INFO] Application started
+2025-01-21T10:36:21.891574300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:36:21.879172700 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:33:09.072326100 [DEBUG] Observer has found a running backup
+2025-01-21T10:33:06.058952700 [DEBUG] Observer has found a running backup
+2025-01-21T10:33:03.062639700 [DEBUG] Observer has found a running backup
+2025-01-21T10:33:00.064277 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:57.067960700 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:54.067801300 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:51.072526400 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:48.072666500 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:45.072773200 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:42.072910700 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:39.059271 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:36.060380700 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:33.059031600 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:30.059321100 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:27.063520900 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:24.064009 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:21.066554900 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:18.068901900 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:15.071321 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:12.059251 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:09.063523800 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:06.067459900 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:03.069086 [DEBUG] Observer has found a running backup
+2025-01-21T10:32:00.072070 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:57.058880200 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:54.062066 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:51.071623300 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:48.068146600 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:45.068437700 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:42.072527800 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:40.973510500 [DEBUG] Selected backup: lezioni
+2025-01-21T10:31:40.959521500 [WARN] The path points to a directory, not a file: D:\Documents
+2025-01-21T10:31:40.958033100 [INFO] Attempting to delete partial backup: D:\Documents
+2025-01-21T10:31:40.956545700 [INFO] Deleting partial backup: D:\Documents
+2025-01-21T10:31:40.954601600 [INFO] Finalizing zipping process
+2025-01-21T10:31:40.940673700 [INFO] Zipping process manually interrupted
+2025-01-21T10:31:40.144098700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610_4D725F44656E6E61_Commonwealth_020906_20240420135148_43_2.fos
+2025-01-21T10:31:39.567207700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610M4D725F44656E6E61_Commonwealth_020857_20180110180647_43_2.fos
+2025-01-21T10:31:39.071703100 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:38.924391900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
+2025-01-21T10:31:38.335144700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
+2025-01-21T10:31:37.710185600 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-21T10:31:37.146647 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-21T10:31:36.516230300 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-21T10:31:36.073205500 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:35.931845600 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-21T10:31:35.930854300 [DEBUG] Adding directory to zip: My Games\Fallout4\Saves/
+2025-01-21T10:31:35.929366300 [DEBUG] Adding directory to zip: My Games\Fallout4/
+2025-01-21T10:31:35.927878500 [DEBUG] Adding directory to zip: My Games/
+2025-01-21T10:31:35.922916600 [DEBUG] Adding file to zip: log_file
+2025-01-21T10:31:35.921381600 [DEBUG] Adding directory to zip: Lightshot/
+2025-01-21T10:31:33.059466600 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:30.060896300 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:29.822320200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:31:29.818848900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:31:29.815376900 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:31:29.813889100 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:31:29.625904800 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:31:29.552002100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:31:29.515794200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:31:29.511329400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:31:29.509344800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:31:29.454289500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:31:29.449329400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:31:29.447841400 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:31:29.114529300 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:31:29.110066100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:31:29.108082800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:31:29.106099700 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:31:29.102625100 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:31:29.099649200 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:31:28.170643800 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:31:27.227748300 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:31:27.224772200 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:31:27.221796100 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:31:27.220803800 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:31:27.219316 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:31:27.217333 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:31:27.215844300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:31:27.214355900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:31:27.212867900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:31:27.211380200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:31:27.209892600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:31:27.207907900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:31:27.206419900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:31:27.204932 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:31:27.202948 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:31:27.200966400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:31:27.198979700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:31:27.197491900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:31:27.196003900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:31:27.194020400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:31:27.192036500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:31:27.190051600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:31:27.188564200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:31:27.186580700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:31:27.184100600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:31:27.181620200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:31:27.180628 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:31:27.179140200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:31:27.177652600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:31:27.175668600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:31:27.174179800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:31:27.173188300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:31:27.171700400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:31:27.170212900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:31:27.168229700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:31:27.166244200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:31:27.164755900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:31:27.163268500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:31:27.161780 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:31:27.160292600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:31:27.158308 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:31:27.156820 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:31:27.155828400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:31:27.154340400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:31:27.152852700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:31:27.150868500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:31:27.148884300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:31:27.147395700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:31:27.145908700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:31:27.143924500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:31:27.141939800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:31:27.139956 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:31:27.138468300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:31:27.136981600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:31:27.135180 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:31:27.133012300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:31:27.131523700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:31:27.130036400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:31:27.124580200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:31:27.122596 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:31:27.120613 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:31:27.118628500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:31:27.116148 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:31:27.114163900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:31:27.112675900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:31:27.110693500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:31:27.108212700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:31:27.106228 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:31:27.104740500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:31:27.101764400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:31:27.099780600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:31:27.097796200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:31:27.095812200 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:31:27.090356100 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:31:27.088868500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:31:27.087380100 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:31:27.084901200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:31:27.082420200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:31:27.080934 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:31:27.078452200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:31:27.075972900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:31:27.073988300 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:31:27.072004900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:31:27.070052300 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:31:27.065556 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:31:27.063076300 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:27.061615800 [INFO] Zipping progress: 0%
+2025-01-21T10:31:27.052164600 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:31:27.049217200 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:31:27.047204 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:31:27.044724900 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:31:27.042245 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:31:27.040260100 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:31:27.037283900 [DEBUG] Adding directory to zip: /
+2025-01-21T10:31:27.019428200 [INFO] Starting zipping process
+2025-01-21T10:31:27.007524600 [INFO] Event --> manual backup started
+2025-01-21T10:31:24.066565900 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:22.980867700 [INFO] Right click on row: 8
+2025-01-21T10:31:22.979379700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:31:22.829927 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:31:21.081731 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:21.054948100 [INFO] Observer for running backups started
+2025-01-21T10:31:20.431984800 [DEBUG] Background mode: false
+2025-01-21T10:31:20.424544400 [INFO] Application started
+2025-01-21T10:31:20.418097400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:31:20.406688400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:31:18.367377200 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:15.365603800 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:12.367349400 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:09.368153600 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:06.369445400 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:03.371413 [DEBUG] Observer has found a running backup
+2025-01-21T10:31:00.357295700 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:57.372059800 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:54.360433200 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:51.362835500 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:48.364072600 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:45.365062300 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:42.364999600 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:39.371640100 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:36.361868600 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:33.363753700 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:30.367481 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:27.368511800 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:24.372500800 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:21.357929800 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:18.361341600 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:15.364779900 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:12.364337100 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:09.363787 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:06.365602900 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:03.368719700 [DEBUG] Observer has found a running backup
+2025-01-21T10:30:00.358461100 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:57.364209900 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:54.364022100 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:51.366865700 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:48.369285400 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:45.370403400 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:42.359305 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:39.361226100 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:36.365771900 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:33.368283500 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:30.365830 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:27.367898800 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:24.372841700 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:21.360141100 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:18.359905600 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:15.362822300 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:12.367215700 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:09.367279600 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:06.369302400 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:03.370346700 [DEBUG] Observer has found a running backup
+2025-01-21T10:29:00.370105300 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:57.369236900 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:54.371446 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:51.372028 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:48.358095700 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:45.359781500 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:42.363129300 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:39.363681 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:36.366245800 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:33.367883800 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:30.368947400 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:27.369750600 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:24.371837700 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:21.359424400 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:18.363735300 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:15.364498800 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:12.367236400 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:09.368911600 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:06.372335200 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:03.357968300 [DEBUG] Observer has found a running backup
+2025-01-21T10:28:00.359458700 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:57.362266300 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:54.362577300 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:51.363796100 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:48.365493600 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:45.368487900 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:42.369455400 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:39.371294800 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:36.362192 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:33.364165700 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:30.366955600 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:27.366491400 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:24.370325400 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:21.357799800 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:18.357488700 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:15.358517 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:12.359989 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:09.362460 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:06.362009700 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:03.366527600 [DEBUG] Observer has found a running backup
+2025-01-21T10:27:00.363934800 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:57.366071500 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:54.366075500 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:51.371811600 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:48.360630900 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:45.368026200 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:42.363387 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:39.363248100 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:36.365625 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:33.364058 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:30.365893800 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:27.370138 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:24.372168700 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:21.360375400 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:18.358610700 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:15.938963800 [WARN] The path points to a directory, not a file: D:\Documents
+2025-01-21T10:26:15.937475600 [INFO] Attempting to delete partial backup: D:\Documents
+2025-01-21T10:26:15.936483300 [INFO] Deleting partial backup: D:\Documents
+2025-01-21T10:26:15.934018600 [INFO] Finalizing zipping process
+2025-01-21T10:26:15.920626400 [INFO] Zipping process manually interrupted
+2025-01-21T10:26:15.363619600 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:15.343703900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Quicksave0_1C601610M4D725F44656E6E61_Commonwealth_020858_20180126145302_43_2.fos
+2025-01-21T10:26:14.634348800 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_BF76982F_44656E6E61_Commonwealth_001141_20240427081326_17_2.fos
+2025-01-21T10:26:14.044273400 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_BF76982FM44656E6E61_DiamondCity_000317_20240422114937_8_2.fos
+2025-01-21T10:26:13.211484800 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610_4D725F44656E6E61_Commonwealth_020906_20240420135148_43_2.fos
+2025-01-21T10:26:12.383274 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Exitsave0_1C601610M4D725F44656E6E61_Commonwealth_020857_20180110180647_43_2.fos
+2025-01-21T10:26:12.363461500 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:11.748890100 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
+2025-01-21T10:26:11.158650700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
+2025-01-21T10:26:10.502443900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
+2025-01-21T10:26:09.935516800 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
+2025-01-21T10:26:09.365010900 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:09.295570900 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
+2025-01-21T10:26:08.717731700 [DEBUG] Adding file to zip: My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
+2025-01-21T10:26:08.716739100 [DEBUG] Adding directory to zip: My Games\Fallout4\Saves/
+2025-01-21T10:26:08.715251800 [DEBUG] Adding directory to zip: My Games\Fallout4/
+2025-01-21T10:26:08.713763700 [DEBUG] Adding directory to zip: My Games/
+2025-01-21T10:26:08.709137800 [DEBUG] Adding file to zip: log_file
+2025-01-21T10:26:08.708169700 [DEBUG] Adding directory to zip: Lightshot/
+2025-01-21T10:26:06.367134200 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:03.368787900 [DEBUG] Observer has found a running backup
+2025-01-21T10:26:02.245349800 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:26:02.241878 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:26:02.238901100 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:26:02.237413800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:26:01.968263700 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:26:01.932055400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:26:01.929079500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:26:01.927590800 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:26:01.873527500 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:26:01.868568200 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:26:01.866584500 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:26:01.529800 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:26:01.526327400 [DEBUG] Adding file to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:26:01.524839400 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:26:01.523351500 [DEBUG] Adding directory to zip: Blocchi appunti di OneNote/
+2025-01-21T10:26:01.519383400 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:26:01.516444300 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:26:00.587401700 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:26:00.371145300 [DEBUG] Observer has found a running backup
+2025-01-21T10:25:59.623674500 [DEBUG] Adding file to zip: Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:25:59.622187200 [DEBUG] Adding directory to zip: Backup Mondo Valheim 09-09-21/
+2025-01-21T10:25:59.617722500 [DEBUG] Adding file to zip: Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:25:59.616234300 [DEBUG] Adding directory to zip: Adobe\Photoshop Cloud Associate/
+2025-01-21T10:25:59.614746100 [DEBUG] Adding directory to zip: Adobe/
+2025-01-21T10:25:59.612763500 [DEBUG] Adding directory to zip: Ableton\User Library\Samples/
+2025-01-21T10:25:59.610778300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:25:59.609290700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:25:59.607802200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:25:59.605818500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:25:59.603834800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:25:59.601850300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:25:59.600362300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:25:59.598874400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:25:59.596890500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:25:59.595402 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:25:59.593418900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:25:59.591435100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:25:59.589947500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:25:59.586474900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:25:59.584987300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:25:59.583002700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:25:59.581514100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:25:59.580026400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:25:59.578538200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:25:59.577050200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:25:59.575563400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:25:59.574074500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:25:59.572586500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:25:59.570106800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Instruments/
+2025-01-21T10:25:59.568122700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:25:59.566634300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:25:59.564651200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:25:59.562667300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:25:59.560186 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:25:59.555227600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:25:59.553242300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:25:59.551754300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:25:59.550762 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:25:59.548778100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:25:59.547785900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:25:59.545802400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:25:59.544314100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:25:59.542826100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:25:59.541835 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:25:59.539850900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:25:59.537866900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:25:59.535883200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:25:59.534890700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:25:59.532906100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:25:59.531914100 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:25:59.530426700 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:25:59.528443 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:25:59.526459400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:25:59.524474600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:25:59.522986600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:25:59.519514800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:25:59.518026600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:25:59.516538800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:25:59.514059400 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:25:59.511578600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:25:59.508602900 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:25:59.506122800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:25:59.503146600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:25:59.500666500 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:25:59.498682800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:25:59.496202800 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:25:59.492733200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:25:59.490746200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:25:59.489259300 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:25:59.486282600 [DEBUG] Adding directory to zip: Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:25:59.484299200 [DEBUG] Adding directory to zip: Ableton\User Library\Presets/
+2025-01-21T10:25:59.482315200 [DEBUG] Adding directory to zip: Ableton\User Library\Grooves/
+2025-01-21T10:25:59.476363500 [DEBUG] Adding file to zip: Ableton\User Library\Desktop.ini
+2025-01-21T10:25:59.474379800 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:25:59.472395200 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:25:59.469915 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:25:59.467930900 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:25:59.466443 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:25:59.464459100 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:25:59.460986600 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:25:59.459498400 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:25:59.458010500 [DEBUG] Adding directory to zip: Ableton\User Library\Defaults/
+2025-01-21T10:25:59.456027 [DEBUG] Adding directory to zip: Ableton\User Library\Clips/
+2025-01-21T10:25:59.449578700 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:25:59.441148300 [INFO] Zipping progress: 0%
+2025-01-21T10:25:59.431723 [DEBUG] Adding file to zip: Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:25:59.429738800 [DEBUG] Adding directory to zip: Ableton\User Library\Ableton Project Info/
+2025-01-21T10:25:59.427754300 [DEBUG] Adding directory to zip: Ableton\User Library/
+2025-01-21T10:25:59.425274700 [DEBUG] Adding directory to zip: Ableton\Live Recordings/
+2025-01-21T10:25:59.423290400 [DEBUG] Adding directory to zip: Ableton\Factory Packs/
+2025-01-21T10:25:59.421306900 [DEBUG] Adding directory to zip: Ableton/
+2025-01-21T10:25:59.418330500 [DEBUG] Adding directory to zip: /
+2025-01-21T10:25:59.398490500 [INFO] Starting zipping process
+2025-01-21T10:25:59.385065800 [INFO] Event --> manual backup started
+2025-01-21T10:25:58.201720900 [INFO] Right click on row: 8
+2025-01-21T10:25:58.200231100 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:25:58.046375700 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:25:54.354691400 [INFO] Observer for running backups started
+2025-01-21T10:25:53.711227500 [DEBUG] Background mode: false
+2025-01-21T10:25:53.706887100 [INFO] Application started
+2025-01-21T10:25:53.698331700 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:25:53.684939200 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
 2025-01-21T10:03:16.981511200 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.03.07).zip
 2025-01-21T10:03:16.965616 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
 2025-01-21T10:03:16.964185200 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
@@ -131,3 +1276,97 @@
 2025-01-21T10:03:01.359315600 [INFO] Application started
 2025-01-21T10:03:01.353482600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
 2025-01-21T10:03:01.342452 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+Exception: java.util.concurrent.RejectedExecutionException - Task java.util.concurrent.FutureTask@f7cefc8[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@fc1c9b1[Wrapped task = backupmanager.Services.ZippingThread$$Lambda$347/0x000000080121bb90@3a39f522]] rejected from java.util.concurrent.ThreadPoolExecutor@7e821e5b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 5]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2081)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:841)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1376)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+	at java.base/java.util.concurrent.Executors$DelegatedExecutorService.submit(Executors.java:786)
+	at backupmanager.Services.ZippingThread.zipDirectory(ZippingThread.java:55)
+	at backupmanager.BackupOperations.SingleBackup(BackupOperations.java:78)
+	at backupmanager.GUI.BackupManagerGUI.RunBackupPopupItemActionPerformed(BackupManagerGUI.java:1935)
+	at backupmanager.GUI.BackupManagerGUI$14.actionPerformed(BackupManagerGUI.java:1156)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.AbstractButton.doClick(AbstractButton.java:374)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1029)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1073)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+Exception: java.util.concurrent.RejectedExecutionException - Task java.util.concurrent.FutureTask@732c5a2[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@51c0b4cc[Wrapped task = backupmanager.Services.ZippingThread$$Lambda$347/0x000000080121bb90@254faba3]] rejected from java.util.concurrent.ThreadPoolExecutor@7e821e5b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 5]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2081)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:841)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1376)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+	at java.base/java.util.concurrent.Executors$DelegatedExecutorService.submit(Executors.java:786)
+	at backupmanager.Services.ZippingThread.zipDirectory(ZippingThread.java:55)
+	at backupmanager.BackupOperations.SingleBackup(BackupOperations.java:78)
+	at backupmanager.GUI.BackupManagerGUI.RunBackupPopupItemActionPerformed(BackupManagerGUI.java:1935)
+	at backupmanager.GUI.BackupManagerGUI$14.actionPerformed(BackupManagerGUI.java:1156)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.AbstractButton.doClick(AbstractButton.java:374)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1029)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1073)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)

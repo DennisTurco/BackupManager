@@ -5,12 +5,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -22,141 +22,60 @@ import javax.swing.JToggleButton;
 import backupmanager.BackupOperations;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
+import backupmanager.ZipFileVisitor;
 import backupmanager.Entities.Backup;
 import backupmanager.Enums.ErrorTypes;
+import backupmanager.Enums.ZippingContext;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Table.BackupTable;
 
 public class ZippingThread {
-    public static Thread zipThread;
-    public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) throws IOException { // Track copied files
+
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, ZippingContext context) {
         Logger.logMessage("Starting zipping process", LogLevel.INFO);
 
-        File file = new File(sourceDirectoryPath.trim());
-        int totalFilesCount = file.isDirectory() ? countFilesInDirectory(file) : 1;
-        if (totalFilesCount == -1) {
-            Logger.logMessage("No files to zip in: " + sourceDirectoryPath, Logger.LogLevel.WARN);
-            progressBar.dispose();
-            BackupOperations.setError(ErrorTypes.ErrorCountingFiles, trayIcon, targetZipPath);
-            BackupOperations.reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-            return;
-        }
-        
         File sourceFile = new File(sourceDirectoryPath.trim());
+        File targetFile = new File(targetZipPath.trim());
+
         if (!sourceFile.exists()) {
-            Logger.logMessage("Source directory does not exist: " + sourceDirectoryPath, Logger.LogLevel.ERROR);
-            BackupOperations.setError(ErrorTypes.ZippingIOError, trayIcon, targetZipPath);
-            BackupOperations.reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+            handleError("Source directory does not exist: " + sourceDirectoryPath, ErrorTypes.ZippingIOError, context);
             return;
         }
-        
+
+        int totalFilesCount = countFilesInDirectory(sourceFile);
+        if (totalFilesCount == -1) {
+            handleError("No files to zip in: " + sourceDirectoryPath, ErrorTypes.ErrorCountingFiles, context);
+            return;
+        }
+
         AtomicInteger copiedFilesCount = new AtomicInteger(0);
-        
-        zipThread = new Thread(() -> {
-            Path sourceDir = Paths.get(sourceDirectoryPath);
-            String rootFolderName = sourceDir.getFileName().toString(); // Get the root folder name
 
+        executorService.submit(() -> {
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(targetZipPath))) {
-                if (file.isFile()) {
-                    addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, file.toPath(), file.getName(), copiedFilesCount, totalFilesCount, backup, trayIcon, progressBar, singleBackupBtn, autoBackupBtn, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-                } else {
-                    Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
-                        @Override
-                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                            if (file == null) {
-                                Logger.logMessage("File is null", Logger.LogLevel.WARN);
-                                return FileVisitResult.CONTINUE;
-                            }
-
-                            if (Thread.currentThread().isInterrupted()) {
-                                Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                BackupOperations.reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-                                return FileVisitResult.TERMINATE; // Stop if interrupted
-                            }
-
-                            // Calculate the relative path inside the zip
-                            Path targetFilePath = sourceDir.relativize(file);
-                            
-                            if (rootFolderName == null || rootFolderName.isEmpty()) {
-                                Logger.logMessage("Root folder name is null or empty", Logger.LogLevel.ERROR);
-                            }
-                            if (targetFilePath == null) {
-                                Logger.logMessage("Target file path is null", Logger.LogLevel.ERROR);
-                            }
-                            
-                            String zipEntryName = rootFolderName + "/" + targetFilePath.toString();
-
-                            Logger.logMessage("Zipping file: " + zipEntryName, Logger.LogLevel.DEBUG);
-
-                            // Create a new zip entry for the file
-                            zipOut.putNextEntry(new ZipEntry(zipEntryName));
-
-                            // Copy the file content to the zip output stream
-                            try (InputStream in = Files.newInputStream(file)) {
-                                byte[] buffer = new byte[1024];
-                                int len;
-                                while ((len = in.read(buffer)) > 0) {
-                                    zipOut.write(buffer, 0, len);
-                                }
-                            }
-
-                            zipOut.closeEntry(); // Close the zip entry after the file is written
-                            
-                            // Update progress
-                            int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
-                            int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-                            BackupOperations.UpdateProgressPercentage(actualProgress, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);  // Update progress percentage
-
-                            return FileVisitResult.CONTINUE;
-                        }
-
-                        @Override
-                        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                            if (dir == null) {
-                                Logger.logMessage("Directory is null", Logger.LogLevel.WARN);
-                                return FileVisitResult.CONTINUE;
-                            }
-
-                            if (Thread.currentThread().isInterrupted()) {
-                                Logger.logMessage("Zipping process manually interrupted", Logger.LogLevel.INFO);
-                                BackupOperations.reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-                                return FileVisitResult.TERMINATE; // Stop if interrupted
-                            }
-                            
-                            // case when the initial folder is empty
-                            if (totalFilesCount == 0) {
-                                Logger.logMessage("Directory is empty: " + sourceDirectoryPath, Logger.LogLevel.WARN);
-                                BackupOperations.UpdateProgressPercentage(100, sourceDirectoryPath, targetZipPath, backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
-                                return FileVisitResult.TERMINATE;
-                            }
-
-                            // Create directory entry in the zip if needed
-                            Path targetDir = sourceDir.relativize(dir);
-                            String name = rootFolderName + "/" + targetDir.toString() + "/";
-                            Logger.logMessage("Zipping directory: " + name, Logger.LogLevel.DEBUG);
-                            zipOut.putNextEntry(new ZipEntry(name));
-                            zipOut.closeEntry();
-                            return FileVisitResult.CONTINUE;
-                        }
-                    });
-                }
-            }  catch (IOException ioEx) {
-                // here we can't run setError because it happens somethimes during backups for "Documents" folder randomly
-                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath + ". Error: " + ioEx.getMessage(), Logger.LogLevel.ERROR, ioEx);
-            } catch (SecurityException secEx) {
-                Logger.logMessage("Security exception while accessing directory: " + sourceDirectoryPath + ". Error: " + secEx.getMessage(), Logger.LogLevel.ERROR, secEx);
-                BackupOperations.setError(ErrorTypes.ZippingSecurityError, trayIcon, targetZipPath);
-            } catch (Exception ex) {
-                Logger.logMessage("Unexpected error during zipping directory: " + sourceDirectoryPath + ". Error: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-                ex.printStackTrace();
-                //setError(ErrorTypes.ZippingGenericError, trayIcon, targetZipPath);
+                Path sourceDir = Paths.get(sourceDirectoryPath);
+                Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, targetFile, zipOut, copiedFilesCount, totalFilesCount, context));
+            } catch (IOException e) {
+                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath, Logger.LogLevel.ERROR, e);
+                handleError("I/O error occurred", ErrorTypes.ZippingIOError, context);
             } finally {
-                Logger.logMessage("Finalizing zipping process", Logger.LogLevel.INFO);
-                BackupOperations.reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+                finalizeProcess(context);
             }
         });
+    }
 
-        zipThread.start(); // Start the zipping thread
+    private static void handleError(String message, ErrorTypes errorType, ZippingContext context) {
+        Logger.logMessage(message, LogLevel.ERROR);
+        BackupOperations.setError(errorType, context.trayIcon, null);
+        BackupOperations.reEnableButtonsAndTable(context.singleBackupBtn, context.autoBackupBtn, context.backup,
+                context.backupTable, context.interruptBackupPopupItem, context.deleteBackupPopupItem);
+    }
+
+    private static void finalizeProcess(ZippingContext context) {
+        Logger.logMessage("Finalizing zipping process", LogLevel.INFO);
+        BackupOperations.reEnableButtonsAndTable(context.singleBackupBtn, context.autoBackupBtn, context.backup,
+                context.backupTable, context.interruptBackupPopupItem, context.deleteBackupPopupItem);
     }
 
     private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, Backup backup, TrayIcon trayIcon, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) throws IOException {
@@ -204,12 +123,35 @@ public class ZippingThread {
         return count;
     }
 
-    public static void StopCopyFiles() {
-        if (zipThread != null && zipThread.isAlive())
-            zipThread.interrupt();
+    /**
+     * Attempts to gracefully stop the given ExecutorService.
+     *
+     * @param executor The ExecutorService to shut down.
+     * @param timeout  The maximum time to wait for termination, in seconds.
+     */
+    public static void stopExecutorService(int timeout) {
+        if (executorService == null || executorService.isShutdown()) {
+            return;
+        }
+
+        executorService.shutdown(); // Reject new tasks
+        try {
+            // Wait for ongoing tasks to complete
+            if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
+                Logger.logMessage("executorService did not terminate in the given time. Forcing shutdown...", LogLevel.WARN);
+                executorService.shutdownNow(); // Forcefully stop remaining tasks
+                if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
+                    Logger.logMessage("executorService did not terminate after forced shutdown", LogLevel.WARN);
+                }
+            }
+        } catch (InterruptedException e) {
+            Logger.logMessage("Shutdown process interrupted. Forcing shutdown...", LogLevel.ERROR, e);
+            executorService.shutdownNow(); // Forcefully stop tasks on interruption
+            Thread.currentThread().interrupt(); // Preserve interrupted status
+        }
     }
 
     public static boolean isInterrupted() {
-        return zipThread.isInterrupted();
+        return executorService.isShutdown() || executorService.isTerminated();
     }
 }

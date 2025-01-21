@@ -53,6 +53,7 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
+import backupmanager.Enums.ZippingContext;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Exporter;
@@ -480,14 +481,16 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         //------------------------------COPY THE FILE OR DIRECTORY------------------------------
         Logger.logMessage("date backup: " + date, Logger.LogLevel.INFO);
     	
-        try {
+        // try {
             progressBar = new BackupProgressGUI(path1, path2);
             progressBar.setVisible(true);
 
             SingleBackup.setEnabled(false);
             toggleAutoBackup.setEnabled(false);
 
-            ZippingThread.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, DeletePopupItem, DeletePopupItem);
+            ZippingContext context = new ZippingContext(currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
+
+            ZippingThread.zipDirectory(path1, path2 + ".zip", context);
 
             //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
             if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
@@ -496,10 +499,10 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 currentBackup.setLastBackup(LocalDateTime.now());
             }
             
-        } catch (IOException e) {
-            Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        } 
+        // } catch (IOException e) {
+        //     Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
+        //     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+        // } 
     }
     
     private void setCurrentBackupName(String name) {

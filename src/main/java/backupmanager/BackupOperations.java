@@ -2,24 +2,14 @@ package backupmanager;
 
 import java.awt.TrayIcon;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -34,6 +24,7 @@ import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Entities.Backup;
 import backupmanager.Enums.ErrorTypes;
+import backupmanager.Enums.ZippingContext;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Entities.Preferences;
@@ -82,11 +73,13 @@ public class BackupOperations {
 
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
-            ZippingThread.zipDirectory(path1, path2 + ".zip", backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
-        } catch (IOException e) {
-            Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+            ZippingContext context = new ZippingContext(backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
+
+            ZippingThread.zipDirectory(path1, path2 + ".zip", context);
+        // } catch (IOException e) {
+        //     Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
+        //     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+        //     reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
@@ -198,7 +191,7 @@ public class BackupOperations {
     public static void interruptBackupProcess(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, BackupProgressGUI progressDialog, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         Logger.logMessage("Event --> interrupt backup process", Logger.LogLevel.INFO);
         
-        ZippingThread.StopCopyFiles();
+        ZippingThread.stopExecutorService(1);
         if (ZippingThread.isInterrupted())
             reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
         
@@ -315,7 +308,7 @@ public class BackupOperations {
     public static boolean deletePartialBackup(String filePath) {
         Logger.logMessage("Attempting to delete partial backup: " + filePath, LogLevel.INFO);
 
-        ZippingThread.StopCopyFiles();
+        ZippingThread.stopExecutorService(1);
         
         if (filePath == null || filePath.isEmpty()) {
             Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
