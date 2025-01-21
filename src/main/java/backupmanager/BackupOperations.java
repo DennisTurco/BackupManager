@@ -11,11 +11,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.filechooser.FileSystemView;
 
 import backupmanager.Entities.Backup;
@@ -31,34 +28,32 @@ import static backupmanager.GUI.BackupManagerGUI.backupTable;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
-import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Logger.LogLevel;
 import backupmanager.Services.ZippingThread;
-import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
 
 public class BackupOperations {
     
     private static final JSONAutoBackup JSON = new JSONAutoBackup();
     
-    public static void SingleBackup(Backup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
-        if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
+    public static void SingleBackup(ZippingContext context) {
+        if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
         Logger.logMessage("Event --> manual backup started", Logger.LogLevel.INFO);
 
-        if (singleBackupBtn != null) singleBackupBtn.setEnabled(false);
-        if (autoBackupBtn != null) autoBackupBtn.setEnabled(false);
+        if (context.singleBackupBtn != null) context.singleBackupBtn.setEnabled(false);
+        if (context.autoBackupBtn != null) context.autoBackupBtn.setEnabled(false);
 
         try {
             String temp = "\\";
-            String path1 = backup.getInitialPath();
-            String path2 = backup.getDestinationPath();
+            String path1 = context.backup.getInitialPath();
+            String path2 = context.backup.getDestinationPath();
 
-            if(!CheckInputCorrect(backup.getBackupName(), path1, path2, trayIcon)) return;
+            if(!CheckInputCorrect(context.backup.getBackupName(), path1, path2, context.trayIcon)) return;
 
-            if (progressBar != null)
-                progressBar.setVisible(true);
+            if (context.progressBar != null)
+                context.progressBar.setVisible(true);
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
@@ -73,8 +68,6 @@ public class BackupOperations {
 
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
-            ZippingContext context = new ZippingContext(backup, trayIcon, backupTable, progressBar, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
-
             ZippingThread.zipDirectory(path1, path2 + ".zip", context);
         // } catch (IOException e) {
         //     Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
@@ -83,7 +76,7 @@ public class BackupOperations {
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+            reEnableButtonsAndTable(context);
         }
     }
 
@@ -95,8 +88,8 @@ public class BackupOperations {
         return fileName;
     }
     
-    private static void updateAfterBackup(String path1, String path2, Backup backup, TrayIcon trayIcon, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
-        if (backup == null) throw new IllegalArgumentException("Backup cannot be null!");
+    private static void updateAfterBackup(String path1, String path2, ZippingContext context) {
+        if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         if (path1 == null) throw new IllegalArgumentException("Initial path cannot be null!");
         if (path2 == null) throw new IllegalArgumentException("Destination path cannot be null!");
         
@@ -104,34 +97,34 @@ public class BackupOperations {
            
         Logger.logMessage("Backup completed!", Logger.LogLevel.INFO);
 
-        reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+        reEnableButtonsAndTable(context);
         
         // next day backup update
-        if (backup.isAutoBackup() == true) {
-            TimeInterval time = backup.getTimeIntervalBackup();
+        if (context.backup.isAutoBackup() == true) {
+            TimeInterval time = context.backup.getTimeIntervalBackup();
             LocalDateTime nextDateBackup = dateNow.plusDays(time.getDays())
                     .plusHours(time.getHours())
                     .plusMinutes(time.getMinutes());
-            backup.setNextDateBackup(nextDateBackup);
+            context.backup.setNextDateBackup(nextDateBackup);
             Logger.logMessage("Next date backup setted to: " + nextDateBackup, Logger.LogLevel.INFO);
         }
-        backup.setLastBackup(dateNow);
-        backup.setBackupCount(backup.getBackupCount()+1);
+        context.backup.setLastBackup(dateNow);
+        context.backup.setBackupCount(context.backup.getBackupCount()+1);
                     
         try {
             List<Backup> backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                         
             for (Backup b : backups) {
-                if (b.getBackupName().equals(backup.getBackupName())) {
-                    b.UpdateBackup(backup);
+                if (b.getBackupName().equals(context.backup.getBackupName())) {
+                    b.UpdateBackup(context.backup);
                     break;
                 }
             }
             
-            updateBackup(backups, backup);
+            updateBackup(backups, context.backup);
             
-            if (trayIcon != null) { 
-                trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backup.getBackupName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
+            if (context.trayIcon != null) { 
+                context.trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + context.backup.getBackupName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
             }
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
@@ -188,27 +181,27 @@ public class BackupOperations {
         return true;
     }
 
-    public static void interruptBackupProcess(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, BackupProgressGUI progressDialog, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
+    public static void interruptBackupProcess(ZippingContext context) {
         Logger.logMessage("Event --> interrupt backup process", Logger.LogLevel.INFO);
         
         ZippingThread.stopExecutorService(1);
         if (ZippingThread.isInterrupted())
-            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+            reEnableButtonsAndTable(context);
         
-        if (progressDialog != null)
-            progressDialog.dispose();
+        if (context.progressBar != null)
+            context.progressBar.dispose();
     }
 
-    public static void reEnableButtonsAndTable(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
-        if (singleBackupBtn != null) singleBackupBtn.setEnabled(true);
-        if (autoBackupBtn != null) autoBackupBtn.setEnabled(true);
-        if (interruptBackupPopupItem != null) interruptBackupPopupItem.setEnabled(false);
-        if (deleteBackupPopuopItem != null) deleteBackupPopuopItem.setEnabled(true);
+    public static void reEnableButtonsAndTable(ZippingContext context) {
+        if (context.singleBackupBtn != null) context.singleBackupBtn.setEnabled(true);
+        if (context.autoBackupBtn != null) context.autoBackupBtn.setEnabled(true);
+        if (context.interruptBackupPopupItem != null) context.interruptBackupPopupItem.setEnabled(false);
+        if (context.deleteBackupPopupItem != null) context.deleteBackupPopupItem.setEnabled(true);
 
-        RunningBackups.cleanRunningBackupsFromJSON(backup.getBackupName());
+        RunningBackups.cleanRunningBackupsFromJSON(context.backup.getBackupName());
 
         if (backupTable != null) 
-            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backup, backupTable, formatter);
+            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, backupTable, formatter);
     } 
     
     public static void updateBackupList(List<Backup> backups) {
@@ -229,23 +222,23 @@ public class BackupOperations {
             TableDataManager.updateTableWithNewBackupList(backups, formatter);
     }
     
-    public static void UpdateProgressPercentage(int value, String path1, String path2, Backup backup, TrayIcon trayIcon, BackupTable table, BackupProgressGUI progressBar, JButton singleBackupBtn, JToggleButton autoBackupBtn, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
+    public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             Logger.logMessage("Zipping progress: " + value + "%", Logger.LogLevel.INFO);
 
-        if (progressBar != null) {
-            progressBar.updateProgressBar(value);
+        if (context.progressBar != null) {
+            context.progressBar.updateProgressBar(value);
         }
 
-        if (table != null) {
-            TableDataManager.updateProgressBarPercentage(table, backup, value, formatter);
+        if (context.backupTable != null) {
+            TableDataManager.updateProgressBarPercentage(context.backupTable, context.backup, value, formatter);
         }
 
-        RunningBackups.updateBackupToJSON(new RunningBackups(backup.getBackupName(), path2, value));
+        RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value));
 
         if (value == 100) {
-            updateAfterBackup(path1, path2, backup, trayIcon, singleBackupBtn, autoBackupBtn, interruptBackupPopupItem, deleteBackupPopuopItem);
-            deleteOldBackupsIfNecessary(backup.getMaxBackupsToKeep(), path2);
+            updateAfterBackup(path1, path2, context);
+            deleteOldBackupsIfNecessary(context.backup.getMaxBackupsToKeep(), path2);
         }
     }
     

@@ -1,6 +1,13 @@
 package backupmanager.Services;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Frame;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,17 +18,19 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 import javax.swing.JFrame;
  
+import backupmanager.BackupOperations;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
+import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Logger;
-import backupmanager.BackupOperations;
-import backupmanager.Entities.RunningBackups;
 
 public class BackugrundService {
     private ScheduledExecutorService scheduler;
@@ -147,7 +156,8 @@ public class BackugrundService {
         private void executeBackups(List<Backup> backups) {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Backup backup : backups) {
-                    BackupOperations.SingleBackup(backup, trayIcon, null, null, null, null, null, null);
+                    ZippingContext context = new ZippingContext(backup, trayIcon, null, null, null, null, null, null);
+                    BackupOperations.SingleBackup(context);
                 }
             });
         }

@@ -1,14 +1,15 @@
 package backupmanager.GUI;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
+
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Services.ZippingThread;
-
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 
 public class BackupProgressGUI extends javax.swing.JFrame {
     public BackupProgressGUI(String initialPath, String destinationPath) {
@@ -70,7 +71,7 @@ public class BackupProgressGUI extends javax.swing.JFrame {
 
         loadingMessageLabel.setText("loading...");
 
-        percentageLabel.setText("100%");
+        percentageLabel.setText("0%");
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {

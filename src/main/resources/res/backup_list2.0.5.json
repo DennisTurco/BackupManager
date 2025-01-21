@@ -137,7 +137,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2025-01-19T23:35:07.002086800",
-    "last_update_date": "2025-01-20T23:20:00.507658600",
+    "last_update_date": "2025-01-21T13:08:12.421434700",
     "backup_count": 85,
     "max_backups_to_keep": 3
   },
@@ -156,26 +156,40 @@
     "backup_name": "hh",
     "start_path": "C:\\Users\\d.turco\\Desktop\\connections.xml",
     "destination_path": "C:\\Users\\d.turco\\Desktop",
+    "last_backup": "2025-01-21T14:44:07.137184200",
     "automatic_backup": true,
-    "next_date_backup": "2025-01-21T16:37:31.886275200",
+    "next_date_backup": "2025-01-22T14:44:07.137184200",
     "time_interval_backup": "1.0:0",
     "notes": "",
     "creation_date": "2025-01-20T16:37:28.849117800",
     "last_update_date": "2025-01-20T16:37:28.849117800",
-    "backup_count": 0,
+    "backup_count": 1,
     "max_backups_to_keep": 3
   },
   {
     "backup_name": "d.turco",
-    "start_path": "C:\\Users\\d.turco",
+    "start_path": "D:\\Projects\\ISTrust",
     "destination_path": "C:\\Users\\d.turco\\Desktop",
+    "last_backup": "2025-01-21T13:09:48.377993400",
     "automatic_backup": true,
     "next_date_backup": "2025-01-22T12:50:24.975265100",
     "time_interval_backup": "1.0:0",
     "notes": "",
     "creation_date": "2025-01-21T12:50:16.698428400",
-    "last_update_date": "2025-01-21T12:50:17.851799300",
+    "last_update_date": "2025-01-21T13:11:02.098016800",
     "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "d.turco2",
+    "start_path": "C:\\Users\\d.turco\\Desktop\\powershell_scripts",
+    "destination_path": "C:\\Users\\d.turco\\Desktop",
+    "last_backup": "2025-01-21T14:27:37.413853900",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2025-01-21T14:27:24.724948700",
+    "last_update_date": "2025-01-21T14:28:16.902220300",
+    "backup_count": 2,
     "max_backups_to_keep": 3
   }
 ]

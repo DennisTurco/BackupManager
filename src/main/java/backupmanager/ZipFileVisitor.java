@@ -75,10 +75,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         // Aggiorna il progresso
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(),
-                context.backup, context.trayIcon, context.backupTable, context.progressBar,
-                context.singleBackupBtn, context.autoBackupBtn, context.interruptBackupPopupItem,
-                context.deleteBackupPopupItem);
+        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context);
 
         return FileVisitResult.CONTINUE;
     }

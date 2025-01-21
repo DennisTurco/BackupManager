@@ -1956,7 +1956,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
             
             progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
-            BackupOperations.SingleBackup(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, DeletePopupItem);
+
+            ZippingContext context = new ZippingContext(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
+            BackupOperations.SingleBackup(context);
             
             // if the backup is currentBackup
             if (currentBackup.getBackupName().equals(backup.getBackupName())) 
@@ -2203,7 +2205,8 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
-            BackupOperations.interruptBackupProcess(SingleBackup, toggleAutoBackup, backup, backupTable, progressBar, interruptBackupPopupItem, DeletePopupItem);
+            ZippingContext context = new ZippingContext(backup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
+            BackupOperations.interruptBackupProcess(context);
         }
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 

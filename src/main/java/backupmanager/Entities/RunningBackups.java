@@ -1,12 +1,13 @@
 package backupmanager.Entities;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,17 +18,17 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import backupmanager.BackupOperations;
+import backupmanager.Enums.ConfigKey;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
-import backupmanager.Enums.ConfigKey;
 
 // this class contains only the RunningBackups entity
 // this entity is used to store the information of the backups that are currently running
 // i use this object to know wich backups are currently running across the instances
 public class RunningBackups {
-    private String backupName;
-    private String path;
-    private int progress;
+    private final String backupName;
+    private final String path;
+    private final int progress;
 
     public RunningBackups(String backupName, String path, int progress) {
         this.backupName = backupName;
@@ -37,22 +38,32 @@ public class RunningBackups {
 
     public static List<RunningBackups> readBackupListFromJSON() {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue())) {
-            // Check if the JSON starts with an array, and if not, try to fix the file
-            String fileContent = new String(Files.readAllBytes(Paths.get(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue())), StandardCharsets.UTF_8);
+        Path filePath = Paths.get(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue());
+        
+        try {
+            // Check if the file exists, otherwise create it with an empty array
+            if (!Files.exists(filePath)) {
+                Logger.logMessage("Backup file not found. Creating a new empty file...", LogLevel.INFO);
+                Files.write(filePath, "[]".getBytes(), StandardOpenOption.CREATE_NEW);
+            }
+
+            // Read the content of the file
+            String fileContent = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
             
             // Try to parse the JSON string into a valid list of objects
             if (!fileContent.trim().startsWith("[")) {
                 Logger.logMessage("Malformed JSON file. Attempting to fix...", LogLevel.WARN);
                 // Attempt to fix the malformed JSON file
                 fileContent = "[" + fileContent.replaceAll("(?<=})\\s*(?=\\{)", ",") + "]";
-                Files.write(Paths.get(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue()), fileContent.getBytes());
+                Files.write(filePath, fileContent.getBytes());
             }
 
+            // Deserialize the JSON into the list of RunningBackups objects
             Type listType = new TypeToken<ArrayList<RunningBackups>>() {}.getType();
             List<RunningBackups> backups = gson.fromJson(fileContent, listType);
             
             return backups != null ? backups : new ArrayList<>();
+            
         } catch (IOException e) {
             Logger.logMessage("Error reading file: " + e.getMessage(), LogLevel.ERROR, e);
             e.printStackTrace();
