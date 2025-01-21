@@ -1,160 +1,133 @@
-2025-01-21T09:48:02.718189800 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.700334200 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.699342 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.697358400 [INFO] Finalizing zipping process
-2025-01-21T09:48:02.682477800 [WARN] Failed to delete partial backup (delete failed): Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.681486500 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.679998300 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 09.47.48).zip
-2025-01-21T09:48:02.676525900 [INFO] Zipping process manually interrupted
-2025-01-21T09:48:02.020224600 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_BF76982F_44656E6E61_Commonwealth_001124_20240426104512_17_2.fos
-2025-01-21T09:48:01.414832 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave3_1C601610M4D725F44656E6E61_Commonwealth_020854_20180110180331_43_2.fos
-2025-01-21T09:48:00.773447700 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_BF76982F_44656E6E61_GorskiCabin01_001121_20240426104219_17_2.fos
-2025-01-21T09:48:00.290343800 [DEBUG] Observer has found a running backup
-2025-01-21T09:48:00.178173500 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave2_1C601610M4D725F44656E6E61_Commonwealth_020904_20180126150135_43_2.fos
-2025-01-21T09:47:59.507505400 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_BF76982F_44656E6E61_Commonwealth_001125_20240426104533_17_2.fos
-2025-01-21T09:47:58.896435200 [DEBUG] Zipping file: Documents/My Games\Fallout4\Saves\Autosave1_1C601610M4D725F44656E6E61_Commonwealth_020856_20180110180512_43_2.fos
-2025-01-21T09:47:58.894449700 [DEBUG] Zipping directory: Documents/My Games\Fallout4\Saves/
-2025-01-21T09:47:58.892962 [DEBUG] Zipping directory: Documents/My Games\Fallout4/
-2025-01-21T09:47:58.891473900 [DEBUG] Zipping directory: Documents/My Games/
-2025-01-21T09:47:58.327970400 [DEBUG] Zipping file: Documents/log_file
-2025-01-21T09:47:58.326978400 [DEBUG] Zipping directory: Documents/Lightshot/
-2025-01-21T09:47:57.276917100 [DEBUG] Observer has found a running backup
-2025-01-21T09:47:54.278167900 [DEBUG] Observer has found a running backup
-2025-01-21T09:47:52.069396 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide.one
-2025-01-21T09:47:52.040232500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
-2025-01-21T09:47:52.021107 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
-2025-01-21T09:47:52.019122300 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Note rapide/
-2025-01-21T09:47:51.697072800 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
-2025-01-21T09:47:51.582639900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
-2025-01-21T09:47:51.522624500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
-2025-01-21T09:47:51.498369400 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
-2025-01-21T09:47:51.496881100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\fghfhf/
-2025-01-21T09:47:51.411893100 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
-2025-01-21T09:47:51.370355500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
-2025-01-21T09:47:51.368839200 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
-2025-01-21T09:47:51.280055 [DEBUG] Observer has found a running backup
-2025-01-21T09:47:51.008561600 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
-2025-01-21T09:47:50.968185 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
-2025-01-21T09:47:50.966170200 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
-2025-01-21T09:47:50.964186100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote/
-2025-01-21T09:47:50.959721300 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
-2025-01-21T09:47:50.950793600 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
-2025-01-21T09:47:49.992913900 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
-2025-01-21T09:47:48.970182 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db
-2025-01-21T09:47:48.968694800 [DEBUG] Zipping directory: Documents/Backup Mondo Valheim 09-09-21/
-2025-01-21T09:47:48.949385800 [DEBUG] Zipping file: Documents/Adobe\PhotoshopPrefsManager-20200711-161226.log
-2025-01-21T09:47:48.948393700 [DEBUG] Zipping directory: Documents/Adobe\Photoshop Cloud Associate/
-2025-01-21T09:47:48.946907500 [DEBUG] Zipping directory: Documents/Adobe/
-2025-01-21T09:47:48.944922100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Samples/
-2025-01-21T09:47:48.943434 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Velocity/
-2025-01-21T09:47:48.941945900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Scale/
-2025-01-21T09:47:48.940457800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Random/
-2025-01-21T09:47:48.938970 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Pitch/
-2025-01-21T09:47:48.937978300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Note Length/
-2025-01-21T09:47:48.935994100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
-2025-01-21T09:47:48.935001900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
-2025-01-21T09:47:48.933513700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Chord/
-2025-01-21T09:47:48.932025900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
-2025-01-21T09:47:48.930538300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects/
-2025-01-21T09:47:48.929050400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Wavetable/
-2025-01-21T09:47:48.928057700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Tension/
-2025-01-21T09:47:48.927066100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Simpler/
-2025-01-21T09:47:48.925579 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Sampler/
-2025-01-21T09:47:48.924586 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Operator/
-2025-01-21T09:47:48.923098200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Max Instrument/
-2025-01-21T09:47:48.922105900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Instrument Rack/
-2025-01-21T09:47:48.920619300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Impulse/
-2025-01-21T09:47:48.919130100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\External Instrument/
-2025-01-21T09:47:48.917146300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Electric/
-2025-01-21T09:47:48.915658 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Drum Rack/
-2025-01-21T09:47:48.914170 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Collision/
-2025-01-21T09:47:48.912682500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Analog/
-2025-01-21T09:47:48.909705900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments/
-2025-01-21T09:47:48.908218300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vocoder/
-2025-01-21T09:47:48.906729900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
-2025-01-21T09:47:48.905242700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Utility/
-2025-01-21T09:47:48.903257900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Tuner/
-2025-01-21T09:47:48.901274 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Spectrum/
-2025-01-21T09:47:48.899785600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Simple Delay/
-2025-01-21T09:47:48.898298800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Saturator/
-2025-01-21T09:47:48.896314300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Reverb/
-2025-01-21T09:47:48.894330500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Resonators/
-2025-01-21T09:47:48.893338600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Redux/
-2025-01-21T09:47:48.891850100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
-2025-01-21T09:47:48.890362700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Phaser/
-2025-01-21T09:47:48.888874900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Pedal/
-2025-01-21T09:47:48.886890400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Overdrive/
-2025-01-21T09:47:48.885403800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
-2025-01-21T09:47:48.883418800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
-2025-01-21T09:47:48.881930300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Looper/
-2025-01-21T09:47:48.880442100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Limiter/
-2025-01-21T09:47:48.878954700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Grain Delay/
-2025-01-21T09:47:48.877962100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Glue Compressor/
-2025-01-21T09:47:48.876473900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Gate/
-2025-01-21T09:47:48.874985800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
-2025-01-21T09:47:48.873993600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Flanger/
-2025-01-21T09:47:48.873002100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Filter Delay/
-2025-01-21T09:47:48.871514 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\External Audio Effect/
-2025-01-21T09:47:48.870026200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Erosion/
-2025-01-21T09:47:48.868538100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Three/
-2025-01-21T09:47:48.867050100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Eight/
-2025-01-21T09:47:48.865562200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Echo/
-2025-01-21T09:47:48.864570200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
-2025-01-21T09:47:48.863082200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Drum Buss/
-2025-01-21T09:47:48.861099600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Corpus/
-2025-01-21T09:47:48.859610200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Compressor/
-2025-01-21T09:47:48.858122200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Chorus/
-2025-01-21T09:47:48.856634800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Cabinet/
-2025-01-21T09:47:48.854650400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Beat Repeat/
-2025-01-21T09:47:48.852666200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Pan/
-2025-01-21T09:47:48.850682200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Filter/
-2025-01-21T09:47:48.849194300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
-2025-01-21T09:47:48.847210300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Amp/
-2025-01-21T09:47:48.844731400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects/
-2025-01-21T09:47:48.842746600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets/
-2025-01-21T09:47:48.841258 [DEBUG] Zipping directory: Documents/Ableton\User Library\Grooves/
-2025-01-21T09:47:48.830346200 [DEBUG] Zipping file: Documents/Ableton\User Library\Desktop.ini
-2025-01-21T09:47:48.828362900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Slicing/
-2025-01-21T09:47:48.826378700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
-2025-01-21T09:47:48.824890200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Device View/
-2025-01-21T09:47:48.823402200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples/
-2025-01-21T09:47:48.821914300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
-2025-01-21T09:47:48.819929800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
-2025-01-21T09:47:48.818442100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
-2025-01-21T09:47:48.816954200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI/
-2025-01-21T09:47:48.815962200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults/
-2025-01-21T09:47:48.814970400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Clips/
-2025-01-21T09:47:48.800586700 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\Project8_1.cfg
-2025-01-21T09:47:48.794137900 [INFO] Zipping progress: 0%
-2025-01-21T09:47:48.757434500 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\AProject.ico
-2025-01-21T09:47:48.755450800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Ableton Project Info/
-2025-01-21T09:47:48.753466100 [DEBUG] Zipping directory: Documents/Ableton\User Library/
-2025-01-21T09:47:48.751482700 [DEBUG] Zipping directory: Documents/Ableton\Live Recordings/
-2025-01-21T09:47:48.749526600 [DEBUG] Zipping directory: Documents/Ableton\Factory Packs/
-2025-01-21T09:47:48.748009900 [DEBUG] Zipping directory: Documents/Ableton/
-2025-01-21T09:47:48.745034200 [DEBUG] Zipping directory: Documents//
-2025-01-21T09:47:48.535874300 [INFO] Starting zipping process
-2025-01-21T09:47:48.526450100 [INFO] Event --> manual backup started
-2025-01-21T09:47:46.763191 [INFO] Right click on row: 8
-2025-01-21T09:47:46.761208 [DEBUG] Selected backup: Documents1_copy
-2025-01-21T09:47:44.345285500 [DEBUG] Selected backup: Documents1_copy
-2025-01-21T09:47:37.670812700 [DEBUG] Selected backup: Documents1_copy
-2025-01-21T09:47:21.357636600 [INFO] Event --> File chooser
-2025-01-21T09:47:21.356644 [DEBUG] File chooser: null, files allowed: true
-2025-01-21T09:47:20.293657500 [DEBUG] updating backup list
-2025-01-21T09:47:20.286254500 [INFO] Event --> auto backup disabled
-2025-01-21T09:47:20.285262500 [INFO] Event --> clear
-2025-01-21T09:47:20.284269100 [INFO] Event --> new backup
-2025-01-21T09:47:12.479690300 [DEBUG] Selected backup: Documents2
-2025-01-21T09:47:09.273856300 [INFO] Observer for running backups started
-2025-01-21T09:47:08.646095800 [DEBUG] Background mode: false
-2025-01-21T09:47:08.642155200 [INFO] Application started
-2025-01-21T09:47:08.636699600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
-2025-01-21T09:47:08.628239600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
-2025-01-21T09:40:21.948790900 [DEBUG] Selected backup: Documents1_copy
-2025-01-21T09:40:20.027444200 [DEBUG] Selected backup: testooooo
-2025-01-21T09:40:17.671470400 [INFO] Observer for running backups started
-2025-01-21T09:40:16.723024600 [DEBUG] Background mode: false
-2025-01-21T09:40:16.719085500 [INFO] Application started
-2025-01-21T09:40:16.713105300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
-2025-01-21T09:40:16.703184600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light
+2025-01-21T10:03:16.981511200 [INFO] Partial backup deleted successfully: Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.965616 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.964185200 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.962202900 [INFO] Finalizing zipping process
+2025-01-21T10:03:16.947321700 [WARN] Failed to delete partial backup (delete failed): Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.945833300 [INFO] Attempting to delete partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.944841200 [INFO] Deleting partial backup: C:\Users\Utente\Desktop\Documents (Backup 21-01-2025 10.03.07).zip
+2025-01-21T10:03:16.941865600 [INFO] Zipping process manually interrupted
+2025-01-21T10:03:14.069484 [DEBUG] Observer has found a running backup
+2025-01-21T10:03:11.070644200 [DEBUG] Observer has found a running backup
+2025-01-21T10:03:10.545380700 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide.one
+2025-01-21T10:03:10.539924200 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Nuova sezione 1.one
+2025-01-21T10:03:10.536453300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Note rapide\Apri blocco appunti.onetoc2
+2025-01-21T10:03:10.534469800 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Note rapide/
+2025-01-21T10:03:10.338053700 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 3.one
+2025-01-21T10:03:10.249268900 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 2.one
+2025-01-21T10:03:10.199173 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Nuova sezione 1.one
+2025-01-21T10:03:10.195205700 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\fghfhf\Apri blocco appunti.onetoc2
+2025-01-21T10:03:10.192724700 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\fghfhf/
+2025-01-21T10:03:10.135189300 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\OneNote_DeletedPages.one
+2025-01-21T10:03:10.131221600 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin\Apri blocco appunti.onetoc2
+2025-01-21T10:03:10.127253600 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\OneNote_RecycleBin/
+2025-01-21T10:03:09.774598500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Nuova sezione 1.one
+2025-01-21T10:03:09.770133500 [DEBUG] Zipping file: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO\Apri blocco appunti.onetoc2
+2025-01-21T10:03:09.768646100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote\Esercizi Riepilogativi prima parte Algebra e Geometria DENNIS TURCO/
+2025-01-21T10:03:09.766834100 [DEBUG] Zipping directory: Documents/Blocchi appunti di OneNote/
+2025-01-21T10:03:09.763362900 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl.old
+2025-01-21T10:03:09.758402200 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.fwl
+2025-01-21T10:03:08.782773 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db.old
+2025-01-21T10:03:08.072996100 [DEBUG] Observer has found a running backup
+2025-01-21T10:03:07.762997200 [DEBUG] Zipping file: Documents/Backup Mondo Valheim 09-09-21\CoopConNathas.db
+2025-01-21T10:03:07.759029200 [DEBUG] Zipping directory: Documents/Backup Mondo Valheim 09-09-21/
+2025-01-21T10:03:07.755062 [DEBUG] Zipping file: Documents/Adobe\PhotoshopPrefsManager-20200711-161226.log
+2025-01-21T10:03:07.753077600 [DEBUG] Zipping directory: Documents/Adobe\Photoshop Cloud Associate/
+2025-01-21T10:03:07.750596900 [DEBUG] Zipping directory: Documents/Adobe/
+2025-01-21T10:03:07.748613600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Samples/
+2025-01-21T10:03:07.746628900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Velocity/
+2025-01-21T10:03:07.740181100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Scale/
+2025-01-21T10:03:07.738196900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Random/
+2025-01-21T10:03:07.735717400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Pitch/
+2025-01-21T10:03:07.733733 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Note Length/
+2025-01-21T10:03:07.732245 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\MIDI Effect Rack/
+2025-01-21T10:03:07.730757700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Max MIDI Effect/
+2025-01-21T10:03:07.728773300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Chord/
+2025-01-21T10:03:07.726293200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects\Arpeggiator/
+2025-01-21T10:03:07.724804900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\MIDI Effects/
+2025-01-21T10:03:07.723317200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Wavetable/
+2025-01-21T10:03:07.722325100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Tension/
+2025-01-21T10:03:07.720837100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Simpler/
+2025-01-21T10:03:07.718853700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Sampler/
+2025-01-21T10:03:07.716374 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Operator/
+2025-01-21T10:03:07.714389600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Max Instrument/
+2025-01-21T10:03:07.712901 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Instrument Rack/
+2025-01-21T10:03:07.710917900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Impulse/
+2025-01-21T10:03:07.708438100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\External Instrument/
+2025-01-21T10:03:07.705957500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Electric/
+2025-01-21T10:03:07.704469 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Drum Rack/
+2025-01-21T10:03:07.700997400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Collision/
+2025-01-21T10:03:07.698517200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments\Analog/
+2025-01-21T10:03:07.697526 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Instruments/
+2025-01-21T10:03:07.695541400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vocoder/
+2025-01-21T10:03:07.691573200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Vinyl Distortion/
+2025-01-21T10:03:07.689589100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Utility/
+2025-01-21T10:03:07.688101 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Tuner/
+2025-01-21T10:03:07.686613400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Spectrum/
+2025-01-21T10:03:07.684629400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Simple Delay/
+2025-01-21T10:03:07.682645400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Saturator/
+2025-01-21T10:03:07.681653 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Reverb/
+2025-01-21T10:03:07.680165200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Resonators/
+2025-01-21T10:03:07.678677200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Redux/
+2025-01-21T10:03:07.676693700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Ping Pong Delay/
+2025-01-21T10:03:07.674709800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Phaser/
+2025-01-21T10:03:07.672230600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Pedal/
+2025-01-21T10:03:07.669749600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Overdrive/
+2025-01-21T10:03:07.667269700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Multiband Dynamics/
+2025-01-21T10:03:07.665285800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Max Audio Effect/
+2025-01-21T10:03:07.663301100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Looper/
+2025-01-21T10:03:07.659829600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Limiter/
+2025-01-21T10:03:07.657844900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Grain Delay/
+2025-01-21T10:03:07.656358100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Glue Compressor/
+2025-01-21T10:03:07.653381900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Gate/
+2025-01-21T10:03:07.650405700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Frequency Shifter/
+2025-01-21T10:03:07.648422 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Flanger/
+2025-01-21T10:03:07.645941400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Filter Delay/
+2025-01-21T10:03:07.643461100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\External Audio Effect/
+2025-01-21T10:03:07.641972900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Erosion/
+2025-01-21T10:03:07.640485900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Three/
+2025-01-21T10:03:07.638501200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\EQ Eight/
+2025-01-21T10:03:07.636021500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Echo/
+2025-01-21T10:03:07.633045100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Dynamic Tube/
+2025-01-21T10:03:07.631557600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Drum Buss/
+2025-01-21T10:03:07.629077400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Corpus/
+2025-01-21T10:03:07.626102 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Compressor/
+2025-01-21T10:03:07.624613100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Chorus/
+2025-01-21T10:03:07.622629 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Cabinet/
+2025-01-21T10:03:07.617669600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Beat Repeat/
+2025-01-21T10:03:07.615685300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Pan/
+2025-01-21T10:03:07.613701900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Auto Filter/
+2025-01-21T10:03:07.609734 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Audio Effect Rack/
+2025-01-21T10:03:07.607749500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects\Amp/
+2025-01-21T10:03:07.606261600 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets\Audio Effects/
+2025-01-21T10:03:07.603570200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Presets/
+2025-01-21T10:03:07.600805300 [DEBUG] Zipping directory: Documents/Ableton\User Library\Grooves/
+2025-01-21T10:03:07.595846800 [DEBUG] Zipping file: Documents/Ableton\User Library\Desktop.ini
+2025-01-21T10:03:07.592375800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Slicing/
+2025-01-21T10:03:07.590886100 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Drum Rack/
+2025-01-21T10:03:07.588902200 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples\On Device View/
+2025-01-21T10:03:07.585926500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Dropping Samples/
+2025-01-21T10:03:07.583445800 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Melody to MIDI/
+2025-01-21T10:03:07.579478700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Harmony to MIDI/
+2025-01-21T10:03:07.575013700 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI\Drums to MIDI/
+2025-01-21T10:03:07.573029900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults\Audio to MIDI/
+2025-01-21T10:03:07.568069500 [DEBUG] Zipping directory: Documents/Ableton\User Library\Defaults/
+2025-01-21T10:03:07.566581400 [DEBUG] Zipping directory: Documents/Ableton\User Library\Clips/
+2025-01-21T10:03:07.558149600 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\Project8_1.cfg
+2025-01-21T10:03:07.541287500 [INFO] Zipping progress: 0%
+2025-01-21T10:03:07.531365200 [DEBUG] Zipping file: Documents/Ableton\User Library\Ableton Project Info\AProject.ico
+2025-01-21T10:03:07.528390900 [DEBUG] Zipping directory: Documents/Ableton\User Library\Ableton Project Info/
+2025-01-21T10:03:07.525414100 [DEBUG] Zipping directory: Documents/Ableton\User Library/
+2025-01-21T10:03:07.523429300 [DEBUG] Zipping directory: Documents/Ableton\Live Recordings/
+2025-01-21T10:03:07.520455100 [DEBUG] Zipping directory: Documents/Ableton\Factory Packs/
+2025-01-21T10:03:07.517476900 [DEBUG] Zipping directory: Documents/Ableton/
+2025-01-21T10:03:07.514997700 [DEBUG] Zipping directory: Documents//
+2025-01-21T10:03:07.496646200 [INFO] Starting zipping process
+2025-01-21T10:03:07.484365100 [INFO] Event --> manual backup started
+2025-01-21T10:03:06.146570700 [INFO] Right click on row: 8
+2025-01-21T10:03:06.145580800 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:03:05.975491600 [DEBUG] Selected backup: Documents1_copy
+2025-01-21T10:03:02.065405500 [INFO] Observer for running backups started
+2025-01-21T10:03:01.364276 [DEBUG] Background mode: false
+2025-01-21T10:03:01.359315600 [INFO] Application started
+2025-01-21T10:03:01.353482600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-21T10:03:01.342452 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light

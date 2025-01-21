@@ -62,6 +62,7 @@ import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.RunningBackupObserver;
+import backupmanager.Services.ZippingThread;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
@@ -486,7 +487,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             SingleBackup.setEnabled(false);
             toggleAutoBackup.setEnabled(false);
 
-            BackupOperations.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, DeletePopupItem, DeletePopupItem);
+            ZippingThread.zipDirectory(path1, path2+".zip", currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, DeletePopupItem, DeletePopupItem);
 
             //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
             if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
