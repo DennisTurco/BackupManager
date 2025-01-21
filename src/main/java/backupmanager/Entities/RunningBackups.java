@@ -66,11 +66,9 @@ public class RunningBackups {
             
         } catch (IOException e) {
             Logger.logMessage("Error reading file: " + e.getMessage(), LogLevel.ERROR, e);
-            e.printStackTrace();
             return new ArrayList<>();
         } catch (JsonSyntaxException e) {
             Logger.logMessage("Malformed JSON in file: " + e.getMessage(), LogLevel.ERROR, e);
-            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -122,7 +120,6 @@ public class RunningBackups {
             writer.flush();  // Make sure the data is written to the file
         } catch (IOException e) {
             Logger.logMessage("Error writing to JSON file: " + e.getMessage(), LogLevel.ERROR, e);
-            e.printStackTrace();
         }
     }
 

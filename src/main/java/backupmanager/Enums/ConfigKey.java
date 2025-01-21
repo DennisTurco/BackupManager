@@ -38,9 +38,7 @@ public enum ConfigKey {
                     configValues.put(key, jsonObject.get(key.name()).getAsString());
                 }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        } catch (IOException ex) { }
     }
 
     public String getValue() {

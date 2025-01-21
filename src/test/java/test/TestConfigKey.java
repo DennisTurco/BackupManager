@@ -1,14 +1,14 @@
 package test;
 
-import backupmanager.Enums.ConfigKey;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.nio.file.Files;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import backupmanager.Enums.ConfigKey;
 
 public class TestConfigKey {
     private final String LOG_FILE_STRING = "log_file";
@@ -90,9 +90,7 @@ public class TestConfigKey {
 
         try {
             Files.write(temp_file.toPath(), jsonContent.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { }
 
         // load the values
         ConfigKey.loadFromJson(temp_file.getPath());
@@ -108,36 +106,11 @@ public class TestConfigKey {
         String emptyJsonContent = "{}";
         try {
             Files.write(temp_file.toPath(), emptyJsonContent.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { }
 
         ConfigKey.loadFromJson(temp_file.getPath());
 
         assertEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
         assertEquals(BACKUP_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
     }
-
-//   @Test
-//   void testJsonParsingException() {
-//       // Test JSON error
-//       String malformedJson = String.format("""
-//                              {
-//                              "LOG_FILE_STRING": "log_file",
-//                              "BACKUP_FILE_STRING": "backup_list.json"
-//                              """,
-//                              LOG_FILE_STRING,
-//                              BACKUP_FILE_STRING
-//                               ); // JSON error ('}' is missing)
-//
-//       try {
-//           Files.write(temp_file.toPath(), malformedJson.getBytes());
-//       } catch (IOException e) {
-//           e.printStackTrace();
-//       }
-//
-//       ConfigKey.loadFromJson(temp_file.getPath());
-//       assertEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
-//       assertEquals(BACKUP_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
-//   }
 }

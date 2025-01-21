@@ -3,14 +3,14 @@ package backupmanager;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Services.BackugrundService;
 import backupmanager.Logger.LogLevel;
+import backupmanager.Services.BackugrundService;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";

@@ -425,6 +425,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     
     private String getBackupName(boolean canOverwrite) {
         String backup_name;
+        
         do {
             backup_name = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT)); // pop-up message
             for (Backup backup : backups) {
@@ -443,7 +444,10 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             }
             if (backup_name == null) return null;
         } while (backup_name.equals("null") ||  backup_name.equals("null*"));	
-        if (backup_name.isEmpty()) return null;
+        
+        if (backup_name.isEmpty()) 
+            return null;
+        
         return backup_name;
     }
     
@@ -471,34 +475,26 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         }
 
         name1 = BackupOperations.removeExtension(name1);
-
         path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
         //------------------------------COPY THE FILE OR DIRECTORY------------------------------
         Logger.logMessage("date backup: " + date, Logger.LogLevel.INFO);
     	
-        // try {
-            progressBar = new BackupProgressGUI(path1, path2);
-            progressBar.setVisible(true);
+        progressBar = new BackupProgressGUI(path1, path2);
+        progressBar.setVisible(true);
 
-            SingleBackup.setEnabled(false);
-            setAutoBackupOff();
+        SingleBackup.setEnabled(false);
+        setAutoBackupOff();
 
-            ZippingContext context = new ZippingContext(currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
+        ZippingContext context = new ZippingContext(currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
+        ZippingThread.zipDirectory(path1, path2 + ".zip", context);
 
-            ZippingThread.zipDirectory(path1, path2 + ".zip", context);
-
-            //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
-            if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
-                currentBackup.setInitialPath(GetStartPathField());
-                currentBackup.setDestinationPath(GetDestinationPathField());
-                currentBackup.setLastBackup(LocalDateTime.now());
-            }
-            
-        // } catch (IOException e) {
-        //     Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
-        //     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        // } 
+        //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
+        if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
+            currentBackup.setInitialPath(GetStartPathField());
+            currentBackup.setDestinationPath(GetDestinationPathField());
+            currentBackup.setLastBackup(LocalDateTime.now());
+        }
     }
     
     private void setCurrentBackupName(String name) {

@@ -1,7 +1,10 @@
 package backupmanager;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,46 +38,59 @@ public class Logger {
         if (!isLogLevelEnabled(level)) {
             return; // Skip logging if the level is not enabled in config
         }
-
+    
         File logFile = new File(LOG_PATH);
-
+    
         lock.lock();
         try {
             int maxLines = configReader.getMaxLines();
             int linesToKeep = configReader.getLinesToKeepAfterFileClear();
-            
+    
             List<String> lines = new ArrayList<>();
             if (logFile.exists()) {
                 lines = Files.readAllLines(logFile.toPath());
             }
-
+    
             // Keep only the most recent lines if exceeding max lines
             if (lines.size() > maxLines) {
                 lines = lines.subList(lines.size() - linesToKeep, lines.size());
             }
-
+    
             String formattedMessage = String.format("%s [%s] %s", LocalDateTime.now(), level, message);
-            lines.add(0, formattedMessage);
-
+    
+            // Create a temporary list for the current log entry
+            List<String> newLogEntry = new ArrayList<>();
+            newLogEntry.add(formattedMessage);
+    
             if (throwable != null) {
-                lines.add("Exception: " + throwable.getClass().getName() + " - " + throwable.getMessage());
+                newLogEntry.add("Exception: " + throwable.getClass().getName() + " - " + throwable.getMessage());
                 for (StackTraceElement element : throwable.getStackTrace()) {
-                    lines.add("\tat " + element.toString());
+                    newLogEntry.add("\tat " + element.toString());
                 }
             }
-
+    
+            // Add the new log entry at the top
+            lines.addAll(0, newLogEntry);
+    
+            // Write the updated log lines to the file
             writeLinesToFile(logFile, lines);
-
+    
+            // Print to console if enabled
             if (consoleLoggingEnabled) {
                 System.out.println(formattedMessage);
+    
+                // Print stack trace to the console
+                if (throwable != null) {
+                    throwable.printStackTrace(System.err); // Print stack trace to the error stream
+                }
             }
-
+    
         } catch (IOException ex) {
             System.err.println("Logging failed: " + ex.getMessage());
         } finally {
             lock.unlock();
         }
-    }
+    }    
 
     private static void writeLinesToFile(File logFile, List<String> lines) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(logFile))) {

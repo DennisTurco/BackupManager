@@ -50,7 +50,8 @@ public class BackupOperations {
             String path1 = context.backup.getInitialPath();
             String path2 = context.backup.getDestinationPath();
 
-            if(!CheckInputCorrect(context.backup.getBackupName(), path1, path2, context.trayIcon)) return;
+            if(!CheckInputCorrect(context.backup.getBackupName(), path1, path2, context.trayIcon)) 
+                return;
 
             if (context.progressBar != null)
                 context.progressBar.setVisible(true);
@@ -65,14 +66,9 @@ public class BackupOperations {
             }
 
             name1 = removeExtension(name1);
-
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
             ZippingThread.zipDirectory(path1, path2 + ".zip", context);
-        // } catch (IOException e) {
-        //     Logger.logMessage("Error during the backup operation: the initial path is incorrect!", Logger.LogLevel.WARN);
-        //     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_INCORRECT_INITIAL_PATH), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        //     reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
         } catch (Exception ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));

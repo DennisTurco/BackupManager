@@ -53,7 +53,6 @@ public class RunningBackupObserver {
                 }
             } catch (Exception ex) {
                 Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-                ex.printStackTrace();
             }
         }, 0, millisecondsToWait, TimeUnit.MILLISECONDS); // run now and periodically
     }

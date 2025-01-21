@@ -184,12 +184,12 @@
     "backup_name": "d.turco2",
     "start_path": "C:\\Users\\d.turco\\Desktop\\powershell_scripts",
     "destination_path": "C:\\Users\\d.turco\\Desktop",
-    "last_backup": "2025-01-21T14:27:37.413853900",
+    "last_backup": "2025-01-21T14:57:03.314871300",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2025-01-21T14:27:24.724948700",
     "last_update_date": "2025-01-21T14:28:16.902220300",
-    "backup_count": 2,
+    "backup_count": 3,
     "max_backups_to_keep": 3
   }
 ]
