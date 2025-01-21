@@ -261,12 +261,19 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     
     public void setAutoBackupPreference(Backup backup, boolean option) {        
         backup.setAutoBackup(option);
-
-        if (option && backup.getBackupName().equals(currentBackup.getBackupName())) {
-            setAutoBackupOn(backup);
-        } else {
+        if (backup.getBackupName().equals(currentBackup.getBackupName())) {
+            toggleAutoBackup.setSelected(option);
+            if (option) {
+                enableTimePickerButton(backup);
+            } else {
+                disableTimePickerButton();
+            }
+        }
+        if (!option) {
             disableAutoBackup(backup);
         }
+
+        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
     }
     
     // it returns true if is correctly setted, false otherwise
@@ -1018,7 +1025,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
             btnTimePicker.setEnabled(true);
         } else {
-            disableTimePickerButton();
+            btnTimePicker.setEnabled(true);
         }  
     }
 
