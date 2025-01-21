@@ -1,11 +1,11 @@
-package backupmanager.Enums;
+package backupmanager.Entities;
+
+import java.awt.TrayIcon;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
-import java.awt.TrayIcon;
 
-import backupmanager.Entities.Backup;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Table.BackupTable;
 

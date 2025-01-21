@@ -20,14 +20,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 
 import backupmanager.BackupOperations;
+import backupmanager.Entities.Backup;
+import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.ErrorTypes;
+import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
-import backupmanager.ZipFileVisitor;
-import backupmanager.Entities.Backup;
-import backupmanager.Enums.ErrorTypes;
-import backupmanager.Enums.ZippingContext;
-import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Table.BackupTable;
+import backupmanager.ZipFileVisitor;
 
 public class ZippingThread {
 

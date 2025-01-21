@@ -43,6 +43,9 @@ import javax.swing.table.TableColumnModel;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.BackupOperations;
+import backupmanager.Exporter;
+import backupmanager.Logger;
+import backupmanager.Logger.LogLevel;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.Backup;
@@ -50,17 +53,14 @@ import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
-import backupmanager.Enums.ZippingContext;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Exporter;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.RunningBackupObserver;
 import backupmanager.Services.ZippingThread;
@@ -79,7 +79,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
     public static Backup currentBackup;
-    private RunningBackupObserver observer;
+    private final RunningBackupObserver observer;
     private static List<Backup> backups;
     private static JSONAutoBackup JSON;
     public static DefaultTableModel model;
@@ -107,8 +107,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         currentBackup = new Backup();
         saveChanged = true;
         
-        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
-        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
+        setAutoBackupOff();
 
         customListeners();
         
@@ -251,26 +250,23 @@ public class BackupManagerGUI extends javax.swing.JFrame {
     }
     
     public void setAutoBackupPreference(boolean option) {         
-        toggleAutoBackup.setSelected(option);
-        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
-        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
         currentBackup.setAutoBackup(option);
         
-        if (!option) {
+        if (option) {
+            setAutoBackupOn(currentBackup);
+        } else {
             disableAutoBackup(currentBackup);
         }
     }
     
     public void setAutoBackupPreference(Backup backup, boolean option) {        
         backup.setAutoBackup(option);
-        if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            toggleAutoBackup.setSelected(option);
-        }
-        if (!option) {
+
+        if (option && backup.getBackupName().equals(currentBackup.getBackupName())) {
+            setAutoBackupOn(backup);
+        } else {
             disableAutoBackup(backup);
         }
-        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
-        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
     }
     
     // it returns true if is correctly setted, false otherwise
@@ -486,7 +482,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             progressBar.setVisible(true);
 
             SingleBackup.setEnabled(false);
-            toggleAutoBackup.setEnabled(false);
+            setAutoBackupOff();
 
             ZippingContext context = new ZippingContext(currentBackup, null, backupTable, progressBar, SingleBackup, toggleAutoBackup, interruptBackupPopupItem, RunBackupPopupItem);
 
@@ -930,11 +926,9 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         setCurrentBackupMaxBackupsToKeep(backup.getMaxBackupsToKeep());
         
         if (backup.getTimeIntervalBackup() != null) {
-            btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
-            btnTimePicker.setEnabled(true);
+            setAutoBackupOn(backup);
         } else {
-            btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
-            btnTimePicker.setEnabled(false);
+            setAutoBackupOff();
         }  
     }
     
@@ -976,8 +970,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         
         // if the backup is the current backup i have to update the main panel
         if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
-            btnTimePicker.setEnabled(false);
+            setAutoBackupOff();
         }
     }
     
@@ -1005,6 +998,37 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(false);
         else 
             savedChanges(true);
+    }
+
+
+    private void setAutoBackupOn(Backup backup) {
+        toggleAutoBackup.setSelected(true);
+        toggleAutoBackup.setText(backupOnText);
+
+        if (backup != null)
+            enableTimePickerButton(backup);
+        else
+            disableTimePickerButton();
+    }
+
+    private void setAutoBackupOff() {
+        toggleAutoBackup.setSelected(false);
+        toggleAutoBackup.setText(backupOffText);
+        disableTimePickerButton();
+    }
+
+    private void enableTimePickerButton(Backup backup) {
+        if (backup.getTimeIntervalBackup() != null) {
+            btnTimePicker.setToolTipText(backup.getTimeIntervalBackup().toString());
+            btnTimePicker.setEnabled(true);
+        } else {
+            disableTimePickerButton();
+        }  
+    }
+
+    private void disableTimePickerButton() {
+        btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
+        btnTimePicker.setEnabled(false);
     }
 
     /**
@@ -2045,15 +2069,13 @@ public class BackupManagerGUI extends javax.swing.JFrame {
 
         // checks
         if (!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) {
-            toggleAutoBackup.setSelected(false);
-            btnTimePicker.setEnabled(false);
+            setAutoBackupOff();
             return;
         }
         if (currentBackup.isAutoBackup()) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
-                toggleAutoBackup.setSelected(false);
-                btnTimePicker.setEnabled(false);
+                setAutoBackupOff();
                 return;
             } 
         }
@@ -2061,17 +2083,15 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         boolean enabled = toggleAutoBackup.isSelected();
         if (enabled && AutomaticBackup()) {
             Logger.logMessage("Event --> Auto Backup setted to Enabled", Logger.LogLevel.INFO);
-            toggleAutoBackup.setSelected(true);
+            setAutoBackupOn(currentBackup);
         }
         else {
             Logger.logMessage("Event --> Auto Backup setted to Disabled", Logger.LogLevel.INFO);
             disableAutoBackup(currentBackup);
-            toggleAutoBackup.setSelected(false);
+            setAutoBackupOff();
             return;
         }
         
-        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
-        btnTimePicker.setEnabled(toggleAutoBackup.isSelected() ? true : false);
         currentBackup.setAutoBackup(enabled);
         BackupOperations.updateBackupList(backups);
     }//GEN-LAST:event_toggleAutoBackupActionPerformed

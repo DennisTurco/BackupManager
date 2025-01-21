@@ -103,7 +103,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-01-21T10:48:26.519837100",
+    "last_update_date": "2025-01-21T12:49:45.530905200",
     "backup_count": 8,
     "max_backups_to_keep": 1
   },
@@ -145,12 +145,10 @@
     "backup_name": "kkk",
     "start_path": "C:\\Users\\d.turco\\Desktop\\1728444935042.gif",
     "destination_path": "C:\\Users\\d.turco\\Desktop",
-    "automatic_backup": true,
-    "next_date_backup": "2025-01-21T16:29:30.617132",
-    "time_interval_backup": "1.0:0",
+    "automatic_backup": false,
     "notes": "",
     "creation_date": "2025-01-20T16:29:27.226503700",
-    "last_update_date": "2025-01-20T16:29:27.226503700",
+    "last_update_date": "2025-01-21T12:50:45.485537200",
     "backup_count": 0,
     "max_backups_to_keep": 3
   },
@@ -164,6 +162,19 @@
     "notes": "",
     "creation_date": "2025-01-20T16:37:28.849117800",
     "last_update_date": "2025-01-20T16:37:28.849117800",
+    "backup_count": 0,
+    "max_backups_to_keep": 3
+  },
+  {
+    "backup_name": "d.turco",
+    "start_path": "C:\\Users\\d.turco",
+    "destination_path": "C:\\Users\\d.turco\\Desktop",
+    "automatic_backup": true,
+    "next_date_backup": "2025-01-22T12:50:24.975265100",
+    "time_interval_backup": "1.0:0",
+    "notes": "",
+    "creation_date": "2025-01-21T12:50:16.698428400",
+    "last_update_date": "2025-01-21T12:50:17.851799300",
     "backup_count": 0,
     "max_backups_to_keep": 3
   }

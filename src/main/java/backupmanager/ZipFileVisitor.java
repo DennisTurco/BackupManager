@@ -3,13 +3,16 @@ package backupmanager;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import backupmanager.Enums.ZippingContext;
+import backupmanager.Entities.ZippingContext;
 
 public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     private final Path sourceDir;
