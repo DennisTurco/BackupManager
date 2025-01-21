@@ -197,9 +197,6 @@ public class Backup {
     public void setNotes(String notes) {
         this._notes = notes;
     }
-    public void setCreationDate(LocalDateTime creationDate) {
-        this._creationDate = creationDate;
-    }
     public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this._lastUpdateDate = lastUpdateDate;
     }

@@ -327,13 +327,13 @@ public class BackupOperations {
 
     public static void interruptBackupProcess(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, BackupProgressGUI progressDialog, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
         Logger.logMessage("Event --> interrupt backup process", Logger.LogLevel.INFO);
-        reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
-        if (zipThread != null) {
-            StopCopyFiles();
-        }
-        if (progressDialog != null) {
+        StopCopyFiles();
+
+        if (zipThread.isInterrupted())
+            reEnableButtonsAndTable(singleBackupBtn, autoBackupBtn, backup, backupTable, interruptBackupPopupItem, deleteBackupPopuopItem);
+        
+        if (progressDialog != null)
             progressDialog.dispose();
-        }
     }
 
     private static void reEnableButtonsAndTable(JButton singleBackupBtn, JToggleButton autoBackupBtn, Backup backup, BackupTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopuopItem) {
@@ -404,44 +404,6 @@ public class BackupOperations {
             deleteOldBackupsIfNecessary(backup.getMaxBackupsToKeep(), path2);
         }
     }
-
-    public static void renameBackupFolder(String backupName, String zipFilePath) {
-        File backupFile = new File(backupName);
-        String baseName = backupFile.getName();
-    
-        File zipFile = new File(zipFilePath);
-        File directory = zipFile.getParentFile();
-    
-        if (directory == null || !directory.isDirectory()) {
-            Logger.logMessage("The provided path is not a valid directory: " + zipFilePath, LogLevel.WARN);
-            return;
-        }
-    
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                String fileName = file.getName();
-    
-                if (fileName.contains(baseName) && fileName.contains("PartialBackup")) {
-                    // removing "Partial"
-                    String newFileName = fileName.replace("Partial", "");
-    
-                    Logger.logMessage("Renaming: " + fileName + " -> " + newFileName, LogLevel.DEBUG);
-    
-                    File renamedFile = new File(directory, newFileName);
-    
-                    // renaming the file
-                    if (file.renameTo(renamedFile)) {
-                        Logger.logMessage("Renamed: " + fileName + " -> " + newFileName, LogLevel.DEBUG);
-                    } else {
-                        Logger.logMessage("Failed to rename: " + fileName + "\nCheck if the file is locked or if you have sufficient permissions", LogLevel.WARN);
-                    }
-                }
-            }
-        } else {
-            Logger.logMessage("Failed to list files in directory: " + directory.getAbsolutePath(), LogLevel.WARN);
-        }
-    }
     
     private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
         Logger.logMessage("Deleting old backups if necessary", LogLevel.INFO);
@@ -502,8 +464,7 @@ public class BackupOperations {
     public static boolean deletePartialBackup(String filePath) {
         Logger.logMessage("Attempting to delete partial backup: " + filePath, LogLevel.INFO);
 
-        if (BackupOperations.zipThread.isAlive())
-            BackupOperations.StopCopyFiles();
+        BackupOperations.StopCopyFiles();
         
         if (filePath == null || filePath.isEmpty()) {
             Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
@@ -638,7 +599,8 @@ public class BackupOperations {
     }
 
     public static void StopCopyFiles() {
-        if (zipThread.isAlive())
+        if (zipThread != null && zipThread.isAlive())
             zipThread.interrupt();
     }
+    
 }

@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -75,29 +76,31 @@ public class RunningBackups {
 
     public static void updateBackupToJSON(RunningBackups backup) {
         List<RunningBackups> backups = readBackupListFromJSON();
+    
+        ListIterator<RunningBackups> iterator = backups.listIterator();
         boolean updated = false;
     
         // Iterate through existing backups to update
-        for (int i = 0; i < backups.size(); i++) {
-            if (backups.get(i).getBackupName().equals(backup.getBackupName())) {
-                backups.set(i, backup);  // Update backup
+        while (iterator.hasNext()) {
+            RunningBackups currentBackup = iterator.next();
+            if (currentBackup.getBackupName().equals(backup.getBackupName())) {
+                if (backup.getProgress() == 100) {
+                    iterator.remove();
+                } else {
+                    iterator.set(backup);
+                }
                 updated = true;
                 break;
             }
         }
     
-        // If backup doesn't exist, add it
-        if (!updated) {
-            backups.add(backup);  // Add new backup to list
+        // If the backup wasn't found in the list, add it
+        if (!updated && backup.getProgress() != 100) {
+            backups.add(backup);
         }
     
-        // If progress is 100, delete the backup from the list before updating the file
-        if (backup != null && backup.getProgress() == 100) {
-            deleteBackupFromJSON(backup.getBackupName());
-        } else {
-            // Only update the file if the backup was added or modified
-            updateBackupsToJSON(backups);
-        }
+        // Write the updated backups to JSON
+        updateBackupsToJSON(backups);
     }
     
     public static void updateBackupsToJSON(List<RunningBackups> backups) {
@@ -122,22 +125,13 @@ public class RunningBackups {
             
             Logger.logMessage("Deleting partial backup: " + runningBackup.getPath(), LogLevel.INFO);
 
-            if (runningBackup.getProgress() != 100 && BackupOperations.deletePartialBackup(runningBackup.getPath())) {
-                iterator.remove();
-            } else if (runningBackup.getProgress() == 100 && runningBackup.getBackupName().equals(backupName)) {
+            if ((runningBackup.getProgress() != 100 && BackupOperations.deletePartialBackup(runningBackup.getPath()))
+                    || (runningBackup.getProgress() == 100 && runningBackup.getBackupName().equals(backupName))) {
                 iterator.remove();
             }
         }
     
         updateBackupsToJSON(backups);
-    }
-
-    public static void deleteBackupFromJSON(String backupName) {
-        List<RunningBackups> backups = readBackupListFromJSON();
-        if (backups != null) {
-            backups.removeIf(backup -> backup.getBackupName().equals(backupName));
-            updateBackupsToJSON(backups); // Update the JSON file after deletion
-        }
     }
     
     public static void deletePartialBackupsStuckedJSONFile() {
@@ -166,15 +160,5 @@ public class RunningBackups {
     }
     public String getPath() {
         return path;
-    }
-
-    public void setBackupName(String backupName) {
-        this.backupName = backupName;
-    }
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
-    public void setPath(String path) {
-        this.path = path;
     }
 }   
