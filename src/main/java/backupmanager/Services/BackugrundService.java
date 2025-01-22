@@ -90,7 +90,7 @@ public class BackugrundService {
             tray.add(trayIcon);
             Logger.logMessage("TrayIcon added", Logger.LogLevel.INFO);
         } catch (AWTException e) {
-            Logger.logMessage("TrayIcon could not be added", Logger.LogLevel.ERROR, e);
+            Logger.logMessage("TrayIcon could not be added: " + e.getMessage(), Logger.LogLevel.ERROR, e);
         }
 
         // Listener for click to tray icon

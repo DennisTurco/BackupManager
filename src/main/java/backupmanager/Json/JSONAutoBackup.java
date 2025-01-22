@@ -6,21 +6,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.lang.reflect.Type;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Interfaces.IJSONAutoBackup;
 import backupmanager.Logger;
+import backupmanager.Logger.LogLevel;
 
 public class JSONAutoBackup implements IJSONAutoBackup {
     @Override
@@ -179,6 +186,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
             try (Writer writer = new FileWriter(filePath)) {
                 gson.toJson(backupList, writer);
             } catch (IOException ex) {
+                Logger.logMessage("An error occurred: " + ex.getMessage(), LogLevel.ERROR, ex);
                 openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
 

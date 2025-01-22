@@ -1,0 +1,5 @@
+2025-01-22T11:17:31.539373300 [INFO] Observer for running backups started
+2025-01-22T11:17:30.513405 [DEBUG] Background mode: false
+2025-01-22T11:17:30.506396600 [INFO] Application started
+2025-01-22T11:17:30.499060200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Light
+2025-01-22T11:17:30.492062 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Light

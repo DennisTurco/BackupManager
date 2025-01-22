@@ -55,7 +55,7 @@ public class ZippingThread {
                     Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, targetFile, zipOut, copiedFilesCount, totalFilesCount, context));
                 }
             } catch (IOException e) {
-                Logger.logMessage("I/O error occurred while zipping directory: " + sourceDirectoryPath, Logger.LogLevel.ERROR, e);
+                Logger.logMessage("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), Logger.LogLevel.ERROR, e);
                 handleError("I/O error occurred", ErrorTypes.ZippingIOError, context);
             } finally {
                 finalizeProcess(context);
@@ -141,7 +141,7 @@ public class ZippingThread {
                 }
             }
         } catch (InterruptedException e) {
-            Logger.logMessage("Shutdown process interrupted. Forcing shutdown...", LogLevel.ERROR, e);
+            Logger.logMessage("Shutdown process interrupted. Forcing shutdown... With message: " + e.getMessage(), LogLevel.ERROR, e);
             executorService.shutdownNow(); // Forcefully stop tasks on interruption
             Thread.currentThread().interrupt(); // Preserve interrupted status
         }

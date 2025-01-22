@@ -3,6 +3,7 @@ package backupmanager;
 import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -125,8 +126,8 @@ public class BackupOperations {
         } catch (IllegalArgumentException ex) {
             Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        } catch (Exception e) {
-            Logger.logMessage("Error saving file", Logger.LogLevel.WARN);
+        } catch (IOException e) {
+            Logger.logMessage("Error saving file", Logger.LogLevel.ERROR);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }

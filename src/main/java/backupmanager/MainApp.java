@@ -25,7 +25,7 @@ public class MainApp {
             Preferences.loadPreferencesFromJSON();
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred during loading preferences: ", LogLevel.DEBUG, ex);
+            Logger.logMessage("An error occurred during loading preferences: " + ex.getMessage(), LogLevel.ERROR, ex);
         }
 
         boolean isBackgroundMode = args.length > 0 && args[0].equalsIgnoreCase("--background");

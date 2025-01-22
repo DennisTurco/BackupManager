@@ -14,10 +14,9 @@ import com.google.gson.JsonParser;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Logger;
 import backupmanager.Logger.LogLevel;
-
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 
 public class Preferences {
     private static LanguagesEnum language;
@@ -38,7 +37,7 @@ public class Preferences {
             updatePreferencesToJSON();
 
         } catch (FileNotFoundException e) {
-            Logger.logMessage("Preferences file not found. Using default preferences.", Logger.LogLevel.WARN);
+            Logger.logMessage("Preferences file not found (Using default preferences): " + e.getMessage(), Logger.LogLevel.ERROR, e);
             updatePreferencesToJSON(); // Create the JSON file with default preferences
         } catch (Exception ex) {
             Logger.logMessage("An error occurred while loading preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);

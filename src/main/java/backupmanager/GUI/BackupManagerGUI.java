@@ -61,6 +61,7 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
+import backupmanager.Logger.LogLevel;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.RunningBackupObserver;
 import backupmanager.Services.ZippingThread;
@@ -73,7 +74,7 @@ import backupmanager.Table.TableDataManager;
 /**
  * @author Dennis Turco
  */
-public class BackupManagerGUI extends javax.swing.JFrame {
+public final class BackupManagerGUI extends javax.swing.JFrame {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -425,7 +426,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
             Logger.logMessage("An error occurred: "  + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (HeadlessException ex) {
-            Logger.logMessage("Error saving backup", Logger.LogLevel.WARN);
+            Logger.logMessage("Error saving backup", Logger.LogLevel.ERROR, ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_SAVING_BACKUP_MESSAGE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -695,7 +696,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
                 }
             }
         } catch (IOException | URISyntaxException e) {
-            Logger.logMessage("Failed to open the web page. Please try again", Logger.LogLevel.WARN);
+            Logger.logMessage("Failed to open the web page: " + e.getMessage(), Logger.LogLevel.ERROR, e);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPENING_WEBSITE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -794,6 +795,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         try {
             return java.net.URLEncoder.encode(value, "UTF-8").replace("+", "%20");
         } catch (IOException e) {
+            Logger.logMessage("An error occurred while trying to get the encode URI for string \"" + value + "\": " + e.getMessage(), LogLevel.ERROR, e);
             return value; // If encoding fails, return the original value
         }
     }
@@ -1771,7 +1773,7 @@ public class BackupManagerGUI extends javax.swing.JFrame {
         try {
             new ProcessBuilder("notepad.exe", ConfigKey.RES_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
         } catch (IOException e) {
-            Logger.logMessage("Error opening history file.", Logger.LogLevel.WARN);
+            Logger.logMessage("Error opening history file: " + e.getMessage(), Logger.LogLevel.ERROR, e);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_MenuHistoryActionPerformed
