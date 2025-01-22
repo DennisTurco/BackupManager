@@ -3,21 +3,21 @@
     <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />--> <!--Scan this configuration for errors-->
 
     <!-- Properties -->
+    <property resource="config.properties" />
+    <property name="smtp.user" value="${smtp.user}" />
+    <property name="smtp.from" value="${smtp.from}" />
+    <property name="smtp.password" value="${smtp.password}" />
+    <property name="smtp.host" value="${smtp.smtp}" />
     <property name="LOG_DIR" value="logs" />
     <property name="MAX_HISTORY" value="7" />
     <property name="TOTAL_SIZE" value="100MB" />
-    <property name="SMTP_HOST" value="smtp.example.com" />
-    <property name="SMTP_PORT" value="587" />
-    <property name="SMTP_USER" value="your-email@example.com" />
-    <property name="SMTP_PASS" value="your-password" />
-    <property name="EMAIL_TO" value="admin@example.com" />
-    <property name="EMAIL_FROM" value="noreply@example.com" />
-    <property name="EMAIL_SUBJECT" value="Critical Error in Application" />
+    <property name="EMAIL_TO" value="shard1@shardpc.it" />
+    <property name="EMAIL_SUBJECT" value="BackupManager - Critical error in application" />
 
     <!-- Console appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} [%X{contextInfo}] - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -31,7 +31,7 @@
             <totalSizeCap>${TOTAL_SIZE}</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} [%X{contextInfo}] - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -49,7 +49,7 @@
             <maxHistory>${MAX_HISTORY}</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} [%X{contextInfo}] - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
@@ -58,21 +58,17 @@
         </filter>
     </appender>
 
-    <!--Email appender -->
+    <!-- Email appender -->
     <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
-        <smtpHost>smtp.example.com</smtpHost>
-        <smtpPort>587</smtpPort>
-        <username>your-email@example.com</username>
-        <password>your-password</password>
-        <to>admin@example.com</to>
-        <from>noreply@example.com</from>
-        <subject>Critical Error in Application</subject>
-        <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} [%X{contextInfo}] - %msg%n</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
-        </filter>
+        <smtpHost>${smtp.host}</smtpHost>
+        <to>${EMAIL_TO}</to>
+        <from>${smtp.from}</from>
+        <username>${smtp.user}</username>
+        <password>${smtp.password}</password>
+        <subject>${EMAIL_SUBJECT}</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </layout>
     </appender>
 
     <!-- Root logger -->
@@ -80,6 +76,6 @@
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC" />
         <appender-ref ref="ERROR_FILE" />
-        <!--<appender-ref ref="EMAIL" />-->
+        <appender-ref ref="EMAIL" />
     </root>
 </configuration>

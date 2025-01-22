@@ -132,7 +132,7 @@ public class BackugrundService {
     class BackupTask implements Runnable {
         @Override
         public void run() {
-            logger.info("Checking for automatic backup...");
+            logger.debug("Checking for automatic backup...");
             try {
                 List<Backup> backups = json.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                 List<Backup> needsBackup = getBackupsToDo(backups);
@@ -140,7 +140,7 @@ public class BackugrundService {
                     logger.info("Start backup process.");
                     executeBackups(needsBackup);
                 } else {
-                    logger.info("No backup needed at this time.");
+                    logger.debug("No backup needed at this time.");
                 }
             } catch (IOException ex) {
                 logger.error("An error occurred: " + ex.getMessage(), ex);
@@ -150,7 +150,7 @@ public class BackugrundService {
         private List<Backup> getBackupsToDo(List<Backup> backups) {
             List<Backup> backupsToDo = new ArrayList<>();
             for (Backup backup : backups) {
-                if (backup.getNextDateBackup() != null && backup.getNextDateBackup().isBefore(LocalDateTime.now())) {
+                if (backup.isAutoBackup() && backup.getNextDateBackup() != null && backup.getNextDateBackup().isBefore(LocalDateTime.now())) {
                     backupsToDo.add(backup);
                 }
             }
