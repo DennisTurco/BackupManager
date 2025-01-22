@@ -10,8 +10,9 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Image;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 
 public class PreferencesDialog extends javax.swing.JDialog {
-
+    private static final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
     private final BackupManagerGUI mainGui;
 
     public PreferencesDialog(java.awt.Frame parent, boolean modal, BackupManagerGUI mainGui) {
@@ -135,7 +136,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         String selectedLanguage = (String) languagesComboBox.getSelectedItem();
         String selectedTheme = (String) themesComboBox.getSelectedItem();
 
-        Logger.logMessage("Updating preferences -> Language: " + selectedLanguage + "; Theme: " + selectedTheme, LogLevel.INFO);
+        logger.info("Updating preferences -> Language: " + selectedLanguage + "; Theme: " + selectedTheme);
 
         try {
             // translactions
@@ -151,7 +152,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
             Preferences.updatePreferencesToJSON();
             mainGui.reloadPreferences();
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred during applying preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }  
     }//GEN-LAST:event_applyBtnActionPerformed

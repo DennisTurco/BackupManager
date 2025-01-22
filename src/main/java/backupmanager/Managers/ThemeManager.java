@@ -1,13 +1,17 @@
 package backupmanager.Managers;
 
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.SwingUtilities;
-import javax.swing.JPopupMenu;
-import javax.swing.UIManager;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.Arrays;
+
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -20,15 +24,15 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Preferences;
-import backupmanager.Logger;
+import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 
 // https://www.formdev.com/flatlaf/#demo
 // https://www.formdev.com/flatlaf/themes/
 // https://github.com/JFormDesigner/FlatLaf/tree/main/flatlaf-intellij-themes
 
 public class ThemeManager {
+    private static final Logger logger = LoggerFactory.getLogger(ThemeManager.class);
 
     public static void updateThemeFrame(Frame frame) {
         updateTheme();
@@ -97,7 +101,7 @@ public class ThemeManager {
             }
 
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.logMessage("Error setting LookAndFeel: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error setting LookAndFeel: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }

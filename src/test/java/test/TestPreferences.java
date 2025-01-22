@@ -4,7 +4,6 @@ import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-import backupmanager.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,6 @@ public class TestPreferences {
         ConfigKey.loadFromJson(CONFIG);
 
         temp_log_file = File.createTempFile("src/test/resources/temp_log_file", "");
-        Logger.setLogFilePath(temp_log_file.getPath());
     }
 
     @Test

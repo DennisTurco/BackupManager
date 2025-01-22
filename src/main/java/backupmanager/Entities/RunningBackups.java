@@ -13,19 +13,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import backupmanager.BackupOperations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
 
 // this class contains only the RunningBackups entity
 // this entity is used to store the information of the backups that are currently running
 // i use this object to know wich backups are currently running across the instances
 public class RunningBackups {
+    private static final Logger logger = LoggerFactory.getLogger(RunningBackups.class);
     private final String backupName;
     private final String path;
     private final int progress;
@@ -43,7 +45,7 @@ public class RunningBackups {
         try {
             // Check if the file exists, otherwise create it with an empty array
             if (!Files.exists(filePath)) {
-                Logger.logMessage("Backup file not found. Creating a new empty file...", LogLevel.INFO);
+                logger.info("Backup file not found. Creating a new empty file...");
                 Files.write(filePath, "[]".getBytes(), StandardOpenOption.CREATE_NEW);
             }
 
@@ -52,7 +54,7 @@ public class RunningBackups {
             
             // Try to parse the JSON string into a valid list of objects
             if (!fileContent.trim().startsWith("[")) {
-                Logger.logMessage("Malformed JSON file. Attempting to fix...", LogLevel.WARN);
+                logger.warn("Malformed JSON file. Attempting to fix...");
                 // Attempt to fix the malformed JSON file
                 fileContent = "[" + fileContent.replaceAll("(?<=})\\s*(?=\\{)", ",") + "]";
                 Files.write(filePath, fileContent.getBytes());
@@ -65,10 +67,10 @@ public class RunningBackups {
             return backups != null ? backups : new ArrayList<>();
             
         } catch (IOException e) {
-            Logger.logMessage("Error reading file: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Error reading file: " + e.getMessage(), e);
             return new ArrayList<>();
         } catch (JsonSyntaxException e) {
-            Logger.logMessage("Malformed JSON in file: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Malformed JSON in file: " + e.getMessage(), e);
             return new ArrayList<>();
         }
     }
@@ -119,7 +121,7 @@ public class RunningBackups {
             gson.toJson(backups, writer);
             writer.flush();  // Make sure the data is written to the file
         } catch (IOException e) {
-            Logger.logMessage("Error writing to JSON file: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Error writing to JSON file: " + e.getMessage(), e);
         }
     }
 
@@ -131,7 +133,7 @@ public class RunningBackups {
         while (iterator.hasNext()) {
             RunningBackups runningBackup = iterator.next();
             
-            Logger.logMessage("Deleting partial backup: " + runningBackup.getPath(), LogLevel.INFO);
+            logger.info("Deleting partial backup: " + runningBackup.getPath());
 
             if ((runningBackup.getProgress() != 100 && BackupOperations.deletePartialBackup(runningBackup.getPath()))
                     || (runningBackup.getProgress() == 100 && runningBackup.getBackupName().equals(backupName))) {

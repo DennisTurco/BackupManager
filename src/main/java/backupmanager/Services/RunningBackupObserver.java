@@ -6,9 +6,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.RunningBackups;
-import backupmanager.Logger;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
 
@@ -18,6 +20,7 @@ import backupmanager.Table.TableDataManager;
  * so we need something like an observer that constantly checks if there are some backups in progress.
  */
 public class RunningBackupObserver {
+    private static final Logger logger = LoggerFactory.getLogger(RunningBackupObserver.class);
 
     private final ScheduledExecutorService scheduler;
     private final BackupTable backupTable;
@@ -32,13 +35,13 @@ public class RunningBackupObserver {
     }
     
     public void start() {
-        Logger.logMessage("Observer for running backups started", Logger.LogLevel.INFO);
+        logger.info("Observer for running backups started");
 
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
                 if (!runningBackups.isEmpty()) {
-                    Logger.logMessage("Observer has found a running backup", Logger.LogLevel.DEBUG);
+                    logger.debug("Observer has found a running backup");
 
                     for (RunningBackups backup : runningBackups) {
                         Backup backupEntity = Backup.getBackupByName(backup.getBackupName());
@@ -52,13 +55,13 @@ public class RunningBackupObserver {
                     }
                 }
             } catch (Exception ex) {
-                Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                logger.error("An error occurred: " + ex.getMessage(), ex);
             }
         }, 0, millisecondsToWait, TimeUnit.MILLISECONDS); // run now and periodically
     }
 
     public void stop() {
-        Logger.logMessage("Observer for running backups stopped", Logger.LogLevel.INFO);
+        logger.info("Observer for running backups stopped");
         scheduler.shutdownNow(); 
     }
 }

@@ -1,12 +1,18 @@
 package backupmanager.Json;
 
-import com.google.gson.*;
 import java.io.FileReader;
 import java.io.IOException;
 
-import backupmanager.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 
 public class JSONConfigReader {
+    private static final Logger logger = LoggerFactory.getLogger(JSONConfigReader.class);
 
     private final String filename;
     private final String directoryPath;
@@ -20,7 +26,7 @@ public class JSONConfigReader {
 
     public boolean isLogLevelEnabled(String level) {
         if (config == null) {
-            Logger.logMessage("Configuration not loaded. Cannot check log level", Logger.LogLevel.ERROR);
+            logger.error("Configuration not loaded. Cannot check log level");
             return false;
         }
 
@@ -34,7 +40,7 @@ public class JSONConfigReader {
 
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
-            Logger.logMessage("Configuration not loaded. Cannot check menu items", Logger.LogLevel.ERROR);
+            logger.warn("Configuration not loaded. Cannot check menu items");
             return false;
         }
 
@@ -66,22 +72,22 @@ public class JSONConfigReader {
             // if the interval is null, set to default of 5 minutes
             int timeInterval = (interval != null) ? interval.getAsInt() : 5;
 
-            Logger.logMessage("Time interval set to " + timeInterval + " minutes", Logger.LogLevel.INFO);
+            logger.info("Time interval set to " + timeInterval + " minutes");
             return timeInterval;
         } catch (NullPointerException e) {
-            Logger.logMessage("Error retrieving backup time interval, defaulting to 5 minutes: " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Error retrieving backup time interval, defaulting to 5 minutes: " + e.getMessage(), e);
             return 5; // Default to 5 minutes
         }
     }
 
     private int getConfigValue(String key, int defaultValue) {
         try {
-            JsonObject logService = getLogServiceConfig();
+            JsonObject logService = getMaxCountForSameBackupConfig();
             JsonElement value = logService.get(key);
 
             return (value != null && value.isJsonPrimitive()) ? value.getAsInt() : defaultValue;
         } catch (IOException | NullPointerException e) {
-            Logger.logMessage("Error retrieving config value for " + key + ": " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Error retrieving config value for " + key + ": " + e.getMessage(), e);
             return defaultValue;
         }
     }
@@ -92,15 +98,15 @@ public class JSONConfigReader {
             Gson gson = new Gson();
             config = gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {
-            Logger.logMessage("Failed to load configuration: " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Failed to load configuration: " + e.getMessage(), e);
         }
     }
 
-    private JsonObject getLogServiceConfig() throws IOException {
+    private JsonObject getMaxCountForSameBackupConfig() throws IOException {
         if (config == null) {
             throw new IOException("Configuration not loaded.");
         }
-        return config.getAsJsonObject("LogService");
+        return config.getAsJsonObject("MaxCountForSameBackup");
     }
 
     private JsonObject getBackupServiceConfig() throws IOException {

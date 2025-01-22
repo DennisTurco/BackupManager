@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
-
 public class TranslationLoaderEnum {
+
+    private static final Logger logger = LoggerFactory.getLogger(TranslationLoaderEnum.class);
 
     public enum TranslationCategory {
         GENERAL("General"),
@@ -302,11 +304,13 @@ public class TranslationLoaderEnum {
                             String translationValue = (value != null && !value.isEmpty()) ? value : translationKey.getDefaultValue();
                             category.addTranslation(translationKey, translationValue);
                         } else {
-                            Logger.logMessage("Warning: Unrecognized key in JSON: " + key + ", using default value.", LogLevel.WARN);
+                            logger.warn("Unrecognized key in JSON: " + key + ", using default value");
                         }
                     }
                 }
             }
+        } catch (Exception ex) {
+            logger.error("An error occurred: " + ex.getMessage(), ex);
         }
     }
 

@@ -1,46 +1,52 @@
 package backupmanager;
 
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.Preferences;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-
 import javax.swing.JOptionPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+
+import backupmanager.Entities.Backup;
+import backupmanager.Entities.Preferences;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+
 public class Exporter {
+
+    private static final Logger logger = LoggerFactory.getLogger(Exporter.class);
+
     public static void exportAsPDF(ArrayList<Backup> backups, String headers) {
-        Logger.logMessage("Exporting backups to PDF", Logger.LogLevel.INFO);
+        logger.info("Exporting backups to PDF");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);
 
         if (path == null) {
-            Logger.logMessage("Exporting backups to PDF cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to PDF cancelled");
             return;
         }
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.PDF_NAME_MESSAGE_INPUT));
         if (filename == null || filename.isEmpty()) {
-            Logger.logMessage("Exporting backups to PDF cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to PDF cancelled");
             return;
         }
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INVALID_FILENAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            Logger.logMessage("Exporting backups to PDF cancelled due to invalid file name", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to PDF cancelled due to invalid file name");
             return;
         }
 
@@ -52,7 +58,7 @@ public class Exporter {
         if (file.exists()) {
             int overwrite = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_FILE_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
             if (overwrite != JOptionPane.YES_OPTION) {
-                Logger.logMessage("Exporting backups to PDF cancelled by user (file exists)", Logger.LogLevel.INFO);
+                logger.info("Exporting backups to PDF cancelled by user (file exists)");
                 return;
             }
         }
@@ -101,33 +107,33 @@ public class Exporter {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_PDF_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
             
         } catch (IOException ex) {
-            Logger.logMessage("Error exporting backups to PDF: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error exporting backups to PDF: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EXPORTING_TO_PDF) + ex.getMessage(), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         } finally {
-            Logger.logMessage("Exporting backups to PDF finished", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to PDF finished");
         }
     }
 
     public static void exportAsCSV(ArrayList<Backup> backups, String header) {
-        Logger.logMessage("Exporting backups to CSV", Logger.LogLevel.INFO);
+        logger.info("Exporting backups to CSV");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);
 
         if (path == null) {
-            Logger.logMessage("Exporting backups to CSV cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to CSV cancelled");
             return;
         }
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CSV_NAME_MESSAGE_INPUT));
         if (filename == null || filename.isEmpty()) {
-            Logger.logMessage("Exporting backups to CSV cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to CSV cancelled");
             return;
         }
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INVALID_FILENAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            Logger.logMessage("Exporting backups to CSV cancelled due to invalid file name", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to CSV cancelled due to invalid file name");
             return;
         }
         
@@ -139,7 +145,7 @@ public class Exporter {
         if (file.exists()) {
             int overwrite = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_FILE_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
             if (overwrite != JOptionPane.YES_OPTION) {
-                Logger.logMessage("Exporting backups to CSV cancelled by user (file exists)", Logger.LogLevel.INFO);
+                logger.info("Exporting backups to CSV cancelled by user (file exists)");
                 return;
             }
         }
@@ -159,10 +165,10 @@ public class Exporter {
 
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
-            Logger.logMessage("Error exporting backups to CSV: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error exporting backups to CSV: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EXPORTING_TO_CSV) + ex.getMessage(), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         } finally {
-            Logger.logMessage("Exporting backups to CSV finished", Logger.LogLevel.INFO);
+            logger.info("Exporting backups to CSV finished");
         }
     }
 

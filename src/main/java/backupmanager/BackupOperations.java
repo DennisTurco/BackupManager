@@ -16,6 +16,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
@@ -30,18 +33,17 @@ import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Json.JSONAutoBackup;
-import backupmanager.Logger.LogLevel;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
 
 public class BackupOperations {
-    
+    private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
     private static final JSONAutoBackup JSON = new JSONAutoBackup();
     
     public static void SingleBackup(ZippingContext context) {
         if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
-        Logger.logMessage("Event --> manual backup started", Logger.LogLevel.INFO);
+        logger.info("Event --> manual backup started");
 
         if (context.singleBackupBtn != null) context.singleBackupBtn.setEnabled(false);
         if (context.autoBackupBtn != null) context.autoBackupBtn.setEnabled(false);
@@ -71,7 +73,7 @@ public class BackupOperations {
 
             ZippingThread.zipDirectory(path1, path2 + ".zip", context);
         } catch (Exception ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             reEnableButtonsAndTable(context);
         }
@@ -92,7 +94,7 @@ public class BackupOperations {
         
         LocalDateTime dateNow = LocalDateTime.now();
            
-        Logger.logMessage("Backup completed!", Logger.LogLevel.INFO);
+        logger.info("Backup completed!");
 
         reEnableButtonsAndTable(context);
         
@@ -103,7 +105,7 @@ public class BackupOperations {
                     .plusHours(time.getHours())
                     .plusMinutes(time.getMinutes());
             context.backup.setNextDateBackup(nextDateBackup);
-            Logger.logMessage("Next date backup setted to: " + nextDateBackup, Logger.LogLevel.INFO);
+            logger.info("Next date backup setted to: " + nextDateBackup);
         }
         context.backup.setLastBackup(dateNow);
         context.backup.setBackupCount(context.backup.getBackupCount()+1);
@@ -124,16 +126,16 @@ public class BackupOperations {
                 context.trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + context.backup.getBackupName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
             }
         } catch (IllegalArgumentException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (IOException e) {
-            Logger.logMessage("Error saving file", Logger.LogLevel.ERROR);
+            logger.error("Error saving file");
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static String pathSearchWithFileChooser(boolean allowFiles) {
-        Logger.logMessage("Event --> File chooser", Logger.LogLevel.INFO);
+        logger.info("Event --> File chooser");
         
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         
@@ -147,9 +149,9 @@ public class BackupOperations {
             File selectedFile = jfc.getSelectedFile();
 
             if (selectedFile.isDirectory()) {
-                Logger.logMessage("You selected the directory: " + selectedFile, Logger.LogLevel.INFO);
+                logger.info("You selected the directory: " + selectedFile);
             } else if (selectedFile.isFile()) {
-                Logger.logMessage("You selected the file: " + selectedFile, Logger.LogLevel.INFO);
+                logger.info("You selected the file: " + selectedFile);
             }
 
             return selectedFile.toString();
@@ -179,7 +181,7 @@ public class BackupOperations {
     }
 
     public static void interruptBackupProcess(ZippingContext context) {
-        Logger.logMessage("Event --> interrupt backup process", Logger.LogLevel.INFO);
+        logger.info("Event --> interrupt backup process");
         
         ZippingThread.stopExecutorService(1);
         if (ZippingThread.isInterrupted())
@@ -221,7 +223,7 @@ public class BackupOperations {
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
-            Logger.logMessage("Zipping progress: " + value + "%", Logger.LogLevel.INFO);
+            logger.info("Zipping progress: " + value + "%");
 
         if (context.progressBar != null) {
             context.progressBar.updateProgressBar(value);
@@ -240,7 +242,7 @@ public class BackupOperations {
     }
     
     private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
-        Logger.logMessage("Deleting old backups if necessary", LogLevel.INFO);
+        logger.info("Deleting old backups if necessary");
 
         File folder = new File(destinationPath).getParentFile();
         String fileBackuppedToSearch = new File(destinationPath).getName();
@@ -254,13 +256,13 @@ public class BackupOperations {
             File[] matchingFiles = folder.listFiles(filter); // getting files for that filter  
 
             if (matchingFiles == null) {
-                Logger.logMessage("Error during deleting old backups: none matching files", LogLevel.WARN);
+                logger.warn("Error during deleting old backups: none matching files");
                 return;
             }
 
             // check if the max is passed, and if it is, remove the oldest
             if (matchingFiles.length > maxBackupsToKeep) {
-                Logger.logMessage("Found " + matchingFiles.length + " matching files, exceeding max allowed: " + maxBackupsToKeep, LogLevel.INFO);
+                logger.info("Found " + matchingFiles.length + " matching files, exceeding max allowed: " + maxBackupsToKeep);
 
                 Arrays.sort(matchingFiles, (f1, f2) -> {
                     String datePattern = "\\(Backup (\\d{2}-\\d{2}-\\d{4} \\d{2}\\.\\d{2}\\.\\d{2})\\)\\.zip"; // regex aggiornata
@@ -275,7 +277,7 @@ public class BackupOperations {
 
                         return dateTime1.compareTo(dateTime2);
                     } catch (Exception e) {
-                        Logger.logMessage("Error parsing dates: " + e.getMessage(), LogLevel.ERROR);
+                        logger.error("Error parsing dates: " + e.getMessage(), e);
                         return 0;
                     }
                 });
@@ -284,24 +286,24 @@ public class BackupOperations {
                 for (int i = 0; i < matchingFiles.length - maxBackupsToKeep; i++) {
                     File fileToDelete = matchingFiles[i];
                     if (fileToDelete.delete()) {
-                        Logger.logMessage("Deleted old backup: " + fileToDelete.getName(), LogLevel.INFO);
+                        logger.info("Deleted old backup: " + fileToDelete.getName());
                     } else {
-                        Logger.logMessage("Failed to delete old backup: " + fileToDelete.getName(), LogLevel.WARN);
+                        logger.warn("Failed to delete old backup: " + fileToDelete.getName());
                     }
                 }
             }
         } else {
-            Logger.logMessage("Destination path is not a directory: " + destinationPath, LogLevel.ERROR);
+            logger.warn("Destination path is not a directory: " + destinationPath);
         }
     }
 
     public static boolean deletePartialBackup(String filePath) {
-        Logger.logMessage("Attempting to delete partial backup: " + filePath, LogLevel.INFO);
+        logger.info("Attempting to delete partial backup: " + filePath);
 
         ZippingThread.stopExecutorService(1);
         
         if (filePath == null || filePath.isEmpty()) {
-            Logger.logMessage("The file path is null or empty.", LogLevel.WARN);
+            logger.warn("The file path is null or empty.");
             return false;
         }
 
@@ -312,21 +314,21 @@ public class BackupOperations {
             if (file.isFile()) {
                 try {
                     if (file.delete()) {
-                        Logger.logMessage("Partial backup deleted successfully: " + file.getName(), LogLevel.INFO);
+                        logger.info("Partial backup deleted successfully: " + file.getName());
                         return true;
                     } else {
-                        Logger.logMessage("Failed to delete partial backup (delete failed): " + file.getName(), LogLevel.WARN);
+                        logger.warn("Failed to delete partial backup (delete failed): " + file.getName());
                     }
                 } catch (SecurityException e) {
-                    Logger.logMessage("Security exception occurred while attempting to delete: " + file.getName(), LogLevel.ERROR, e);
+                    logger.error("Security exception occurred while attempting to delete: " + file.getName(), e);
                 } catch (Exception e) {
-                    Logger.logMessage("Unexpected error while attempting to delete: " + file.getName(), LogLevel.ERROR, e);
+                    logger.error("Unexpected error while attempting to delete: " + file.getName(), e);
                 }
             } else {
-                Logger.logMessage("The path points to a directory, not a file: " + filePath, LogLevel.WARN);
+                logger.warn("The path points to a directory, not a file: " + filePath);
             }
         } else {
-            Logger.logMessage("The file does not exist: " + filePath, LogLevel.WARN);
+            logger.warn("The file does not exist: " + filePath);
         }
 
         return false;
@@ -346,7 +348,7 @@ public class BackupOperations {
     public static void setError(ErrorTypes error, TrayIcon trayIcon, String backupName) {
         switch (error) {
             case InputMissing:
-                Logger.logMessage("Input Missing!", Logger.LogLevel.WARN);
+                logger.warn("Input Missing!");
                 if (trayIcon != null) {
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
                 } else {
@@ -354,7 +356,7 @@ public class BackupOperations {
                 }
                 break;
             case InputError:
-                Logger.logMessage("Input Error! One or both paths do not exist.", Logger.LogLevel.WARN);
+                logger.warn("Input Error! One or both paths do not exist.");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
                 } else {
@@ -362,7 +364,7 @@ public class BackupOperations {
                 }
                 break;
             case SamePaths:
-                Logger.logMessage("The initial path and destination path cannot be the same. Please choose different paths", Logger.LogLevel.WARN);
+                logger.warn("The initial path and destination path cannot be the same. Please choose different paths");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
                 } else {
@@ -370,7 +372,7 @@ public class BackupOperations {
                 }
                 break;
             case ErrorCountingFiles:
-                Logger.logMessage("Error during counting files in directory", Logger.LogLevel.WARN);
+                logger.warn("Error during counting files in directory");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
                 } else {
@@ -378,7 +380,7 @@ public class BackupOperations {
                 }
                 break;
             case ZippingGenericError:
-                Logger.logMessage("Error during zipping directory", Logger.LogLevel.WARN);
+                logger.warn("Error during zipping directory");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
                 } else {
@@ -386,7 +388,7 @@ public class BackupOperations {
                 }
                 break;
             case ZippingIOError:
-                Logger.logMessage("I/O error occurred while zipping directory", Logger.LogLevel.WARN);
+                logger.warn("I/O error occurred while zipping directory");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
                 } else {
@@ -394,7 +396,7 @@ public class BackupOperations {
                 }
                 break;
             case ZippingSecurityError:
-                Logger.logMessage("Security exception while zipping directory", Logger.LogLevel.WARN);
+                logger.warn("Security exception while zipping directory");
                 if (trayIcon != null) { 
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
                 } else {

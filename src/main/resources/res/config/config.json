@@ -1,5 +1,4 @@
 {
-  "LOG_FILE_STRING": "log_file.txt",
   "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
   "RUNNING_BACKUPS_FILE_STRING": "running_backups.json",
@@ -41,25 +40,9 @@
     "type": "int",
     "description": "Interval in minutes to check for auto backup"
   },
-  "LogService": {
-    "ERROR": true,
-    "INFO": true,
-    "WARN": true,
-    "DEBUG": true,
-    "MaxLines": {
-      "value": 10000,
-      "type": "int",
-      "description": "Maximum number of logs for the file"
-    },
-    "LinesToKeepAfterFileClear": {
-      "value": 1000,
-      "type": "int",
-      "description": "Lines to keep after file clear"
-    },
-    "MaxCountForSameBackup": {
-      "value": 3,
-      "type": "int",
-      "description": "Max count for the same backup in the same directory"
-    }
+  "MaxCountForSameBackup": {
+    "value": 3,
+    "type": "int",
+    "description": "Max count for the same backup in the same directory"
   }
 }

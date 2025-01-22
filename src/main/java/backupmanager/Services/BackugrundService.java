@@ -20,6 +20,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
  
 import backupmanager.BackupOperations;
 import backupmanager.Entities.Backup;
@@ -30,9 +33,10 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Logger;
 
 public class BackugrundService {
+    private static final Logger logger = LoggerFactory.getLogger(BackugrundService.class);
+
     private ScheduledExecutorService scheduler;
     private final JSONAutoBackup json = new JSONAutoBackup();
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
@@ -55,10 +59,10 @@ public class BackugrundService {
     }
 
     public void stopService() {
-        Logger.logMessage("Stopping background service", Logger.LogLevel.DEBUG);
+        logger.debug("Stopping background service");
         if (scheduler != null && !scheduler.isShutdown()) {
             scheduler.shutdownNow();
-            Logger.logMessage("Background service stopped", Logger.LogLevel.INFO);
+            logger.info("Background service stopped");
         }
         if (trayIcon != null) {
             SystemTray.getSystemTray().remove(trayIcon);
@@ -68,7 +72,7 @@ public class BackugrundService {
 
     private void createHiddenIcon() {
         if (!SystemTray.isSupported()) {
-            Logger.logMessage("System tray is not supported!", Logger.LogLevel.WARN);
+            logger.warn("System tray is not supported!");
             return;
         }
 
@@ -88,9 +92,9 @@ public class BackugrundService {
 
         try {
             tray.add(trayIcon);
-            Logger.logMessage("TrayIcon added", Logger.LogLevel.INFO);
+            logger.info("TrayIcon added");
         } catch (AWTException e) {
-            Logger.logMessage("TrayIcon could not be added: " + e.getMessage(), Logger.LogLevel.ERROR, e);
+            logger.error("TrayIcon could not be added: " + e.getMessage(), e);
         }
 
         // Listener for click to tray icon
@@ -109,7 +113,7 @@ public class BackugrundService {
     }
 
     private void showMainGUI() {
-        Logger.logMessage("Showing the GUI", Logger.LogLevel.INFO);
+        logger.info("Showing the GUI");
         
         if (guiInstance == null) {
             guiInstance = new BackupManagerGUI();
@@ -128,18 +132,18 @@ public class BackugrundService {
     class BackupTask implements Runnable {
         @Override
         public void run() {
-            Logger.logMessage("Checking for automatic backup...", Logger.LogLevel.INFO);
+            logger.info("Checking for automatic backup...");
             try {
                 List<Backup> backups = json.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                 List<Backup> needsBackup = getBackupsToDo(backups);
                 if (needsBackup != null && !needsBackup.isEmpty()) {
-                    Logger.logMessage("Start backup process.", Logger.LogLevel.INFO);
+                    logger.info("Start backup process.");
                     executeBackups(needsBackup);
                 } else {
-                    Logger.logMessage("No backup needed at this time.", Logger.LogLevel.INFO);
+                    logger.info("No backup needed at this time.");
                 }
             } catch (IOException ex) {
-                Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                logger.error("An error occurred: " + ex.getMessage(), ex);
             }
         }
 

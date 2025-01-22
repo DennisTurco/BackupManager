@@ -14,19 +14,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backupmanager.BackupOperations;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ErrorTypes;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
 import backupmanager.ZipFileVisitor;
 
 public class ZippingThread {
 
+    private static final Logger logger = LoggerFactory.getLogger(ZippingThread.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, ZippingContext context) {
-        Logger.logMessage("Starting zipping process", LogLevel.INFO);
+        logger.info("Starting zipping process");
     
         File sourceFile = new File(sourceDirectoryPath.trim());
         File targetFile = new File(targetZipPath.trim());
@@ -42,7 +44,7 @@ public class ZippingThread {
     
         // Ensure the executor is not shut down before submitting a task
         if (executorService.isShutdown() || executorService.isTerminated()) {
-            Logger.logMessage("ExecutorService is terminated. Re-creating the executor...", LogLevel.WARN);
+            logger.warn("ExecutorService is terminated. Re-creating the executor...");
             executorService = Executors.newSingleThreadExecutor();  // Recreate the executor
         }
     
@@ -55,7 +57,7 @@ public class ZippingThread {
                     Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, targetFile, zipOut, copiedFilesCount, totalFilesCount, context));
                 }
             } catch (IOException e) {
-                Logger.logMessage("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), Logger.LogLevel.ERROR, e);
+                logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);
                 handleError("I/O error occurred", ErrorTypes.ZippingIOError, context);
             } finally {
                 finalizeProcess(context);
@@ -64,13 +66,13 @@ public class ZippingThread {
     }
 
     private static void handleError(String message, ErrorTypes errorType, ZippingContext context) {
-        Logger.logMessage(message, LogLevel.ERROR);
+        logger.error(message);
         BackupOperations.setError(errorType, context.trayIcon, null);
         BackupOperations.reEnableButtonsAndTable(context);
     }
 
     private static void finalizeProcess(ZippingContext context) {
-        Logger.logMessage("Finalizing zipping process", LogLevel.INFO);
+        logger.info("Finalizing zipping process");
         BackupOperations.reEnableButtonsAndTable(context);
     }
 
@@ -95,16 +97,16 @@ public class ZippingThread {
 
     private static int countFilesInDirectory(File directory) {
         if (directory == null) {
-            Logger.logMessage("Directory is null", Logger.LogLevel.WARN);
+            logger.warn("Directory is null");
             return -1;
         }
         if (!directory.canRead()) {
-            Logger.logMessage("Unable to read directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
+            logger.warn("Unable to read directory: " + directory.getAbsolutePath());
             return -1;
         }
         File[] files = directory.listFiles();
         if (files == null) {
-            Logger.logMessage("Unable to list files for directory: " + directory.getAbsolutePath(), Logger.LogLevel.WARN);
+            logger.warn("Unable to list files for directory: " + directory.getAbsolutePath());
             return -1;
         }
     	
@@ -134,14 +136,14 @@ public class ZippingThread {
         try {
             // Wait for ongoing tasks to complete
             if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
-                Logger.logMessage("executorService did not terminate in the given time. Forcing shutdown...", LogLevel.WARN);
+                logger.warn("executorService did not terminate in the given time. Forcing shutdown...");
                 executorService.shutdownNow(); // Forcefully stop remaining tasks
                 if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
-                    Logger.logMessage("executorService did not terminate after forced shutdown", LogLevel.WARN);
+                    logger.warn("executorService did not terminate after forced shutdown");
                 }
             }
         } catch (InterruptedException e) {
-            Logger.logMessage("Shutdown process interrupted. Forcing shutdown... With message: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Shutdown process interrupted. Forcing shutdown... With message: " + e.getMessage(), e);
             executorService.shutdownNow(); // Forcefully stop tasks on interruption
             Thread.currentThread().interrupt(); // Preserve interrupted status
         }

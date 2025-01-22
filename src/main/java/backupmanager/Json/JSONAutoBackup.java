@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -26,10 +29,11 @@ import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Interfaces.IJSONAutoBackup;
-import backupmanager.Logger;
-import backupmanager.Logger.LogLevel;
 
 public class JSONAutoBackup implements IJSONAutoBackup {
+    
+    private static final Logger logger = LoggerFactory.getLogger(JSONAutoBackup.class);
+
     @Override
     public List<Backup> readBackupListFromJSON(String directoryPath, String filename) throws IOException {
         List<Backup> backupList = new ArrayList<>();
@@ -37,8 +41,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
         // Check if the directory is correct, otherwise reset to default
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
-            //Logger.logMessage("Directory of the backup list file doesn't exist (" + directoryPath + "), reset to default value.", Logger.LogLevel.INFO);
-            Logger.logMessage("Directory of the backup list file doesn't exist, reset to default value.", Logger.LogLevel.INFO);
+            logger.warn("Directory of the backup list file doesn't exist (" + directoryPath + "), reset to default value.");
             Preferences.setBackupList(Preferences.getDefaultBackupList());
             Preferences.updatePreferencesToJSON();
             directoryPath = Preferences.getBackupList().getDirectory();
@@ -50,14 +53,14 @@ public class JSONAutoBackup implements IJSONAutoBackup {
         // Check if the file exists and is not empty
         if (!file.exists()) {
             file.createNewFile();
-            Logger.logMessage("New backup list created with name: " + filePath, Logger.LogLevel.INFO);
+            logger.info("New backup list created with name: " + filePath);
         }
         if (file.length() == 0) {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("[]");
-                Logger.logMessage("File initialized with empty JSON array: []", Logger.LogLevel.INFO);
+                logger.info("File initialized with empty JSON array: []");
             } catch (IOException e) {
-                Logger.logMessage("Error initializing file: " + e.getMessage(), Logger.LogLevel.ERROR, e);
+                logger.error("Error initializing file: " + e.getMessage(), e);
                 throw e;
             }
         }
@@ -107,7 +110,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
             }
     
         } catch (IOException | JsonSyntaxException | NullPointerException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return backupList;
@@ -148,7 +151,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
             // Write the JSON array to the file
             gson.toJson(updatedBackupArray, writer);
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -186,15 +189,15 @@ public class JSONAutoBackup implements IJSONAutoBackup {
             try (Writer writer = new FileWriter(filePath)) {
                 gson.toJson(backupList, writer);
             } catch (IOException ex) {
-                Logger.logMessage("An error occurred: " + ex.getMessage(), LogLevel.ERROR, ex);
+                logger.error("An error occurred: " + ex.getMessage(),  ex);
                 openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
 
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (JsonSyntaxException ex) {
-            Logger.logMessage("Invalid JSON format: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Invalid JSON format: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }

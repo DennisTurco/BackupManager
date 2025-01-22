@@ -6,11 +6,15 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumnModel;
 
-import backupmanager.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backupmanager.Entities.Backup;
 import backupmanager.GUI.BackupManagerGUI;
 
 public class TableDataManager {
+    
+    private static final Logger logger = LoggerFactory.getLogger(TableDataManager.class);
 
     public static void removeProgressInTheTableAndRestoreAsDefault(Backup backup, BackupTable table, DateTimeFormatter formatter) {
         if (table == null) throw new IllegalArgumentException("Table cannot be null");
@@ -62,7 +66,7 @@ public class TableDataManager {
     }
 
     public static void updateTableWithNewBackupList(List<Backup> updatedBackups, DateTimeFormatter formatter) { 
-        Logger.logMessage("updating backup list", Logger.LogLevel.DEBUG);
+        logger.debug("updating backup list");
         
         SwingUtilities.invokeLater(() -> {
             BackupManagerGUI.model.setRowCount(0);

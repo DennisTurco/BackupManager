@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import backupmanager.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
 
 public class Backup {
+    private static final Logger logger = LoggerFactory.getLogger(Backup.class);
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private String _backupName;
     private String _initialPath;
@@ -124,7 +127,7 @@ public class Backup {
                 }
             }
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
 
