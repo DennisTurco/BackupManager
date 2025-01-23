@@ -110,6 +110,11 @@
     "Language": "Language",
     "Theme": "Theme"
   },
+  "UserDialog": {
+    "UserTitle": "Insert your data",
+    "Name": "Name",
+    "Surname": "Surname"
+  },
   "ProgressBackupFrame": {
     "ProgressBackupTitle":"Backup in progress",
     "StatusCompleted":"Backup completed!",

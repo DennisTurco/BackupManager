@@ -1,6 +1,6 @@
 <configuration debug="true">
 
-    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> <!--Scan this configuration for errors-->
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />--> <!--Scan this configuration for errors-->
 
     <!-- Properties -->
     <property resource="config.properties" />
@@ -8,7 +8,7 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.password" value="${smtp.password}" />
     <property name="smtp.host" value="${smtp.smtp}" />
-    <property name="EMAIL_TO" value="test1@shardpc.it" /> <!--assistenza@shardpc.it-->
+    <property name="EMAIL_TO" value="assistenza@shardpc.it" /> <!--assistenza@shardpc.it-->
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ BackupManager - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 BackupManager - New user registered!! 🆕" />
     <property name="LOG_DIR" value="./src/main/resources/res/logs" />
@@ -86,7 +86,7 @@
         <password>${smtp.password}</password>
         <subject>${EMAIL_INFO_SUBJECT}</subject>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger{36} - %msg%n</pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level> <!--Should be info, but if you change it, it doesn't work-->
@@ -97,12 +97,10 @@
 
     <logger name="EMAIL_ERROR_LOGGER" level="ERROR" additivity="false">
         <appender-ref ref="ERROR_EMAIL" />
-        <appender-ref ref="CONSOLE" />
     </logger>
 
     <logger name="EMAIL_INFO_LOGGER" level="ERROR" additivity="false"> <!--Should be info, but if you change it, it doesn't work-->
         <appender-ref ref="INFO_EMAIL" />
-        <appender-ref ref="CONSOLE" />
     </logger>
 
     <!-- Root logger -->

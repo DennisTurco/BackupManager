@@ -1,16 +1,34 @@
 package backupmanager.Dialogs;
 
+import backupmanager.LimitDocument;
+import backupmanager.Entities.User;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+
 public class EntryUserDialog extends javax.swing.JDialog {
+
+    private User user;
 
     public EntryUserDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        nameTextField.setDocument(new LimitDocument(20));
+        surnameTextField.setDocument(new LimitDocument(20));
+
+        user = null;
         
         setTranslactions();
     }
     
     private void setTranslactions() {
-        
+        setTitle(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_TITLE));
+        nameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_NAME));
+        surnameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_SURNAME));
+    }
+
+    public User getUser() {
+        return (user != null) ? user : User.getDefaultUser();
     }
 
     /**
@@ -48,20 +66,18 @@ public class EntryUserDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(surnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(okBtn)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(surnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(okBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(surnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(nameTextField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -75,9 +91,9 @@ public class EntryUserDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(surnameLabel)
                     .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(okBtn)
-                .addGap(12, 12, 12))
+                .addContainerGap())
         );
 
         pack();
@@ -85,12 +101,16 @@ public class EntryUserDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty()) {
-            // TODO: error message
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
+        
+        if (name.isEmpty() || surname.isEmpty()) {
+            return;
         }
         
-        // TODO: save data to file
-        
+        // save user to the file
+        user = new User(name, surname);
+                
         this.dispose();
     }//GEN-LAST:event_okBtnActionPerformed
 

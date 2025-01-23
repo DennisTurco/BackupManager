@@ -48,6 +48,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import backupmanager.BackupOperations;
 import backupmanager.EmailSender;
 import backupmanager.Exporter;
+import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.Backup;
@@ -55,6 +56,7 @@ import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Entities.User;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
@@ -63,6 +65,7 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Json.JSONAutoBackup;
 import backupmanager.Json.JSONConfigReader;
+import backupmanager.Json.JsonUser;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.RunningBackupObserver;
 import backupmanager.Services.ZippingThread;
@@ -155,8 +158,33 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         
         // set all svg images
         setSvgImages();
+
+        checkForFirstAccess();
     }
     
+    private void checkForFirstAccess() {
+        logger.debug("Checking for first access");
+        try {
+            User user = JsonUser.readUserFromJson(ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+
+            if (user != null) {
+                logger.info("Current user: " + user.toString());
+                return;
+            }
+
+            // first access
+            EntryUserDialog userDialog = new EntryUserDialog(this, true);
+            userDialog.setVisible(true);
+            User newUser = userDialog.getUser();
+            JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+        } catch (IOException e) {
+            logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
+            JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+        }
+
+        EmailSender.sendUserCreationEmail();
+    }
+
     public void showWindow() {
         setVisible(true);
         toFront();

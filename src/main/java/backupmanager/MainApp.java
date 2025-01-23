@@ -10,6 +10,7 @@ import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
+
 import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Services.BackugrundService;
 
@@ -51,6 +52,7 @@ public class MainApp {
             }
         }
         else if (!isBackgroundMode) {
+            // GUI starting
             javax.swing.SwingUtilities.invokeLater(() -> {
                 BackupManagerGUI gui = new BackupManagerGUI();
                 gui.showWindow();

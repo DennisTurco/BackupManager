@@ -110,6 +110,11 @@
       "Language": "Idioma",
       "Theme": "Tema"
     },
+    "UserDialog": {
+      "UserTitle": "Inserta tus datos",
+      "Name": "Nombre",
+      "Surname": "Apellido"
+    },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Copia de Seguridad en Progreso",
       "StatusCompleted": "¡Copia completada!",

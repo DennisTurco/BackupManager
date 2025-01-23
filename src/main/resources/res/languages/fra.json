@@ -110,6 +110,11 @@
       "Language": "Langue",
       "Theme": "Thème"
     },
+    "UserDialog": {
+      "UserTitle": "Entrez vos informations",
+      "Name": "Prénom",
+      "Surname": "Nom de famille"
+    },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Sauvegarde en cours",
       "StatusCompleted": "Sauvegarde terminée !",

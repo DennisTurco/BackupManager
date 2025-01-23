@@ -52,3 +52,10 @@ java.lang.Exception: null
 23-01-2025 09:29:06.612 [main] [ERROR] backupmanager.MainApp - TEST
 java.lang.Exception: null
 	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 11:12:44.995 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:15:50.368 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:25:19.967 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:26:00.225 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:26:17.830 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:26:34.948 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:27:58.282 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty

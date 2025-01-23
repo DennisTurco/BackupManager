@@ -110,6 +110,11 @@
       "Language": "Sprache",
       "Theme": "Thema"
     },
+    "UserDialog": {
+      "UserTitle": "Geben Sie Ihre Daten ein",
+      "Name": "Vorname",
+      "Surname": "Nachname"
+    },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Backup läuft",
       "StatusCompleted": "Backup abgeschlossen!",

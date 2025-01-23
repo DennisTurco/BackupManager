@@ -24,6 +24,7 @@ public class TranslationLoaderEnum {
         BACKUP_LIST("BackupList"),
         TIME_PICKER_DIALOG("TimePickerDialog"),
         PREFERENCES_DIALOG("PreferencesDialog"),
+        USER_DIALOG("UserDialog"),
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
@@ -161,6 +162,11 @@ public class TranslationLoaderEnum {
         LANGUAGE("Language", "Language"),
         THEME("Theme", "Theme"),
 
+        // User dialog
+        USER_TITLE("UserTitle", "Insert your data"),
+        USER_NAME("Name", "Name"),
+        USER_SURNAME("Surname", "Surname"),
+    
         // ProgressBackupFrame
         PROGRESS_BACKUP_TITLE("ProgressBackupTitle", "Backup in progress"),
         STATUS_COMPLETED("StatusCompleted", "Backup completed!"),
