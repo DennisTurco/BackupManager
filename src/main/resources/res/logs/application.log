@@ -388,3 +388,107 @@ java.lang.Exception: null
 23-01-2025 11:27:58.282 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
 23-01-2025 11:28:04.591 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco
 23-01-2025 11:28:04.597 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Dennis Turco
+23-01-2025 11:31:03.881 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:31:03.899 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:31:03.903 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:31:03.904 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:31:04.485 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:31:04.489 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:31:04.491 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 11:31:06.147 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Unregistered User
+23-01-2025 11:31:06.152 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Unregistered User
+23-01-2025 11:31:08.796 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:32:50.163 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:32:50.181 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:32:50.186 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:32:50.187 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:32:50.724 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:32:50.728 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:32:50.730 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:32:53.268 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:34:10.975 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:34:10.992 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:34:10.997 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:34:10.997 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:34:11.542 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:34:11.546 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:34:11.547 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:34:14.442 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:34:14.443 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening hsitory with path: src/main/resources/res/logs/src/main/resources/res/
+23-01-2025 11:34:47.012 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:34:47.032 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:34:47.038 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:34:47.038 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:34:47.573 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:34:47.577 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:34:47.579 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:34:49.738 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:34:49.739 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening hsitory with path: src/main/resources/res/logs/application.log
+23-01-2025 11:36:33.454 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:36:33.471 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:36:33.476 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:36:33.476 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:36:34.028 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:36:34.032 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:36:34.034 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:36:36.164 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:36:36.164 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/logs/application.log
+23-01-2025 11:38:51.134 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:38:51.151 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:38:51.155 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:38:51.156 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:38:51.684 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:38:51.688 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:38:51.690 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:38:53.556 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:38:53.557 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/application.log
+23-01-2025 11:38:53.557 [AWT-EventQueue-0] [ERROR] backupmanager.GUI.BackupManagerGUI - Error opening history file: Log file does not exist at path: src/main/resources/res/application.log
+java.io.IOException: Log file does not exist at path: src/main/resources/res/application.log
+	at backupmanager.GUI.BackupManagerGUI.MenuHistoryActionPerformed(BackupManagerGUI.java:1815)
+	at backupmanager.GUI.BackupManagerGUI$39.actionPerformed(BackupManagerGUI.java:1690)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.AbstractButton.doClick(AbstractButton.java:374)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI.doClick(BasicMenuItemUI.java:1029)
+	at java.desktop/javax.swing.plaf.basic.BasicMenuItemUI$Handler.mouseReleased(BasicMenuItemUI.java:1073)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+23-01-2025 11:39:20.427 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 11:39:20.445 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 11:39:20.449 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 11:39:20.450 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 11:39:21.001 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 11:39:21.008 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 11:39:21.010 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
+23-01-2025 11:39:23.182 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 11:39:23.183 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/logs/application.log
