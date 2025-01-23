@@ -106,3 +106,4 @@ java.io.IOException: Log file does not exist at path: src/main/resources/res/app
 23-01-2025 14:01:25.567 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
 23-01-2025 14:02:21.643 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
 23-01-2025 14:03:46.953 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:16:26.507 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!

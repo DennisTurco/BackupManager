@@ -570,3 +570,9 @@ java.io.IOException: Log file does not exist at path: src/main/resources/res/app
 23-01-2025 14:07:56.278 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
 23-01-2025 14:08:11.016 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
 23-01-2025 14:08:11.017 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/logs/application.log
+23-01-2025 14:16:26.482 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:16:26.502 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:16:26.507 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+23-01-2025 14:16:26.516 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+23-01-2025 14:16:26.517 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+23-01-2025 14:16:26.517 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
