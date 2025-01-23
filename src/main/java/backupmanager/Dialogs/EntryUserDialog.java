@@ -15,6 +15,7 @@ public class EntryUserDialog extends javax.swing.JDialog {
 
         nameTextField.setDocument(new LimitDocument(20));
         surnameTextField.setDocument(new LimitDocument(20));
+        emailTextField.setDocument(new LimitDocument(32));
 
         user = null;
         
@@ -25,6 +26,7 @@ public class EntryUserDialog extends javax.swing.JDialog {
         setTitle(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_TITLE));
         nameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_NAME));
         surnameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_SURNAME));
+        emailLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_EMAIL));
     }
 
     public User getUser() {
@@ -45,6 +47,8 @@ public class EntryUserDialog extends javax.swing.JDialog {
         nameTextField = new javax.swing.JTextField();
         surnameLabel = new javax.swing.JLabel();
         surnameTextField = new javax.swing.JTextField();
+        emailLabel = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Insert your data");
@@ -62,22 +66,26 @@ public class EntryUserDialog extends javax.swing.JDialog {
 
         surnameLabel.setText("Surname");
 
+        emailLabel.setText("Email");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(okBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(emailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(surnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(surnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(surnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(nameTextField))))
+                        .addGap(0, 128, Short.MAX_VALUE)
+                        .addComponent(okBtn))
+                    .addComponent(surnameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(emailTextField)
+                    .addComponent(nameTextField))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,13 +95,21 @@ public class EntryUserDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(surnameLabel)
                     .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(okBtn)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addComponent(okBtn)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(emailLabel)
+                            .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -103,18 +119,21 @@ public class EntryUserDialog extends javax.swing.JDialog {
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         String name = nameTextField.getText();
         String surname = surnameTextField.getText();
+        String email = emailTextField.getText();
         
         if (name.isEmpty() || surname.isEmpty()) {
             return;
         }
         
         // save user to the file
-        user = new User(name, surname);
+        user = new User(name, surname, email);
                 
         this.dispose();
     }//GEN-LAST:event_okBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton okBtn;

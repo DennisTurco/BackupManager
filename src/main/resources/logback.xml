@@ -8,7 +8,7 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.password" value="${smtp.password}" />
     <property name="smtp.host" value="${smtp.smtp}" />
-    <property name="EMAIL_TO" value="assistenza@shardpc.it" /> <!--assistenza@shardpc.it-->
+    <property name="EMAIL_TO" value="assistenza@shardpc.it" />
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ BackupManager - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 BackupManager - New user registered!! 🆕" />
     <property name="LOG_DIR" value="./src/main/resources/res/logs" />

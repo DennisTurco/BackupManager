@@ -40,6 +40,12 @@ public class MainApp {
         
         logger.info("Application started");
         logger.debug("Background mode: {}", isBackgroundMode);
+
+        try {
+            throw new IllegalAccessError("askm,djmasbd jgbasdjhgbasjhghdjhasgdjhasgdjh gasjhdgjashgdjhasgdjhgashjdgjashgdnhjas");
+        } catch (IllegalAccessError e) {
+            openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
         
         if (isBackgroundMode) {
             logger.info("Backup service starting in the background");

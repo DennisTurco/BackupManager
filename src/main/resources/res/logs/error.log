@@ -101,3 +101,8 @@ java.io.IOException: Log file does not exist at path: src/main/resources/res/app
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+23-01-2025 13:58:12.306 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:00:24.732 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:01:25.567 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:02:21.643 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:03:46.953 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty

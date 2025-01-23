@@ -166,6 +166,7 @@ public class TranslationLoaderEnum {
         USER_TITLE("UserTitle", "Insert your data"),
         USER_NAME("Name", "Name"),
         USER_SURNAME("Surname", "Surname"),
+        USER_EMAIL("Email", "Email"),
     
         // ProgressBackupFrame
         PROGRESS_BACKUP_TITLE("ProgressBackupTitle", "Backup in progress"),

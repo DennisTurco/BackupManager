@@ -36,11 +36,15 @@ public class JsonUser {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
 
             // Check if "name" and "surname" fields are present and not empty
+            // I don't care if email is empty. This is not a probelm
             String name = jsonObject.has("name") && !jsonObject.get("name").getAsString().isBlank()
                     ? jsonObject.get("name").getAsString()
                     : null;
             String surname = jsonObject.has("surname") && !jsonObject.get("surname").getAsString().isBlank()
                     ? jsonObject.get("surname").getAsString()
+                    : null;
+            String email = jsonObject.has("email") && !jsonObject.get("email").getAsString().isBlank()
+                    ? jsonObject.get("email").getAsString()
                     : null;
 
             // Return null if either field is null
@@ -50,7 +54,7 @@ public class JsonUser {
             }
 
             // Create and return a User object
-            user = new User(name, surname);
+            user = new User(name, surname, email);
             return user;
         } catch (JsonSyntaxException | NullPointerException ex) {
             logger.error("An error occurred while parsing the user JSON: " + ex.getMessage(), ex);
@@ -69,6 +73,7 @@ public class JsonUser {
             // Populate the JSON object
             jsonObject.addProperty("name", user.name != null ? user.name : "");
             jsonObject.addProperty("surname", user.surname != null ? user.surname : "");
+            jsonObject.addProperty("email", user.email != null ? user.email : "");
 
             // Write JSON to file
             writer.write(gson.toJson(jsonObject));

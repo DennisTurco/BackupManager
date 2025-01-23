@@ -113,7 +113,8 @@
     "UserDialog": {
       "UserTitle": "Entrez vos informations",
       "Name": "Prénom",
-      "Surname": "Nom de famille"
+      "Surname": "Nom de famille",
+      "Email": "E-Mail"
     },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Sauvegarde en cours",

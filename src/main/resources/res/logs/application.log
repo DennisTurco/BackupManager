@@ -492,3 +492,81 @@ java.io.IOException: Log file does not exist at path: src/main/resources/res/app
 23-01-2025 11:39:21.010 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User
 23-01-2025 11:39:23.182 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
 23-01-2025 11:39:23.183 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/logs/application.log
+23-01-2025 13:58:11.746 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 13:58:11.764 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 13:58:11.770 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 13:58:11.770 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 13:58:12.301 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 13:58:12.305 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 13:58:12.306 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 13:58:17.516 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Unregistered User, 
+23-01-2025 13:58:17.521 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Unregistered User, null
+23-01-2025 13:58:48.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 13:58:48.856 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 13:58:48.861 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 13:58:48.862 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 13:58:49.449 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 13:58:49.454 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 13:58:49.456 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, null
+23-01-2025 14:00:24.158 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:00:24.176 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:00:24.182 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:00:24.182 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:00:24.726 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:00:24.731 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:00:24.732 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:00:43.361 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:00:43.368 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:01:25.016 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:01:25.033 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:01:25.038 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:01:25.039 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:01:25.562 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:01:25.566 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:01:25.567 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:01:31.049 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis asd, 
+23-01-2025 14:01:31.055 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Dennis asd, null
+23-01-2025 14:02:21.071 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:02:21.088 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:02:21.094 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:02:21.094 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:02:21.637 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:02:21.642 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:02:21.643 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:02:27.724 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: asdasd asdasd, asddasds
+23-01-2025 14:02:27.730 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: asdasd asdasd, asddasds
+23-01-2025 14:03:46.402 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:03:46.419 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:03:46.424 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:03:46.424 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:03:46.948 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:03:46.952 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:03:46.953 [AWT-EventQueue-0] [ERROR] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+23-01-2025 14:04:28.963 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:04:28.969 [AWT-EventQueue-0] [INFO ] backupmanager.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:05:50.263 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:05:50.283 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:05:50.288 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:05:50.288 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:05:50.322 [main] [INFO ] backupmanager.EmailSender - Error email sent with subject: Critical Error Report
+23-01-2025 14:05:58.725 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:05:58.728 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:05:58.729 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:07:22.094 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:07:22.111 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:07:22.116 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:07:22.116 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:07:22.149 [main] [INFO ] backupmanager.EmailSender - Error email sent with subject: Critical Error Report
+23-01-2025 14:07:24.213 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:07:24.216 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:07:24.217 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:07:50.925 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+23-01-2025 14:07:50.942 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+23-01-2025 14:07:50.946 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 14:07:50.946 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 14:07:50.978 [main] [INFO ] backupmanager.EmailSender - Error email sent with subject: Critical Error Report
+23-01-2025 14:07:56.273 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 14:07:56.277 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+23-01-2025 14:07:56.278 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+23-01-2025 14:08:11.016 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 14:08:11.017 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Opening log file with path: src/main/resources/res/logs/application.log
