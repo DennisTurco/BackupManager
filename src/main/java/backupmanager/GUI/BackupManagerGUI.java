@@ -46,11 +46,11 @@ import org.slf4j.LoggerFactory;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.BackupOperations;
-import backupmanager.EmailSender;
 import backupmanager.Exporter;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
+import backupmanager.Email.EmailSender;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
@@ -176,13 +176,17 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             EntryUserDialog userDialog = new EntryUserDialog(this, true);
             userDialog.setVisible(true);
             User newUser = userDialog.getUser();
+
+            if (newUser == null) {
+                return;
+            }
+
             JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+            EmailSender.sendUserCreationEmail();
         } catch (IOException e) {
             logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
             JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
         }
-
-        EmailSender.sendUserCreationEmail();
     }
 
     public void showWindow() {

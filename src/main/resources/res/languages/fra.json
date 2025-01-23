@@ -114,7 +114,9 @@
       "UserTitle": "Entrez vos informations",
       "Name": "Prénom",
       "Surname": "Nom de famille",
-      "Email": "E-Mail"
+      "Email": "E-Mail",
+      "ErrorMessageForMissingData": "Veuillez remplir tous les champs requis.",
+      "ErrorMessageForWrongEmail": "L'adresse e-mail fournie n'est pas valide. Veuillez en fournir une correcte."
     },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Sauvegarde en cours",

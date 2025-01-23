@@ -114,7 +114,9 @@
     "UserTitle": "Insert your data",
     "Name": "Name",
     "Surname": "Surname",
-    "Email": "Email"
+    "Email": "Email",
+    "ErrorMessageForMissingData": "Please fill in all the required fields.",
+    "ErrorMessageForWrongEmail": "The provided email address is invalid. Please provide a correct one."
   },
   "ProgressBackupFrame": {
     "ProgressBackupTitle":"Backup in progress",

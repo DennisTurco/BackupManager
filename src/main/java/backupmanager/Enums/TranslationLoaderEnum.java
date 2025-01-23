@@ -167,6 +167,8 @@ public class TranslationLoaderEnum {
         USER_NAME("Name", "Name"),
         USER_SURNAME("Surname", "Surname"),
         USER_EMAIL("Email", "Email"),
+        ERROR_MESSAGE_FOR_MISSING_DATA("ErrorMessageForMissingData", "Please fill in all the required fields."),
+        ERROR_MESSAGE_FOR_WRONG_EMAIL("ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
     
         // ProgressBackupFrame
         PROGRESS_BACKUP_TITLE("ProgressBackupTitle", "Backup in progress"),

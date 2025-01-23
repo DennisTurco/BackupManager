@@ -135,7 +135,7 @@ public class BackugrundService {
             logger.debug("Checking for automatic backup...");
             try {
                 List<Backup> backups = json.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-                List<Backup> needsBackup = getBackupsToDo(backups);
+                List<Backup> needsBackup = getBackupsToDo(backups, 1);
                 if (needsBackup != null && !needsBackup.isEmpty()) {
                     logger.info("Start backup process.");
                     executeBackups(needsBackup);
@@ -147,11 +147,24 @@ public class BackugrundService {
             }
         }
 
-        private List<Backup> getBackupsToDo(List<Backup> backups) {
+        private List<Backup> getBackupsToDo(List<Backup> backups, int maxBackupsToAdd) {
             List<Backup> backupsToDo = new ArrayList<>();
+            List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
+
             for (Backup backup : backups) {
-                if (backup.isAutoBackup() && backup.getNextDateBackup() != null && backup.getNextDateBackup().isBefore(LocalDateTime.now())) {
+
+                // i have to check that the backup is not running 
+                boolean found = false;
+                for (RunningBackups running : runningBackups) {
+                    if (backup.getBackupName().equals(running.getBackupName())){
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found && maxBackupsToAdd > 0 && backup.isAutoBackup() && backup.getNextDateBackup() != null && backup.getNextDateBackup().isBefore(LocalDateTime.now())) {
                     backupsToDo.add(backup);
+                    maxBackupsToAdd--;
                 }
             }
             return backupsToDo;

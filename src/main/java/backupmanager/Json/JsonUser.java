@@ -28,7 +28,7 @@ public class JsonUser {
 
         // Check if the file exists and is not empty
         if (!file.exists() || file.length() == 0) {
-            logger.error("User file doesn't exist or is empty");
+            logger.warn("User file doesn't exist or is empty");
             return null;
         }
 

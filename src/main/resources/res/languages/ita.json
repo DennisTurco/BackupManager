@@ -114,7 +114,9 @@
     "UserTitle": "Inserisci i tuoi dati",
     "Name": "Nome",
     "Surname": "Cognome",
-    "Email": "Email"
+    "Email": "Email",
+    "ErrorMessageForMissingData": "Per favore, compila tutti i campi richiesti.",
+    "ErrorMessageForWrongEmail": "L'indirizzo email fornito non è valido. Inseriscine uno corretto."
   },
   "ProgressBackupFrame": {
     "ProgressBackupTitle": "Backup in corso",

@@ -1,4 +1,4 @@
-package backupmanager;
+package backupmanager.Email;
 
 import java.io.IOException;
 

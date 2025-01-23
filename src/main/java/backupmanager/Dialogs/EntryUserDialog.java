@@ -1,6 +1,9 @@
 package backupmanager.Dialogs;
 
+import javax.swing.JOptionPane;
+
 import backupmanager.LimitDocument;
+import backupmanager.Email.EmailValidator;
 import backupmanager.Entities.User;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -30,7 +33,7 @@ public class EntryUserDialog extends javax.swing.JDialog {
     }
 
     public User getUser() {
-        return (user != null) ? user : User.getDefaultUser();
+        return user;
     }
 
     /**
@@ -121,7 +124,11 @@ public class EntryUserDialog extends javax.swing.JDialog {
         String surname = surnameTextField.getText();
         String email = emailTextField.getText();
         
-        if (name.isEmpty() || surname.isEmpty()) {
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_MISSING_DATA), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (!EmailValidator.isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             return;
         }
         
