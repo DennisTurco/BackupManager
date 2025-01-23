@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.BackupOperations;
+import backupmanager.EmailSender;
 import backupmanager.Exporter;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
@@ -635,7 +636,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         if (errorMessage == null) {
             errorMessage = "";
         }
+
         stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
+
+        EmailSender.sendErrorEmail("Critical Error Report", stackTrace);
+
         String stackTraceMessage = TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
 
         int choice;
@@ -1772,7 +1777,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
         logger.info("Event --> history");
         try {
-            new ProcessBuilder("notepad.exe", ConfigKey.RES_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
+            new ProcessBuilder("notepad.exe", ConfigKey.RES_DIRECTORY_STRING.getValue() + ConfigKey.LOG_DIRECTORY_STRING.getValue()).start();
         } catch (IOException e) {
             logger.error("Error opening history file: " + e.getMessage(), e);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);

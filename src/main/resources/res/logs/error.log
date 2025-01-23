@@ -1,0 +1,54 @@
+23-01-2025 00:20:26.284 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 00:52:13.729 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 00:52:13.731 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: CIAO
+	at backupmanager.MainApp.main(MainApp.java:31)
+23-01-2025 01:03:59.756 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 01:03:59.759 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: CIAO
+	at backupmanager.MainApp.main(MainApp.java:31)
+23-01-2025 08:52:56.049 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 09:00:54.928 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:02:52.605 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:04:31.872 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:06:12.005 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:06:53.955 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:10:39.749 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:15:14.213 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:15:51.220 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:16:35.648 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:23:28.420 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:27:03.134 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:29:06.612 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)

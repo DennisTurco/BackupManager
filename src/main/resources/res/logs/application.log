@@ -1,0 +1,151 @@
+23-01-2025 00:02:58.775 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:02:58.797 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:02:58.804 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 00:02:58.804 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 00:02:59.397 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 00:03:02.529 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 00:03:06.880 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asa
+23-01-2025 00:03:07.059 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asa
+23-01-2025 00:03:07.059 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 6
+23-01-2025 00:03:07.059 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> opening backup
+23-01-2025 00:03:07.060 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> auto backup disabled
+23-01-2025 00:03:07.067 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+23-01-2025 00:03:27.365 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 00:10:36.361 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:10:36.380 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:10:36.385 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 00:10:36.386 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 00:10:36.951 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 00:10:39.268 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Event --> history
+23-01-2025 00:20:17.055 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:20:17.077 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:20:17.082 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 00:20:17.082 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 00:20:17.661 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 00:20:26.284 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 00:20:26.294 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:20:26.320 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:20:26.326 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 00:20:26.327 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 00:20:26.911 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 00:52:13.729 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 00:52:13.731 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: CIAO
+	at backupmanager.MainApp.main(MainApp.java:31)
+23-01-2025 00:52:13.736 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:52:13.759 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 00:52:13.764 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 00:52:13.764 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 00:52:14.312 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 01:03:59.756 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 01:03:59.759 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: CIAO
+	at backupmanager.MainApp.main(MainApp.java:31)
+23-01-2025 01:03:59.767 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 01:03:59.795 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 01:03:59.806 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 01:03:59.806 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 01:04:00.479 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 08:52:56.049 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:25)
+23-01-2025 08:52:56.051 [main] [INFO ] backupmanager.MainApp - Ciao Mondo!!!
+23-01-2025 08:53:41.552 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 08:53:41.556 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 08:53:41.558 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 08:53:41.559 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 08:53:41.857 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:00:54.928 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:00:54.930 [main] [INFO ] backupmanager.MainApp - Ciao Mondo!!!
+23-01-2025 09:01:04.579 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:01:04.582 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:01:04.585 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:01:04.585 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:01:04.840 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:02:52.605 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:02:52.607 [main] [INFO ] backupmanager.MainApp - Ciao Mondo!!!
+23-01-2025 09:02:56.878 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:02:56.882 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:02:56.885 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:02:56.885 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:02:57.141 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:04:31.872 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:04:31.876 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:04:31.894 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:04:31.899 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:04:31.899 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:04:32.433 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:06:12.005 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:06:18.418 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:06:18.422 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:06:18.424 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:06:18.424 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:06:18.690 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:06:53.955 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:06:55.532 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:06:55.537 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:06:55.539 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:06:55.539 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:06:55.790 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:10:39.749 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:15:14.213 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:15:17.215 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:15:17.218 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:15:17.221 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:15:17.221 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:15:17.484 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:15:51.220 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:15:53.339 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:15:53.344 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:15:53.347 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:15:53.348 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:15:53.589 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:16:35.648 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:16:39.668 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:16:39.674 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:16:39.677 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:16:39.677 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:16:40.072 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:23:28.420 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:23:35.138 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:23:35.142 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:23:35.145 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:23:35.145 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:23:35.432 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+23-01-2025 09:27:03.134 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:29:06.612 [main] [ERROR] backupmanager.MainApp - TEST
+java.lang.Exception: null
+	at backupmanager.MainApp.main(MainApp.java:27)
+23-01-2025 09:29:08.141 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:29:08.145 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Carbon
+23-01-2025 09:29:08.148 [main] [INFO ] backupmanager.MainApp - Application started
+23-01-2025 09:29:08.148 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+23-01-2025 09:29:08.639 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started

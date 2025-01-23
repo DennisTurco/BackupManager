@@ -1,6 +1,8 @@
 {
   "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
+  "LOG_FILE_STRING": "application.log",
+  "LOG_DIRECTORY_STRING": "src/main/resources/res/logs/",
   "RUNNING_BACKUPS_FILE_STRING": "running_backups.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
   "RES_DIRECTORY_STRING": "src/main/resources/res/",
@@ -22,7 +24,7 @@
     "Preferences": true,
     "Clear": true,
     "Donate": false,
-    "History": false,
+    "History": true,
     "InfoPage": true,
     "New": true,
     "Quit": true,
