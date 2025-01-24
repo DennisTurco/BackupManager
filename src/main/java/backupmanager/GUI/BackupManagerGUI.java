@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -59,6 +60,7 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.User;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
@@ -172,21 +174,58 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 return;
             }
 
-            // first access
-            EntryUserDialog userDialog = new EntryUserDialog(this, true);
-            userDialog.setVisible(true);
-            User newUser = userDialog.getUser();
+            // set language based on PC language
+            setLanguageBasedOnPcLanguage();
 
-            if (newUser == null) {
-                return;
-            }
-
-            JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
-            EmailSender.sendUserCreationEmail();
+            // user creation
+            createUser();
         } catch (IOException e) {
             logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
             JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
         }
+    }
+
+    private void createUser() {
+        // first access
+        EntryUserDialog userDialog = new EntryUserDialog(this, true);
+        userDialog.setVisible(true);
+        User newUser = userDialog.getUser();
+
+        if (newUser == null) {
+            return;
+        }
+
+        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+        EmailSender.sendUserCreationEmail();        
+    }
+    
+    private void setLanguageBasedOnPcLanguage() {
+        Locale defaultLocale = Locale.getDefault();
+        String language = defaultLocale.getLanguage();
+
+        logger.info("Setting default language to: " + language);
+
+        switch (language) {
+            case "en":
+                Preferences.setLanguage(LanguagesEnum.ENG);
+                break;
+            case "it":
+                Preferences.setLanguage(LanguagesEnum.ITA);
+                break;
+            case "es":
+                Preferences.setLanguage(LanguagesEnum.ESP);
+                break;
+            case "de":
+                Preferences.setLanguage(LanguagesEnum.DEU);
+                break;
+            case "fr":
+                Preferences.setLanguage(LanguagesEnum.FRA);
+                break;
+            default:
+                Preferences.setLanguage(LanguagesEnum.ENG);
+        }
+
+        reloadPreferences();
     }
 
     public void showWindow() {
@@ -218,6 +257,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     public void reloadPreferences() {
         logger.info("Reloading preferences");
+
+        Preferences.updatePreferencesToJSON();
 
         // load language
         try {

@@ -51,14 +51,14 @@
     "backup_name": "lezioni",
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-23T23:52:09.754976100",
+    "last_backup": "2025-01-24T09:15:13.625386700",
     "automatic_backup": true,
-    "next_date_backup": "2025-01-23T23:54:09.754976100",
+    "next_date_backup": "2025-01-24T09:17:13.625386700",
     "time_interval_backup": "0.0:2",
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
     "last_update_date": "2025-01-22T20:33:33.959194700",
-    "backup_count": 42,
+    "backup_count": 50,
     "max_backups_to_keep": 3
   },
   {

@@ -111,3 +111,1272 @@ java.io.IOException: Log file does not exist at path: src/main/resources/res/app
 23-01-2025 19:14:47.702 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
 23-01-2025 19:39:28.683 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
 23-01-2025 23:25:03.378 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:02:23.812 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:04:53.395 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:06:22.054 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:08:31.070 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:09:02.820 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:22:10.501 [main] [ERROR] backupmanager.Entities.Preferences - An error occurred while loading preferences: Not a JSON Object: null
+java.lang.IllegalStateException: Not a JSON Object: null
+	at com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91)
+	at backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32)
+	at backupmanager.MainApp.main(MainApp.java:27)
+24-01-2025 09:22:10.555 [main] [ERROR] EMAIL_ERROR_LOGGER - Subject: Critical Error Report
+
+User: Dennis Turco 
+Email: dennisturco@gmail.com 
+
+Has encountered the following error:
+Not a JSON Object: null
+[com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91), backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32), backupmanager.MainApp.main(MainApp.java:27)] 
+
+Last 300 rows of the application.log file:
+24-01-2025 00:23:05.240 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:05.240 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:05.832 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:05.837 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:05.838 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:23:23.656 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:23.662 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:30.747 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.765 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.771 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:30.771 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:31.330 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:31.336 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:31.339 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:33.993 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.012 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.017 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:25:34.018 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:25:34.562 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:25:34.566 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:25:34.567 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:25:45.909 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:45.915 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:26:14.658 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.690 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.691 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 16
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 14
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 12
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 10
+24-01-2025 00:26:17.724 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
+24-01-2025 00:26:17.725 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 8
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 7
+24-01-2025 08:44:17.396 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.415 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.422 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:44:17.423 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 08:44:18.073 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 08:44:18.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 08:44:18.080 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 08:57:06.535 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.553 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:06.561 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:06.561 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:06.562 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:06.911 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:06.921 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:06.924 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:06.932 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:57:06.935 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:57:06.960 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:57:06.968 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:57:06.969 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:57:06.980 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:57:06.985 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:57:06.986 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:57:06.988 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:57:06.993 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:57:06.997 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:57:07.001 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:57:07.004 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:57:07.008 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:57:07.016 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:57:07.018 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:57:07.020 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:57:07.026 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:57:07.028 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:57:07.035 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:57:07.037 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:57:07.039 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T08:59:07.037309
+24-01-2025 08:57:07.060 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:57:07.064 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 08:57:27.488 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:57:27.489 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:57:52.456 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.471 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.477 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:52.478 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:52.478 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:52.478 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:52.479 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:52.698 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:52.705 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:52.707 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:52.714 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:58:52.716 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:58:52.719 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:59:34.664 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:59:34.665 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:59:36.416 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.433 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.439 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:59:36.440 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:59:36.440 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:59:36.440 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:59:36.441 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:59:36.660 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:59:36.666 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:59:36.668 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:59:36.676 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:59:36.678 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:59:36.692 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:59:36.698 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:59:36.699 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:59:36.704 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:59:36.709 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:59:36.710 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:59:36.712 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:59:36.715 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:59:36.718 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:59:36.722 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:59:36.724 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:59:36.727 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:59:36.732 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:59:36.733 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:59:36.735 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:59:36.739 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:59:36.741 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:59:36.746 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:59:36.748 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:59:36.749 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:01:36.748135800
+24-01-2025 08:59:36.771 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:59:36.775 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:00:36.682 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:36.685 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:00:38.653 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:00:38.653 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:00:41.669 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.683 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 09:00:41.690 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:00:41.690 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 09:00:41.691 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:00:41.918 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:00:41.924 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:00:41.926 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:41.933 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:01:41.935 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:01:41.940 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:01:41.942 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:01:41.962 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:01:41.971 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 09:01:41.975 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 09:01:41.998 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 09:01:42.007 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 09:01:42.017 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:01:42.021 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 09:01:42.035 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 09:01:42.041 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 09:01:42.048 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:01:42.055 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 09:01:42.064 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 09:01:42.074 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 09:01:42.075 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:01:42.078 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 09:01:42.086 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 09:01:42.090 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 09:01:42.097 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:01:42.099 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:01:42.101 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:03:42.099728400
+24-01-2025 09:01:42.130 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:01:42.134 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:01:45.725 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:01:45.725 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:02:23.780 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.806 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.812 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:02:23.833 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.486 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.501 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.507 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:03:03.508 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:03:03.742 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:03:03.749 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:04:03.766 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:04:03.768 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:04:03.778 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:04:03.797 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:04:03.812 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:04:03.831 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:04:03.849 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:04:03.853 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:04:03.855 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:06:03.853839
+24-01-2025 09:04:03.878 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:04:03.880 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:04:03.881 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.57.06).zip
+24-01-2025 09:04:03.884 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:04:23.678 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:04:53.370 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.390 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.395 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:04:53.406 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.407 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.408 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.234 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.248 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:05:32.476 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:05:32.482 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:03.653 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:06:22.027 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.048 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.054 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:06:22.069 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.070 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.071 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.759 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.774 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.780 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:06:47.781 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:06:47.998 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:06:48.004 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:48.016 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:06:48.018 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:06:48.031 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:06:48.046 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:06:48.056 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:06:48.068 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:06:48.079 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:06:48.081 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:06:48.083 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:08:48.081563900
+24-01-2025 09:06:48.103 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:06:48.105 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:06:48.107 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.59.36).zip
+24-01-2025 09:06:48.109 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:08:31.025 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.058 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.070 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:08:31.084 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.087 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.088 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:32.657 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:08:41.354 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.369 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.377 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:08:41.378 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:08:41.591 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:08:41.597 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:02.795 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.814 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.820 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:09:02.829 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.831 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.832 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:10.334 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:09:13.330 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.344 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.350 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:09:13.351 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:09:13.564 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:09:13.571 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:13.579 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:09:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:09:13.593 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:09:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:09:13.621 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:09:13.633 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:09:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:09:13.648 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:09:13.650 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:11:13.648347600
+24-01-2025 09:09:13.670 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:09:13.672 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:09:13.674 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.01.41).zip
+24-01-2025 09:09:13.676 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:12:13.575 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:12:13.576 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:12:13.577 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:12:13.584 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:12:13.597 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:12:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:12:13.622 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:12:13.624 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:12:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:14:13.624643700
+24-01-2025 09:12:13.642 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:12:13.644 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:12:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.04.03).zip
+24-01-2025 09:12:13.648 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:15:13.581 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:15:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:15:13.583 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:15:13.589 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:15:13.600 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:15:13.610 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:15:13.623 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:15:13.625 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:15:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:17:13.625386700
+24-01-2025 09:15:13.638 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:15:13.639 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:15:13.640 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.06.48).zip
+24-01-2025 09:15:13.643 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:16:56.518 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:25:07.920 [main] [ERROR] backupmanager.Entities.Preferences - An error occurred while loading preferences: Not a JSON Object: null
+java.lang.IllegalStateException: Not a JSON Object: null
+	at com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91)
+	at backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32)
+	at backupmanager.MainApp.main(MainApp.java:27)
+24-01-2025 09:25:08.800 [main] [ERROR] EMAIL_ERROR_LOGGER - Subject: Critical Error Report
+
+User: Dennis Turco 
+Email: dennisturco@gmail.com 
+
+Has encountered the following error:
+Not a JSON Object: null
+[com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91), backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32), backupmanager.MainApp.main(MainApp.java:27)] 
+
+Last 300 rows of the application.log file:
+24-01-2025 00:23:05.240 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:05.240 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:05.832 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:05.837 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:05.838 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:23:23.656 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:23.662 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:30.747 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.765 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.771 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:30.771 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:31.330 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:31.336 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:31.339 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:33.993 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.012 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.017 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:25:34.018 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:25:34.562 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:25:34.566 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:25:34.567 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:25:45.909 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:45.915 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:26:14.658 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.690 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.691 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 16
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 14
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 12
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 10
+24-01-2025 00:26:17.724 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
+24-01-2025 00:26:17.725 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 8
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 7
+24-01-2025 08:44:17.396 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.415 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.422 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:44:17.423 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 08:44:18.073 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 08:44:18.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 08:44:18.080 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 08:57:06.535 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.553 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:06.561 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:06.561 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:06.562 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:06.911 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:06.921 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:06.924 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:06.932 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:57:06.935 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:57:06.960 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:57:06.968 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:57:06.969 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:57:06.980 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:57:06.985 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:57:06.986 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:57:06.988 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:57:06.993 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:57:06.997 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:57:07.001 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:57:07.004 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:57:07.008 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:57:07.016 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:57:07.018 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:57:07.020 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:57:07.026 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:57:07.028 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:57:07.035 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:57:07.037 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:57:07.039 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T08:59:07.037309
+24-01-2025 08:57:07.060 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:57:07.064 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 08:57:27.488 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:57:27.489 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:57:52.456 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.471 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.477 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:52.478 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:52.478 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:52.478 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:52.479 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:52.698 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:52.705 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:52.707 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:52.714 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:58:52.716 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:58:52.719 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:59:34.664 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:59:34.665 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:59:36.416 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.433 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.439 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:59:36.440 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:59:36.440 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:59:36.440 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:59:36.441 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:59:36.660 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:59:36.666 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:59:36.668 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:59:36.676 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:59:36.678 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:59:36.692 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:59:36.698 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:59:36.699 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:59:36.704 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:59:36.709 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:59:36.710 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:59:36.712 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:59:36.715 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:59:36.718 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:59:36.722 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:59:36.724 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:59:36.727 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:59:36.732 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:59:36.733 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:59:36.735 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:59:36.739 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:59:36.741 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:59:36.746 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:59:36.748 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:59:36.749 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:01:36.748135800
+24-01-2025 08:59:36.771 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:59:36.775 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:00:36.682 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:36.685 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:00:38.653 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:00:38.653 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:00:41.669 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.683 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 09:00:41.690 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:00:41.690 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 09:00:41.691 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:00:41.918 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:00:41.924 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:00:41.926 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:41.933 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:01:41.935 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:01:41.940 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:01:41.942 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:01:41.962 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:01:41.971 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 09:01:41.975 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 09:01:41.998 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 09:01:42.007 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 09:01:42.017 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:01:42.021 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 09:01:42.035 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 09:01:42.041 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 09:01:42.048 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:01:42.055 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 09:01:42.064 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 09:01:42.074 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 09:01:42.075 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:01:42.078 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 09:01:42.086 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 09:01:42.090 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 09:01:42.097 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:01:42.099 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:01:42.101 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:03:42.099728400
+24-01-2025 09:01:42.130 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:01:42.134 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:01:45.725 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:01:45.725 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:02:23.780 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.806 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.812 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:02:23.833 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.486 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.501 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.507 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:03:03.508 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:03:03.742 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:03:03.749 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:04:03.766 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:04:03.768 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:04:03.778 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:04:03.797 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:04:03.812 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:04:03.831 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:04:03.849 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:04:03.853 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:04:03.855 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:06:03.853839
+24-01-2025 09:04:03.878 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:04:03.880 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:04:03.881 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.57.06).zip
+24-01-2025 09:04:03.884 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:04:23.678 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:04:53.370 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.390 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.395 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:04:53.406 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.407 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.408 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.234 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.248 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:05:32.476 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:05:32.482 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:03.653 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:06:22.027 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.048 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.054 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:06:22.069 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.070 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.071 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.759 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.774 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.780 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:06:47.781 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:06:47.998 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:06:48.004 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:48.016 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:06:48.018 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:06:48.031 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:06:48.046 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:06:48.056 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:06:48.068 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:06:48.079 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:06:48.081 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:06:48.083 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:08:48.081563900
+24-01-2025 09:06:48.103 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:06:48.105 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:06:48.107 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.59.36).zip
+24-01-2025 09:06:48.109 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:08:31.025 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.058 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.070 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:08:31.084 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.087 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.088 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:32.657 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:08:41.354 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.369 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.377 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:08:41.378 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:08:41.591 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:08:41.597 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:02.795 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.814 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.820 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:09:02.829 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.831 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.832 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:10.334 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:09:13.330 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.344 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.350 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:09:13.351 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:09:13.564 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:09:13.571 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:13.579 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:09:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:09:13.593 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:09:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:09:13.621 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:09:13.633 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:09:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:09:13.648 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:09:13.650 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:11:13.648347600
+24-01-2025 09:09:13.670 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:09:13.672 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:09:13.674 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.01.41).zip
+24-01-2025 09:09:13.676 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:12:13.575 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:12:13.576 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:12:13.577 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:12:13.584 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:12:13.597 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:12:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:12:13.622 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:12:13.624 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:12:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:14:13.624643700
+24-01-2025 09:12:13.642 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:12:13.644 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:12:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.04.03).zip
+24-01-2025 09:12:13.648 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:15:13.581 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:15:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:15:13.583 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:15:13.589 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:15:13.600 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:15:13.610 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:15:13.623 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:15:13.625 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:15:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:17:13.625386700
+24-01-2025 09:15:13.638 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:15:13.639 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:15:13.640 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.06.48).zip
+24-01-2025 09:15:13.643 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:16:56.518 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:26:54.325 [main] [ERROR] backupmanager.Entities.Preferences - An error occurred while loading preferences: Not a JSON Object: null
+java.lang.IllegalStateException: Not a JSON Object: null
+	at com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91)
+	at backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32)
+	at backupmanager.MainApp.main(MainApp.java:27)
+24-01-2025 09:26:54.380 [main] [ERROR] EMAIL_ERROR_LOGGER - Subject: Critical Error Report
+
+User: Dennis Turco 
+Email: dennisturco@gmail.com 
+
+Has encountered the following error:
+Not a JSON Object: null
+[com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91), backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32), backupmanager.MainApp.main(MainApp.java:27)] 
+
+Last 300 rows of the application.log file:
+24-01-2025 00:23:05.240 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:05.240 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:05.832 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:05.837 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:05.838 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:23:23.656 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:23.662 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:30.747 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.765 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.771 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:30.771 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:31.330 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:31.336 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:31.339 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:33.993 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.012 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.017 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:25:34.018 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:25:34.562 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:25:34.566 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:25:34.567 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:25:45.909 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:45.915 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:26:14.658 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.690 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.691 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 16
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 14
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 12
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 10
+24-01-2025 00:26:17.724 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
+24-01-2025 00:26:17.725 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 8
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 7
+24-01-2025 08:44:17.396 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.415 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.422 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:44:17.423 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 08:44:18.073 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 08:44:18.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 08:44:18.080 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 08:57:06.535 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.553 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:06.561 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:06.561 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:06.562 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:06.911 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:06.921 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:06.924 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:06.932 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:57:06.935 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:57:06.960 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:57:06.968 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:57:06.969 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:57:06.980 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:57:06.985 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:57:06.986 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:57:06.988 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:57:06.993 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:57:06.997 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:57:07.001 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:57:07.004 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:57:07.008 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:57:07.016 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:57:07.018 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:57:07.020 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:57:07.026 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:57:07.028 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:57:07.035 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:57:07.037 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:57:07.039 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T08:59:07.037309
+24-01-2025 08:57:07.060 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:57:07.064 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 08:57:27.488 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:57:27.489 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:57:52.456 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.471 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.477 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:52.478 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:52.478 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:52.478 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:52.479 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:52.698 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:52.705 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:52.707 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:52.714 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:58:52.716 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:58:52.719 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:59:34.664 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:59:34.665 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:59:36.416 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.433 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.439 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:59:36.440 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:59:36.440 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:59:36.440 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:59:36.441 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:59:36.660 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:59:36.666 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:59:36.668 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:59:36.676 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:59:36.678 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:59:36.692 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:59:36.698 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:59:36.699 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:59:36.704 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:59:36.709 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:59:36.710 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:59:36.712 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:59:36.715 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:59:36.718 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:59:36.722 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:59:36.724 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:59:36.727 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:59:36.732 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:59:36.733 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:59:36.735 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:59:36.739 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:59:36.741 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:59:36.746 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:59:36.748 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:59:36.749 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:01:36.748135800
+24-01-2025 08:59:36.771 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:59:36.775 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:00:36.682 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:36.685 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:00:38.653 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:00:38.653 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:00:41.669 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.683 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 09:00:41.690 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:00:41.690 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 09:00:41.691 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:00:41.918 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:00:41.924 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:00:41.926 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:41.933 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:01:41.935 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:01:41.940 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:01:41.942 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:01:41.962 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:01:41.971 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 09:01:41.975 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 09:01:41.998 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 09:01:42.007 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 09:01:42.017 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:01:42.021 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 09:01:42.035 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 09:01:42.041 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 09:01:42.048 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:01:42.055 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 09:01:42.064 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 09:01:42.074 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 09:01:42.075 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:01:42.078 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 09:01:42.086 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 09:01:42.090 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 09:01:42.097 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:01:42.099 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:01:42.101 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:03:42.099728400
+24-01-2025 09:01:42.130 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:01:42.134 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:01:45.725 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:01:45.725 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:02:23.780 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.806 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.812 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:02:23.833 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.486 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.501 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.507 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:03:03.508 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:03:03.742 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:03:03.749 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:04:03.766 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:04:03.768 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:04:03.778 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:04:03.797 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:04:03.812 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:04:03.831 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:04:03.849 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:04:03.853 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:04:03.855 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:06:03.853839
+24-01-2025 09:04:03.878 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:04:03.880 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:04:03.881 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.57.06).zip
+24-01-2025 09:04:03.884 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:04:23.678 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:04:53.370 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.390 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.395 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:04:53.406 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.407 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.408 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.234 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.248 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:05:32.476 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:05:32.482 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:03.653 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:06:22.027 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.048 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.054 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:06:22.069 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.070 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.071 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.759 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.774 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.780 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:06:47.781 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:06:47.998 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:06:48.004 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:48.016 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:06:48.018 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:06:48.031 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:06:48.046 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:06:48.056 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:06:48.068 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:06:48.079 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:06:48.081 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:06:48.083 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:08:48.081563900
+24-01-2025 09:06:48.103 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:06:48.105 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:06:48.107 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.59.36).zip
+24-01-2025 09:06:48.109 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:08:31.025 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.058 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.070 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:08:31.084 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.087 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.088 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:32.657 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:08:41.354 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.369 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.377 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:08:41.378 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:08:41.591 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:08:41.597 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:02.795 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.814 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.820 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:09:02.829 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.831 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.832 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:10.334 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:09:13.330 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.344 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.350 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:09:13.351 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:09:13.564 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:09:13.571 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:13.579 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:09:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:09:13.593 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:09:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:09:13.621 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:09:13.633 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:09:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:09:13.648 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:09:13.650 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:11:13.648347600
+24-01-2025 09:09:13.670 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:09:13.672 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:09:13.674 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.01.41).zip
+24-01-2025 09:09:13.676 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:12:13.575 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:12:13.576 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:12:13.577 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:12:13.584 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:12:13.597 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:12:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:12:13.622 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:12:13.624 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:12:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:14:13.624643700
+24-01-2025 09:12:13.642 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:12:13.644 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:12:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.04.03).zip
+24-01-2025 09:12:13.648 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:15:13.581 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:15:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:15:13.583 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:15:13.589 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:15:13.600 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:15:13.610 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:15:13.623 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:15:13.625 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:15:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:17:13.625386700
+24-01-2025 09:15:13.638 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:15:13.639 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:15:13.640 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.06.48).zip
+24-01-2025 09:15:13.643 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:16:56.518 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:27:47.226 [main] [ERROR] backupmanager.Entities.Preferences - An error occurred while loading preferences: Not a JSON Object: null
+java.lang.IllegalStateException: Not a JSON Object: null
+	at com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91)
+	at backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32)
+	at backupmanager.MainApp.main(MainApp.java:27)
+24-01-2025 09:27:47.279 [main] [ERROR] EMAIL_ERROR_LOGGER - Subject: Critical Error Report
+
+User: Dennis Turco 
+Email: dennisturco@gmail.com 
+
+Has encountered the following error:
+Not a JSON Object: null
+[com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91), backupmanager.Entities.Preferences.loadPreferencesFromJSON(Preferences.java:32), backupmanager.MainApp.main(MainApp.java:27)] 
+
+Last 300 rows of the application.log file:
+24-01-2025 00:23:05.240 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:05.240 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:05.832 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:05.837 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:05.838 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:23:23.656 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:23.662 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:23:30.747 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.765 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:23:30.771 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:23:30.771 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:23:31.330 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:23:31.336 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:23:31.339 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:33.993 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.012 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 00:25:34.017 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 00:25:34.018 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 00:25:34.562 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 00:25:34.566 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 00:25:34.567 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+24-01-2025 00:25:45.909 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:25:45.915 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 00:26:14.658 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.690 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test
+24-01-2025 00:26:15.691 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 16
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
+24-01-2025 00:26:16.464 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 14
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
+24-01-2025 00:26:16.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 12
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
+24-01-2025 00:26:17.349 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 10
+24-01-2025 00:26:17.724 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
+24-01-2025 00:26:17.725 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 8
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd
+24-01-2025 00:26:18.106 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 7
+24-01-2025 08:44:17.396 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.415 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:44:17.422 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:44:17.423 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+24-01-2025 08:44:18.073 [AWT-EventQueue-0] [INFO ] b.Services.RunningBackupObserver - Observer for running backups started
+24-01-2025 08:44:18.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+24-01-2025 08:44:18.080 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennis Turco, dennisturco@gmail.com
+24-01-2025 08:57:06.535 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.553 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:06.560 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:06.561 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:06.561 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:06.562 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:06.911 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:06.921 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:06.924 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:06.932 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:57:06.935 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:57:06.960 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:57:06.968 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:57:06.969 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:57:06.980 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:57:06.985 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:57:06.986 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:57:06.988 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:57:06.993 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:57:06.997 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:57:07.001 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:57:07.004 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:57:07.008 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:57:07.016 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:57:07.018 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:57:07.020 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:57:07.026 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:57:07.028 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:57:07.035 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:57:07.037 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:57:07.039 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T08:59:07.037309
+24-01-2025 08:57:07.060 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:57:07.064 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 08:57:27.488 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:57:27.489 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:57:52.456 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.471 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:57:52.477 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:57:52.478 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:57:52.478 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:57:52.478 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:57:52.479 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:57:52.698 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:57:52.705 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:57:52.707 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:57:52.714 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:58:52.716 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:58:52.719 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 08:59:34.664 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 08:59:34.665 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 08:59:36.416 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.433 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 08:59:36.439 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 08:59:36.440 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 08:59:36.440 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 08:59:36.440 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 08:59:36.441 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 08:59:36.660 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 08:59:36.666 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 08:59:36.668 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 08:59:36.676 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 08:59:36.678 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 08:59:36.692 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 08:59:36.698 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 08:59:36.699 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 08:59:36.704 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 08:59:36.709 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 08:59:36.710 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 08:59:36.712 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 08:59:36.715 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 08:59:36.718 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 08:59:36.722 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 08:59:36.724 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 08:59:36.727 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 08:59:36.732 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 08:59:36.733 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 08:59:36.735 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 08:59:36.739 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 08:59:36.741 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 08:59:36.746 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 08:59:36.748 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 08:59:36.749 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:01:36.748135800
+24-01-2025 08:59:36.771 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 08:59:36.775 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:00:36.682 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:36.685 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:00:38.653 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:00:38.653 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:00:41.669 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.683 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForMissingData, using default value
+24-01-2025 09:00:41.689 [main] [WARN ] b.Enums.TranslationLoaderEnum - Unrecognized key in JSON: ErrorMessageForWrongEmail, using default value
+24-01-2025 09:00:41.690 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:00:41.690 [main] [DEBUG] backupmanager.MainApp - Background mode: true
+24-01-2025 09:00:41.691 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:00:41.918 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:00:41.924 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:00:41.926 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:00:41.933 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - No backup needed at this time.
+24-01-2025 09:01:41.935 [pool-1-thread-1] [DEBUG] b.Services.BackugrundService - Checking for automatic backup...
+24-01-2025 09:01:41.940 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:01:41.942 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:01:41.962 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:01:41.971 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding directory to zip: /
+24-01-2025 09:01:41.975 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia - Copia.txt
+24-01-2025 09:01:41.998 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021 - Copia.csv
+24-01-2025 09:01:42.007 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.csv
+24-01-2025 09:01:42.017 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:01:42.021 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2021.png
+24-01-2025 09:01:42.035 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.csv
+24-01-2025 09:01:42.041 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2022.png
+24-01-2025 09:01:42.048 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:01:42.055 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.csv
+24-01-2025 09:01:42.064 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2023.png
+24-01-2025 09:01:42.074 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.csv
+24-01-2025 09:01:42.075 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:01:42.078 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: lezioni2024.png
+24-01-2025 09:01:42.086 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: Nuovo documento di testo (2).txt
+24-01-2025 09:01:42.090 [pool-2-thread-1] [DEBUG] backupmanager.ZipFileVisitor - Adding file to zip: test.csv
+24-01-2025 09:01:42.097 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:01:42.099 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:01:42.101 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:03:42.099728400
+24-01-2025 09:01:42.130 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:01:42.134 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:01:45.725 [Thread-1] [DEBUG] b.Services.BackugrundService - Stopping background service
+24-01-2025 09:01:45.725 [Thread-1] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:02:23.780 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.806 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Carbon
+24-01-2025 09:02:23.812 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:02:23.833 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:02:23.839 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.486 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.501 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:03:03.507 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:03:03.508 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:03:03.742 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:03:03.749 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:04:03.766 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:04:03.768 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:04:03.778 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:04:03.797 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:04:03.812 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:04:03.831 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:04:03.849 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:04:03.853 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:04:03.855 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:06:03.853839
+24-01-2025 09:04:03.878 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:04:03.880 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:04:03.881 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.57.06).zip
+24-01-2025 09:04:03.884 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:04:23.678 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:04:53.370 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.390 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.395 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:04:53.406 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.407 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:04:53.408 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.234 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.248 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:05:32.255 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:05:32.476 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:05:32.482 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:03.653 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:06:22.027 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.048 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.054 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:06:22.069 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.070 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:22.071 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.759 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.774 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:06:47.780 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:06:47.781 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:06:47.998 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:06:48.004 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:06:48.016 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:06:48.018 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:06:48.031 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:06:48.046 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:06:48.056 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:06:48.068 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:06:48.079 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:06:48.081 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:06:48.083 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:08:48.081563900
+24-01-2025 09:06:48.103 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:06:48.105 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:06:48.107 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 08.59.36).zip
+24-01-2025 09:06:48.109 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:08:31.025 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.058 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.070 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:08:31.084 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.087 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:31.088 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:32.657 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:08:41.354 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.369 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:08:41.377 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:08:41.378 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:08:41.591 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:08:41.597 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:02.795 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.814 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.820 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 09:09:02.829 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.831 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:02.832 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:10.334 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:09:13.330 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.344 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = deu.json, theme = Carbon
+24-01-2025 09:09:13.350 [main] [INFO ] backupmanager.MainApp - Application started
+24-01-2025 09:09:13.351 [main] [INFO ] backupmanager.MainApp - Backup service starting in the background
+24-01-2025 09:09:13.564 [main] [INFO ] b.Services.BackugrundService - TrayIcon added
+24-01-2025 09:09:13.571 [main] [INFO ] backupmanager.Json.JSONConfigReader - Time interval set to 1 minutes
+24-01-2025 09:09:13.579 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:09:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:09:13.593 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:09:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:09:13.621 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:09:13.633 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:09:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:09:13.648 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:09:13.650 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:11:13.648347600
+24-01-2025 09:09:13.670 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:09:13.672 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:09:13.674 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.01.41).zip
+24-01-2025 09:09:13.676 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:12:13.575 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:12:13.576 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:12:13.577 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:12:13.584 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:12:13.597 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:12:13.609 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:12:13.622 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:12:13.624 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:12:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:14:13.624643700
+24-01-2025 09:12:13.642 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:12:13.644 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:12:13.646 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.04.03).zip
+24-01-2025 09:12:13.648 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:15:13.581 [pool-1-thread-1] [INFO ] b.Services.BackugrundService - Start backup process.
+24-01-2025 09:15:13.582 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> manual backup started
+24-01-2025 09:15:13.583 [AWT-EventQueue-0] [INFO ] b.Services.ZippingThread - Starting zipping process
+24-01-2025 09:15:13.589 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 25%
+24-01-2025 09:15:13.600 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 50%
+24-01-2025 09:15:13.610 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 75%
+24-01-2025 09:15:13.623 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Zipping progress: 100%
+24-01-2025 09:15:13.625 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Backup completed!
+24-01-2025 09:15:13.626 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Next date backup setted to: 2025-01-24T09:17:13.625386700
+24-01-2025 09:15:13.638 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleting old backups if necessary
+24-01-2025 09:15:13.639 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Found 4 matching files, exceeding max allowed: 3
+24-01-2025 09:15:13.640 [pool-2-thread-1] [INFO ] backupmanager.BackupOperations - Deleted old backup: lezioni (Backup 24-01-2025 09.06.48).zip
+24-01-2025 09:15:13.643 [pool-2-thread-1] [INFO ] b.Services.ZippingThread - Finalizing zipping process
+24-01-2025 09:16:56.518 [Thread-0] [INFO ] b.Services.BackugrundService - Background service stopped
+24-01-2025 09:47:22.138 [AWT-EventQueue-0] [ERROR] EMAIL_INFO_LOGGER - 
+
+New user registered with name: Dennis Turco
+Email: dennisturco@gmail.com

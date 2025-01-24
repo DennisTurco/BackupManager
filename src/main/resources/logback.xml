@@ -1,8 +1,5 @@
 <configuration debug="true">
 
-    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />--> <!--Scan this configuration for errors-->
-
-    <!-- Properties -->
     <property resource="config.properties" />
     <property name="smtp.user" value="${smtp.user}" />
     <property name="smtp.from" value="${smtp.from}" />
@@ -15,34 +12,23 @@
     <property name="MAX_HISTORY" value="7" />
     <property name="TOTAL_SIZE" value="100MB" />
 
-    <!-- Console appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Rolling file appender -->
     <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_DIR}/application-%d{dd-MM-yyyy}-%i.log.gz</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
             <maxHistory>${MAX_HISTORY}</maxHistory>
-            <totalSizeCap>${TOTAL_SIZE}</totalSizeCap>
         </rollingPolicy>
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- async appender -->
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="ROLLING_FILE" />
-    </appender>
-
-
-    <!--Appernder only for the error logs-->
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -59,54 +45,9 @@
         </filter>
     </appender>
 
-    <!-- Error email appender -->
-    <appender name="ERROR_EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
-        <smtpHost>${smtp.host}</smtpHost>
-        <to>${EMAIL_TO}</to>
-        <from>${smtp.from}</from>
-        <username>${smtp.user}</username>
-        <password>${smtp.password}</password>
-        <subject>${EMAIL_ERROR_SUBJECT}</subject>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
-        </layout>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
-    <!-- info email appender -->
-    <appender name="INFO_EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
-        <smtpHost>${smtp.host}</smtpHost>
-        <to>${EMAIL_TO}</to>
-        <from>${smtp.from}</from>
-        <username>${smtp.user}</username>
-        <password>${smtp.password}</password>
-        <subject>${EMAIL_INFO_SUBJECT}</subject>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger{36} - %msg%n</pattern>
-        </layout>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level> <!--Should be info, but if you change it, it doesn't work-->
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
-    <logger name="EMAIL_ERROR_LOGGER" level="ERROR" additivity="false">
-        <appender-ref ref="ERROR_EMAIL" />
-    </logger>
-
-    <logger name="EMAIL_INFO_LOGGER" level="ERROR" additivity="false"> <!--Should be info, but if you change it, it doesn't work-->
-        <appender-ref ref="INFO_EMAIL" />
-    </logger>
-
-    <!-- Root logger -->
     <root level="debug">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="ASYNC" />
+        <appender-ref ref="ROLLING_FILE" />
         <appender-ref ref="ERROR_FILE" />
     </root>
 </configuration>

@@ -149,7 +149,6 @@ public class PreferencesDialog extends javax.swing.JDialog {
             ThemeManager.updateThemeDialog(this);
 
             // update globally
-            Preferences.updatePreferencesToJSON();
             mainGui.reloadPreferences();
         } catch (IOException ex) {
             logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
