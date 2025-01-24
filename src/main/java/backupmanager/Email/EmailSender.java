@@ -42,10 +42,11 @@ public class EmailSender {
         
         int rows = 300;
         String emailMessage = String.format(
-            "Subject: %s\n\nUser: %s \nEmail: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
+            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
             user.email,
+            user.language,
             body,
             rows,
             getTextFromLogFile(rows)
@@ -63,7 +64,7 @@ public class EmailSender {
         User user = getCurrentUser();
 
         String userDetails = (user != null) 
-            ? "New user registered with name: " + user.getUserCompleteName()+ "\nEmail: " + user.email
+            ? "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language
             : "New user registered, but user details are unavailable.";
 
         String emailMessage = "\n\n" + userDetails;
