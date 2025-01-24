@@ -1,10 +1,9 @@
 package backupmanager.svg;
 
-import javax.swing.JMenuItem;
-
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import javax.swing.JMenu;
 
-public class SVGMenuItem extends JMenuItem {
+public class SVGMenu extends JMenu {
 
     public void setSvgImage(String imagePath, int width, int height) {
         if (imagePath == null) return;

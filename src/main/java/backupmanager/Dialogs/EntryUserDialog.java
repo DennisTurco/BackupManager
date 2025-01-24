@@ -67,9 +67,27 @@ public class EntryUserDialog extends javax.swing.JDialog {
 
         nameLabel.setText("Name");
 
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyReleased(evt);
+            }
+        });
+
         surnameLabel.setText("Surname");
 
+        surnameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                surnameTextFieldKeyReleased(evt);
+            }
+        });
+
         emailLabel.setText("Email");
+
+        emailTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTextFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,6 +155,24 @@ public class EntryUserDialog extends javax.swing.JDialog {
                 
         this.dispose();
     }//GEN-LAST:event_okBtnActionPerformed
+
+    private void emailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailTextFieldKeyReleased
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            okBtnActionPerformed(null);
+        }
+    }//GEN-LAST:event_emailTextFieldKeyReleased
+
+    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            surnameTextField.requestFocus();
+        }
+    }//GEN-LAST:event_nameTextFieldKeyReleased
+
+    private void surnameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_surnameTextFieldKeyReleased
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            emailTextField.requestFocus();
+        }
+    }//GEN-LAST:event_surnameTextFieldKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailLabel;

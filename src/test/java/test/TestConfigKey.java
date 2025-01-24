@@ -69,7 +69,6 @@ public class TestConfigKey {
         assertEquals(BACKUP_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
         assertEquals(CONFIG_FILE_STRING, ConfigKey.CONFIG_FILE_STRING.getValue());
         assertEquals(RES_DIRECTORY_STRING, ConfigKey.RES_DIRECTORY_STRING.getValue());
-        assertEquals(DONATE_PAGE_LINK, ConfigKey.DONATE_PAGE_LINK.getValue());
         assertEquals(ISSUE_PAGE_LINK, ConfigKey.ISSUE_PAGE_LINK.getValue());
         assertEquals(INFO_PAGE_LINK, ConfigKey.INFO_PAGE_LINK.getValue());
         assertEquals(EMAIL, ConfigKey.EMAIL.getValue());
@@ -98,7 +97,6 @@ public class TestConfigKey {
         // checks
         assertEquals(CONFIG_FILE_STRING, ConfigKey.CONFIG_FILE_STRING.getValue());
         assertEquals(RES_DIRECTORY_STRING, ConfigKey.RES_DIRECTORY_STRING.getValue());
-        assertEquals(DONATE_PAGE_LINK, ConfigKey.DONATE_PAGE_LINK.getValue());
     }
 
     @Test

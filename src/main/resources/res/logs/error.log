@@ -1380,3 +1380,7 @@ Last 300 rows of the application.log file:
 
 New user registered with name: Dennis Turco
 Email: dennisturco@gmail.com
+24-01-2025 10:19:36.677 [AWT-EventQueue-0] [ERROR] EMAIL_INFO_LOGGER - 
+
+New user registered with name: dennis turco
+Email: dennisturco@gmail.com

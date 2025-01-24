@@ -94,6 +94,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="nameTextField">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nameTextFieldKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="surnameLabel">
       <Properties>
@@ -101,6 +104,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="surnameTextField">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="surnameTextFieldKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="emailLabel">
       <Properties>
@@ -108,6 +114,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="emailTextField">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="emailTextFieldKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

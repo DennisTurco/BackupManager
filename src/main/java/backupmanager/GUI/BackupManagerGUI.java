@@ -125,6 +125,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         MenuPreferences.setVisible(config.isMenuItemEnabled(MenuItems.Preferences.name()));
         MenuClear.setVisible(config.isMenuItemEnabled(MenuItems.Clear.name()));
         MenuDonate.setVisible(config.isMenuItemEnabled(MenuItems.Donate.name()));
+        MenuPaypalDonate.setVisible(config.isMenuItemEnabled(MenuItems.PaypalDonate.name()));
+        MenuBuyMeACoffeDonate.setVisible(config.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name()));
         MenuHistory.setVisible(config.isMenuItemEnabled(MenuItems.History.name()));
         MenuInfoPage.setVisible(config.isMenuItemEnabled(MenuItems.InfoPage.name()));
         MenuNew.setVisible(config.isMenuItemEnabled(MenuItems.New.name()));
@@ -1192,7 +1194,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         MenuWebsite = new backupmanager.svg.SVGMenuItem();
         MenuInfoPage = new backupmanager.svg.SVGMenuItem();
         MenuShare = new backupmanager.svg.SVGMenuItem();
-        MenuDonate = new backupmanager.svg.SVGMenuItem();
+        MenuDonate = new backupmanager.svg.SVGMenu();
+        MenuPaypalDonate = new backupmanager.svg.SVGMenuItem();
+        MenuBuyMeACoffeDonate = new backupmanager.svg.SVGMenuItem();
         jMenu5 = new javax.swing.JMenu();
         MenuBugReport = new backupmanager.svg.SVGMenuItem();
         MenuSupport = new backupmanager.svg.SVGMenuItem();
@@ -1787,11 +1791,23 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         jMenu3.add(MenuShare);
 
         MenuDonate.setText("Donate");
-        MenuDonate.addActionListener(new java.awt.event.ActionListener() {
+
+        MenuPaypalDonate.setText("Paypal");
+        MenuPaypalDonate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuDonateActionPerformed(evt);
+                MenuPaypalDonateActionPerformed(evt);
             }
         });
+        MenuDonate.add(MenuPaypalDonate);
+
+        MenuBuyMeACoffeDonate.setText("Buy me a coffe");
+        MenuBuyMeACoffeDonate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuBuyMeACoffeDonateActionPerformed(evt);
+            }
+        });
+        MenuDonate.add(MenuBuyMeACoffeDonate);
+
         jMenu3.add(MenuDonate);
 
         jMenuBar1.add(jMenu3);
@@ -2129,10 +2145,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_renamePopupItemActionPerformed
 
-    private void MenuDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonateActionPerformed
-        logger.info("Event --> donate");
-        openWebSite(ConfigKey.DONATE_PAGE_LINK.getValue());
-    }//GEN-LAST:event_MenuDonateActionPerformed
+    private void MenuPaypalDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPaypalDonateActionPerformed
+        logger.info("Event --> paypal donation");
+        openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue());
+    }//GEN-LAST:event_MenuPaypalDonateActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
         logger.info("Event --> bug report");
@@ -2350,6 +2366,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPathSearch2ActionPerformed
 
+    private void MenuBuyMeACoffeDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuyMeACoffeDonateActionPerformed
+        logger.info("Event --> buymeacoffe donation");
+        openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue());
+    }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
+
     private void setTranslations() {
         // update table translations
         if (backups != null)
@@ -2471,6 +2492,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         MenuClear.setSvgImage("res/img/clear.svg", 16, 16);
         MenuHistory.setSvgImage("res/img/history.svg", 16, 16);
         MenuDonate.setSvgImage("res/img/donate.svg", 16, 16);
+        MenuPaypalDonate.setSvgImage("res/img/paypal.svg", 16, 16);
+        MenuBuyMeACoffeDonate.setSvgImage("res/img/buymeacoffee.svg", 16, 16);
         MenuPreferences.setSvgImage("res/img/settings.svg", 16, 16);
         MenuShare.setSvgImage("res/img/share.svg", 16, 16);
         MenuSupport.setSvgImage("res/img/support.svg", 16, 16);
@@ -2490,13 +2513,15 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem EditPoputItem;
     private javax.swing.JLabel ExportLabel;
     private backupmanager.svg.SVGMenuItem MenuBugReport;
+    private backupmanager.svg.SVGMenuItem MenuBuyMeACoffeDonate;
     private backupmanager.svg.SVGMenuItem MenuClear;
-    private backupmanager.svg.SVGMenuItem MenuDonate;
+    private backupmanager.svg.SVGMenu MenuDonate;
     private backupmanager.svg.SVGMenuItem MenuExport;
     private backupmanager.svg.SVGMenuItem MenuHistory;
     private backupmanager.svg.SVGMenuItem MenuImport;
     private backupmanager.svg.SVGMenuItem MenuInfoPage;
     private backupmanager.svg.SVGMenuItem MenuNew;
+    private backupmanager.svg.SVGMenuItem MenuPaypalDonate;
     private backupmanager.svg.SVGMenuItem MenuPreferences;
     private backupmanager.svg.SVGMenuItem MenuQuit;
     private backupmanager.svg.SVGMenuItem MenuSave;
