@@ -7,7 +7,12 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Json.JsonUser;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.net.SMTPAppender;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,6 +31,9 @@ public class EmailSender {
     
     // Logger for sending informational emails
     private static final Logger emailInfoLogger = LoggerFactory.getLogger("EMAIL_INFO_LOGGER");
+
+    // Logger for sending confirmation email
+    private static final Logger emailConfirmationLogger = LoggerFactory.getLogger("EMAIL_CONFIRMATION_LOGGER");
 
     /**
      * Sends a critical error email.
@@ -60,19 +68,38 @@ public class EmailSender {
     /**
      * Sends an informational email.
      */
-    public static void sendUserCreationEmail() {
-        User user = getCurrentUser();
-
-        String userDetails = (user != null) 
-            ? "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language
-            : "New user registered, but user details are unavailable.";
+    public static void sendUserCreationEmail(User user) {
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language;
 
         String emailMessage = "\n\n" + userDetails;
 
         // Should be info, but if you change it, it doesn't work
         emailInfoLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
 
-        logger.info("User creation info email sent with user: " + (user != null ? user.toString() : "Unknown user"));
+        logger.info("User creation info email sent with user: " + user.toString());
+    }
+
+    /**
+     * Sends an informational email.
+     */
+    public static void sendConfirmEmailToUser(User user) {
+        if (user == null) throw new IllegalArgumentException("User object cannot be null");
+    
+        String subject = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_SUBJECT);
+        String body = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_BODY);
+    
+        // Assicurati di assegnare il risultato della sostituzione
+        body = body.replace("[UserName]", user.getUserCompleteName());
+        body = body.replace("[SupportEmail]", ConfigKey.EMAIL.getValue());
+    
+        String emailMessage = subject + "\n\n" + body;
+
+        updateEmailRecipient(user.email);
+    
+        // Should be info, but if you change it, it doesn't work
+        emailConfirmationLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
+    
+        logger.info("Confirmation registration email sent to the user: " + user.toString());
     }
 
     private static User getCurrentUser() {
@@ -115,4 +142,17 @@ public class EmailSender {
 
         return String.join("\n", lastLines);
     }
+
+    private static void updateEmailRecipient(String newRecipient) {
+        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+
+        //get the'appender SMTP
+        SMTPAppender smtpAppender = (SMTPAppender) context.getLogger("EMAIL_CONFIRMATION_LOGGER").getAppender("EMAIL_CONFIRMATION_LOGGER");
+
+        // if exists -> update
+        if (smtpAppender != null) {
+            smtpAppender.getToList().clear();
+            smtpAppender.addTo(newRecipient);
+        }
+    } 
 }

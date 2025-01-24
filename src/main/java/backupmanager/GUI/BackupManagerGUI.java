@@ -198,7 +198,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         }
 
         JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
-        EmailSender.sendUserCreationEmail();        
+
+        EmailSender.sendUserCreationEmail(newUser);
+        EmailSender.sendConfirmEmailToUser(newUser);
     }
     
     private void setLanguageBasedOnPcLanguage() {

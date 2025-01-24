@@ -169,6 +169,8 @@ public class TranslationLoaderEnum {
         USER_EMAIL("Email", "Email"),
         ERROR_MESSAGE_FOR_MISSING_DATA("ErrorMessageForMissingData", "Please fill in all the required fields."),
         ERROR_MESSAGE_FOR_WRONG_EMAIL("ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
+        EMAIL_CONFIRMATION_SUBJECT("EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
+        EMAIL_CONFIRMATION_BODY("EmailConfirmationBody", "Hi [UserName],\n\nThank you for downloading and registering **Backup Manager**, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at **[SupportEmail]**.\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"),
     
         // ProgressBackupFrame
         PROGRESS_BACKUP_TITLE("ProgressBackupTitle", "Backup in progress"),

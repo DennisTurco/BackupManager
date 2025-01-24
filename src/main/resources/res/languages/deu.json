@@ -116,7 +116,9 @@
       "Surname": "Nachname",
       "Email": "E-Mail",
       "ErrorMessageForMissingData": "Bitte füllen Sie alle erforderlichen Felder aus.",
-      "ErrorMessageForWrongEmail": "Die angegebene E-Mail-Adresse ist ungültig. Bitte geben Sie eine korrekte Adresse an."
+      "ErrorMessageForWrongEmail": "Die angegebene E-Mail-Adresse ist ungültig. Bitte geben Sie eine korrekte Adresse an.",
+      "EmailConfirmationSubject": "Vielen Dank, dass Sie sich für Backup Manager entschieden haben!",
+      "EmailConfirmationBody": "Hallo [UserName],\n\nVielen Dank, dass Sie Backup Manager heruntergeladen und registriert haben - Ihr neues Tool für eine sichere und effiziente Verwaltung Ihrer Backups!\n\nDies ist eine automatisierte E-Mail, die zur Bestätigung Ihrer Registrierung gesendet wurde. Wir werden Sie nur per E-Mail kontaktieren, um Sie über neue Versionen oder wichtige Updates der Anwendung zu informieren.\n\nFalls Sie Fragen haben, Unterstützung benötigen oder Vorschläge machen möchten, stehen wir Ihnen jederzeit gerne zur Verfügung. Sie können uns unter [SupportEmail] erreichen.\n\nVielen Dank nochmals, dass Sie sich für Backup Manager entschieden haben, und viel Erfolg bei der Verwaltung Ihrer Backups!\n\nMit freundlichen Grüßen,\nDas Backup Manager-Team"
     },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Backup läuft",
