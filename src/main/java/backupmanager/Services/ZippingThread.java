@@ -128,7 +128,10 @@ public class ZippingThread {
      * @param timeout  The maximum time to wait for termination, in seconds.
      */
     public static void stopExecutorService(int timeout) {
+        logger.debug("Stopping zipping executor");
+
         if (executorService == null || executorService.isShutdown()) {
+            logger.debug("executorService == null || executorService.isShutdown()");
             return;
         }
     
@@ -142,6 +145,7 @@ public class ZippingThread {
                     logger.warn("executorService did not terminate after forced shutdown");
                 }
             }
+            logger.info("Zipping executor stopped");
         } catch (InterruptedException e) {
             logger.error("Shutdown process interrupted. Forcing shutdown... With message: " + e.getMessage(), e);
             executorService.shutdownNow(); // Forcefully stop tasks on interruption

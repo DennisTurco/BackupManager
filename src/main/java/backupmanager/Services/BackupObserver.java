@@ -19,15 +19,15 @@ import backupmanager.Table.TableDataManager;
  * if a backup starts caused by the BackugroundService and we open the GUI, thre are 2 different instance of this program, 
  * so we need something like an observer that constantly checks if there are some backups in progress.
  */
-public class RunningBackupObserver {
-    private static final Logger logger = LoggerFactory.getLogger(RunningBackupObserver.class);
+public class BackupObserver {
+    private static final Logger logger = LoggerFactory.getLogger(BackupObserver.class);
 
     private final ScheduledExecutorService scheduler;
     private final BackupTable backupTable;
     private final DateTimeFormatter formatter;
     private final long millisecondsToWait;
 
-    public RunningBackupObserver(BackupTable backupTable, DateTimeFormatter formatter, int millisecondsToWait) {
+    public BackupObserver(BackupTable backupTable, DateTimeFormatter formatter, int millisecondsToWait) {
         this.millisecondsToWait = millisecondsToWait;
         this.backupTable = backupTable;
         this.formatter = formatter;
@@ -49,7 +49,7 @@ public class RunningBackupObserver {
                         int value = backup.getProgress();
                         if (value < 100) {
                             TableDataManager.updateProgressBarPercentage(backupTable, backupEntity, value, formatter);
-                        } else if (value == 100) {
+                        } else {
                             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, backupTable, formatter);
                         }
                     }

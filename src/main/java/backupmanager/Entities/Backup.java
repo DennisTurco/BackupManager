@@ -1,7 +1,5 @@
 package backupmanager.Entities;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Json.JSONAutoBackup;
+import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
+import backupmanager.Managers.ExceptionManager;
 
 public class Backup {
     private static final Logger logger = LoggerFactory.getLogger(Backup.class);
@@ -120,7 +119,7 @@ public class Backup {
     public static Backup getBackupByName(String backupName) {
         List<Backup> backups;
         try {
-            backups = new JSONAutoBackup().readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            backups = new JSONBackup().readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
             for (Backup backup : backups) {
                 if (backup.getBackupName().equals(backupName)) {
                     return backup;
@@ -128,7 +127,7 @@ public class Backup {
             }
         } catch (IOException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
 
         return null;

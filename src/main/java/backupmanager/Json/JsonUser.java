@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import backupmanager.Entities.User;
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
+import backupmanager.Managers.ExceptionManager;
 
 public class JsonUser {
     private static final Logger logger = LoggerFactory.getLogger(JsonUser.class);
@@ -80,7 +80,7 @@ public class JsonUser {
             logger.info("User successfully written to JSON user file with data: " + user.toString());
         } catch (IOException ex) {
             logger.error("An error occurred while writing the user JSON: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

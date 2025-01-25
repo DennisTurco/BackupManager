@@ -31,14 +31,14 @@ import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.Json.JSONAutoBackup;
+import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
 
 public class BackugrundService {
     private static final Logger logger = LoggerFactory.getLogger(BackugrundService.class);
 
     private ScheduledExecutorService scheduler;
-    private final JSONAutoBackup json = new JSONAutoBackup();
+    private final JSONBackup json = new JSONBackup();
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private TrayIcon trayIcon = null;
     private BackupManagerGUI guiInstance = null;

@@ -11,12 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,15 +23,12 @@ import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -47,13 +38,12 @@ import org.slf4j.LoggerFactory;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.BackupOperations;
-import backupmanager.Exporter;
+import backupmanager.Managers.ImportExportManager;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.Backup;
-import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.TimeInterval;
@@ -65,11 +55,13 @@ import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONAutoBackup;
+import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Json.JsonUser;
+import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ThemeManager;
-import backupmanager.Services.RunningBackupObserver;
+import backupmanager.Managers.WebsiteManager;
+import backupmanager.Services.BackupObserver;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
@@ -87,9 +79,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
     public static Backup currentBackup;
-    private final RunningBackupObserver observer;
+    private final BackupObserver observer;
     private static List<Backup> backups;
-    private static JSONAutoBackup JSON;
+    private static JSONBackup JSON;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
     public static BackupTableModel tableModel;
@@ -111,7 +103,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
         
-        JSON = new JSONAutoBackup();
+        JSON = new JSONBackup();
         currentBackup = new Backup();
         saveChanged = true;
         
@@ -150,7 +142,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         // first initialize the table, then start observer thread
         initializeTable();
-        observer = new RunningBackupObserver(backupTable, dateForfolderNameFormatter, 3000);
+        observer = new BackupObserver(backupTable, dateForfolderNameFormatter, 3000);
         observer.start();
 
         setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
@@ -270,7 +262,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             setTranslations();
         } catch (IOException ex) {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         
         // load theme
@@ -307,7 +299,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                     desktop.open(folder);
                 } catch (IOException ex) {
                     logger.error("An error occurred: " + ex.getMessage(), ex);
-                    openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                    ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
                 }
             } else {
                 logger.warn("Desktop not supported on this operating system");
@@ -503,7 +495,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: "  + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (HeadlessException ex) {
             logger.error("Error saving backup", ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_SAVING_BACKUP_MESSAGE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -602,7 +594,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             lastBackupLabel.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.LAST_BACKUP) + last_date);
         } catch(Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 	
@@ -611,7 +603,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             updateCurrentFiedsByBackup(currentBackup);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         setAutoBackupPreference(currentBackup.isAutoBackup());
     }
@@ -705,83 +697,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             lastBackupLabel.setText(dateStr);
         }
         else lastBackupLabel.setText("");
-    }
-    
-    public static void openExceptionMessage(String errorMessage, String stackTrace) {
-        Object[] options = {TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
-
-        if (errorMessage == null) {
-            errorMessage = "";
-        }
-
-        stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
-
-        EmailSender.sendErrorEmail("Critical Error Report", stackTrace);
-
-        String stackTraceMessage = TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
-
-        int choice;
-
-        // Set a maximum width for the error message
-        final int MAX_WIDTH = 500;
-
-        // Keep displaying the dialog until the "Close" option (index 0) is chosen
-        do {
-            if (stackTraceMessage.length() > 1500) {
-                stackTraceMessage = stackTraceMessage.substring(0, 1500) + "...";
-            }
-
-            // Create a JTextArea to hold the error message with line wrapping
-            JTextArea messageArea = new JTextArea(stackTraceMessage);
-            messageArea.setLineWrap(true);
-            messageArea.setWrapStyleWord(true);
-            messageArea.setEditable(false);
-            messageArea.setColumns(50); // Approximate width, adjust as necessary
-
-            // Limit the maximum width
-            messageArea.setSize(new Dimension(MAX_WIDTH, Integer.MAX_VALUE));
-            messageArea.setPreferredSize(new Dimension(MAX_WIDTH, messageArea.getPreferredSize().height));
-
-            // Put the JTextArea in a JScrollPane for scrollable display if needed
-            JScrollPane scrollPane = new JScrollPane(messageArea);
-            scrollPane.setPreferredSize(new Dimension(MAX_WIDTH, 300));
-
-            // Display the option dialog with the JScrollPane
-            String error = TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE);
-            choice = JOptionPane.showOptionDialog(
-                null,
-                scrollPane,                           // The JScrollPane containing the error message
-                error,                                // The error message/title
-                JOptionPane.DEFAULT_OPTION,           // Option type (default option type)
-                JOptionPane.ERROR_MESSAGE,            // Message type (error message icon)
-                null,                            // Icon (null means default icon)
-                options,                              // The options for the buttons
-                options[0]                            // The default option (Close)
-            );
-
-            if (choice == 1) {
-                StringSelection selection = new StringSelection(stackTrace);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
-                logger.info("Error text has been copied to the clipboard");
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
-            } else if (choice == 2) {
-                openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
-            }
-        } while (choice == 1 || choice == 2);
-    }
-    
-    private static void openWebSite(String reportUrl) {
-        try {
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                    desktop.browse(new URI(reportUrl));
-                }
-            }
-        } catch (IOException | URISyntaxException e) {
-            logger.error("Failed to open the web page: " + e.getMessage(), e);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPENING_WEBSITE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     private void displayBackupList(List<Backup> backups) {
@@ -951,7 +866,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
@@ -981,7 +896,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             savedChanges(true);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
@@ -2149,12 +2064,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuPaypalDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPaypalDonateActionPerformed
         logger.info("Event --> paypal donation");
-        openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue());
+        WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue());
     }//GEN-LAST:event_MenuPaypalDonateActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
         logger.info("Event --> bug report");
-        openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
+        WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
     }//GEN-LAST:event_MenuBugReportActionPerformed
 
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
@@ -2203,39 +2118,17 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
         logger.info("Event --> shard website");
-        openWebSite(ConfigKey.SHARD_WEBSITE.getValue());
+        WebsiteManager.openWebSite(ConfigKey.SHARD_WEBSITE.getValue());
     }//GEN-LAST:event_MenuWebsiteActionPerformed
 
     private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
         logger.info("Event --> support");
-        
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-
-            if (desktop.isSupported(Desktop.Action.MAIL)) {
-                String subject = "Support - Backup Manager";
-                String mailTo = "mailto:" + ConfigKey.EMAIL.getValue() + "?subject=" + encodeURI(subject);
-
-                try {
-                    URI uri = new URI(mailTo);
-                    desktop.mail(uri);
-                } catch (IOException | URISyntaxException ex) {
-                    logger.error("Failed to send email: " + ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_UNABLE_TO_SEND_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                logger.warn("Mail action is unsupported in your system's desktop environment.");
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            logger.warn("Desktop integration is unsupported on this system.");
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        }
+        WebsiteManager.sendEmail();
     }//GEN-LAST:event_MenuSupportActionPerformed
     
     private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
         logger.info("Event --> shard website");
-        openWebSite(ConfigKey.INFO_PAGE_LINK.getValue());
+        WebsiteManager.openWebSite(ConfigKey.INFO_PAGE_LINK.getValue());
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
@@ -2244,55 +2137,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImportActionPerformed
         logger.info("Event --> importing backup list");
-
-        JFileChooser jfc = new JFileChooser(ConfigKey.RES_DIRECTORY_STRING.getValue());
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("JSON Files (*.json)", "json");
-        jfc.setFileFilter(jsonFilter);
-        int returnValue = jfc.showSaveDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            if (selectedFile.isFile() && selectedFile.getName().toLowerCase().endsWith(".json")) {
-                logger.info("File imported: " + selectedFile);
-
-                Preferences.setBackupList(new BackupList(selectedFile.getParent()+File.separator, selectedFile.getName()));
-                Preferences.updatePreferencesToJSON();
-
-                try {
-                    backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-                    TableDataManager.updateTableWithNewBackupList(backups, formatter);
-                } catch (IOException ex) {
-                    logger.error("An error occurred: " + ex.getMessage(), ex);
-                }
-
-                JOptionPane.showMessageDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        backups = ImportExportManager.importListFromJson(this, JSON, formatter);
     }//GEN-LAST:event_MenuImportActionPerformed
 
     private void MenuExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportActionPerformed
         logger.info("Event --> exporting backup list");
-
-        Path desktopPath = Paths.get(System.getProperty("user.home"), "Desktop", Preferences.getBackupList().getFile());
-        Path sourcePath = Paths.get(Preferences.getBackupList().getDirectory() + Preferences.getBackupList().getFile());
-
-        try {
-            Files.copy(sourcePath, desktopPath, StandardCopyOption.REPLACE_EXISTING);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_EXPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_EXPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
-        } catch (java.nio.file.NoSuchFileException ex) {
-            logger.error("Source file not found: " + ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error: The source file was not found.\nPlease check the file path.", "Export Error", JOptionPane.ERROR_MESSAGE);
-        } catch (java.nio.file.AccessDeniedException ex) {
-            logger.error("Access denied to desktop: " + ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error: Access to the Desktop is denied.\nPlease check folder permissions and try again.","Export Error", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            logger.error("Unexpected error: " + ex.getMessage());
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+        ImportExportManager.exportListToJson();
     }//GEN-LAST:event_MenuExportActionPerformed
 
     private void maxBackupCountSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_maxBackupCountSpinnerStateChanged
@@ -2323,11 +2173,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPathSearch1ActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        Exporter.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ImportExportManager.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        Exporter.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ImportExportManager.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
@@ -2370,7 +2220,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuBuyMeACoffeDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuyMeACoffeDonateActionPerformed
         logger.info("Event --> buymeacoffe donation");
-        openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue());
+        WebsiteManager.openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue());
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
 
     private void setTranslations() {
@@ -2474,7 +2324,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             backups = null;
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     

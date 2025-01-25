@@ -1384,3 +1384,7 @@ Email: dennisturco@gmail.com
 
 New user registered with name: dennis turco
 Email: dennisturco@gmail.com
+24-01-2025 19:35:33.580 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 20:51:54.766 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 21:13:58.472 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!
+24-01-2025 23:01:48.213 [main] [ERROR] backupmanager.MainApp - Argument "--wrong_argument" not valid!

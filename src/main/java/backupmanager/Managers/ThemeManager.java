@@ -25,7 +25,6 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
 import backupmanager.Entities.Preferences;
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 
 // https://www.formdev.com/flatlaf/#demo
 // https://www.formdev.com/flatlaf/themes/
@@ -102,7 +101,7 @@ public class ThemeManager {
 
         } catch (UnsupportedLookAndFeelException ex) {
             logger.error("Error setting LookAndFeel: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

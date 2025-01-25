@@ -1,6 +1,5 @@
 package backupmanager.Dialogs;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
@@ -8,6 +7,7 @@ import backupmanager.Enums.ThemesEnum;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.GUI.BackupManagerGUI;
 
@@ -152,7 +152,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
             mainGui.reloadPreferences();
         } catch (IOException ex) {
             logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }  
     }//GEN-LAST:event_applyBtnActionPerformed
 

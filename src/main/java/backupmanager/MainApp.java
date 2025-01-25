@@ -10,8 +10,8 @@ import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.Managers.ExceptionManager;
 
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
 import backupmanager.Services.BackugrundService;
 
 public class MainApp {
@@ -48,7 +48,7 @@ public class MainApp {
                 service.startService();
             } catch (IOException ex) {
                 logger.error("An error occurred: {}", ex.getMessage(), ex);
-                openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
         }
         else if (!isBackgroundMode) {

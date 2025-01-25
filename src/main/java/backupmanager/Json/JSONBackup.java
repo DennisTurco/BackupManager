@@ -27,12 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
-import backupmanager.Interfaces.IJSONAutoBackup;
+import backupmanager.Interfaces.IJSONBackup;
+import backupmanager.Managers.ExceptionManager;
 
-public class JSONAutoBackup implements IJSONAutoBackup {
+public class JSONBackup implements IJSONBackup {
     
-    private static final Logger logger = LoggerFactory.getLogger(JSONAutoBackup.class);
+    private static final Logger logger = LoggerFactory.getLogger(JSONBackup.class);
 
     @Override
     public List<Backup> readBackupListFromJSON(String directoryPath, String filename) throws IOException {
@@ -111,7 +111,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
     
         } catch (IOException | JsonSyntaxException | NullPointerException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return backupList;
     }
@@ -152,7 +152,7 @@ public class JSONAutoBackup implements IJSONAutoBackup {
             gson.toJson(updatedBackupArray, writer);
         } catch (IOException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     
@@ -190,15 +190,15 @@ public class JSONAutoBackup implements IJSONAutoBackup {
                 gson.toJson(backupList, writer);
             } catch (IOException ex) {
                 logger.error("An error occurred: " + ex.getMessage(),  ex);
-                openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
 
         } catch (IOException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (JsonSyntaxException ex) {
             logger.error("Invalid JSON format: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

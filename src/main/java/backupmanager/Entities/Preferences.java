@@ -17,7 +17,7 @@ import com.google.gson.JsonParser;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
+import backupmanager.Managers.ExceptionManager;
 
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
@@ -44,7 +44,7 @@ public class Preferences {
             updatePreferencesToJSON(); // Create the JSON file with default preferences
         } catch (Exception ex) {
             logger.error("An error occurred while loading preferences: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -69,7 +69,7 @@ public class Preferences {
 
         } catch (IOException ex) {
             logger.error("An error occurred during updating preferences to json operation: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -150,7 +150,7 @@ public class Preferences {
             logger.warn("Invalid language name: " + selectedLanguage);
         } catch (Exception ex) {
             logger.error("An error occurred during setting language operation: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
     public static void setTheme(String selectedTheme) {
@@ -165,7 +165,7 @@ public class Preferences {
             logger.warn("Invalid theme name: " + selectedTheme);
         } catch (Exception ex) {
             logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

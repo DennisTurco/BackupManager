@@ -31,14 +31,14 @@ import backupmanager.GUI.BackupManagerGUI;
 import static backupmanager.GUI.BackupManagerGUI.backupTable;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
-import static backupmanager.GUI.BackupManagerGUI.openExceptionMessage;
-import backupmanager.Json.JSONAutoBackup;
+import backupmanager.Json.JSONBackup;
+import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    private static final JSONAutoBackup JSON = new JSONAutoBackup();
+    private static final JSONBackup JSON = new JSONBackup();
     
     public static void SingleBackup(ZippingContext context) {
         if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
@@ -74,7 +74,7 @@ public class BackupOperations {
             ZippingThread.zipDirectory(path1, path2 + ".zip", context);
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             reEnableButtonsAndTable(context);
         }
     }
@@ -127,7 +127,7 @@ public class BackupOperations {
             }
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
-            openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (IOException e) {
             logger.error("Error saving file");
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);

@@ -1,12 +1,20 @@
-package backupmanager;
+package backupmanager.Managers;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +26,72 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
+import backupmanager.BackupOperations;
 import backupmanager.Entities.Backup;
+import backupmanager.Entities.BackupList;
 import backupmanager.Entities.Preferences;
+import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.Json.JSONBackup;
+import backupmanager.Table.TableDataManager;
 
-public class Exporter {
+public class ImportExportManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(Exporter.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImportExportManager.class);
+
+    // return the Backup list. Null if the operations fail or cancelled by the user
+    public static List<Backup> importListFromJson(BackupManagerGUI main, JSONBackup JSON, DateTimeFormatter formatter) {
+        JFileChooser jfc = new JFileChooser(ConfigKey.RES_DIRECTORY_STRING.getValue());
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("JSON Files (*.json)", "json");
+        jfc.setFileFilter(jsonFilter);
+        int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            if (selectedFile.isFile() && selectedFile.getName().toLowerCase().endsWith(".json")) {
+                logger.info("File imported: " + selectedFile);
+
+                Preferences.setBackupList(new BackupList(selectedFile.getParent()+File.separator, selectedFile.getName()));
+                Preferences.updatePreferencesToJSON();
+
+                try {
+                    List<Backup> backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                    TableDataManager.updateTableWithNewBackupList(backups, formatter);
+                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
+                    return backups;
+                } catch (IOException ex) {
+                    logger.error("An error occurred: " + ex.getMessage(), ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        return null;
+    }
+
+    public static void exportListToJson() {
+        Path desktopPath = Paths.get(System.getProperty("user.home"), "Desktop", Preferences.getBackupList().getFile());
+        Path sourcePath = Paths.get(Preferences.getBackupList().getDirectory() + Preferences.getBackupList().getFile());
+
+        try {
+            Files.copy(sourcePath, desktopPath, StandardCopyOption.REPLACE_EXISTING);
+            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_EXPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_EXPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
+        } catch (java.nio.file.NoSuchFileException ex) {
+            logger.error("Source file not found: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: The source file was not found.\nPlease check the file path.", "Export Error", JOptionPane.ERROR_MESSAGE);
+        } catch (java.nio.file.AccessDeniedException ex) {
+            logger.error("Access denied to desktop: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: Access to the Desktop is denied.\nPlease check folder permissions and try again.","Export Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            logger.error("Unexpected error: " + ex.getMessage());
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
+    }
 
     public static void exportAsPDF(ArrayList<Backup> backups, String headers) {
         logger.info("Exporting backups to PDF");
@@ -171,5 +237,4 @@ public class Exporter {
             logger.info("Exporting backups to CSV finished");
         }
     }
-
 }

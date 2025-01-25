@@ -23,21 +23,7 @@ public class JSONConfigReader {
         this.directoryPath = directoryPath;
         loadConfig(); // Load configuration at instantiation
     }
-
-    public boolean isLogLevelEnabled(String level) {
-        if (config == null) {
-            logger.error("Configuration not loaded. Cannot check log level");
-            return false;
-        }
-
-        JsonObject logService = config.getAsJsonObject("LogService");
-        if (logService != null) {
-            JsonElement isEnabled = logService.get(level);
-            return isEnabled != null && isEnabled.getAsBoolean();
-        }
-        return false; // Default to false if LogService or level is missing
-    }
-
+    
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
             logger.warn("Configuration not loaded. Cannot check menu items");
@@ -51,17 +37,8 @@ public class JSONConfigReader {
         }
         return true; // Default to true
     }
-
-    public int getMaxLines() {
-        return getConfigValue("MaxLines", 1500); // Default to 1500
-    }
-
-    public int getLinesToKeepAfterFileClear() {
-        return getConfigValue("LinesToKeepAfterFileClear", 150); // Default to 150
-    }
-
     public int getMaxCountForSameBackup() {
-        return getConfigValue("MaxCountForSameBackup", 3); // Default to 3
+        return getConfigValue("MaxCountForSameBackup", 1); // Default to 1
     }
 
     public int readCheckForBackupTimeInterval() throws IOException {

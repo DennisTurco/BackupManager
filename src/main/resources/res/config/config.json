@@ -42,14 +42,13 @@
     "Support": true,
     "Website": true
   },
-
   "BackupService": {
     "value": 1,
     "type": "int",
     "description": "Interval in minutes to check for auto backup"
   },
   "MaxCountForSameBackup": {
-    "value": 3,
+    "value": 1,
     "type": "int",
     "description": "Max count for the same backup in the same directory"
   }
