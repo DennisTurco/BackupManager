@@ -32,6 +32,7 @@ import static backupmanager.GUI.BackupManagerGUI.backupTable;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Json.JSONBackup;
+import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
@@ -44,9 +45,6 @@ public class BackupOperations {
         if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
         logger.info("Event --> manual backup started");
-
-        if (context.singleBackupBtn != null) context.singleBackupBtn.setEnabled(false);
-        if (context.autoBackupBtn != null) context.autoBackupBtn.setEnabled(false);
 
         try {
             String temp = "\\";
@@ -71,6 +69,8 @@ public class BackupOperations {
             name1 = removeExtension(name1);
             path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
 
+            logger.info("date backup: " + date);
+
             ZippingThread.zipDirectory(path1, path2 + ".zip", context);
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
@@ -91,9 +91,7 @@ public class BackupOperations {
         if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         if (path1 == null) throw new IllegalArgumentException("Initial path cannot be null!");
         if (path2 == null) throw new IllegalArgumentException("Destination path cannot be null!");
-        
-        LocalDateTime dateNow = LocalDateTime.now();
-           
+                   
         logger.info("Backup completed!");
 
         reEnableButtonsAndTable(context);
@@ -101,13 +99,11 @@ public class BackupOperations {
         // next day backup update
         if (context.backup.isAutoBackup() == true) {
             TimeInterval time = context.backup.getTimeIntervalBackup();
-            LocalDateTime nextDateBackup = dateNow.plusDays(time.getDays())
-                    .plusHours(time.getHours())
-                    .plusMinutes(time.getMinutes());
+            LocalDateTime nextDateBackup = BackupManager.getNexDateBackup(time);
             context.backup.setNextDateBackup(nextDateBackup);
             logger.info("Next date backup setted to: " + nextDateBackup);
         }
-        context.backup.setLastBackup(dateNow);
+        context.backup.setLastBackup(LocalDateTime.now());
         context.backup.setBackupCount(context.backup.getBackupCount()+1);
                     
         try {
@@ -120,7 +116,7 @@ public class BackupOperations {
                 }
             }
             
-            updateBackup(backups, context.backup);
+            BackupManager.updateBackup(backups, context.backup);
             
             if (context.trayIcon != null) { 
                 context.trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + context.backup.getBackupName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
@@ -192,8 +188,6 @@ public class BackupOperations {
     }
 
     public static void reEnableButtonsAndTable(ZippingContext context) {
-        if (context.singleBackupBtn != null) context.singleBackupBtn.setEnabled(true);
-        if (context.autoBackupBtn != null) context.autoBackupBtn.setEnabled(true);
         if (context.interruptBackupPopupItem != null) context.interruptBackupPopupItem.setEnabled(false);
         if (context.deleteBackupPopupItem != null) context.deleteBackupPopupItem.setEnabled(true);
 
@@ -202,24 +196,6 @@ public class BackupOperations {
         if (backupTable != null) 
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, backupTable, formatter);
     } 
-    
-    public static void updateBackupList(List<Backup> backups) {
-        if (backups == null) throw new IllegalArgumentException("Backup list is null!");
-            
-        JSON.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
-        
-        if (BackupManagerGUI.model != null)
-            TableDataManager.updateTableWithNewBackupList(backups, formatter);
-    }
-    
-    public static void updateBackup(List<Backup> backups, Backup updatedBackup) {
-        if (updatedBackup == null) throw new IllegalArgumentException("Backup is null!");
-        
-        JSON.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
-        
-        if (BackupManagerGUI.model != null)
-            TableDataManager.updateTableWithNewBackupList(backups, formatter);
-    }
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)

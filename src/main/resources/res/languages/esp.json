@@ -8,7 +8,9 @@
       "OkButton": "Aceptar",
       "CancelButton": "Cancelar",
       "CloseButton": "Cerrar",
-      "ApplyButton": "Aplicar"
+      "ApplyButton": "Aplicar",
+      "SaveButton": "Guardar",
+      "CreateButton": "Crear"
     },
     "Menu": {
       "File": "Archivo",
@@ -46,6 +48,8 @@
       "AutoBackupButtonOFF": "Copia de Seguridad Automática (DESACTIVADA)",
       "InitialPathPlaceholder": "Ruta inicial",
       "DestinationPathPlaceholder": "Ruta de destino",
+      "BackupName": "Nombre de la copia de seguridad: ",
+      "BackupNameTooltip": "(Requerido) Nombre de la copia de seguridad", 
       "InitialPathTooltip": "(Requerido) Ruta inicial",
       "DestinationPathTooltip": "(Requerido) Ruta de destino",
       "InitialFileChooserTooltip": "Abrir explorador de archivos",
@@ -134,6 +138,8 @@
     },
     "Dialogs": {
       "ErrorGenericTitle": "Error",
+      "WarningGenericTitle": "Advertencia",
+      "WarningBackupAlreadyInProgressMessage": "Ya hay una copia de seguridad en progreso. No es posible realizar copias de seguridad en paralelo.",
       "ErrorMessageForFolderNotExisting": "La carpeta no existe o no es válida",
       "ErrorMessageForSavingFileWithPathsEmpty": "No se puede guardar el archivo. Tanto la ruta inicial como la de destino deben especificarse y no pueden estar vacías",
       "BackupSavedCorrectlyTitle": "Copia Guardada",

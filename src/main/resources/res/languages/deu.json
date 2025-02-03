@@ -8,7 +8,9 @@
       "OkButton": "Ok",
       "CancelButton": "Abbrechen",
       "CloseButton": "Schließen",
-      "ApplyButton": "Anwenden"
+      "ApplyButton": "Anwenden",
+      "SaveButton": "Speichern",
+      "CreateButton": "Erstellen"
     },
     "Menu": {
       "File": "Datei",
@@ -46,6 +48,8 @@
       "AutoBackupButtonOFF": "Auto-Backup (AUS)",
       "InitialPathPlaceholder": "Anfangspfad",
       "DestinationPathPlaceholder": "Zielpfad",
+      "BackupName": "Sicherungsname: ",
+      "BackupNameTooltip": "(Erforderlich) Sicherungsname",
       "InitialPathTooltip": "(Erforderlich) Anfangspfad",
       "DestinationPathTooltip": "(Erforderlich) Zielpfad",
       "InitialFileChooserTooltip": "Dateiexplorer öffnen",
@@ -134,6 +138,8 @@
     },
     "Dialogs": {
       "ErrorGenericTitle": "Fehler",
+      "WarningGenericTitle": "Warnung",
+      "WarningBackupAlreadyInProgressMessage": "Es läuft bereits eine Sicherung. Es ist nicht möglich, parallele Sicherungen durchzuführen.",
       "ErrorMessageForFolderNotExisting": "Der Ordner existiert nicht oder ist ungültig",
       "ErrorMessageForSavingFileWithPathsEmpty": "Die Datei konnte nicht gespeichert werden. Sowohl der Anfangs- als auch der Zielpfad müssen angegeben werden und dürfen nicht leer sein",
       "BackupSavedCorrectlyTitle": "Backup gespeichert",

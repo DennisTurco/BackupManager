@@ -61,6 +61,8 @@ public class TranslationLoaderEnum {
         OK_BUTTON("OkButton", "Ok"),
         CANCEL_BUTTON("CancelButton", "Cancel"),
         APPLY_BUTTON("ApplyButton", "Apply"),
+        SAVE_BUTTON("SaveButton", "Save"),
+        CREATE_BUTTON("CreateButton", "Create"),
 
         // Menu
         FILE("File", "File"),
@@ -98,6 +100,8 @@ public class TranslationLoaderEnum {
         AUTO_BACKUP_BUTTON_OFF("AutoBackupButtonOFF", "Auto Backup (OFF)"),
         INITIAL_PATH_PLACEHOLDER("InitialPathPlaceholder", "Initial path"),
         DESTINATION_PATH_PLACEHOLDER("DestinationPathPlaceholder", "Destination path"),
+        BACKUP_NAME("BackupName", "Backup name: "),
+        BACKUP_NAME_TOOLTIP("BackupNameTooltip", "(Required) Backup name"),
         INITIAL_PATH_TOOLTIP("InitialPathTooltip", "(Required) Initial path"),
         DESTINATION_PATH_TOOLTIP("DestinationPathTooltip", "(Required) Destination path"),
         INITIAL_FILE_CHOOSER_TOOLTIP("InitialFileChooserTooltip", "Open file explorer"),
@@ -186,6 +190,8 @@ public class TranslationLoaderEnum {
 
         // Dialogs
         ERROR_GENERIC_TITLE("ErrorGenericTitle", "Error"),
+        WARNING_GENERIC_TITLE("WarningGenericTitle", "Warning"),
+        WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE("WarningBackupAlreadyInProgressMessage", "There is already a backup in progress. It is not possible to perform parallel backups"),
         ERROR_MESSAGE_FOR_FOLDER_NOT_EXISTING("ErrorMessageForFolderNotExisting", "The folder does not exist or is invalid"),
         ERROR_MESSAGE_FOR_SAVING_FILE_WITH_PATHS_EMPTY("ErrorMessageForSavingFileWithPathsEmpty", "Unable to save the file. Both the initial and destination paths must be specified and cannot be empty"),
         BACKUP_SAVED_CORRECTLY_TITLE("BackupSavedCorrectlyTitle", "Backup saved"),

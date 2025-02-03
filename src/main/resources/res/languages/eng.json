@@ -8,7 +8,9 @@
     "OkButton": "Ok",
     "CancelButton": "Cancel",
     "CloseButton":"Close",
-    "ApplyButton":"Apply"
+    "ApplyButton":"Apply",
+    "SaveButton": "Save",
+    "CreateButton": "Create"
   },
   "Menu": {
     "File": "File",
@@ -46,6 +48,8 @@
     "AutoBackupButtonOFF": "Auto Backup (OFF)",
     "InitialPathPlaceholder": "Initial path",
     "DestinationPathPlaceholder": "Destination path",
+    "BackupName": "Backup name: ",
+    "BackupNameTooltip": "(Required) Backup name",
     "InitialPathTooltip": "(Required) Initial path",
     "DestinationPathTooltip": "(Required) Destination path",
     "InitialFileChooserTooltip": "Open file explorer",
@@ -134,6 +138,8 @@
   },
   "Dialogs": {
     "ErrorGenericTitle":"Error",
+    "WarningGenericTitle": "Warning",
+    "WarningBackupAlreadyInProgressMessage": "There is already a backup in progress. It is not possible to perform parallel backups",
     "ErrorMessageForFolderNotExisting":"The folder does not exist or is invalid",
     "ErrorMessageForSavingFileWithPathsEmpty":"Unable to save the file. Both the initial and destination paths must be specified and cannot be empty",
     "BackupSavedCorrectlyTitle":"Backup saved",

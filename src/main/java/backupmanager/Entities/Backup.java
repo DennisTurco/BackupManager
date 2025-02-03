@@ -107,7 +107,7 @@ public class Backup {
         );
     }
 
-    public static Backup getBackupByName(ArrayList<Backup> backups, String backupName) {
+    public static Backup getBackupByName(List<Backup> backups, String backupName) {
         for (Backup backup : backups) {
             if (backup.getBackupName().equals(backupName)) {
                 return backup;

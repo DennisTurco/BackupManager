@@ -14,7 +14,7 @@ public class TimePicker extends javax.swing.JDialog {
     private TimeInterval timeInterval;
     private boolean closeOk;
     
-    public TimePicker(java.awt.Frame parent, TimeInterval timeInterval, boolean modal) {
+    public TimePicker(java.awt.Dialog parent, TimeInterval timeInterval, boolean modal) {
         super(parent, modal);
         
         closeOk = false;

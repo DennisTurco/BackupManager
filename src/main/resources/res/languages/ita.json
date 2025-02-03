@@ -8,7 +8,9 @@
     "CloseButton": "Chiudi",
     "OkButton": "Ok",
     "CancelButton": "Annulla",
-    "ApplyButton":"Applica"
+    "ApplyButton":"Applica",
+    "SaveButton": "Salva",
+    "CreateButton": "Crea"
   },
   "Menu": {
     "File": "File",
@@ -46,6 +48,8 @@
     "AutoBackupButtonOFF": "Backup Automatico (OFF)",
     "InitialPathPlaceholder": "Percorso iniziale",
     "DestinationPathPlaceholder": "Percorso di destinazione",
+    "BackupName": "Nome del backup: ",
+    "BackupNameTooltip": "(Obbligatorio) Nome del backup",
     "InitialPathTooltip": "(Obbligatorio) Percorso iniziale",
     "DestinationPathTooltip": "(Obbligatorio) Percorso di destinazione",
     "InitialFileChooserTooltip": "Apri esplora file",
@@ -134,6 +138,8 @@
   },
   "Dialogs": {
     "ErrorGenericTitle": "Errore",
+    "WarningGenericTitle": "Avviso",
+    "WarningBackupAlreadyInProgressMessage": "È già in corso un backup. Non è possibile eseguire backup in parallelo.",
     "ErrorMessageForFolderNotExisting": "La cartella non esiste o non è valida",
     "ErrorMessageForSavingFileWithPathsEmpty": "Impossibile salvare il file. Entrambi i percorsi iniziale e di destinazione devono essere specificati e non possono essere vuoti",
     "BackupSavedCorrectlyTitle": "Backup salvato",

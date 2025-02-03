@@ -1,14 +1,14 @@
 [
   {
     "backup_name": "testone",
-    "start_path": "C:\\Users\\Utente\\Desktop\\DJI_20240925130642_0030_D.JPG",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2024-12-31T16:20:00.957459400",
+    "start_path": "CIAO899999",
+    "destination_path": "C:\\Users\\Utente\\Desktop^\u0026^",
+    "last_backup": "2025-02-02T13:25:36.508664500",
     "automatic_backup": false,
-    "notes": "",
+    "notes": "ghjgdsahjgdashjd\nasdiuasdh uijlasgdyhjkgasyjhdgasjhkgdhjasgdhjgashjgdhjasgd",
     "creation_date": "2024-12-12T21:44:37.283133900",
-    "last_update_date": "2025-01-05T18:14:25.744958600",
-    "backup_count": 29,
+    "last_update_date": "2025-02-03T14:04:08.053368500",
+    "backup_count": 30,
     "max_backups_to_keep": 3
   },
   {
@@ -16,10 +16,10 @@
     "start_path": "C:\\Users\\Utente\\Desktop\\test.txt",
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2024-12-12T23:29:01.963425500",
-    "automatic_backup": false,
+    "automatic_backup": true,
     "notes": "",
     "creation_date": "2024-12-12T22:52:41.381624500",
-    "last_update_date": "2025-01-08T21:41:45.263245",
+    "last_update_date": "2025-02-03T14:06:01.140223200",
     "backup_count": 9,
     "max_backups_to_keep": 3
   },
@@ -85,17 +85,6 @@
     "max_backups_to_keep": 3
   },
   {
-    "backup_name": "asd",
-    "start_path": "asdasd",
-    "destination_path": "saddsa",
-    "automatic_backup": false,
-    "notes": "",
-    "creation_date": "2024-12-28T00:01:26.084230400",
-    "last_update_date": "2025-01-22T20:06:43.393044800",
-    "backup_count": 0,
-    "max_backups_to_keep": 3
-  },
-  {
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
@@ -127,7 +116,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2025-01-08T13:02:22.396939",
-    "last_update_date": "2025-01-08T13:02:22.396939",
+    "last_update_date": "2025-02-03T10:36:32.513605800",
     "backup_count": 0,
     "max_backups_to_keep": 3
   },
@@ -202,6 +191,28 @@
     "creation_date": "2025-01-23T19:16:38.608844600",
     "last_update_date": "2025-01-24T23:21:08.651193",
     "backup_count": 6,
+    "max_backups_to_keep": 1
+  },
+  {
+    "backup_name": "culo",
+    "start_path": "culo",
+    "destination_path": "culo",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2025-02-03T14:15:23.595071300",
+    "last_update_date": "2025-02-03T14:31:01.684345700",
+    "backup_count": 0,
+    "max_backups_to_keep": 1
+  },
+  {
+    "backup_name": "ffff",
+    "start_path": "asd",
+    "destination_path": "asd",
+    "automatic_backup": false,
+    "notes": "",
+    "creation_date": "2025-02-03T14:15:41.746248700",
+    "last_update_date": "2025-02-03T14:30:52.636804900",
+    "backup_count": 0,
     "max_backups_to_keep": 1
   }
 ]

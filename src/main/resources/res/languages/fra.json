@@ -8,7 +8,9 @@
       "OkButton": "OK",
       "CancelButton": "Annuler",
       "CloseButton": "Fermer",
-      "ApplyButton": "Appliquer"
+      "ApplyButton": "Appliquer",
+      "SaveButton": "Enregistrer",
+      "CreateButton": "Créer"
     },
     "Menu": {
       "File": "Fichier",
@@ -46,6 +48,8 @@
       "AutoBackupButtonOFF": "Sauvegarde Automatique (DÉSACTIVÉE)",
       "InitialPathPlaceholder": "Chemin initial",
       "DestinationPathPlaceholder": "Chemin de destination",
+      "BackupName": "Nom de la sauvegarde : ",
+      "BackupNameTooltip": "(Requis) Nom de la sauvegarde",
       "InitialPathTooltip": "(Requis) Chemin initial",
       "DestinationPathTooltip": "(Requis) Chemin de destination",
       "InitialFileChooserTooltip": "Ouvrir l'explorateur de fichiers",
@@ -134,6 +138,8 @@
     },
     "Dialogs": {
       "ErrorGenericTitle": "Erreur",
+      "WarningGenericTitle": "Avertissement",
+      "WarningBackupAlreadyInProgressMessage": "Une sauvegarde est déjà en cours. Il n'est pas possible d'effectuer des sauvegardes en parallèle.",
       "ErrorMessageForFolderNotExisting": "Le dossier n'existe pas ou est invalide",
       "ErrorMessageForSavingFileWithPathsEmpty": "Impossible d'enregistrer le fichier. Les chemins initial et de destination doivent être spécifiés et ne peuvent pas être vides",
       "BackupSavedCorrectlyTitle": "Sauvegarde Enregistrée",

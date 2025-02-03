@@ -1,25 +1,23 @@
 package backupmanager.GUI;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
+
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Services.ZippingThread;
 
-public class BackupProgressGUI extends javax.swing.JFrame {
+
+public class BackupProgressGUI extends javax.swing.JDialog {
     public BackupProgressGUI(String initialPath, String destinationPath) {
         initComponents();
-        
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
+                
         // logo application
-        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon);
+       Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
+       this.setIconImage(icon);
         
         initialPathLabel.setText(initialPath);
         destinationPathLabel.setText(destinationPath);
@@ -56,7 +54,6 @@ public class BackupProgressGUI extends javax.swing.JFrame {
 
         jLabel4.setText("jLabel4");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Backup in progress");
         setMaximumSize(new java.awt.Dimension(430, 175));
         setMinimumSize(new java.awt.Dimension(430, 175));
@@ -136,7 +133,6 @@ public class BackupProgressGUI extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed

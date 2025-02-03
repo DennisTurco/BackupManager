@@ -173,7 +173,7 @@ public class BackugrundService {
         private void executeBackups(List<Backup> backups) {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Backup backup : backups) {
-                    ZippingContext context = new ZippingContext(backup, trayIcon, null, null, null, null, null, null);
+                    ZippingContext context = new ZippingContext(backup, trayIcon, null, null, null, null);
                     BackupOperations.SingleBackup(context);
                 }
             });
