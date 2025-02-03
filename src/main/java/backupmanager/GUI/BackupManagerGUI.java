@@ -63,14 +63,14 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
-    private BackupManager backupManager;
+    private final BackupManager backupManager;
     private final BackupObserver observer;
     public static List<Backup> backups;
     private static JSONBackup JSON;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
     public static BackupTableModel tableModel;
-    private BackupProgressGUI progressBar;
+    public static BackupProgressGUI progressBar;
     private Integer selectedRow;
     private final String currentVersion;
     
@@ -246,9 +246,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                backupManager.openBackup((String) backupTable.getValueAt(selectedRow, 0), progressBar);
+                backupManager.openBackup((String) backupTable.getValueAt(selectedRow, 0));
 
-                backupManager.openBackupEntryDialog(progressBar);
+                backupManager.openBackupEntryDialog();
             }
         });
 
@@ -806,7 +806,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuNewActionPerformed
         
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups, progressBar);        
+        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups);        
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
@@ -850,7 +850,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 logger.info("Double-click on row: " + selectedRow);
-                backupManager.openBackup(backupName, progressBar);
+                backupManager.openBackup(backupName);
             }
 
             // Handling single left mouse button click
@@ -890,7 +890,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void RunBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunBackupPopupItemActionPerformed
-        backupManager.popupItemRunBackup(selectedRow, backupTable, backups, progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+        backupManager.popupItemRunBackup(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_RunBackupPopupItemActionPerformed
 
     private void CopyBackupNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyBackupNamePopupItemActionPerformed
@@ -958,7 +958,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuExportActionPerformed
 
     private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
-        backupManager.popupItemInterrupt(selectedRow, backupTable, backups, progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+        backupManager.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed

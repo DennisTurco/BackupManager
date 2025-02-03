@@ -1,7 +1,5 @@
 package backupmanager.Table;
 
-import static backupmanager.GUI.BackupManagerGUI.tableModel;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -59,8 +57,9 @@ public class TableDataManager {
                         targetColumnIndex
                     );
                 } else {
-                    logger.debug("Update the value of the progress in the table, for backup: " + backup.getBackupName());
-                    logger.debug("Setting value: " + value + "; at: " + rowIndex + "; targetColumnIndex: " + targetColumnIndex);
+                    // logger.debug("Update the value of the progress in the table, for backup: " + backup.getBackupName());
+                    // logger.debug("Setting value: " + value + "; at: " + rowIndex + "; targetColumnIndex: " + targetColumnIndex);
+                    
                     // Update the value of the progress in the table
                     table.getModel().setValueAt(value, rowIndex, targetColumnIndex);
                 }

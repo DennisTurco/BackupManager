@@ -20,6 +20,7 @@ import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.BackupManager;
@@ -34,26 +35,25 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     private String backupOnText;
     private String backupOffText;
     private Backup currentBackup;
-    private BackupProgressGUI progressBar;
     private boolean closeOk;
     private boolean create;
     private TimeInterval timeInterval;
 
-    public BackupEntryDialog(java.awt.Frame parent, boolean modal, BackupProgressGUI progressBar) {
+    public BackupEntryDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
-        initializeDialog(progressBar);
+        initializeDialog();
         setAutoBackupOff();
         this.create = true;
         okButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CREATE_BUTTON));
     }
 
-    public BackupEntryDialog(java.awt.Frame parent, boolean modal, Backup currentBackup, BackupProgressGUI progressBar) {
+    public BackupEntryDialog(java.awt.Frame parent, boolean modal, Backup currentBackup) {
         super(parent, modal);
         
         this.currentBackup = currentBackup;
 
-        initializeDialog(progressBar);
+        initializeDialog();
         updateCurrentFiedsByBackup(currentBackup);
         backupName.setText(currentBackup.getBackupName());
         backupName.setEditable(false);
@@ -63,11 +63,10 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         okButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON));
     }
 
-    private void initializeDialog(BackupProgressGUI progressBar) {
+    private void initializeDialog() {
         initComponents();
 
         setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
-        this.progressBar = progressBar;
         this.closeOk = false;
 
         setSvgImages();
@@ -247,10 +246,10 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         //------------------------------COPY THE FILE OR DIRECTORY------------------------------
         logger.info("date backup: " + date);
     	
-        progressBar = new BackupProgressGUI(path1, path2);
-        progressBar.setVisible(true);
+        BackupManagerGUI.progressBar = new BackupProgressGUI(path1, path2);
+        BackupManagerGUI.progressBar.setVisible(true);
 
-        ZippingContext context = new ZippingContext(currentBackup, null, backupTable, progressBar, null, null);
+        ZippingContext context = new ZippingContext(currentBackup, null, backupTable, BackupManagerGUI.progressBar, null, null);
         ZippingThread.zipDirectory(path1, path2 + ".zip", context);
 
         //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file

@@ -20,12 +20,6 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.GUI.BackupProgressGUI;
-import backupmanager.Json.JSONBackup;
-import backupmanager.Services.BackupObserver;
-import backupmanager.Table.BackupTable;
-import backupmanager.Table.TableDataManager;
 import backupmanager.BackupOperations;
 import backupmanager.Dialogs.BackupEntryDialog;
 import backupmanager.Dialogs.PreferencesDialog;
@@ -36,6 +30,12 @@ import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.GUI.BackupProgressGUI;
+import backupmanager.Json.JSONBackup;
+import backupmanager.Services.BackupObserver;
+import backupmanager.Table.BackupTable;
+import backupmanager.Table.TableDataManager;
 
 public final class BackupManager {
     private static final Logger logger = LoggerFactory.getLogger(BackupManager.class);
@@ -61,19 +61,19 @@ public final class BackupManager {
         updateBackupList(backups);
     }
 
-    public void openBackup(String backupName, BackupProgressGUI progressBar) {
+    public void openBackup(String backupName) {
         logger.info("Event --> opening backup");
 
         Backup backup = Backup.getBackupByName(backupName);
         
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup, progressBar);
+        BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
         dialog.setVisible(true);
     }
 
     public void newBackup(BackupProgressGUI progressBar) {
         logger.info("Event --> new backup");
         
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false, progressBar);
+        BackupEntryDialog dialog = new BackupEntryDialog(main, false);
         dialog.setVisible(true);
     }
 
@@ -232,8 +232,8 @@ public final class BackupManager {
         }
     }
 
-    public void openBackupEntryDialog(BackupProgressGUI progressBar) {
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false, progressBar);
+    public void openBackupEntryDialog() {
+        BackupEntryDialog dialog = new BackupEntryDialog(main, false);
         dialog.setVisible(true);
     }
     
@@ -400,12 +400,12 @@ public final class BackupManager {
 
 
     // ################################################# Popup items
-    public void popupItemInterrupt(int selectedRow, BackupTable backupTable, List<Backup> backups, BackupProgressGUI progressBar, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+    public void popupItemInterrupt(int selectedRow, BackupTable backupTable, List<Backup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-            ZippingContext context = new ZippingContext(backup, null, backupTable, progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+            ZippingContext context = new ZippingContext(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
             BackupOperations.interruptBackupProcess(context);
         }
     }
@@ -488,28 +488,28 @@ public final class BackupManager {
         }
     }
 
-    public void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<Backup> backups, BackupProgressGUI progressBar, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+    public void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<Backup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
             
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
             
-            progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
+            BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
 
-            ZippingContext context = new ZippingContext(backup, null, backupTable, progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+            ZippingContext context = new ZippingContext(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
             BackupOperations.SingleBackup(context);
         }
     }
 
-    public void popupItemEditBackupName(int selectedRow, BackupTable backupTable, List<Backup> backups, BackupProgressGUI progressBar) {
+    public void popupItemEditBackupName(int selectedRow, BackupTable backupTable, List<Backup> backups) {
         if (selectedRow != -1) {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
 
             logger.info("Edit row : " + selectedRow);
-            openBackup(backup.getBackupName(), progressBar);
+            openBackup(backup.getBackupName());
         }
     }
 
