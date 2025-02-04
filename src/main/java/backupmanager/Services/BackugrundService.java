@@ -155,7 +155,7 @@ public class BackugrundService {
                 // i have to check that the backup is not running 
                 boolean found = false;
                 for (RunningBackups running : runningBackups) {
-                    if (backup.getBackupName().equals(running.getBackupName())){
+                    if (backup.getBackupName().equals(running.backupName)){
                         found = true;
                         break;
                     }

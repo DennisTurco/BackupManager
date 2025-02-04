@@ -662,7 +662,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         logger.info("Event --> Changing auto backup preference");
 
         // checks
-        if (!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) {
+        if (!currentBackup.isAutoBackup() && !BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) {
             setAutoBackupOff();
             return;
         }

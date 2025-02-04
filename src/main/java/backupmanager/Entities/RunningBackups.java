@@ -1,24 +1,17 @@
 package backupmanager.Entities;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import backupmanager.BackupOperations;
 import backupmanager.Enums.BackupStatusEnum;
@@ -29,10 +22,19 @@ import backupmanager.Enums.ConfigKey;
 // i use this object to know wich backups are currently running across the instances
 public class RunningBackups {
     private static final Logger logger = LoggerFactory.getLogger(RunningBackups.class);
-    private final String backupName;
-    private final String path;
-    private final int progress;
-    private final BackupStatusEnum status;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public final String backupName;
+    public final String path;
+    public int progress;
+    public BackupStatusEnum status;
+
+    public RunningBackups() {
+        this.backupName = null;
+        this.path = null;
+        this.progress = 0;
+        this.status = null;
+    }   
 
     public RunningBackups(String backupName, String path, int progress, BackupStatusEnum status) {
         this.backupName = backupName;
@@ -41,33 +43,21 @@ public class RunningBackups {
         this.status = status;
     }
 
-    public static List<RunningBackups> readBackupListFromJSON() {
-        Gson gson = new Gson();
-        Path filePath = Paths.get(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue());
+    private static File getBackupFile() {
+        return new File(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue());
+    }
+
+    public static synchronized List<RunningBackups> readBackupListFromJSON() {
+        File file = getBackupFile();
         
         try {
             // Check if the file exists, otherwise create it with an empty array
-            if (!Files.exists(filePath)) {
+            if (!file.exists()) {
                 logger.info("Backup file not found. Creating a new empty file...");
-                Files.write(filePath, "[]".getBytes(), StandardOpenOption.CREATE_NEW);
+                objectMapper.writeValue(file, new ArrayList<RunningBackups>());
             }
 
-            // Read the content of the file
-            String fileContent = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
-            
-            // Try to parse the JSON string into a valid list of objects
-            if (!fileContent.trim().startsWith("[")) {
-                logger.warn("Malformed JSON file. Attempting to fix...");
-                // Attempt to fix the malformed JSON file
-                fileContent = "[" + fileContent.replaceAll("(?<=})\\s*(?=\\{)", ",") + "]";
-                Files.write(filePath, fileContent.getBytes());
-            }
-
-            // Deserialize the JSON into the list of RunningBackups objects
-            Type listType = new TypeToken<ArrayList<RunningBackups>>() {}.getType();
-            List<RunningBackups> backups = gson.fromJson(fileContent, listType);
-            
-            return backups != null ? backups : new ArrayList<>();
+            return objectMapper.readValue(file, new TypeReference<List<RunningBackups>>() {});
             
         } catch (IOException e) {
             logger.error("Error reading file: " + e.getMessage(), e);
@@ -80,101 +70,108 @@ public class RunningBackups {
 
     public static RunningBackups readBackupFromJSON(String backupName) {
         List<RunningBackups> backups = readBackupListFromJSON();
+
+        if (backups == null || backups.isEmpty()) return null;
+
         for (RunningBackups backup : backups) {
-            if (backup.getBackupName().equals(backupName)) {
+            if (backup.backupName.equals(backupName)) {
                 return backup;
             }
         }
         return null; // Return null if no backup with the specified name is found
     }
-
-    public static void updateBackupToJSON(RunningBackups backup) {
+    
+    // the system is multi threading, it is possible that multiple threads call this method, so i need to use synchronized keyworl
+    public static synchronized void updateBackupToJSON(RunningBackups backup) {
         List<RunningBackups> backups = readBackupListFromJSON();
-    
-        ListIterator<RunningBackups> iterator = backups.listIterator();
         boolean updated = false;
-    
+        
         // Iterate through existing backups to update
-        while (iterator.hasNext()) {
+        for (ListIterator<RunningBackups> iterator = backups.listIterator(); iterator.hasNext(); ) {
             RunningBackups currentBackup = iterator.next();
-            if (currentBackup.getBackupName().equals(backup.getBackupName())) {
-                if (backup.getProgress() == 100) {
-                    iterator.remove();
+            if (currentBackup.backupName.equals(backup.backupName)) {
+                // Se il backup è completato, segnalalo come finito
+                backup.status = (backup.progress == 100) ? BackupStatusEnum.Finished : BackupStatusEnum.Progress;
+                iterator.set(backup);
+                updated = true;
+                break;
+            }
+        }
+
+         // If the backup wasn't found in the list, add it
+        if (!updated && backup.progress != 100) {
+            backup.status = BackupStatusEnum.Progress;
+            backups.add(backup);
+        }
+
+        updateBackupsToJSON(backups);
+    }
+
+    public static synchronized void updateBackupStatusAfterCompletition(String backupName) {
+        List<RunningBackups> backups = readBackupListFromJSON();
+        boolean updated = false;
+        BackupStatusEnum status = BackupStatusEnum.Finished;
+    
+        for (RunningBackups backup : backups) {
+            if (backup.backupName.equals(backupName)) {
+                if (backup.progress == 100) {
+                    backup.status = status;
                 } else {
-                    iterator.set(backup);
+                    status = BackupStatusEnum.Terminated;
+                    backup.status = status;
                 }
+
                 updated = true;
                 break;
             }
         }
     
-        // If the backup wasn't found in the list, add it
-        if (!updated && backup.getProgress() != 100) {
-            backups.add(backup);
+        if (updated) {
+            updateBackupsToJSON(backups);
+            logger.info("Backup '{}' updated with the status: {}", backupName, status);
+        } else {
+            logger.warn("Backup '{}' didn't find. No status update", backupName);
         }
-    
-        // Write the updated backups to JSON
-        updateBackupsToJSON(backups);
     }
     
-    public static void updateBackupsToJSON(List<RunningBackups> backups) {
-        Gson gson = new Gson();
-        try (FileWriter writer = new FileWriter(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.RUNNING_BACKUPS_FILE_STRING.getValue())) {
-            // Ensure JSON is written properly by serializing the list
-            gson.toJson(backups, writer);
-            writer.flush();  // Make sure the data is written to the file
+    public static synchronized void updateBackupsToJSON(List<RunningBackups> backups) {
+        File file = getBackupFile();
+        try {
+            objectMapper.writeValue(file, backups);
         } catch (IOException e) {
             logger.error("Error writing to JSON file: " + e.getMessage(), e);
         }
     }
 
-    public static void cleanRunningBackupsFromJSON(String backupName) {
+    public static synchronized void cleanRunningBackupsFromJSON(String backupName) {
         List<RunningBackups> backups = readBackupListFromJSON();
-    
-        // Use an Iterator to safely remove items while iterating
-        Iterator<RunningBackups> iterator = backups.iterator();
-        while (iterator.hasNext()) {
-            RunningBackups runningBackup = iterator.next();
-            
-            logger.info("Deleting partial backup: " + runningBackup.getPath());
+        backups.removeIf(runningBackup -> 
+            (runningBackup.progress != 100 && BackupOperations.deletePartialBackup(runningBackup.path)) ||
+            (runningBackup.progress == 100 && runningBackup.backupName.equals(backupName))
+        );
 
-            if ((runningBackup.getProgress() != 100 && BackupOperations.deletePartialBackup(runningBackup.getPath()))
-                    || (runningBackup.getProgress() == 100 && runningBackup.getBackupName().equals(backupName))) {
-                iterator.remove();
-            }
-        }
-    
-        updateBackupsToJSON(backups);
-    }
-    
-    public static void deletePartialBackupsStuckedJSONFile() {
-        List<RunningBackups> backups = readBackupListFromJSON();
-    
-        // Use an iterator to safely remove items while iterating
-        Iterator<RunningBackups> iterator = backups.iterator();
-        while (iterator.hasNext()) {
-            RunningBackups backup = iterator.next();
-            
-            // Call the delete method if necessary
-            if (BackupOperations.deletePartialBackup(backup.getPath())) {
-                // If you need to remove the backup from the list after deletion, you can do so safely
-                iterator.remove(); // This ensures no ConcurrentModificationException occurs
-            }
-        }
-    
         updateBackupsToJSON(backups);
     }
 
-    public String getBackupName() {
-        return backupName;
+    public static synchronized void deleteCompletedBackup(String backupName) {
+        List<RunningBackups> backups = readBackupListFromJSON();
+        backups.removeIf(backup -> backup.backupName.equals(backupName) && (backup.status == BackupStatusEnum.Finished || backup.status == BackupStatusEnum.Terminated));
+
+        updateBackupsToJSON(backups);
     }
-    public int getProgress() {
-        return progress;
+
+    public static synchronized void deleteCompletedBackups() {
+        List<RunningBackups> backups = readBackupListFromJSON();
+        backups.removeIf(backup -> backup.status == BackupStatusEnum.Finished || backup.status == BackupStatusEnum.Terminated);
+
+        updateBackupsToJSON(backups);
     }
-    public String getPath() {
-        return path;
-    }
-    public BackupStatusEnum getStatus() {
-        return status;
+
+    // remove all backups. I don't care the status, we have to delete everything
+    public static synchronized void deletePartialBackupsStuckedJSONFile() {
+        List<RunningBackups> backups = readBackupListFromJSON();
+        backups.removeIf(backup -> BackupOperations.deletePartialBackup(backup.path));
+
+        updateBackupsToJSON(backups);
     }
 }   

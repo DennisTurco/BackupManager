@@ -22,6 +22,7 @@ import backupmanager.Entities.Backup;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -184,7 +185,8 @@ public class BackupOperations {
         if (context.interruptBackupPopupItem != null) context.interruptBackupPopupItem.setEnabled(false);
         if (context.deleteBackupPopupItem != null) context.deleteBackupPopupItem.setEnabled(true);
 
-        RunningBackups.cleanRunningBackupsFromJSON(context.backup.getBackupName());
+        // edit the backup running state
+        RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
 
         if (BackupManagerGUI.backupTable != null) 
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, formatter);
@@ -203,7 +205,11 @@ public class BackupOperations {
         }
 
         // updating running backups file .json
-        RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value));
+        if (value == 100) {
+            RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Finished));
+        } else {
+            RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Progress));
+        }
 
         if (value == 100) {
             updateAfterBackup(path1, path2, context);

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.RunningBackups;
+import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Table.TableDataManager;
 
 /*
@@ -34,6 +35,8 @@ public class BackupObserver {
     public void start() {
         logger.info("Observer for running backups started");
 
+        RunningBackups.deleteCompletedBackups();
+
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
@@ -41,12 +44,12 @@ public class BackupObserver {
                     logger.debug("Observer has found a running backup");
 
                     for (RunningBackups backup : runningBackups) {
-                        Backup backupEntity = Backup.getBackupByName(backup.getBackupName());
+                        Backup backupEntity = Backup.getBackupByName(backup.backupName);
 
-                        int value = backup.getProgress();
-                        if (value < 100) {
-                            TableDataManager.updateProgressBarPercentage(backupEntity, value, formatter);
+                        if (backup.progress < 100 && backup.status == BackupStatusEnum.Progress) {
+                            TableDataManager.updateProgressBarPercentage(backupEntity, backup.progress, formatter);
                         } else {
+                            RunningBackups.deleteCompletedBackup(backup.backupName);
                             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, formatter);
                         }
                     }
