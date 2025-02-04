@@ -66,7 +66,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private final BackupManager backupManager;
     private final BackupObserver observer;
     public static List<Backup> backups;
-    private static JSONBackup JSON;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
     public static BackupTableModel tableModel;
@@ -84,9 +83,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
-        
-        JSON = new JSONBackup();
-        
+                
         // load Menu items
         initializeMenuItems();
         
@@ -1048,7 +1045,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void initializeTable() {
         try {
-            backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
             displayBackupList(backups);
         } catch (IOException ex) {
             backups = null;

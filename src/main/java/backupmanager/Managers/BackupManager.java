@@ -42,12 +42,10 @@ public final class BackupManager {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
-    private static JSONBackup JSON;
     private final BackupManagerGUI main;
 
     public BackupManager(BackupManagerGUI main) {
         this.main = main;
-        JSON = new JSONBackup();
     } 
 
     private void renameBackup(List<Backup> backups, Backup backup) {
@@ -145,26 +143,24 @@ public final class BackupManager {
         if (backups == null) throw new IllegalArgumentException("Backup list is null!");
 
         logger.info("Updating backup list");
-            
-        JSON.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
+        
+        // update
+        JSONBackup.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
+        
+        // get the new backup updated
         backups = getBackupList();
         
         if (BackupManagerGUI.model != null)
             TableDataManager.updateTableWithNewBackupList(backups, formatter);
     }
-
-    public static void updateBackup(Backup updatedBackup) {
-        List<Backup> backups = getBackupList();
-        updateBackup(backups, updatedBackup);
-    }
     
-    public static void updateBackup(List<Backup> backups, Backup updatedBackup) {
+    public static void updateBackup(Backup updatedBackup) {
         if (updatedBackup == null) throw new IllegalArgumentException("Backup is null!");
 
         logger.info("Updating backup: " + updatedBackup.getBackupName());
         
-        JSON.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
-        backups = getBackupList();
+        JSONBackup.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
+        List<Backup> backups = getBackupList();
 
         if (BackupManagerGUI.model != null) {
             TableDataManager.updateTableWithNewBackupList(backups, formatter);
@@ -245,14 +241,15 @@ public final class BackupManager {
     }
 
     public static List<Backup> getBackupList() {
-        List<Backup> backups;
         try {
-            backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+            List<Backup> backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
             BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
             return backups;
         } catch (IOException e) {
             logger.error("An error occurred while trying to get the backup list from json file: " + e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+        } catch (Exception e) {
+            logger.error("An error occurred: " + e.getMessage(), e);
         }
 
         return null;
@@ -277,7 +274,7 @@ public final class BackupManager {
 
     public List<Backup> menuItemImportFromJson() {
         logger.info("Event --> importing backup list");
-        return ImportExportManager.importListFromJson(main, JSON, formatter);
+        return ImportExportManager.importListFromJson(main, formatter);
     }
 
     public void menuItemOpenPreferences() {

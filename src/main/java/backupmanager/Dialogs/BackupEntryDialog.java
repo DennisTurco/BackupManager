@@ -104,9 +104,12 @@ public class BackupEntryDialog extends javax.swing.JDialog {
                 "AutoBackup", 1);
     }
 
-    private void openBackupActivationMessage(TimeInterval timeInterval) {
-        if (timeInterval == null) 
+    private void openBackupActivationMessage(TimeInterval newtimeInterval) {
+        if (newtimeInterval == null) 
             throw new IllegalArgumentException("Time interval cannot be null");
+
+        // update current timeInterval with the new one
+        timeInterval = newtimeInterval;
 
         String from = TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM);
         String to = TranslationCategory.GENERAL.getTranslation(TranslationKey.TO);
@@ -270,8 +273,11 @@ public class BackupEntryDialog extends javax.swing.JDialog {
             if (currentBackup.getBackupName() == null || currentBackup.getBackupName().isEmpty()) return false;
 
             // message
-            TimeInterval timeInterval = openTimePicker(null);
-            if (timeInterval == null) return false;
+            TimeInterval newtimeInterval = openTimePicker(null);
+            if (newtimeInterval == null) return false;
+
+            // update current timeInterval with the new one
+            timeInterval = newtimeInterval;
 
             //set date for next backup
             LocalDateTime nextDateBackup = BackupManager.getNexDateBackup(timeInterval);

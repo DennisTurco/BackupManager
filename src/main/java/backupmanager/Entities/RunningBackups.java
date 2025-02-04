@@ -21,6 +21,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import backupmanager.BackupOperations;
+import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ConfigKey;
 
 // this class contains only the RunningBackups entity
@@ -31,11 +32,13 @@ public class RunningBackups {
     private final String backupName;
     private final String path;
     private final int progress;
+    private final BackupStatusEnum status;
 
-    public RunningBackups(String backupName, String path, int progress) {
+    public RunningBackups(String backupName, String path, int progress, BackupStatusEnum status) {
         this.backupName = backupName;
         this.path = path;
         this.progress = progress;
+        this.status = status;
     }
 
     public static List<RunningBackups> readBackupListFromJSON() {
@@ -170,5 +173,8 @@ public class RunningBackups {
     }
     public String getPath() {
         return path;
+    }
+    public BackupStatusEnum getStatus() {
+        return status;
     }
 }   

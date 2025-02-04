@@ -3,7 +3,6 @@ package backupmanager;
 import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -20,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Backup;
-import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
@@ -30,16 +28,13 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
-import backupmanager.Json.JSONBackup;
 import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
 
 public class BackupOperations {
-    private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    private static final JSONBackup JSON = new JSONBackup();
-    
+    private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);    
     public static void SingleBackup(ZippingContext context) {
         if (context.backup == null) throw new IllegalArgumentException("Backup cannot be null!");
         
@@ -94,7 +89,7 @@ public class BackupOperations {
         logger.info("Backup completed!");
 
         reEnableButtonsAndTable(context);
-        
+
         // next day backup update
         if (context.backup.isAutoBackup() == true) {
             TimeInterval time = context.backup.getTimeIntervalBackup();
@@ -106,8 +101,8 @@ public class BackupOperations {
         context.backup.setBackupCount(context.backup.getBackupCount()+1);
                     
         try {
-            List<Backup> backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-                        
+            List<Backup> backups = BackupManager.getBackupList();
+            
             for (Backup b : backups) {
                 if (b.getBackupName().equals(context.backup.getBackupName())) {
                     b.UpdateBackup(context.backup);
@@ -115,7 +110,9 @@ public class BackupOperations {
                 }
             }
             
-            BackupManager.updateBackup(backups, context.backup);
+            BackupManager.updateBackup(context.backup);
+
+            logger.info("Backup :\"" + context.backup.getBackupName() + "\" updated after the backup");
             
             if (context.trayIcon != null) { 
                 context.trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + context.backup.getBackupName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
@@ -123,9 +120,6 @@ public class BackupOperations {
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        } catch (IOException e) {
-            logger.error("Error saving file");
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAVING_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -208,6 +202,7 @@ public class BackupOperations {
             TableDataManager.updateProgressBarPercentage(context.backup, value, formatter);
         }
 
+        // updating running backups file .json
         RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value));
 
         if (value == 100) {

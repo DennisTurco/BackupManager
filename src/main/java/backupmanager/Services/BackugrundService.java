@@ -38,7 +38,6 @@ public class BackugrundService {
     private static final Logger logger = LoggerFactory.getLogger(BackugrundService.class);
 
     private ScheduledExecutorService scheduler;
-    private final JSONBackup json = new JSONBackup();
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private TrayIcon trayIcon = null;
     private BackupManagerGUI guiInstance = null;
@@ -134,7 +133,7 @@ public class BackugrundService {
         public void run() {
             logger.debug("Checking for automatic backup...");
             try {
-                List<Backup> backups = json.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                List<Backup> backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                 List<Backup> needsBackup = getBackupsToDo(backups, 1);
                 if (needsBackup != null && !needsBackup.isEmpty()) {
                     logger.info("Start backup process.");

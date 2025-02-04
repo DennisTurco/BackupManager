@@ -42,7 +42,7 @@ public class ImportExportManager {
     private static final Logger logger = LoggerFactory.getLogger(ImportExportManager.class);
 
     // return the Backup list. Null if the operations fail or cancelled by the user
-    public static List<Backup> importListFromJson(BackupManagerGUI main, JSONBackup JSON, DateTimeFormatter formatter) {
+    public static List<Backup> importListFromJson(BackupManagerGUI main, DateTimeFormatter formatter) {
         JFileChooser jfc = new JFileChooser(ConfigKey.RES_DIRECTORY_STRING.getValue());
         jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -59,7 +59,7 @@ public class ImportExportManager {
                 Preferences.updatePreferencesToJSON();
 
                 try {
-                    List<Backup> backups = JSON.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                    List<Backup> backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
                     TableDataManager.updateTableWithNewBackupList(backups, formatter);
                     JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
                     return backups;

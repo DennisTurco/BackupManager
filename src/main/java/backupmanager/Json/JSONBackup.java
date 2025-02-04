@@ -27,15 +27,13 @@ import com.google.gson.reflect.TypeToken;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
-import backupmanager.Interfaces.IJSONBackup;
 import backupmanager.Managers.ExceptionManager;
 
-public class JSONBackup implements IJSONBackup {
+public class JSONBackup {
     
     private static final Logger logger = LoggerFactory.getLogger(JSONBackup.class);
 
-    @Override
-    public List<Backup> readBackupListFromJSON(String directoryPath, String filename) throws IOException {
+    public static List<Backup> readBackupListFromJSON(String directoryPath, String filename) throws IOException {
         List<Backup> backupList = new ArrayList<>();
     
         // Check if the directory is correct, otherwise reset to default
@@ -117,12 +115,11 @@ public class JSONBackup implements IJSONBackup {
     }
     
     // Helper method to safely retrieve a string or null
-    private String getStringOrNull(JsonObject obj, String property) {
+    private static String getStringOrNull(JsonObject obj, String property) {
         return obj.has(property) && !obj.get(property).isJsonNull() ? obj.get(property).getAsString() : null;
     }
     
-    @Override
-    public void updateBackupListJSON(String directoryPath, String filename, List<Backup> backups) {
+    public static void updateBackupListJSON(String directoryPath, String filename, List<Backup> backups) {
         String filePath = directoryPath + filename;
 
         try (Writer writer = new FileWriter(filePath)) {
@@ -156,8 +153,7 @@ public class JSONBackup implements IJSONBackup {
         }
     }
     
-    @Override
-    public void updateSingleBackupInJSON(String directoryPath, String filename, Backup updatedBackup) {
+    public static void updateSingleBackupInJSON(String directoryPath, String filename, Backup updatedBackup) {
         String filePath = directoryPath + filename;
 
         try (Reader reader = new FileReader(filePath)) {
