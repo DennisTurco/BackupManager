@@ -26,8 +26,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     private final int totalFilesCount;
     private final ZippingContext context;
 
-    public ZipFileVisitor(Path sourceDir, File destinationDIr, ZipOutputStream zipOut, AtomicInteger copiedFilesCount,
-                          int totalFilesCount, ZippingContext context) {
+    public ZipFileVisitor(Path sourceDir, File destinationDIr, ZipOutputStream zipOut, AtomicInteger copiedFilesCount, int totalFilesCount, ZippingContext context) {
         this.sourceDir = sourceDir;
         this.destinationDir = destinationDIr;
         this.zipOut = zipOut;
@@ -40,13 +39,12 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
             logger.info("Zipping process manually interrupted");
-            return FileVisitResult.TERMINATE; // Termina il processo se il thread è interrotto
+            return FileVisitResult.TERMINATE;
         }
 
         String zipEntryName = sourceDir.relativize(dir).toString() + "/";
         logger.debug("Adding directory to zip: " + zipEntryName);
 
-        // Aggiungi l'entry per la directory
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
         zipOut.closeEntry();
 
@@ -57,13 +55,12 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
             logger.info("Zipping process manually interrupted");
-            return FileVisitResult.TERMINATE; // Termina il processo se il thread è interrotto
+            return FileVisitResult.TERMINATE;
         }
 
         String zipEntryName = sourceDir.relativize(file).toString();
         logger.debug("Adding file to zip: " + zipEntryName);
 
-        // Aggiungi l'entry per il file
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
 
         try (InputStream in = Files.newInputStream(file)) {
@@ -76,7 +73,6 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
         zipOut.closeEntry();
 
-        // Aggiorna il progresso
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
         BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context);
@@ -87,6 +83,6 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
         logger.error("Failed to visit file: " + file + ". Error: " + exc.getMessage(), exc);
-        return FileVisitResult.CONTINUE; // Continua anche se ci sono errori
+        return FileVisitResult.CONTINUE;
     }
 }

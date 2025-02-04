@@ -16,34 +16,40 @@ public class TableDataManager {
     
     private static final Logger logger = LoggerFactory.getLogger(TableDataManager.class);
 
-    public static void removeProgressInTheTableAndRestoreAsDefault(Backup backup, BackupTable table, DateTimeFormatter formatter) {
-        if (table == null) throw new IllegalArgumentException("Table cannot be null");
+    public static void removeProgressInTheTableAndRestoreAsDefault(Backup backup, DateTimeFormatter formatter) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null");
         if (formatter == null) throw new IllegalArgumentException("Formatter cannot be null");
+        
+        if (BackupManagerGUI.backupTable == null) {
+            return;
+        }
 
         // remove the progress bar renderer
-        table.getColumnModel().getColumn(3).setCellRenderer(new StripedRowRenderer());
+        BackupManagerGUI.backupTable.getColumnModel().getColumn(3).setCellRenderer(new StripedRowRenderer());
 
         // Set last backup value in the table
-        table.getModel().setValueAt(
+        BackupManagerGUI.backupTable.getModel().setValueAt(
                 backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                TableDataManager.findBackupRowIndex(backup, table), 3);
+                TableDataManager.findBackupRowIndex(backup, BackupManagerGUI.backupTable), 3);
         
-        table.repaint();  // Repaints the whole table
-        table.revalidate(); // Revalidates the table layout
+        BackupManagerGUI.backupTable.repaint();  // Repaints the whole table
+        BackupManagerGUI.backupTable.revalidate(); // Revalidates the table layout
     }
 
-    public static void updateProgressBarPercentage(BackupTable table, Backup backup, int value, DateTimeFormatter formatter) {
-        if (table == null) throw new IllegalArgumentException("Table cannot be null");
+    public static void updateProgressBarPercentage(Backup backup, int value, DateTimeFormatter formatter) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null");
         if (value < 0 || value > 100) throw new IllegalArgumentException("Value must be between 0 and 100");
         if (formatter == null) throw new IllegalArgumentException("Formatter cannot be null");
 
+        if (BackupManagerGUI.backupTable == null) {
+            return;
+        } 
+
         SwingUtilities.invokeLater(() -> {
             // Locate the row index of the backup in the table
-            int rowIndex = TableDataManager.findBackupRowIndex(backup, table);
+            int rowIndex = TableDataManager.findBackupRowIndex(backup, BackupManagerGUI.backupTable);
             if (rowIndex != -1) {
-                TableColumnModel columnModel = table.getColumnModel();
+                TableColumnModel columnModel = BackupManagerGUI.backupTable.getColumnModel();
                 int targetColumnIndex = 3;
                 
                 columnModel.getColumn(targetColumnIndex).setCellRenderer(new ProgressBarRenderer());
@@ -51,20 +57,19 @@ public class TableDataManager {
                 // Restore the original renderer after completion
                 if (value == 100) {
                     logger.debug("Restore the original renderer after completion");
-                    table.getModel().setValueAt(
+                    BackupManagerGUI.backupTable.getModel().setValueAt(
                         backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
                         rowIndex,
                         targetColumnIndex
                     );
                 } else {
-                    // logger.debug("Update the value of the progress in the table, for backup: " + backup.getBackupName());
-                    // logger.debug("Setting value: " + value + "; at: " + rowIndex + "; targetColumnIndex: " + targetColumnIndex);
+                    logger.debug("Update the value of the progress in the table, for backup: " + backup.getBackupName());
                     
                     // Update the value of the progress in the table
-                    table.getModel().setValueAt(value, rowIndex, targetColumnIndex);
+                    BackupManagerGUI.backupTable.getModel().setValueAt(value, rowIndex, targetColumnIndex);
                 }
 
-                table.repaint();
+                BackupManagerGUI.backupTable.repaint();
             }
         });
     }

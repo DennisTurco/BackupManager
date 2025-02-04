@@ -28,7 +28,6 @@ import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
-import static backupmanager.GUI.BackupManagerGUI.backupTable;
 import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Json.JSONBackup;
@@ -193,8 +192,8 @@ public class BackupOperations {
 
         RunningBackups.cleanRunningBackupsFromJSON(context.backup.getBackupName());
 
-        if (backupTable != null) 
-            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, backupTable, formatter);
+        if (BackupManagerGUI.backupTable != null) 
+            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, formatter);
     } 
     
     public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context) {
@@ -205,8 +204,8 @@ public class BackupOperations {
             context.progressBar.updateProgressBar(value);
         }
 
-        if (context.backupTable != null) {
-            TableDataManager.updateProgressBarPercentage(context.backupTable, context.backup, value, formatter);
+        if (BackupManagerGUI.backupTable != null) {
+            TableDataManager.updateProgressBarPercentage(context.backup, value, formatter);
         }
 
         RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value));

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.RunningBackups;
-import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
 
 /*
@@ -23,13 +22,11 @@ public class BackupObserver {
     private static final Logger logger = LoggerFactory.getLogger(BackupObserver.class);
 
     private final ScheduledExecutorService scheduler;
-    private final BackupTable backupTable;
     private final DateTimeFormatter formatter;
     private final long millisecondsToWait;
 
-    public BackupObserver(BackupTable backupTable, DateTimeFormatter formatter, int millisecondsToWait) {
+    public BackupObserver(DateTimeFormatter formatter, int millisecondsToWait) {
         this.millisecondsToWait = millisecondsToWait;
-        this.backupTable = backupTable;
         this.formatter = formatter;
         this.scheduler = Executors.newSingleThreadScheduledExecutor(); // create single thread
     }
@@ -48,9 +45,9 @@ public class BackupObserver {
 
                         int value = backup.getProgress();
                         if (value < 100) {
-                            TableDataManager.updateProgressBarPercentage(backupTable, backupEntity, value, formatter);
+                            TableDataManager.updateProgressBarPercentage(backupEntity, value, formatter);
                         } else {
-                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, backupTable, formatter);
+                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, formatter);
                         }
                     }
                 }

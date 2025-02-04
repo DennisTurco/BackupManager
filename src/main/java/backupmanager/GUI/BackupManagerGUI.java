@@ -101,7 +101,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         // first initialize the table, then start observer thread
         initializeTable();
-        observer = new BackupObserver(backupTable, dateForfolderNameFormatter, 3000);
+        observer = new BackupObserver(dateForfolderNameFormatter, 3000);
         observer.start();
 
         // disable interruption backup operation option
