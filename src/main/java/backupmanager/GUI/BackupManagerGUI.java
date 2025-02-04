@@ -495,6 +495,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Backup Manager");
+        setMinimumSize(new java.awt.Dimension(750, 450));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

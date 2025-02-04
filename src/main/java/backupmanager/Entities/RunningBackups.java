@@ -119,6 +119,7 @@ public class RunningBackups {
                 } else {
                     status = BackupStatusEnum.Terminated;
                     backup.status = status;
+                    cleanRunningBackupsFromJSON(backupName); // delete partial backup
                 }
 
                 updated = true;

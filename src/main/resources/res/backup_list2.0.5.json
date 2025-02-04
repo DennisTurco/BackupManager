@@ -51,13 +51,13 @@
     "backup_name": "lezioni",
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-02-04T21:41:06.970473400",
+    "last_backup": "2025-02-04T21:58:11.828011500",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
-    "last_update_date": "2025-02-04T14:06:31.168899400",
-    "backup_count": 66,
-    "max_backups_to_keep": 3
+    "last_update_date": "2025-02-04T21:58:08.422802",
+    "backup_count": 67,
+    "max_backups_to_keep": 1
   },
   {
     "backup_name": "Documents2",
@@ -87,18 +87,22 @@
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2025-01-24T20:06:10.114255600",
-    "automatic_backup": false,
+    "automatic_backup": true,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-02-04T21:45:36.481359300",
+    "last_update_date": "2025-02-04T23:47:40.038202800",
     "backup_count": 10,
-    "max_backups_to_keep": 1
+    "max_backups_to_keep": 1,
+    "next_date_backup": "2025-02-04T23:49:40.038202800",
+    "time_interval_backup": "0.0:2"
   },
   {
     "backup_name": "Documents1_copy",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "automatic_backup": false,
+    "automatic_backup": true,
+    "next_date_backup": "2025-02-05T23:15:15.581081900",
+    "time_interval_backup": "1.0:0",
     "notes": "",
     "creation_date": "2024-12-29T13:30:37.591067200",
     "last_update_date": "2024-12-29T13:30:37.591067200",
@@ -187,28 +191,6 @@
     "creation_date": "2025-01-23T19:16:38.608844600",
     "last_update_date": "2025-02-04T14:06:48.066937",
     "backup_count": 6,
-    "max_backups_to_keep": 1
-  },
-  {
-    "backup_name": "culo",
-    "start_path": "culo",
-    "destination_path": "culo",
-    "automatic_backup": false,
-    "notes": "",
-    "creation_date": "2025-02-03T14:15:23.595071300",
-    "last_update_date": "2025-02-03T14:31:01.684345700",
-    "backup_count": 0,
-    "max_backups_to_keep": 1
-  },
-  {
-    "backup_name": "ffff",
-    "start_path": "asd",
-    "destination_path": "asd",
-    "automatic_backup": false,
-    "notes": "",
-    "creation_date": "2025-02-03T14:15:41.746248700",
-    "last_update_date": "2025-02-03T14:30:52.636804900",
-    "backup_count": 0,
     "max_backups_to_keep": 1
   },
   {

@@ -97,13 +97,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }  
     }
 
-    private void showMessageActivationAutoBackup(String activated, String from, String to, String setted, TimeInterval timeInterval, String days, String startPath, String destinationPath) {
-        JOptionPane.showMessageDialog(null,
-                activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
-                + destinationPath + setted + " " + timeInterval.toString() + days,
-                "AutoBackup", 1);
-    }
-
     private void openBackupActivationMessage(TimeInterval newtimeInterval) {
         if (newtimeInterval == null) 
             throw new IllegalArgumentException("Time interval cannot be null");
@@ -111,15 +104,9 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         // update current timeInterval with the new one
         timeInterval = newtimeInterval;
 
-        String from = TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM);
-        String to = TranslationCategory.GENERAL.getTranslation(TranslationKey.TO);
-        String activated = TranslationCategory.DIALOGS.getTranslation(TranslationKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
-        String setted = TranslationCategory.DIALOGS.getTranslation(TranslationKey.SETTED_EVERY_MESSAGE);
-        String days = TranslationCategory.DIALOGS.getTranslation(TranslationKey.DAYS_MESSAGE);
-
         String startPath = GetStartPathField();
         String destinationPath = GetDestinationPathField();
-        showMessageActivationAutoBackup(activated, from, to, setted, timeInterval, days, startPath, destinationPath);
+        BackupManager.showMessageActivationAutoBackup(timeInterval, startPath, destinationPath);
     }
 
     public void setAutoBackupPreference(boolean option) {         
@@ -130,23 +117,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         } else {
             disableAutoBackup(currentBackup);
         }
-    }
-    
-    public void setAutoBackupPreference(Backup backup, boolean option) {        
-        backup.setAutoBackup(option);
-        if (backup.getBackupName().equals(currentBackup.getBackupName())) {
-            toggleAutoBackup.setSelected(option);
-            if (option) {
-                enableTimePickerButton(backup);
-            } else {
-                disableTimePickerButton();
-            }
-        }
-        if (!option) {
-            disableAutoBackup(backup);
-        }
-
-        toggleAutoBackup.setText(toggleAutoBackup.isSelected() ? backupOnText : backupOffText);
     }
 
     public Backup getBackup() {
@@ -165,6 +135,11 @@ public class BackupEntryDialog extends javax.swing.JDialog {
             nextDateBackup = BackupManager.getNexDateBackup(timeInterval);
         }
 
+        if (!autoBackup) {
+            timeInterval = null;
+            nextDateBackup = null;
+        }
+
         if (currentBackup == null) {
             String name = backupName.getText();
             LocalDateTime lastBackup = null;
@@ -180,12 +155,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
             int backupCount = currentBackup.getBackupCount();
             return new Backup(name, initialPath, destinationPath, lastBackup, autoBackup, nextDateBackup, timeInterval, notes, creationDate, lastUpdateDate, backupCount, maxBackupsToKeep);
         }
-    }
-
-    private TimeInterval openTimePicker(TimeInterval time) {
-        TimePicker picker = new TimePicker(this, time, true);
-        picker.setVisible(true);
-        return picker.getTimeInterval();
     }
 
     public String GetStartPathField() {
@@ -263,39 +232,26 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }
     }
 
-    private boolean automaticBackup() {
-        logger.info("Event --> automatic backup");
+    private boolean toggleAutomaticBackup() {
+        Backup backup = BackupManager.toggleAutomaticBackup(currentBackup);
         
-        if(!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) return false;
-
-        // if the file has not been saved you need to save it before setting the auto backup
-        if(currentBackup.isAutoBackup() == false || currentBackup.getNextDateBackup() == null || currentBackup.getTimeIntervalBackup() == null) {
-            if (currentBackup.getBackupName() == null || currentBackup.getBackupName().isEmpty()) return false;
-
-            // message
-            TimeInterval newtimeInterval = openTimePicker(null);
-            if (newtimeInterval == null) return false;
-
-            // update current timeInterval with the new one
-            timeInterval = newtimeInterval;
-
-            //set date for next backup
-            LocalDateTime nextDateBackup = BackupManager.getNexDateBackup(timeInterval);
-
-            currentBackup.setTimeIntervalBackup(timeInterval);
-            currentBackup.setNextDateBackup(nextDateBackup);
-            btnTimePicker.setToolTipText(timeInterval.toString());
-            btnTimePicker.setEnabled(true);
-
-            logger.info("Event --> Next date backup setted to " + nextDateBackup);
-
-            openBackupActivationMessage(timeInterval);
+        if (backup != null) {
+            currentBackup = backup;
         }
 
-        currentBackup.setInitialPath(GetStartPathField());
-        currentBackup.setDestinationPath(GetDestinationPathField());
-        return true;
+        if (backup.getTimeIntervalBackup() != null) {
+            timeInterval = backup.getTimeIntervalBackup();
+            currentBackup.setNextDateBackup(BackupManager.getNexDateBackup(timeInterval));
+            btnTimePicker.setToolTipText(timeInterval.toString());
+            btnTimePicker.setEnabled(true);
+            setAutoBackupOn(currentBackup);
+            return true;
+        }
+        
+        setAutoBackupOff();
+        return false;
     }
+    
 
     private void setAutoBackupOn(Backup backup) {
         toggleAutoBackup.setSelected(true);
@@ -660,37 +616,11 @@ public class BackupEntryDialog extends javax.swing.JDialog {
 
     private void toggleAutoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleAutoBackupActionPerformed
         logger.info("Event --> Changing auto backup preference");
-
-        // checks
-        if (!currentBackup.isAutoBackup() && !BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) {
-            setAutoBackupOff();
-            return;
-        }
-        if (currentBackup.isAutoBackup()) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                setAutoBackupOff();
-                return;
-            }
-        }
-
-        boolean enabled = toggleAutoBackup.isSelected();
-        if (enabled && automaticBackup()) {
-            logger.info("Event --> Auto Backup setted to Enabled");
-            setAutoBackupOn(currentBackup);
-        }
-        else {
-            logger.info("Event --> Auto Backup setted to Disabled");
-            disableAutoBackup(currentBackup);
-            setAutoBackupOff();
-            return;
-        }
-
-        currentBackup.setAutoBackup(enabled);
+        toggleAutomaticBackup();
     }//GEN-LAST:event_toggleAutoBackupActionPerformed
 
     private void btnTimePickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimePickerActionPerformed
-        TimeInterval timeInterval = openTimePicker(currentBackup.getTimeIntervalBackup());
+        TimeInterval timeInterval = BackupManager.openTimePicker(this, currentBackup.getTimeIntervalBackup());
         if (timeInterval == null) return;
 
         btnTimePicker.setToolTipText(timeInterval.toString());

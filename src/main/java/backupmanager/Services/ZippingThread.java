@@ -18,7 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
+import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ErrorTypes;
 import backupmanager.ZipFileVisitor;
 
@@ -51,6 +53,12 @@ public class ZippingThread {
         executorService.submit(() -> {
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(targetZipPath))) {
                 Path sourceDir = Paths.get(sourceDirectoryPath);
+
+                if (RunningBackups.readBackupFromJSON(context.backup.getBackupName()).status == BackupStatusEnum.Terminated) {
+                    logger.info("Backup \"{}\" terminated", context.backup.getBackupName());
+                    return;
+                }
+
                 if (sourceFile.isFile()) {
                     addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, sourceFile.toPath(), sourceFile.getName(), copiedFilesCount, totalFilesCount, context);
                 } else {

@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import backupmanager.BackupOperations;
 import backupmanager.Dialogs.BackupEntryDialog;
 import backupmanager.Dialogs.PreferencesDialog;
+import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
@@ -336,63 +337,74 @@ public final class BackupManager {
         System.exit(main.EXIT_ON_CLOSE);
     }
 
-    private void automaticBackup(Backup backup, List<Backup> backups) {
+    // returns the new time inteval
+    public static Backup toggleAutomaticBackup(Backup backup) {
         logger.info("Event --> automatic backup");
         
-        // if(!BackupOperations.CheckInputCorrect(currentBackup.getBackupName(),startPathField.getText(), destinationPathField.getText(), null)) return false;
+        if (backup.isAutoBackup()) {
+            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response != JOptionPane.YES_OPTION) {
+                return null;
+            }
 
-        // // if the file has not been saved you need to save it before setting the auto backup
-        // if(currentBackup.isAutoBackup() == false || currentBackup.getNextDateBackup() == null || currentBackup.getTimeIntervalBackup() == null) {
-        //     //if (currentBackup.getBackupName() == null || currentBackup.getBackupName().isEmpty()) BackupManager.saveWithName();
-        //     if (currentBackup.getBackupName() == null || currentBackup.getBackupName().isEmpty()) return false;
+            backup.setAutoBackup(false);
+            backup.setTimeIntervalBackup(null);
+            backup.setNextDateBackup(null);
+            backup.setLastUpdateDate(LocalDateTime.now());
 
-        //     // message
-        //     TimeInterval timeInterval = openTimePicker(null);
-        //     if (timeInterval == null) return false;
+            logger.info("Automatic backup turned off");
 
-        //     //set date for next backup
-        //     LocalDateTime nextDateBackup = LocalDateTime.now().plusDays(timeInterval.getDays())
-        //             .plusHours(timeInterval.getHours())
-        //             .plusMinutes(timeInterval.getMinutes());
+            updateBackup(backup);
+            return backup;
+        }
 
-        //     currentBackup.setTimeIntervalBackup(timeInterval);
-        //     currentBackup.setNextDateBackup(nextDateBackup);
-        //     btnPathSearch2.setToolTipText(timeInterval.toString());
-        //     btnPathSearch2.setEnabled(true);
+        if(!BackupOperations.CheckInputCorrect(backup.getBackupName(),backup.getInitialPath(), backup.getDestinationPath(), null)) return null;
 
-        //     logger.info("Event --> Next date backup setted to " + nextDateBackup);
+        // if the file has not been saved you need to save it before setting the auto backup
+        if(!backup.isAutoBackup() || backup.getNextDateBackup() == null || backup.getTimeIntervalBackup() == null) {
+            if (backup.getBackupName() == null || backup.getBackupName().isEmpty()) return null;
 
-        //     openBackupActivationMessage(timeInterval, null);
-        // }
+            // message
+            TimeInterval timeInterval = openTimePicker(null, null);
+            if (timeInterval == null) return null;
 
-        // currentBackup.setInitialPath(GetStartPathField());
-        // currentBackup.setDestinationPath(GetDestinationPathField());
-        // for (Backup b : backups) {
-        //     if (b.getBackupName().equals(currentBackup.getBackupName())) {
-        //         b.UpdateBackup(currentBackup);
-        //         break;
-        //     }
-        // }
-        // BackupManager.updateBackupList(backups);
-        // return true;
+            //set date for next backup
+            LocalDateTime nextDateBackup = getNexDateBackup(timeInterval);  
 
-        // if(!BackupOperations.CheckInputCorrect(backup.getBackupName(), startPathField.getText(), destinationPathField.getText(), null)) return false;
+            backup.setAutoBackup(true);
+            backup.setTimeIntervalBackup(timeInterval);
+            backup.setNextDateBackup(nextDateBackup);
+            backup.setLastUpdateDate(LocalDateTime.now());
 
-        // backup.
+            logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
 
-        // // time interval
-        // TimeInterval timeInterval = backup.getTimeIntervalBackup();
+            showMessageActivationAutoBackup(timeInterval, backup.getInitialPath(), backup.getDestinationPath());
 
-        // //set date for next backup
-        // LocalDateTime nextDateBackup = LocalDateTime.now().plusDays(timeInterval.getDays())
-        //         .plusHours(timeInterval.getHours())
-        //         .plusMinutes(timeInterval.getMinutes());
+            updateBackup(backup);
+            return backup;
 
-        // updateBackupList(backups);
+        } 
+
+        return null;
     }
 
-    public void automaticBackup() {
+    public static TimeInterval openTimePicker(java.awt.Dialog parent, TimeInterval time) {
+        TimePicker picker = new TimePicker(parent, time, true);
+        picker.setVisible(true);
+        return picker.getTimeInterval();
+    }
 
+    public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
+        String from = TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM);
+        String to = TranslationCategory.GENERAL.getTranslation(TranslationKey.TO);
+        String activated = TranslationCategory.DIALOGS.getTranslation(TranslationKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
+        String setted = TranslationCategory.DIALOGS.getTranslation(TranslationKey.SETTED_EVERY_MESSAGE);
+        String days = TranslationCategory.DIALOGS.getTranslation(TranslationKey.DAYS_MESSAGE);
+        
+        JOptionPane.showMessageDialog(null,
+                activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
+                + destinationPath + setted + " " + timeInterval.toString() + days,
+                "AutoBackup", 1);
     }
 
 
@@ -443,12 +455,8 @@ public final class BackupManager {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
 
-            boolean res = !backup.isAutoBackup();
-            //setAutoBackupPreference(backup, res);
-            autoBackupMenuItem.setSelected(res);
-            if (res) {
-                //automaticBackup(backup);
-            }
+            autoBackupMenuItem.setSelected(!backup.isAutoBackup());
+            toggleAutomaticBackup(backup);
         }
     }
 

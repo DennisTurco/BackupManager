@@ -172,6 +172,9 @@ public class BackupOperations {
 
     public static void interruptBackupProcess(ZippingContext context) {
         logger.info("Event --> interrupt backup process");
+
+        // set Terminated status
+        RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
         
         ZippingThread.stopExecutorService(1);
         if (ZippingThread.isInterrupted())
