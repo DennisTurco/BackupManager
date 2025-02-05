@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonSyntaxException;
 
 import backupmanager.BackupOperations;
 import backupmanager.Enums.BackupStatusEnum;
@@ -49,23 +49,25 @@ public class RunningBackups {
 
     public static synchronized List<RunningBackups> readBackupListFromJSON() {
         File file = getBackupFile();
+        int attempts = 5;
         
-        try {
-            // Check if the file exists, otherwise create it with an empty array
-            if (!file.exists()) {
-                logger.info("Backup file not found. Creating a new empty file...");
-                objectMapper.writeValue(file, new ArrayList<RunningBackups>());
+        for (int i = 0; i < attempts; i++) {
+            try {
+                if (!file.exists() || file.length() == 0) {
+                    logger.warn("The backup file does not exist or is empty. Attempt " + (i + 1) + "/" + attempts);
+                    Thread.sleep(new Random().nextInt(100, 150));
+                    continue;
+                }
+    
+                return objectMapper.readValue(file, new TypeReference<List<RunningBackups>>() {});
+            } catch (IOException e) {
+                logger.error("Error while reading the file: " + e.getMessage(), e);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
-
-            return objectMapper.readValue(file, new TypeReference<List<RunningBackups>>() {});
-            
-        } catch (IOException e) {
-            logger.error("Error reading file: " + e.getMessage(), e);
-            return new ArrayList<>();
-        } catch (JsonSyntaxException e) {
-            logger.error("Malformed JSON in file: " + e.getMessage(), e);
-            return new ArrayList<>();
         }
+    
+        return new ArrayList<>();
     }
 
     public static RunningBackups readBackupFromJSON(String backupName) {
@@ -90,8 +92,17 @@ public class RunningBackups {
         for (ListIterator<RunningBackups> iterator = backups.listIterator(); iterator.hasNext(); ) {
             RunningBackups currentBackup = iterator.next();
             if (currentBackup.backupName.equals(backup.backupName)) {
-                // Se il backup è completato, segnalalo come finito
-                backup.status = (backup.progress == 100) ? BackupStatusEnum.Finished : BackupStatusEnum.Progress;
+                
+                if (backup.progress == 100) {
+                    backup.status = BackupStatusEnum.Finished;
+                } else if (backup.status != null && backup.status != BackupStatusEnum.Terminated) {
+                    backup.status =  BackupStatusEnum.Progress;
+                } else {
+                    backup.status =  BackupStatusEnum.Terminated;
+                }
+
+                logger.info("Backup '{}' updated with the status: {}", backup.backupName, backup.status);
+                
                 iterator.set(backup);
                 updated = true;
                 break;
@@ -102,6 +113,8 @@ public class RunningBackups {
         if (!updated && backup.progress != 100) {
             backup.status = BackupStatusEnum.Progress;
             backups.add(backup);
+
+            logger.info("Backup '{}' created with the status: {}", backup.backupName, backup.status);
         }
 
         updateBackupsToJSON(backups);
@@ -135,13 +148,25 @@ public class RunningBackups {
         }
     }
     
-    public static synchronized void updateBackupsToJSON(List<RunningBackups> backups) {
+    private static synchronized void updateBackupsToJSON(List<RunningBackups> backups) {
         File file = getBackupFile();
-        try {
-            objectMapper.writeValue(file, backups);
-        } catch (IOException e) {
-            logger.error("Error writing to JSON file: " + e.getMessage(), e);
+        int attempts = 5;
+        
+        for (int i = 0; i < attempts; i++) {
+            try {
+                objectMapper.writeValue(file, backups);
+                return;
+            } catch (IOException e) {
+                logger.warn("Attempt " + (i + 1) + " to write failed: " + e.getMessage());  
+                try {
+                    Thread.sleep(new Random().nextInt(100, 150));
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         }
+    
+        logger.error("Error: unable to write to JSON after " + attempts + " attempts.");
     }
 
     public static synchronized void cleanRunningBackupsFromJSON(String backupName) {

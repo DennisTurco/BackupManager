@@ -15,6 +15,7 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
 
 public class ZipFileVisitor extends SimpleFileVisitor<Path> {
@@ -38,6 +39,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
+            RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
             logger.info("Zipping process manually interrupted");
             return FileVisitResult.TERMINATE;
         }
@@ -54,12 +56,13 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
+            RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
             logger.info("Zipping process manually interrupted");
             return FileVisitResult.TERMINATE;
         }
 
         String zipEntryName = sourceDir.relativize(file).toString();
-        logger.debug("Adding file to zip: " + zipEntryName);
+        //logger.debug("Adding file to zip: " + zipEntryName);
 
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
 

@@ -172,9 +172,6 @@ public class BackupOperations {
 
     public static void interruptBackupProcess(ZippingContext context) {
         logger.info("Event --> interrupt backup process");
-
-        // set Terminated status
-        RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
         
         ZippingThread.stopExecutorService(1);
         if (ZippingThread.isInterrupted())
@@ -206,13 +203,21 @@ public class BackupOperations {
         if (BackupManagerGUI.backupTable != null) {
             TableDataManager.updateProgressBarPercentage(context.backup, value, formatter);
         }
-
+        
         // updating running backups file .json
-        if (value == 100) {
-            RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Finished));
-        } else {
+        RunningBackups running = RunningBackups.readBackupFromJSON(context.backup.getBackupName());
+        if (running != null) {
+            running.progress = value;
+            RunningBackups.updateBackupToJSON(running);
+        }else {
             RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Progress));
         }
+       
+        // if (value == 100) {
+        //     RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Finished));
+        // } else {
+        //     RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.getBackupName(), path2, value, BackupStatusEnum.Progress));
+        // }
 
         if (value == 100) {
             updateAfterBackup(path1, path2, context);

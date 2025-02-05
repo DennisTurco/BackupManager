@@ -334,17 +334,4 @@ public class TranslationLoaderEnum {
     public static String getTranslation(TranslationCategory category, TranslationKey key) {
         return category.translations.getOrDefault(key, key.getDefaultValue()); // Use default value if not found
     }
-
-    // only for test
-    public static void main(String[] args) {
-        try {
-            loadTranslations("src/main/resources/res/languages/ita.json");
-
-            System.out.println(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
-            System.out.println(TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE));
-
-        } catch (IOException e) {
-            // e.printStackTrace();
-        }
-    }
 }

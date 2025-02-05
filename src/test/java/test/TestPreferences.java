@@ -1,18 +1,17 @@
 package test;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 
 public class TestPreferences {
 
@@ -28,15 +27,15 @@ public class TestPreferences {
 
     @Test
     void testUpdatePreferences() {
-        Preferences.setLanguage(LanguagesEnum.DEU);
-        Preferences.setTheme(ThemesEnum.CARBON);
+        Preferences.setLanguage(LanguagesEnum.ENG);
+        Preferences.setTheme(ThemesEnum.INTELLIJ);
 
         Preferences.updatePreferencesToJSON(); // update
         Preferences.loadPreferencesFromJSON(); // reload
 
         // check if update changed everything correctly
-        assertEquals(LanguagesEnum.DEU.getLanguageName(), Preferences.getLanguage().getLanguageName());
-        assertEquals(ThemesEnum.CARBON.getThemeName(), Preferences.getTheme().getThemeName());
+        assertEquals(LanguagesEnum.ENG.getLanguageName(), Preferences.getLanguage().getLanguageName());
+        assertEquals(ThemesEnum.INTELLIJ.getThemeName(), Preferences.getTheme().getThemeName());
     }
 
     @AfterEach
