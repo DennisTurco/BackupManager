@@ -1121,3 +1121,53 @@
 06-02-2025 15:44:36.907 [pool-3-thread-1] [INFO ] backupmanager.BackupOperations - Partial backup deleted successfully: Documents (Backup 06-02-2025 15.39.28).zip
 06-02-2025 15:44:36.909 [pool-3-thread-1] [INFO ] b.Entities.RunningBackups - Backup 'Documents1' updated with the status: Terminated
 06-02-2025 15:44:36.909 [pool-2-thread-1] [DEBUG] b.Services.BackupObserver - Observer has found a running backup
+06-02-2025 16:25:04.445 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+06-02-2025 16:25:04.462 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+06-02-2025 16:25:04.472 [main] [INFO ] backupmanager.MainApp - Application started
+06-02-2025 16:25:04.473 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+06-02-2025 16:25:05.307 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+06-02-2025 16:25:05.453 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+06-02-2025 16:25:05.455 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
+06-02-2025 16:25:05.455 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+06-02-2025 16:25:05.455 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+06-02-2025 16:25:05.456 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+06-02-2025 16:25:10.773 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
+06-02-2025 16:25:10.919 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
+06-02-2025 16:25:10.920 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 7
+06-02-2025 16:25:10.920 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
+06-02-2025 16:25:10.958 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
+06-02-2025 16:25:13.258 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
+06-02-2025 16:25:13.258 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
+06-02-2025 16:25:26.043 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-02-06T16:28:26.043453400
+06-02-2025 16:25:27.007 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: Documents1
+06-02-2025 16:25:27.018 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:25:29.267 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: Documents1
+06-02-2025 16:25:29.273 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:25:43.629 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:43.867 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:43.868 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 4
+06-02-2025 16:25:47.223 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:47.390 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:47.391 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 4
+06-02-2025 16:25:47.391 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
+06-02-2025 16:25:48.336 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
+06-02-2025 16:25:48.337 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
+06-02-2025 16:25:49.305 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned off
+06-02-2025 16:25:49.305 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: lezioni
+06-02-2025 16:25:49.309 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:25:49.896 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
+06-02-2025 16:25:49.896 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
+06-02-2025 16:25:53.417 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-02-06T16:27:53.417190400
+06-02-2025 16:25:54.344 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: lezioni
+06-02-2025 16:25:54.348 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:25:56.175 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: lezioni
+06-02-2025 16:25:56.179 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:25:57.224 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:58.313 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
+06-02-2025 16:25:58.313 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 4
+06-02-2025 16:25:59.710 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
+06-02-2025 16:26:00.549 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned off
+06-02-2025 16:26:00.549 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: lezioni
+06-02-2025 16:26:00.552 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+06-02-2025 16:26:01.043 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asa
+06-02-2025 16:26:01.670 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini

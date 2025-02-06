@@ -52,12 +52,10 @@
     "start_path": "C:\\Users\\Utente\\Desktop\\lezioni",
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2025-02-04T21:58:11.828011500",
-    "automatic_backup": true,
-    "next_date_backup": "2025-02-05T20:00:09.517598100",
-    "time_interval_backup": "0.2:0",
+    "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
-    "last_update_date": "2025-02-05T18:00:09.517598100",
+    "last_update_date": "2025-02-06T16:26:00.548931400",
     "backup_count": 67,
     "max_backups_to_keep": 1
   },
@@ -89,12 +87,14 @@
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2025-02-05T18:55:52.809984300",
-    "automatic_backup": false,
+    "automatic_backup": true,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-02-05T09:15:15.501617700",
+    "last_update_date": "2025-02-06T16:25:29.267566900",
     "backup_count": 11,
-    "max_backups_to_keep": 1
+    "max_backups_to_keep": 1,
+    "next_date_backup": "2025-02-06T16:28:29.267566900",
+    "time_interval_backup": "0.0:3"
   },
   {
     "backup_name": "Documents1_copy",

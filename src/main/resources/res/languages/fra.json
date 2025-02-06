@@ -140,6 +140,7 @@
       "ErrorGenericTitle": "Erreur",
       "WarningGenericTitle": "Avertissement",
       "WarningBackupAlreadyInProgressMessage": "Une sauvegarde est déjà en cours. Il n'est pas possible d'effectuer des sauvegardes en parallèle.",
+      "WarningShortTimeIntervalMessage": "L'intervalle de temps sélectionné est très court. Pour un fonctionnement optimal, nous recommandons de le régler à au moins une heure. Voulez-vous quand même continuer ?",
       "ErrorMessageForFolderNotExisting": "Le dossier n'existe pas ou est invalide",
       "ErrorMessageForSavingFileWithPathsEmpty": "Impossible d'enregistrer le fichier. Les chemins initial et de destination doivent être spécifiés et ne peuvent pas être vides",
       "BackupSavedCorrectlyTitle": "Sauvegarde Enregistrée",

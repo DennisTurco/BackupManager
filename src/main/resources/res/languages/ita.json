@@ -140,6 +140,7 @@
     "ErrorGenericTitle": "Errore",
     "WarningGenericTitle": "Avviso",
     "WarningBackupAlreadyInProgressMessage": "È già in corso un backup. Non è possibile eseguire backup in parallelo.",
+    "WarningShortTimeIntervalMessage": "L'intervallo di tempo selezionato è molto breve. Per un funzionamento ottimale, consigliamo di impostarlo ad almeno un'ora. Vuoi comunque procedere?",
     "ErrorMessageForFolderNotExisting": "La cartella non esiste o non è valida",
     "ErrorMessageForSavingFileWithPathsEmpty": "Impossibile salvare il file. Entrambi i percorsi iniziale e di destinazione devono essere specificati e non possono essere vuoti",
     "BackupSavedCorrectlyTitle": "Backup salvato",

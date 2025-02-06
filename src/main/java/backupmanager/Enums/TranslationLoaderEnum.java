@@ -192,6 +192,8 @@ public class TranslationLoaderEnum {
         ERROR_GENERIC_TITLE("ErrorGenericTitle", "Error"),
         WARNING_GENERIC_TITLE("WarningGenericTitle", "Warning"),
         WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE("WarningBackupAlreadyInProgressMessage", "There is already a backup in progress. It is not possible to perform parallel backups"),
+        WARNING_SHORT_TIME_INTERVAL_MESSAGE("WarningShortTimeIntervalMessage", "The selected time interval is very short. For optimal performance, we recommend setting it to at least one hour. Do you still want to proceed?"),
+
         ERROR_MESSAGE_FOR_FOLDER_NOT_EXISTING("ErrorMessageForFolderNotExisting", "The folder does not exist or is invalid"),
         ERROR_MESSAGE_FOR_SAVING_FILE_WITH_PATHS_EMPTY("ErrorMessageForSavingFileWithPathsEmpty", "Unable to save the file. Both the initial and destination paths must be specified and cannot be empty"),
         BACKUP_SAVED_CORRECTLY_TITLE("BackupSavedCorrectlyTitle", "Backup saved"),

@@ -140,6 +140,7 @@
       "ErrorGenericTitle": "Error",
       "WarningGenericTitle": "Advertencia",
       "WarningBackupAlreadyInProgressMessage": "Ya hay una copia de seguridad en progreso. No es posible realizar copias de seguridad en paralelo.",
+      "WarningShortTimeIntervalMessage": "El intervalo de tiempo seleccionado es muy corto. Para un funcionamiento óptimo, recomendamos configurarlo en al menos una hora. ¿Quieres continuar de todos modos?",
       "ErrorMessageForFolderNotExisting": "La carpeta no existe o no es válida",
       "ErrorMessageForSavingFileWithPathsEmpty": "No se puede guardar el archivo. Tanto la ruta inicial como la de destino deben especificarse y no pueden estar vacías",
       "BackupSavedCorrectlyTitle": "Copia Guardada",

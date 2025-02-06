@@ -74,6 +74,12 @@ public class TimePicker extends javax.swing.JDialog {
         Integer minutes = (Integer) minutesSpinner.getValue();
         return (days != null && days >= 0 && hours != null && hours >= 0 && hours <= 23 && minutes != null && minutes >= 0 && minutes <= 59 && (days != 0 || hours != 0 || minutes != 0));
     }
+
+    private boolean checkShortTimeInterval() {
+        Integer days = (Integer) daysSpinner.getValue();
+        Integer hours = (Integer) hoursSpinner.getValue();
+        return (days == 0 && hours == 0);
+    }
     
     private void mouseWeel(java.awt.event.MouseWheelEvent evt) {
         javax.swing.JSpinner spinner = (javax.swing.JSpinner) evt.getSource();
@@ -246,12 +252,19 @@ public class TimePicker extends javax.swing.JDialog {
     
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         if (checkInputCorrectness()) {
+
+            // check for small time interval setted
+            int response = JOptionPane.showConfirmDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_SHORT_TIME_INTERVAL_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_GENERIC_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response != JOptionPane.YES_OPTION) {
+                return;
+            }
+
             timeInterval = new TimeInterval((int)daysSpinner.getValue(), (int)hoursSpinner.getValue(), (int)minutesSpinner.getValue());
             closeOk = true;
             this.dispose();
         }
         else {
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_WRONG_TIME_INTERVAL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_WRONG_TIME_INTERVAL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnOkActionPerformed
 

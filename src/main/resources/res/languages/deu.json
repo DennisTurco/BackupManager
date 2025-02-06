@@ -140,6 +140,7 @@
       "ErrorGenericTitle": "Fehler",
       "WarningGenericTitle": "Warnung",
       "WarningBackupAlreadyInProgressMessage": "Es läuft bereits eine Sicherung. Es ist nicht möglich, parallele Sicherungen durchzuführen.",
+      "WarningShortTimeIntervalMessage": "Das ausgewählte Zeitintervall ist sehr kurz. Für eine optimale Leistung empfehlen wir, es auf mindestens eine Stunde einzustellen. Möchten Sie dennoch fortfahren?",
       "ErrorMessageForFolderNotExisting": "Der Ordner existiert nicht oder ist ungültig",
       "ErrorMessageForSavingFileWithPathsEmpty": "Die Datei konnte nicht gespeichert werden. Sowohl der Anfangs- als auch der Zielpfad müssen angegeben werden und dürfen nicht leer sein",
       "BackupSavedCorrectlyTitle": "Backup gespeichert",
