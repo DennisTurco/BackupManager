@@ -649,6 +649,10 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         closeOk = true;
 
+        if (backupName.getText().isBlank() || destinationPathField.getText().isBlank() || startPathField.getText().isBlank()) {
+            return;
+        }
+
         currentBackup = getBackup();
 
         if (create) {

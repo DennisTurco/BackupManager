@@ -52,7 +52,7 @@ public final class BackupManager {
     private void renameBackup(List<Backup> backups, Backup backup) {
         logger.info("Event --> backup renaming");
         
-        String backup_name = getBackupName(backups, false);
+        String backup_name = getBackupName(backups, backup.getBackupName(), false);
         if (backup_name == null || backup_name.isEmpty()) return;
         
         backup.setBackupName(backup_name);
@@ -197,10 +197,10 @@ public final class BackupManager {
         }
     }
 
-    private String getBackupName(List<Backup> backups, boolean canOverwrite) {
+    private String getBackupName(List<Backup> backups, String oldName, boolean canOverwrite) {
         while (true) {
             String backupName = JOptionPane.showInputDialog(null, 
-                TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT));
+                TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT), oldName);
     
             // If the user cancels the operation
             if (backupName == null || backupName.trim().isEmpty()) {
@@ -214,11 +214,11 @@ public final class BackupManager {
             if (existingBackup.isPresent()) {
                 if (canOverwrite) {
                     int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_BACKUP_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-    
-                    if (response == JOptionPane.YES_OPTION) {
-                        backups.remove(existingBackup.get());
-                        return backupName;
-                    }
+
+                if (response == JOptionPane.YES_OPTION) {
+                    backups.remove(existingBackup.get());
+                    return backupName;
+                }
                 } else {
                     logger.warn("Backup name '{}' is already in use", backupName);
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);

@@ -72,13 +72,13 @@
     "max_backups_to_keep": 3
   },
   {
-    "backup_name": "asa",
+    "backup_name": "dsaj",
     "start_path": "C:\\Users\\Utente\\Desktop\\Dennis",
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-28T00:00:00.017265400",
-    "last_update_date": "2025-01-23T00:03:07.060948400",
+    "last_update_date": "2025-02-06T23:17:19.446141600",
     "backup_count": 0,
     "max_backups_to_keep": 3
   },
@@ -86,15 +86,13 @@
     "backup_name": "Documents1",
     "start_path": "D:\\Documents",
     "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-02-05T18:55:52.809984300",
-    "automatic_backup": true,
+    "last_backup": "2025-02-06T22:58:58.910553",
+    "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
-    "last_update_date": "2025-02-06T16:25:29.267566900",
-    "backup_count": 11,
-    "max_backups_to_keep": 1,
-    "next_date_backup": "2025-02-06T16:28:29.267566900",
-    "time_interval_backup": "0.0:3"
+    "last_update_date": "2025-02-06T23:26:57.363907600",
+    "backup_count": 12,
+    "max_backups_to_keep": 1
   },
   {
     "backup_name": "Documents1_copy",
