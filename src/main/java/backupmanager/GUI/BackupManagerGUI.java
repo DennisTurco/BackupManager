@@ -110,6 +110,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         checkForFirstAccess();
 
         backupManager = new BackupManager(this);
+
+
+        // TODO: remove this
+        interruptBackupPopupItem.setVisible(false);
     }
     
     private void checkForFirstAccess() {
@@ -212,7 +216,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         setSvgImages();
     }
     
-    private void displayBackupList(List<Backup> backups) {
+    private void displayBackupList() {
         BackupTableModel model = new BackupTableModel(getColumnTranslations(), 0);
     
         // Populate the model with backup data
@@ -978,7 +982,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void setTranslations() {
         // update table translations
         if (backups != null)
-            displayBackupList(backups);
+            displayBackupList();
 
         // general
         jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + currentVersion);
@@ -1047,7 +1051,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void initializeTable() {
         try {
             backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-            displayBackupList(backups);
+            displayBackupList();
         } catch (IOException ex) {
             backups = null;
             logger.error("An error occurred: " + ex.getMessage(), ex);

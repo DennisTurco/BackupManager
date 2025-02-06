@@ -192,12 +192,12 @@ public class BackupOperations {
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup, formatter);
     } 
     
-    public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context) {
+    public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             logger.info("Zipping progress: " + value + "%");
 
         if (context.progressBar != null) {
-            context.progressBar.updateProgressBar(value);
+            context.progressBar.updateProgressBar(value, fileProcessed, filesCopiedSoFar, totalFilesCount);
         }
 
         if (BackupManagerGUI.backupTable != null) {

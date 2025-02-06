@@ -62,7 +62,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         }
 
         String zipEntryName = sourceDir.relativize(file).toString();
-        //logger.debug("Adding file to zip: " + zipEntryName);
+        logger.debug("Adding file to zip: " + zipEntryName);
 
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
 
@@ -78,7 +78,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context);
+        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context, zipEntryName, filesCopiedSoFar, totalFilesCount);
 
         return FileVisitResult.CONTINUE;
     }

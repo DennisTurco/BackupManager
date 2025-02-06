@@ -62,9 +62,7 @@ public class TableDataManager {
                         rowIndex,
                         targetColumnIndex
                     );
-                } else {
-                    logger.debug("Update the value of the progress in the table, for backup: " + backup.getBackupName());
-                    
+                } else {                    
                     // Update the value of the progress in the table
                     BackupManagerGUI.backupTable.getModel().setValueAt(value, rowIndex, targetColumnIndex);
                 }
