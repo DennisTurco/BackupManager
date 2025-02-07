@@ -30,7 +30,7 @@
     "Donate": false,
     "PaypalDonate": true,
     "BuymeacoffeeDonate": true,
-    "History": true,
+    "History": false,
     "InfoPage": true,
     "New": true,
     "Quit": true,
