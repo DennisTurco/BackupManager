@@ -8,7 +8,9 @@
       "OkButton": "Aceptar",
       "CancelButton": "Cancelar",
       "CloseButton": "Cerrar",
-      "ApplyButton": "Aplicar"
+      "ApplyButton": "Aplicar",
+      "SaveButton": "Guardar",
+      "CreateButton": "Crear"
     },
     "Menu": {
       "File": "Archivo",
@@ -46,6 +48,8 @@
       "AutoBackupButtonOFF": "Copia de Seguridad Automática (DESACTIVADA)",
       "InitialPathPlaceholder": "Ruta inicial",
       "DestinationPathPlaceholder": "Ruta de destino",
+      "BackupName": "Nombre de la copia de seguridad: ",
+      "BackupNameTooltip": "(Requerido) Nombre de la copia de seguridad", 
       "InitialPathTooltip": "(Requerido) Ruta inicial",
       "DestinationPathTooltip": "(Requerido) Ruta de destino",
       "InitialFileChooserTooltip": "Abrir explorador de archivos",
@@ -77,10 +81,14 @@
       "NotesDetail": "Notas",
       "MaxBackupsToKeepDetail": "MaximoCopiasDeSeguridadMantener",
       "AddBackupTooltip": "Agregar nueva copia de seguridad",
+      "ExportAs": "Exportar como: ",
+      "ExportAsPdfTooltip": "Exportar como PDF",
+      "ExportAsCsvTooltip": "Exportar como CSV",
       "ResearchBarTooltip": "Barra de búsqueda",
       "ResearchBarPlaceholder": "Buscar...",
       "EditPopup": "Editar",
       "DeletePopup": "Eliminar",
+      "InterruptPopup": "Interrumpir",
       "DuplicatePopup": "Duplicar",
       "RenameBackupPopup": "Renombrar copia de seguridad",
       "OpenInitialFolderPopup": "Abrir ruta inicial",
@@ -106,6 +114,16 @@
       "Language": "Idioma",
       "Theme": "Tema"
     },
+    "UserDialog": {
+      "UserTitle": "Inserta tus datos",
+      "Name": "Nombre",
+      "Surname": "Apellido",
+      "Email": "Correo electrónico",
+      "ErrorMessageForMissingData": "Por favor, completa todos los campos requeridos.",
+      "ErrorMessageForWrongEmail": "La dirección de correo electrónico proporcionada no es válida. Por favor, proporciona una correcta.",
+      "EmailConfirmationSubject": "¡Gracias por elegir Backup Manager!",
+      "EmailConfirmationBody": "Hola [UserName],\n\n¡Gracias por descargar y registrar Backup Manager, tu nueva herramienta para una gestión segura y eficiente de tus copias de seguridad!\n\nEste es un correo automático enviado para confirmar tu registro. Nos pondremos en contacto contigo por correo solo para informarte sobre nuevas versiones o actualizaciones importantes de la aplicación.\n\nMientras tanto, si tienes preguntas, necesitas ayuda o tienes sugerencias, estamos siempre a tu disposición. Puedes contactarnos en [SupportEmail].\n\n¡Gracias nuevamente por elegir Backup Manager y disfruta gestionando tus copias de seguridad!\n\nSaludos cordiales,\nEl equipo de Backup Manager"
+    },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Copia de Seguridad en Progreso",
       "StatusCompleted": "¡Copia completada!",
@@ -120,6 +138,9 @@
     },
     "Dialogs": {
       "ErrorGenericTitle": "Error",
+      "WarningGenericTitle": "Advertencia",
+      "WarningBackupAlreadyInProgressMessage": "Ya hay una copia de seguridad en progreso. No es posible realizar copias de seguridad en paralelo.",
+      "WarningShortTimeIntervalMessage": "El intervalo de tiempo seleccionado es muy corto. Para un funcionamiento óptimo, recomendamos configurarlo en al menos una hora. ¿Quieres continuar de todos modos?",
       "ErrorMessageForFolderNotExisting": "La carpeta no existe o no es válida",
       "ErrorMessageForSavingFileWithPathsEmpty": "No se puede guardar el archivo. Tanto la ruta inicial como la de destino deben especificarse y no pueden estar vacías",
       "BackupSavedCorrectlyTitle": "Copia Guardada",
@@ -159,7 +180,22 @@
       "BackupListCorrectlyImportedTitle": "Menú Importar",
       "BackupListCorrectlyImportedMessage": "¡Lista de copias de seguridad importada correctamente!",
       "ErrorMessageForWrongFileExtensionTitle": "Archivo no válido",
-      "ErrorMessageForWrongFileExtensionMessage": "Error: por favor selecciona un archivo JSON válido."
+      "ErrorMessageForWrongFileExtensionMessage": "Error: Seleccione un archivo JSON válido.",
+      "ErrorMessageCountingFiles": "Error al calcular los archivos para la copia de seguridad.",
+      "ErrorMessageZippingGeneric": "Error al comprimir los archivos.",
+      "ErrorMessageZippingIO": "Error al comprimir los archivos: error de E/S.",
+      "ErrorMessageZippingSecurity": "Error al comprimir los archivos: Error de seguridad.",
+      "SuccessGenericTitle": "Éxito",
+      "SuccessfullyExportedToCsvMessage": "¡Copias de seguridad exportadas a CSV con éxito!",
+      "SuccessfullyExportedToPdfMessage": "¡Copias de seguridad exportadas a PDF con éxito!",
+      "ErrorMessageForExportingToCsv": "Error al exportar copias de seguridad a CSV: ",
+      "ErrorMessageForExportingToPdf": "Error al exportar copias de seguridad a PDF: ",
+      "CsvNameMessageInput": "Introduce el nombre del archivo CSV.",
+      "PdfNameMessageInput": "Introduce el nombre del archivo PDF.",
+      "DuplicatedFileNameMessage": "El archivo ya existe. ¿Sobrescribir?",
+      "ErrorMessageInvalidFilename": "Nombre de archivo no válido. Usa solo caracteres alfanuméricos, guiones y guiones bajos.",
+      "ConfirmationDeletionTitle": "Confirmar Eliminación",
+      "ConfirmationDeletionMessage": "¿Está seguro de que desea eliminar las filas seleccionadas?"
     }
   }
   

@@ -13,7 +13,7 @@
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
-                <exec.mainClass>com.mycompany.autobackupprogram.MainApp</exec.mainClass>
+                <exec.mainClass>backupmanager.MainApp</exec.mainClass>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

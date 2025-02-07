@@ -8,7 +8,9 @@
       "OkButton": "Ok",
       "CancelButton": "Abbrechen",
       "CloseButton": "Schließen",
-      "ApplyButton": "Anwenden"
+      "ApplyButton": "Anwenden",
+      "SaveButton": "Speichern",
+      "CreateButton": "Erstellen"
     },
     "Menu": {
       "File": "Datei",
@@ -46,6 +48,8 @@
       "AutoBackupButtonOFF": "Auto-Backup (AUS)",
       "InitialPathPlaceholder": "Anfangspfad",
       "DestinationPathPlaceholder": "Zielpfad",
+      "BackupName": "Sicherungsname: ",
+      "BackupNameTooltip": "(Erforderlich) Sicherungsname",
       "InitialPathTooltip": "(Erforderlich) Anfangspfad",
       "DestinationPathTooltip": "(Erforderlich) Zielpfad",
       "InitialFileChooserTooltip": "Dateiexplorer öffnen",
@@ -77,10 +81,14 @@
       "NotesDetail": "Notizen",
       "MaxBackupsToKeepDetail": "MaximaleSicherungenBehalten",
       "AddBackupTooltip": "Neues Backup hinzufügen",
+      "ExportAs": "Exportieren als: ",
+      "ExportAsPdfTooltip": "Exportieren als PDF",
+      "ExportAsCsvTooltip": "Exportieren als CSV",
       "ResearchBarTooltip": "Suchleiste",
       "ResearchBarPlaceholder": "Suchen...",
       "EditPopup": "Bearbeiten",
       "DeletePopup": "Löschen",
+      "InterruptPopup": "Unterbrechen",
       "DuplicatePopup": "Duplizieren",
       "RenameBackupPopup": "Backup umbenennen",
       "OpenInitialFolderPopup": "Anfangspfad öffnen",
@@ -106,6 +114,16 @@
       "Language": "Sprache",
       "Theme": "Thema"
     },
+    "UserDialog": {
+      "UserTitle": "Geben Sie Ihre Daten ein",
+      "Name": "Vorname",
+      "Surname": "Nachname",
+      "Email": "E-Mail",
+      "ErrorMessageForMissingData": "Bitte füllen Sie alle erforderlichen Felder aus.",
+      "ErrorMessageForWrongEmail": "Die angegebene E-Mail-Adresse ist ungültig. Bitte geben Sie eine korrekte Adresse an.",
+      "EmailConfirmationSubject": "Vielen Dank, dass Sie sich für Backup Manager entschieden haben!",
+      "EmailConfirmationBody": "Hallo [UserName],\n\nVielen Dank, dass Sie Backup Manager heruntergeladen und registriert haben - Ihr neues Tool für eine sichere und effiziente Verwaltung Ihrer Backups!\n\nDies ist eine automatisierte E-Mail, die zur Bestätigung Ihrer Registrierung gesendet wurde. Wir werden Sie nur per E-Mail kontaktieren, um Sie über neue Versionen oder wichtige Updates der Anwendung zu informieren.\n\nFalls Sie Fragen haben, Unterstützung benötigen oder Vorschläge machen möchten, stehen wir Ihnen jederzeit gerne zur Verfügung. Sie können uns unter [SupportEmail] erreichen.\n\nVielen Dank nochmals, dass Sie sich für Backup Manager entschieden haben, und viel Erfolg bei der Verwaltung Ihrer Backups!\n\nMit freundlichen Grüßen,\nDas Backup Manager-Team"
+    },
     "ProgressBackupFrame": {
       "ProgressBackupTitle": "Backup läuft",
       "StatusCompleted": "Backup abgeschlossen!",
@@ -120,6 +138,9 @@
     },
     "Dialogs": {
       "ErrorGenericTitle": "Fehler",
+      "WarningGenericTitle": "Warnung",
+      "WarningBackupAlreadyInProgressMessage": "Es läuft bereits eine Sicherung. Es ist nicht möglich, parallele Sicherungen durchzuführen.",
+      "WarningShortTimeIntervalMessage": "Das ausgewählte Zeitintervall ist sehr kurz. Für eine optimale Leistung empfehlen wir, es auf mindestens eine Stunde einzustellen. Möchten Sie dennoch fortfahren?",
       "ErrorMessageForFolderNotExisting": "Der Ordner existiert nicht oder ist ungültig",
       "ErrorMessageForSavingFileWithPathsEmpty": "Die Datei konnte nicht gespeichert werden. Sowohl der Anfangs- als auch der Zielpfad müssen angegeben werden und dürfen nicht leer sein",
       "BackupSavedCorrectlyTitle": "Backup gespeichert",
@@ -159,7 +180,22 @@
       "BackupListCorrectlyImportedTitle": "Menü Importieren",
       "BackupListCorrectlyImportedMessage": "Backup-Liste erfolgreich importiert!",
       "ErrorMessageForWrongFileExtensionTitle": "Ungültige Datei",
-      "ErrorMessageForWrongFileExtensionMessage": "Fehler: Bitte wählen Sie eine gültige JSON-Datei aus."
+      "ErrorMessageForWrongFileExtensionMessage": "Fehler: Bitte wählen Sie eine gültige JSON-Datei aus.",
+      "ErrorMessageCountingFiles": "Fehler beim Zählen der zu sichernden Dateien.",
+      "ErrorMessageZippingGeneric": "Fehler beim Komprimieren der Dateien.",
+      "ErrorMessageZippingIO": "Fehler beim Komprimieren der Dateien: E/A-Fehler.",
+      "ErrorMessageZippingSecurity": "Fehler beim Komprimieren der Dateien: Sicherheitsfehler.",
+      "SuccessGenericTitle": "Erfolg",
+      "SuccessfullyExportedToCsvMessage": "Backups erfolgreich als CSV exportiert!",
+      "SuccessfullyExportedToPdfMessage": "Backups erfolgreich als PDF exportiert!",
+      "ErrorMessageForExportingToCsv": "Fehler beim Exportieren der Backups in CSV: ",
+      "ErrorMessageForExportingToPdf": "Fehler beim Exportieren der Backups in PDF: ",
+      "CsvNameMessageInput": "Geben Sie den Namen der CSV-Datei ein.",
+      "PdfNameMessageInput": "Geben Sie den Namen der PDF-Datei ein.",
+      "DuplicatedFileNameMessage": "Datei existiert bereits. Überschreiben?",
+      "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwenden Sie nur alphanumerische Zeichen, Bindestriche und Unterstriche.",
+      "ConfirmationDeletionTitle": "Löschen bestätigen",
+      "ConfirmationDeletionMessage": "Sind Sie sicher, dass Sie die ausgewählten Zeilen löschen möchten?"
     }
   }
   

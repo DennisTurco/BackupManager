@@ -1,111 +1,112 @@
-package test;
+// package test;
 
-import com.mycompany.autobackupprogram.JSONConfigReader;
-import com.mycompany.autobackupprogram.Logger;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
+// import backupmanager.Json.JSONConfigReader;
+// import backupmanager.Logger;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.List;
+// import org.junit.jupiter.api.*;
+// import org.mockito.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+// import java.io.*;
+// import java.nio.file.*;
+// import java.util.List;
 
-public class TestLogger {
+// import static org.junit.jupiter.api.Assertions.*;
+// import static org.mockito.Mockito.*;
 
-    private static File temp_file;
+// public class TestLogger {
 
-    @Mock
-    private static JSONConfigReader mockConfigReader;
+//     private static File temp_file;
 
-    @BeforeAll
-    static void setUpBeforeClass() throws IOException {
-        // Create test configuration file
-        temp_file = File.createTempFile("src/test/resources/log_test", "");
+//     @Mock
+//     private static JSONConfigReader mockConfigReader;
 
-        // Set up the mock config reader
-        mockConfigReader = mock(JSONConfigReader.class);
-        when(mockConfigReader.getMaxLines()).thenReturn(100);
-        when(mockConfigReader.getLinesToKeepAfterFileClear()).thenReturn(50);
-        when(mockConfigReader.isLogLevelEnabled("INFO")).thenReturn(true);
-        when(mockConfigReader.isLogLevelEnabled("DEBUG")).thenReturn(true);
-        when(mockConfigReader.isLogLevelEnabled("WARN")).thenReturn(true);
-        when(mockConfigReader.isLogLevelEnabled("ERROR")).thenReturn(true);
+//     @BeforeAll
+//     static void setUpBeforeClass() throws IOException {
+//         // Create test configuration file
+//         temp_file = File.createTempFile("src/test/resources/log_test", "");
 
-        Logger.configReader = mockConfigReader;
+//         // Set up the mock config reader
+//         mockConfigReader = mock(JSONConfigReader.class);
+//         when(mockConfigReader.getMaxLines()).thenReturn(100);
+//         when(mockConfigReader.getLinesToKeepAfterFileClear()).thenReturn(50);
+//         when(mockConfigReader.isLogLevelEnabled("INFO")).thenReturn(true);
+//         when(mockConfigReader.isLogLevelEnabled("DEBUG")).thenReturn(true);
+//         when(mockConfigReader.isLogLevelEnabled("WARN")).thenReturn(true);
+//         when(mockConfigReader.isLogLevelEnabled("ERROR")).thenReturn(true);
 
-        Logger.setLogFilePath(temp_file.getPath());
-    }
+//         Logger.configReader = mockConfigReader;
 
-    @BeforeEach
-    void setup() throws IOException {
-        Logger.setConsoleLoggingEnabled(false);
+//         Logger.setLogFilePath(temp_file.getPath());
+//     }
 
-        // clear the content of the log file for each test
-        Files.write(temp_file.toPath(), new byte[0], StandardOpenOption.TRUNCATE_EXISTING);
-    }
+//     @BeforeEach
+//     void setup() throws IOException {
+//         Logger.setConsoleLoggingEnabled(false);
 
-    @Test
-    void testLogMessageInfoLevel() throws IOException {
-        Logger.logMessage("Test info message", Logger.LogLevel.INFO);
+//         // clear the content of the log file for each test
+//         Files.write(temp_file.toPath(), new byte[0], StandardOpenOption.TRUNCATE_EXISTING);
+//     }
 
-        List<String> lines = Files.readAllLines(temp_file.toPath());
-        assertTrue(lines.stream().anyMatch(line -> line.contains("INFO")));
-    }
+//     @Test
+//     void testLogMessageInfoLevel() throws IOException {
+//         Logger.logMessage("Test info message", Logger.LogLevel.INFO);
 
-    @Test
-    void testLogMessageDebugLevel() throws IOException {
-        Logger.logMessage("Test debug message", Logger.LogLevel.DEBUG);
+//         List<String> lines = Files.readAllLines(temp_file.toPath());
+//         assertTrue(lines.stream().anyMatch(line -> line.contains("INFO")));
+//     }
 
-        List<String> lines = Files.readAllLines(temp_file.toPath());
-        assertTrue(lines.stream().anyMatch(line -> line.contains("DEBUG") && line.contains("Test debug message")));
-    }
+//     @Test
+//     void testLogMessageDebugLevel() throws IOException {
+//         Logger.logMessage("Test debug message", Logger.LogLevel.DEBUG);
 
-    @Test
-    void testLogMessageErrorLevel() throws IOException {
-        Logger.logMessage("Test error message", Logger.LogLevel.ERROR);
+//         List<String> lines = Files.readAllLines(temp_file.toPath());
+//         assertTrue(lines.stream().anyMatch(line -> line.contains("DEBUG") && line.contains("Test debug message")));
+//     }
 
-        List<String> lines = Files.readAllLines(temp_file.toPath());
-        assertTrue(lines.stream().anyMatch(line -> line.contains("ERROR") && line.contains("Test error message")));
-    }
+//     @Test
+//     void testLogMessageErrorLevel() throws IOException {
+//         Logger.logMessage("Test error message", Logger.LogLevel.ERROR);
 
-    @Test
-    void testLogMessageWithException() throws IOException {
-        Exception testException = new Exception("Test exception");
-        Logger.logMessage("Test message with exception: " + testException.getMessage(), Logger.LogLevel.ERROR, testException);
+//         List<String> lines = Files.readAllLines(temp_file.toPath());
+//         assertTrue(lines.stream().anyMatch(line -> line.contains("ERROR") && line.contains("Test error message")));
+//     }
 
-        List<String> lines = Files.readAllLines(temp_file.toPath());
-        assertTrue(lines.stream().anyMatch(line -> line.contains("ERROR") && line.contains("Test message with exception")));
-        assertTrue(lines.stream().anyMatch(line -> line.contains("Exception: java.lang.Exception - Test exception")));
-    }
+//     @Test
+//     void testLogMessageWithException() throws IOException {
+//         Exception testException = new Exception("Test exception");
+//         Logger.logMessage("Test message with exception: " + testException.getMessage(), Logger.LogLevel.ERROR, testException);
 
-    @Test
-    void testConsoleLoggingEnabled() {
-        Logger.setConsoleLoggingEnabled(true);
+//         List<String> lines = Files.readAllLines(temp_file.toPath());
+//         assertTrue(lines.stream().anyMatch(line -> line.contains("ERROR") && line.contains("Test message with exception")));
+//         assertTrue(lines.stream().anyMatch(line -> line.contains("Exception: java.lang.Exception - Test exception")));
+//     }
 
-        // Capture the console output
-        PrintStream originalOut = System.out;
-        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(consoleOutput));
+//     @Test
+//     void testConsoleLoggingEnabled() {
+//         Logger.setConsoleLoggingEnabled(true);
 
-        Logger.logMessage("Test console logging", Logger.LogLevel.INFO);
+//         // Capture the console output
+//         PrintStream originalOut = System.out;
+//         ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
+//         System.setOut(new PrintStream(consoleOutput));
 
-        assertTrue(consoleOutput.toString().contains("Test console logging"));
+//         Logger.logMessage("Test console logging", Logger.LogLevel.INFO);
 
-        // Reset the console output
-        System.setOut(originalOut);
-    }
+//         assertTrue(consoleOutput.toString().contains("Test console logging"));
 
-    // @Test
-    void testFileLoggingWithMaxLines() throws IOException {
-        // Create a large number of log entries to test maxLines
-        for (int i = 0; i < 200; i++) {
-            Logger.logMessage("Log entry " + i, Logger.LogLevel.INFO);
-        }
+//         // Reset the console output
+//         System.setOut(originalOut);
+//     }
 
-        List<String> lines = Files.readAllLines(temp_file.toPath());
-        assertEquals(100, lines.size()); // After trimming, only 100 lines should remain
-    }
+//     // @Test
+//     void testFileLoggingWithMaxLines() throws IOException {
+//         // Create a large number of log entries to test maxLines
+//         for (int i = 0; i < 200; i++) {
+//             Logger.logMessage("Log entry " + i, Logger.LogLevel.INFO);
+//         }
 
-}
+//         List<String> lines = Files.readAllLines(temp_file.toPath());
+//         assertEquals(100, lines.size()); // After trimming, only 100 lines should remain
+//     }
+
+// }

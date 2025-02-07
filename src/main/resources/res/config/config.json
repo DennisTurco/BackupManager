@@ -1,19 +1,25 @@
 {
-  "LOG_FILE_STRING": "log_file",
   "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
+  "LOG_FILE_STRING": "application.log",
+  "LOG_DIRECTORY_STRING": "src/main/resources/res/logs/",
+  "RUNNING_BACKUPS_FILE_STRING": "running_backups.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
+  "USER_FILE_STRING": "user.json",
   "RES_DIRECTORY_STRING": "src/main/resources/res/",
+  "PROPERTIES_FILE_STRING": "config.properties",
+  "RESURCES_DIRECTORY_STRING": "src/main/resources/",
   "LANGUAGES_DIRECTORY_STRING": "src/main/resources/res/languages/",
   "CONFIG_DIRECTORY_STRING": "src/main/resources/res/config/",
-  "DONATE_PAGE_LINK": "https://buymeacoffee.com/denno",
+  "DONATE_BUYMEACOFFE_LINK": "https://buymeacoffee.com/denno",
+  "DONATE_PAYPAL_LINK": "https://www.paypal.com/donate/?hosted_button_id=M7CJXS929334U",
   "ISSUE_PAGE_LINK": "https://github.com/DennisTurco/BackupManager/issues",
   "INFO_PAGE_LINK": "https://github.com/DennisTurco/BackupManager",
   "SHARE_LINK": "https://github.com/DennisTurco/BackupManager/releases",
   "EMAIL": "assistenza@shardpc.it",
   "SHARD_WEBSITE": "https://www.shardpc.it/",
   "LOGO_IMG": "/res/img/logo.png",
-  "VERSION": "2.0.4",
+  "VERSION": "2.0.5",
   "GUI_WIDTH": "982",
   "GUI_HEIGHT": "715",
 
@@ -22,6 +28,8 @@
     "Preferences": true,
     "Clear": true,
     "Donate": false,
+    "PaypalDonate": true,
+    "BuymeacoffeeDonate": true,
     "History": false,
     "InfoPage": true,
     "New": true,
@@ -34,31 +42,14 @@
     "Support": true,
     "Website": true
   },
-
   "BackupService": {
     "value": 1,
     "type": "int",
     "description": "Interval in minutes to check for auto backup"
   },
-  "LogService": {
-    "ERROR": true,
-    "INFO": true,
-    "WARN": true,
-    "DEBUG": true,
-    "MaxLines": {
-      "value": 10000,
-      "type": "int",
-      "description": "Maximum number of logs for the file"
-    },
-    "LinesToKeepAfterFileClear": {
-      "value": 1000,
-      "type": "int",
-      "description": "Lines to keep after file clear"
-    },
-    "MaxCountForSameBackup": {
-      "value": 3,
-      "type": "int",
-      "description": "Max count for the same backup in the same directory"
-    }
+  "MaxCountForSameBackup": {
+    "value": 1,
+    "type": "int",
+    "description": "Max count for the same backup in the same directory"
   }
 }

@@ -1,19 +1,17 @@
 package test;
 
-import com.mycompany.autobackupprogram.Entities.Preferences;
-import com.mycompany.autobackupprogram.Enums.ConfigKey;
-import com.mycompany.autobackupprogram.Enums.LanguagesEnum;
-import com.mycompany.autobackupprogram.Enums.ThemesEnum;
-import com.mycompany.autobackupprogram.Logger;
-
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import backupmanager.Entities.Preferences;
+import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.LanguagesEnum;
+import backupmanager.Enums.ThemesEnum;
 
 public class TestPreferences {
 
@@ -25,20 +23,19 @@ public class TestPreferences {
         ConfigKey.loadFromJson(CONFIG);
 
         temp_log_file = File.createTempFile("src/test/resources/temp_log_file", "");
-        Logger.setLogFilePath(temp_log_file.getPath());
     }
 
     @Test
     void testUpdatePreferences() {
-        Preferences.setLanguage(LanguagesEnum.DEU);
-        Preferences.setTheme(ThemesEnum.CARBON);
+        Preferences.setLanguage(LanguagesEnum.ENG);
+        Preferences.setTheme(ThemesEnum.INTELLIJ);
 
         Preferences.updatePreferencesToJSON(); // update
         Preferences.loadPreferencesFromJSON(); // reload
 
         // check if update changed everything correctly
-        assertEquals(LanguagesEnum.DEU.getLanguageName(), Preferences.getLanguage().getLanguageName());
-        assertEquals(ThemesEnum.CARBON.getThemeName(), Preferences.getTheme().getThemeName());
+        assertEquals(LanguagesEnum.ENG.getLanguageName(), Preferences.getLanguage().getLanguageName());
+        assertEquals(ThemesEnum.INTELLIJ.getThemeName(), Preferences.getTheme().getThemeName());
     }
 
     @AfterEach

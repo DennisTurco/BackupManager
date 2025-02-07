@@ -8,7 +8,9 @@
     "CloseButton": "Chiudi",
     "OkButton": "Ok",
     "CancelButton": "Annulla",
-    "ApplyButton":"Applica"
+    "ApplyButton":"Applica",
+    "SaveButton": "Salva",
+    "CreateButton": "Crea"
   },
   "Menu": {
     "File": "File",
@@ -46,6 +48,8 @@
     "AutoBackupButtonOFF": "Backup Automatico (OFF)",
     "InitialPathPlaceholder": "Percorso iniziale",
     "DestinationPathPlaceholder": "Percorso di destinazione",
+    "BackupName": "Nome del backup: ",
+    "BackupNameTooltip": "(Obbligatorio) Nome del backup",
     "InitialPathTooltip": "(Obbligatorio) Percorso iniziale",
     "DestinationPathTooltip": "(Obbligatorio) Percorso di destinazione",
     "InitialFileChooserTooltip": "Apri esplora file",
@@ -54,7 +58,7 @@
     "SingleBackupTooltip": "Esegui il backup",
     "AutoBackupTooltip": "Attiva/Disattiva backup automatico",
     "TimePickerTooltip": "Selettore orario",
-    "MaxBackupsToKeep": "Massimo di backup da mantenere",
+    "MaxBackupsToKeep": "Massimo numero di backup da mantenere",
     "MaxBackupsToKeepTooltip": "Numero massimo di backup da conservare prima di eliminare i più vecchi."
   },
   "BackupList": {
@@ -74,13 +78,17 @@
     "CreationDateDetail": "DataCreazione",
     "LastUpdateDateDetail": "DataUltimoAggiornamento",
     "BackupCountDetail": "ConteggioBackup",
-    "MaxBackupsToKeepDetail": "MassimoBackupDaMantenere",
+    "MaxBackupsToKeepDetail": "MassimoNumeroBackupDaMantenere",
     "NotesDetail": "Note",
     "AddBackupTooltip": "Aggiungi nuovo backup",
+    "ExportAs": "Esporta come: ",
+    "ExportAsPdfTooltip": "Esporta come PDF",
+    "ExportAsCsvTooltip": "Esporta come CSV",
     "ResearchBarTooltip": "Barra di ricerca",
-    "ResearchBarPlaceholder": "cerca...",
+    "ResearchBarPlaceholder": "Cerca...",
     "EditPopup": "Modifica",
     "DeletePopup": "Elimina",
+    "InterruptPopup": "Interrompi",
     "DuplicatePopup": "Duplica",
     "RenameBackupPopup": "Rinomina backup",
     "OpenInitialFolderPopup": "Apri percorso iniziale",
@@ -106,6 +114,16 @@
     "Language": "Lingua",
     "Theme": "Tema"
   },
+  "UserDialog": {
+    "UserTitle": "Inserisci i tuoi dati",
+    "Name": "Nome",
+    "Surname": "Cognome",
+    "Email": "Email",
+    "ErrorMessageForMissingData": "Per favore, compila tutti i campi richiesti.",
+    "ErrorMessageForWrongEmail": "L'indirizzo email fornito non è valido. Inseriscine uno corretto.",
+    "EmailConfirmationSubject": "Grazie per aver scelto Backup Manager!",
+    "EmailConfirmationBody": "Ciao [UserName],\n\nGrazie per aver scaricato e registrato Backup Manager, il tuo nuovo strumento per una gestione sicura ed efficiente dei backup!\n\nQuesta è un’email automatica, inviata per confermare la tua registrazione. Ti contatteremo via email esclusivamente per comunicarti il rilascio di nuove versioni o aggiornamenti importanti dell’applicazione.\n\nNel frattempo, se hai domande, necessiti assistenza o hai suggerimenti, siamo sempre a tua disposizione. Puoi contattarci scrivendo a [SupportEmail].\n\nGrazie ancora per aver scelto Backup Manager e buon lavoro con i tuoi backup!\n\nA presto,\nIl Team di Backup Manager"
+  },
   "ProgressBackupFrame": {
     "ProgressBackupTitle": "Backup in corso",
     "StatusCompleted": "Backup completato!",
@@ -120,6 +138,9 @@
   },
   "Dialogs": {
     "ErrorGenericTitle": "Errore",
+    "WarningGenericTitle": "Avviso",
+    "WarningBackupAlreadyInProgressMessage": "È già in corso un backup. Non è possibile eseguire backup in parallelo.",
+    "WarningShortTimeIntervalMessage": "L'intervallo di tempo selezionato è molto breve. Per un funzionamento ottimale, consigliamo di impostarlo ad almeno un'ora. Vuoi comunque procedere?",
     "ErrorMessageForFolderNotExisting": "La cartella non esiste o non è valida",
     "ErrorMessageForSavingFileWithPathsEmpty": "Impossibile salvare il file. Entrambi i percorsi iniziale e di destinazione devono essere specificati e non possono essere vuoti",
     "BackupSavedCorrectlyTitle": "Backup salvato",
@@ -159,6 +180,21 @@
     "BackupListCorrectlyImportedTitle": "Menu Importa",
     "BackupListCorrectlyImportedMessage": "Lista di backup importata correttamente!",
     "ErrorMessageForWrongFileExtensionTitle": "File non valido",
-    "ErrorMessageForWrongFileExtensionMessage": "Errore: seleziona un file JSON valido."
+    "ErrorMessageForWrongFileExtensionMessage": "Errore: Selezionare un file JSON valido.",
+    "ErrorMessageCountingFiles": "Errore durante il calcolo dei file da eseguire il backup.",
+    "ErrorMessageZippingGeneric": "Errore durante la compressione dei file.",
+    "ErrorMessageZippingIO": "Errore durante la compressione dei file: errore di I/O.",
+    "ErrorMessageZippingSecurity": "Errore durante la compressione dei file: Errore di sicurezza.",
+    "SuccessGenericTitle": "Successo",
+    "SuccessfullyExportedToCsvMessage": "Backup esportati in CSV con successo!",
+    "SuccessfullyExportedToPdfMessage": "Backup esportati in PDF con successo!",
+    "ErrorMessageForExportingToCsv": "Errore durante l'esportazione dei backup in CSV: ",
+    "ErrorMessageForExportingToPdf": "Errore durante l'esportazione dei backup in PDF: ",
+    "CsvNameMessageInput": "Inserisci il nome del file CSV.",
+    "PdfNameMessageInput": "Inserisci il nome del file PDF.",
+    "DuplicatedFileNameMessage": "Il file esiste già. Sovrascrivere?",
+    "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo caratteri alfanumerici, trattini e underscore.",
+    "ConfirmationDeletionTitle": "Conferma Eliminazione",
+    "ConfirmationDeletionMessage": "Sei sicuro di voler eliminare le righe selezionate?"
   }
 }

@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany</groupId>
+    <groupId>backupmanager</groupId>
     <artifactId>BackupManager</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -12,15 +12,19 @@
     <dependencies>
         <!-- Dependency for json -->
         <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.15.2</version>
         </dependency>
         
         <!-- Dependency for JUnit 4 -->
@@ -58,10 +62,54 @@
             <artifactId>flatlaf</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency> <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf-extras -->
+            <groupId>com.formdev</groupId> 
+            <artifactId>flatlaf-extras</artifactId> <!-- for svg icons -->
+            <version>3.5.4</version>
+        </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE220</version>
+        </dependency>
+        
+        <!-- for export as PDF -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.2.5</version>
+            <type>jar</type>
+        </dependency>
+
+        <!--LOGGING-->
+        <!-- SLF4J API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <!-- Logback Classic Implementation -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -73,7 +121,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.mycompany.autobackupprogram.MainApp</mainClass>
+                        <mainClass>backupmanager.MainApp</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>

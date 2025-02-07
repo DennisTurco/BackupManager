@@ -14,14 +14,14 @@
             "type": "java",
             "name": "TranslationLoaderEnum",
             "request": "launch",
-            "mainClass": "com.mycompany.autobackupprogram.Enums.TranslationLoaderEnum",
+            "mainClass": "backupmanager.Enums.TranslationLoaderEnum",
             "projectName": "BackupManager"
         },
         {
             "type": "java",
             "name": "MainApp",
             "request": "launch",
-            "mainClass": "com.mycompany.autobackupprogram.MainApp",
+            "mainClass": "backupmanager.MainApp",
             "projectName": "BackupManager"
         }
     ]

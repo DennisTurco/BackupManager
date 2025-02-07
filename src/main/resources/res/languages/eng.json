@@ -8,7 +8,9 @@
     "OkButton": "Ok",
     "CancelButton": "Cancel",
     "CloseButton":"Close",
-    "ApplyButton":"Apply"
+    "ApplyButton":"Apply",
+    "SaveButton": "Save",
+    "CreateButton": "Create"
   },
   "Menu": {
     "File": "File",
@@ -46,6 +48,8 @@
     "AutoBackupButtonOFF": "Auto Backup (OFF)",
     "InitialPathPlaceholder": "Initial path",
     "DestinationPathPlaceholder": "Destination path",
+    "BackupName": "Backup name: ",
+    "BackupNameTooltip": "(Required) Backup name",
     "InitialPathTooltip": "(Required) Initial path",
     "DestinationPathTooltip": "(Required) Destination path",
     "InitialFileChooserTooltip": "Open file explorer",
@@ -77,10 +81,14 @@
     "NotesDetail": "Notes",
     "MaxBackupsToKeepDetail": "MaxBackupsToKeep",
     "AddBackupTooltip": "Add new backup",
+    "ExportAs": "Export as: ",
+    "ExportAsPdfTooltip": "Export as PDF",
+    "ExportAsCsvTooltip": "Export as CSV",
     "ResearchBarTooltip": "Research bar",
     "ResearchBarPlaceholder": "Search...",
     "EditPopup": "Edit",
     "DeletePopup": "Delete",
+    "InterruptPopup": "Interrupt",
     "DuplicatePopup": "Duplicate",
     "RenameBackupPopup": "Rename backup",
     "OpenInitialFolderPopup": "Open initial path",
@@ -106,6 +114,16 @@
     "Language": "Language",
     "Theme": "Theme"
   },
+  "UserDialog": {
+    "UserTitle": "Insert your data",
+    "Name": "Name",
+    "Surname": "Surname",
+    "Email": "Email",
+    "ErrorMessageForMissingData": "Please fill in all the required fields.",
+    "ErrorMessageForWrongEmail": "The provided email address is invalid. Please provide a correct one.",
+    "EmailConfirmationSubject": "Thank you for choosing Backup Manager!",
+    "EmailConfirmationBody": "Hi [UserName],\n\nThank you for downloading and registering Backup Manager, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at [SupportEmail].\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"
+  },
   "ProgressBackupFrame": {
     "ProgressBackupTitle":"Backup in progress",
     "StatusCompleted":"Backup completed!",
@@ -120,6 +138,9 @@
   },
   "Dialogs": {
     "ErrorGenericTitle":"Error",
+    "WarningGenericTitle": "Warning",
+    "WarningBackupAlreadyInProgressMessage": "There is already a backup in progress. It is not possible to perform parallel backups",
+    "WarningShortTimeIntervalMessage": "The selected time interval is very short. For optimal performance, we recommend setting it to at least one hour. Do you still want to proceed?",
     "ErrorMessageForFolderNotExisting":"The folder does not exist or is invalid",
     "ErrorMessageForSavingFileWithPathsEmpty":"Unable to save the file. Both the initial and destination paths must be specified and cannot be empty",
     "BackupSavedCorrectlyTitle":"Backup saved",
@@ -159,6 +180,21 @@
     "BackupListCorrectlyImportedMessage": "Backup list successfully imported!",
     "ErrorMessageForSamePaths": "The initial path and destination path cannot be the same. Please choose different paths!",
     "ErrorMessageForWrongFileExtensionTitle": "Invalid File",
-    "ErrorMessageForWrongFileExtensionMessage": "Error: Please select a valid JSON file."
+    "ErrorMessageForWrongFileExtensionMessage": "Error: Please select a valid JSON file.",
+    "ErrorMessageCountingFiles": "Error occurred while calculating files to back up.",
+    "ErrorMessageZippingGeneric": "Error occurred while zipping files.",
+    "ErrorMessageZippingIO": "Error occurred while zipping files: I/O error.",
+    "ErrorMessageZippingSecurity": "Error occurred while zipping files: Security error.",
+    "SuccessGenericTitle":"Success",
+    "SuccessfullyExportedToCsvMessage":"Backups exported to CSV successfully!",
+    "SuccessfullyExportedToPdfMessage":"Backups exported to PDF successfully!",
+    "ErrorMessageForExportingToCsv":"Error exporting backups to CSV: ",
+    "ErrorMessageForExportingToPdf":"Error exporting backups to PDF: ",
+    "CsvNameMessageInput":"Enter the name of the CSV file.",
+    "PdfNameMessageInput":"Enter the name of the PDF file.",
+    "DuplicatedFileNameMessage":"File already exists. Overwrite?",
+    "ErrorMessageInvalidFilename":"Invalid file name. Use only alphanumeric characters, dashes, and underscores.",
+    "ConfirmationDeletionTitle":"Confirm Deletion",
+    "ConfirmationDeletionMessage":"Are you sure you want to delete the selected rows?"
   }
 }
