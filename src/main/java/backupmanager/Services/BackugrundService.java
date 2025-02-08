@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFrame;
 
@@ -41,6 +42,7 @@ public class BackugrundService {
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private TrayIcon trayIcon = null;
     private BackupManagerGUI guiInstance = null;
+    private final AtomicBoolean isBackupping = new AtomicBoolean(false);
 
     public void startService() throws IOException {
         if (trayIcon == null) {
@@ -131,17 +133,35 @@ public class BackugrundService {
     class BackupTask implements Runnable {
         @Override
         public void run() {
+            if (!isBackupping.compareAndSet(false, true)) {
+                return;
+            }
+        
             logger.debug("Checking for automatic backup...");
+        
             try {
-                List<Backup> backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
+                List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
+                if (!runningBackups.isEmpty()) {
+                    logger.info("A backup is already running. Skipping this cycle.");
+                    isBackupping.set(false);
+                    return;
+                }
+        
+                List<Backup> backups = JSONBackup.readBackupListFromJSON(
+                    Preferences.getBackupList().getDirectory(),
+                    Preferences.getBackupList().getFile()
+                );
+        
                 List<Backup> needsBackup = getBackupsToDo(backups, 1);
-                if (needsBackup != null && !needsBackup.isEmpty()) {
+                if (!needsBackup.isEmpty()) {
                     logger.info("Start backup process.");
                     executeBackups(needsBackup);
                 } else {
+                    isBackupping.set(false);
                     logger.debug("No backup needed at this time.");
                 }
             } catch (IOException ex) {
+                isBackupping.set(false);
                 logger.error("An error occurred: " + ex.getMessage(), ex);
             }
         }
@@ -171,9 +191,14 @@ public class BackugrundService {
 
         private void executeBackups(List<Backup> backups) {
             javax.swing.SwingUtilities.invokeLater(() -> {
-                for (Backup backup : backups) {
-                    ZippingContext context = new ZippingContext(backup, trayIcon, null, null, null, null);
-                    BackupOperations.SingleBackup(context);
+                try {
+                    for (Backup backup : backups) {
+                        ZippingContext context = new ZippingContext(backup, trayIcon, null, null, null, null);
+                        BackupOperations.SingleBackup(context);
+                    }
+                } finally {
+                    logger.info("All backups completed. Resetting isBackupping flag.");
+                    isBackupping.set(false);
                 }
             });
         }

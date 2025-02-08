@@ -26,7 +26,7 @@
   "MenuItems": {
     "BugReport": true,
     "Preferences": true,
-    "Clear": true,
+    "Clear": false,
     "Donate": false,
     "PaypalDonate": true,
     "BuymeacoffeeDonate": true,
@@ -34,10 +34,10 @@
     "InfoPage": true,
     "New": true,
     "Quit": true,
-    "Save": true,
+    "Save": false,
     "Import": true,
     "Export": true,
-    "SaveWithName": true,
+    "SaveWithName": false,
     "Share": true,
     "Support": true,
     "Website": true

@@ -111,6 +111,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         backupManager = new BackupManager(this);
 
+        jSeparator5.setVisible(false);
 
         // TODO: remove this
         interruptBackupPopupItem.setVisible(false);

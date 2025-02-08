@@ -101,7 +101,7 @@ public class RunningBackups {
                     backup.status =  BackupStatusEnum.Terminated;
                 }
 
-                logger.info("Backup '{}' updated with the status: {}", backup.backupName, backup.status);
+                logger.debug("Backup '{}' updated with the status: {}", backup.backupName, backup.status);
                 
                 iterator.set(backup);
                 updated = true;
