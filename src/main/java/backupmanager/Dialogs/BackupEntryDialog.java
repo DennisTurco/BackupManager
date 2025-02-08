@@ -35,7 +35,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     private String backupOnText;
     private String backupOffText;
     private Backup currentBackup;
-    private boolean closeOk;
     private boolean create;
     private TimeInterval timeInterval;
 
@@ -67,7 +66,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         initComponents();
 
         setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
-        this.closeOk = false;
 
         setSvgImages();
         setTranslations();
@@ -104,8 +102,8 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         // update current timeInterval with the new one
         timeInterval = newtimeInterval;
 
-        String startPath = GetStartPathField();
-        String destinationPath = GetDestinationPathField();
+        String startPath = startPathField.getText();
+        String destinationPath = destinationPathField.getText();
         BackupManager.showMessageActivationAutoBackup(timeInterval, startPath, destinationPath);
     }
 
@@ -119,11 +117,8 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }
     }
 
-    public Backup getBackup() {
-        if (!closeOk){
-            return null;
-        }
-         
+    public Backup getBackup() {         
+        String name = backupName.getText();
         String initialPath = startPathField.getText();
         String destinationPath = destinationPathField.getText();
         String notes = backupNoteTextArea.getText();
@@ -141,14 +136,12 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }
 
         if (currentBackup == null) {
-            String name = backupName.getText();
             LocalDateTime lastBackup = null;
             LocalDateTime creationDate = LocalDateTime.now();
             LocalDateTime lastUpdateDate = creationDate;
             int backupCount = 0;
             return new Backup(name, initialPath, destinationPath, lastBackup, autoBackup, nextDateBackup, timeInterval, notes, creationDate, lastUpdateDate, backupCount, maxBackupsToKeep);
         } else {
-            String name = currentBackup.getBackupName();
             LocalDateTime lastBackup = currentBackup.getLastBackup();
             LocalDateTime creationDate = currentBackup.getCreationDate();
             LocalDateTime lastUpdateDate = LocalDateTime.now();
@@ -157,21 +150,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }
     }
 
-    public String GetStartPathField() {
-        return startPathField.getText();
-    }
-    public String GetDestinationPathField() {
-        return destinationPathField.getText();
-    }
-    public String GetNotesTextArea() {
-        return backupNoteTextArea.getText();
-    }
-    public boolean GetAutomaticBackupPreference() {
-        return toggleAutoBackup.isSelected();
-    }
-    public int GetMaxBackupsToKeep() {
-        return (int) maxBackupCountSpinner.getValue();
-    }
     public void SetStartPathField(String text) {
         startPathField.setText(text);
     }
@@ -226,29 +204,39 @@ public class BackupEntryDialog extends javax.swing.JDialog {
 
         //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
         if (currentBackup.getBackupName() != null && !currentBackup.getBackupName().isEmpty()) { 
-            currentBackup.setInitialPath(GetStartPathField());
-            currentBackup.setDestinationPath(GetDestinationPathField());
+            currentBackup.setInitialPath(startPathField.getText());
+            currentBackup.setDestinationPath(destinationPathField.getText());
             currentBackup.setLastBackup(LocalDateTime.now());
         }
     }
 
     private boolean toggleAutomaticBackup() {
-        Backup backup = BackupManager.toggleAutomaticBackup(currentBackup);
-        
-        if (backup != null) {
-            currentBackup = backup;
+        if (currentBackup == null) {
+            currentBackup = getBackup();
+            currentBackup.setAutoBackup(!currentBackup.isAutoBackup());
         }
+        
+        Backup backup = BackupManager.toggleAutomaticBackup(currentBackup);
 
+        if (backup == null) {
+            toggleAutoBackup.setSelected(false);
+            return false;
+        }
+    
+        currentBackup = backup;
+    
         if (backup.getTimeIntervalBackup() != null) {
             timeInterval = backup.getTimeIntervalBackup();
             currentBackup.setNextDateBackup(BackupManager.getNexDateBackup(timeInterval));
             btnTimePicker.setToolTipText(timeInterval.toString());
             btnTimePicker.setEnabled(true);
             setAutoBackupOn(currentBackup);
+            toggleAutoBackup.setSelected(true); 
             return true;
         }
-        
+    
         setAutoBackupOff();
+        toggleAutoBackup.setSelected(false);  
         return false;
     }
     
@@ -628,8 +616,8 @@ public class BackupEntryDialog extends javax.swing.JDialog {
 
         currentBackup.setTimeIntervalBackup(timeInterval);
         currentBackup.setNextDateBackup(nextDateBackup);
-        currentBackup.setInitialPath(GetStartPathField());
-        currentBackup.setDestinationPath(GetDestinationPathField());
+        currentBackup.setInitialPath(startPathField.getText());
+        currentBackup.setDestinationPath(destinationPathField.getText());
 
         openBackupActivationMessage(timeInterval);
     }//GEN-LAST:event_btnTimePickerActionPerformed
@@ -647,8 +635,6 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_closeButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        closeOk = true;
-
         if (backupName.getText().isBlank() || destinationPathField.getText().isBlank() || startPathField.getText().isBlank()) {
             return;
         }

@@ -53,13 +53,13 @@
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2025-02-08T01:02:38.269321700",
     "automatic_backup": true,
+    "next_date_backup": "2025-02-08T01:08:38.268945700",
+    "time_interval_backup": "0.0:6",
     "notes": "",
     "creation_date": "2024-12-26T11:39:05.784050",
     "last_update_date": "2025-02-08T00:39:54.223754700",
     "backup_count": 69,
-    "max_backups_to_keep": 1,
-    "next_date_backup": "2025-02-08T01:08:38.268945700",
-    "time_interval_backup": "0.0:6"
+    "max_backups_to_keep": 1
   },
   {
     "backup_name": "Documents2",
@@ -69,7 +69,7 @@
     "automatic_backup": false,
     "notes": "",
     "creation_date": "2024-12-27T21:03:01.013826200",
-    "last_update_date": "2025-01-22T23:37:11.115778400",
+    "last_update_date": "2025-02-08T14:26:21.838055300",
     "backup_count": 20,
     "max_backups_to_keep": 3
   },
@@ -90,13 +90,13 @@
     "destination_path": "C:\\Users\\Utente\\Desktop",
     "last_backup": "2025-02-08T01:10:16.636767200",
     "automatic_backup": true,
+    "next_date_backup": "2025-02-08T01:12:16.636270700",
+    "time_interval_backup": "0.0:2",
     "notes": "",
     "creation_date": "2024-12-29T13:28:19.132467600",
     "last_update_date": "2025-02-08T00:40:08.405629",
     "backup_count": 15,
-    "max_backups_to_keep": 1,
-    "next_date_backup": "2025-02-08T01:12:16.636270700",
-    "time_interval_backup": "0.0:2"
+    "max_backups_to_keep": 1
   },
   {
     "backup_name": "Documents1_copy",
@@ -180,18 +180,6 @@
     "max_backups_to_keep": 1
   },
   {
-    "backup_name": "test",
-    "start_path": "C:\\Users\\Utente\\Desktop\\Dennis\\File vari",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
-    "last_backup": "2025-01-24T20:10:42.271929900",
-    "automatic_backup": false,
-    "notes": "",
-    "creation_date": "2025-01-23T19:16:38.608844600",
-    "last_update_date": "2025-02-04T14:06:48.066937",
-    "backup_count": 6,
-    "max_backups_to_keep": 1
-  },
-  {
     "backup_name": "d.turco2_copy",
     "start_path": "C:\\Users\\d.turco\\Desktop\\DennisTurco",
     "destination_path": "C:\\Users\\d.turco\\Desktop",
@@ -201,6 +189,32 @@
     "creation_date": "2025-02-04T10:11:06.269395600",
     "last_update_date": "2025-02-08T00:40:13.396135900",
     "backup_count": 9,
+    "max_backups_to_keep": 1
+  },
+  {
+    "backup_name": "test",
+    "start_path": "C:\\Users\\Utente\\Desktop\\mamma",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": true,
+    "next_date_backup": "2025-02-10T14:52:19.724042800",
+    "time_interval_backup": "2.0:0",
+    "notes": "",
+    "creation_date": "2025-02-08T14:52:07.870091900",
+    "last_update_date": "2025-02-08T14:52:19.724042800",
+    "backup_count": 0,
+    "max_backups_to_keep": 1
+  },
+  {
+    "backup_name": "culo",
+    "start_path": "C:\\Users\\Utente\\Desktop\\mamma",
+    "destination_path": "C:\\Users\\Utente\\Desktop",
+    "automatic_backup": true,
+    "next_date_backup": "2025-02-10T14:52:24.135406700",
+    "time_interval_backup": "2.0:0",
+    "notes": "",
+    "creation_date": "2025-02-08T14:52:07.870091900",
+    "last_update_date": "2025-02-08T14:52:25.638810200",
+    "backup_count": 0,
     "max_backups_to_keep": 1
   }
 ]

@@ -253,11 +253,14 @@ public class TimePicker extends javax.swing.JDialog {
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         if (checkInputCorrectness()) {
 
-            // check for small time interval setted
-            int response = JOptionPane.showConfirmDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_SHORT_TIME_INTERVAL_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_GENERIC_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                return;
+            if (checkShortTimeInterval()) {
+                // check for small time interval setted
+                int response = JOptionPane.showConfirmDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_SHORT_TIME_INTERVAL_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_GENERIC_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (response != JOptionPane.YES_OPTION) {
+                    return;
+                }
             }
+            
 
             timeInterval = new TimeInterval((int)daysSpinner.getValue(), (int)hoursSpinner.getValue(), (int)minutesSpinner.getValue());
             closeOk = true;
