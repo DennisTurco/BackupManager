@@ -211,10 +211,8 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }
 
     private boolean toggleAutomaticBackup() {
-        if (currentBackup == null) {
-            currentBackup = getBackup();
-            currentBackup.setAutoBackup(!currentBackup.isAutoBackup());
-        }
+        currentBackup = getBackup();
+        currentBackup.setAutoBackup(!currentBackup.isAutoBackup());
         
         Backup backup = BackupManager.toggleAutomaticBackup(currentBackup);
 

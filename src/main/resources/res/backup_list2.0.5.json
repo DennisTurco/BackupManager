@@ -190,31 +190,5 @@
     "last_update_date": "2025-02-08T00:40:13.396135900",
     "backup_count": 9,
     "max_backups_to_keep": 1
-  },
-  {
-    "backup_name": "test",
-    "start_path": "C:\\Users\\Utente\\Desktop\\mamma",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
-    "automatic_backup": true,
-    "next_date_backup": "2025-02-10T14:52:19.724042800",
-    "time_interval_backup": "2.0:0",
-    "notes": "",
-    "creation_date": "2025-02-08T14:52:07.870091900",
-    "last_update_date": "2025-02-08T14:52:19.724042800",
-    "backup_count": 0,
-    "max_backups_to_keep": 1
-  },
-  {
-    "backup_name": "culo",
-    "start_path": "C:\\Users\\Utente\\Desktop\\mamma",
-    "destination_path": "C:\\Users\\Utente\\Desktop",
-    "automatic_backup": true,
-    "next_date_backup": "2025-02-10T14:52:24.135406700",
-    "time_interval_backup": "2.0:0",
-    "notes": "",
-    "creation_date": "2025-02-08T14:52:07.870091900",
-    "last_update_date": "2025-02-08T14:52:25.638810200",
-    "backup_count": 0,
-    "max_backups_to_keep": 1
   }
 ]
