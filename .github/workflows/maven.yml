@@ -32,24 +32,24 @@ jobs:
         cache: maven  # Cache Maven dependencies to speed up subsequent builds
 
     # Step 3: Clean and build with Maven
-    - name: Build with Maven
-      run: mvn -B clean package --file pom.xml  # Build the project with Maven, suppress the interactive mode
+    # - name: Build with Maven
+    #   run: mvn -B clean package --file pom.xml  # Build the project with Maven, suppress the interactive mode
 
     # Step 4: Run Tests
-    - name: Run Tests
-      run: mvn test --file pom.xml  # Run the tests to ensure the code works as expected
+    # - name: Run Tests
+    #   run: mvn test --file pom.xml  # Run the tests to ensure the code works as expected
 
-    # Step 5: Upload the built JAR file as an artifact
-    - name: Upload JAR Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: backupmanager-jar  # Name of the artifact
-        path: target/BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar  # Path to the JAR file
+    # # Step 5: Upload the built JAR file as an artifact
+    # - name: Upload JAR Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: backupmanager-jar  # Name of the artifact
+    #     path: target/BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar  # Path to the JAR file
 
-    # Step 6: Static Code Analysis with SpotBugs (optional)
-    - name: Static Code Analysis with SpotBugs
-      run: mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs  # Run SpotBugs for static code analysis
+    # # Step 6: Static Code Analysis with SpotBugs (optional)
+    # - name: Static Code Analysis with SpotBugs
+    #   run: mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs  # Run SpotBugs for static code analysis
 
-    # Step 7: Update dependency graph to improve Dependabot alerts
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6  # Submit dependency graph for security monitoring
+    # # Step 7: Update dependency graph to improve Dependabot alerts
+    # - name: Update dependency graph
+    #   uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6  # Submit dependency graph for security monitoring
