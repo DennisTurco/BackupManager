@@ -6,6 +6,13 @@
 
 Each backup is carefully saved, and the program maintains a detailed log of all completed operations. Users can also view, manage, and edit the details of each backup, ensuring complete control and customization over saved data. This tool is an ideal solution for efficiently and securely protecting files, minimizing the risk of data loss.
 
+## Features
+* 📁 Automatic backup of folders and subfolders
+* 🕒 Flexible scheduling for recurring backups
+* 🖱️ Simple GUI with tray icon support
+* 📝 Detailed logs and backup history
+* 🎨 Light/Dark themes and multilingual support (EN, IT, DE, ES, FR)
+* 🪟 Auto-start with the operating system (configurable)
 
 ## Screenshots and Videos
 ![](./docs/imgs/BackupManagerPresentation.gif)
