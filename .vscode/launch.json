@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DecryptPassword",
+            "request": "launch",
+            "mainClass": "backupmanager.Email.DecryptPassword",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
+            "name": "EncryptPassword",
+            "request": "launch",
+            "mainClass": "backupmanager.Email.EncryptPassword",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
