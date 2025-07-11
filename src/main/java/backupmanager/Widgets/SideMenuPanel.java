@@ -20,7 +20,7 @@ public class SideMenuPanel {
     private int responsiveMinWidth = 600;
 
     private JPanel side;
-    private JPanel main;
+    private JComponent main;
     private boolean mainAnimationEnabled = false;
     private boolean isOpen = false;
     private int currentWidth = 0;
@@ -120,7 +120,7 @@ public class SideMenuPanel {
     }
 
     /** @return The main content panel. */
-    public JPanel getMain() {
+    public JComponent getMain() {
         return main;
     }
 
@@ -128,7 +128,7 @@ public class SideMenuPanel {
      * @brief Sets the main content panel. Can be null for no responsiveness.
      * @param main A JPanel or null.
      */
-    public void setMain(JPanel main) {
+    public void setMain(JComponent main) {
         this.main = main;
     }
 

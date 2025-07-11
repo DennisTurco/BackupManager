@@ -55,6 +55,7 @@ import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
 import backupmanager.Table.TableDataManager;
 import backupmanager.Widgets.SideMenuPanel;
+import java.awt.CardLayout;
 
 /**
  * @author Dennis Turco
@@ -148,7 +149,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void initSidebar() {
-        sp.setMain(null);
+        sp.setMain(layeredCardPanel);
         sp.setSide(sidebar);
         sp.setMinWidth(55);
         sp.setMaxWidth(150);
@@ -362,6 +363,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         men = new javax.swing.JButton();
         copyrightLabelSide = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        layeredCardPanel = new javax.swing.JLayeredPane();
+        panelBackupList = new javax.swing.JPanel();
         detailsLabel = new javax.swing.JLabel();
         researchField = new javax.swing.JTextField();
         exportAsPdfBtn = new backupmanager.svg.SVGButton();
@@ -371,6 +374,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         addBackupEntryButton = new backupmanager.svg.SVGButton();
         exportAsCsvBtn = new backupmanager.svg.SVGButton();
         ExportLabel = new javax.swing.JLabel();
+        panelDashboard = new javax.swing.JPanel();
+        button1 = new java.awt.Button();
+        button2 = new java.awt.Button();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new backupmanager.svg.SVGMenuItem();
@@ -663,6 +669,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Version 2.0.2");
 
+        layeredCardPanel.setLayout(new java.awt.CardLayout());
+
         detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         researchField.setToolTipText("Research bar");
@@ -737,6 +745,80 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         ExportLabel.setText("Export As:");
+
+        javax.swing.GroupLayout panelBackupListLayout = new javax.swing.GroupLayout(panelBackupList);
+        panelBackupList.setLayout(panelBackupListLayout);
+        panelBackupListLayout.setHorizontalGroup(
+            panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(panelBackupListLayout.createSequentialGroup()
+                .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        panelBackupListLayout.setVerticalGroup(
+            panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackupListLayout.createSequentialGroup()
+                .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        researchField.getAccessibleContext().setAccessibleName("");
+
+        layeredCardPanel.add(panelBackupList, "BackupList");
+
+        button1.setLabel("button1");
+
+        button2.setLabel("button1");
+
+        javax.swing.GroupLayout panelDashboardLayout = new javax.swing.GroupLayout(panelDashboard);
+        panelDashboard.setLayout(panelDashboardLayout);
+        panelDashboardLayout.setHorizontalGroup(
+            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                .addContainerGap(404, Short.MAX_VALUE)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(346, 346, 346))
+            .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                    .addContainerGap(403, Short.MAX_VALUE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(347, 347, 347)))
+        );
+        panelDashboardLayout.setVerticalGroup(
+            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDashboardLayout.createSequentialGroup()
+                .addGap(247, 247, 247)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(249, Short.MAX_VALUE))
+            .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDashboardLayout.createSequentialGroup()
+                    .addGap(162, 162, 162)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(334, Short.MAX_VALUE)))
+        );
+
+        layeredCardPanel.add(panelDashboard, "Dashboard");
 
         jMenu1.setText("File");
 
@@ -903,23 +985,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-                                .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(layeredCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -928,26 +997,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                        .addGap(12, 12, 12)
-                        .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                        .addComponent(layeredCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        researchField.getAccessibleContext().setAccessibleName("");
 
         pack();
         setLocationRelativeTo(null);
@@ -1159,11 +1215,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_pageSettingsActionPerformed
 
     private void pageDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageDashboardActionPerformed
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) layeredCardPanel.getLayout();
+        cl.show(layeredCardPanel, "Dashboard");
     }//GEN-LAST:event_pageDashboardActionPerformed
 
     private void pageBackupListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageBackupListActionPerformed
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) layeredCardPanel.getLayout();
+        cl.show(layeredCardPanel, "BackupList");
     }//GEN-LAST:event_pageBackupListActionPerformed
 
     private void setTranslations() {
@@ -1322,6 +1380,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem RunBackupPopupItem;
     private javax.swing.JPopupMenu TablePopup;
     private backupmanager.svg.SVGButton addBackupEntryButton;
+    private java.awt.Button button1;
+    private java.awt.Button button2;
     private javax.swing.JLabel copyrightLabelSide;
     private javax.swing.JLabel detailsLabel;
     private backupmanager.svg.SVGButton exportAsCsvBtn;
@@ -1341,11 +1401,14 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JLayeredPane layeredCardPanel;
     private javax.swing.JButton men;
     private javax.swing.JButton pageBackupList;
     private javax.swing.JButton pageDashboard;
     private javax.swing.JButton pageHome;
     private javax.swing.JButton pageSettings;
+    private javax.swing.JPanel panelBackupList;
+    private javax.swing.JPanel panelDashboard;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
     private javax.swing.JPanel sidebar;
