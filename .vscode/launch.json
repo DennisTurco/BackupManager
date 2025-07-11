@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SidebarTest",
+            "request": "launch",
+            "mainClass": "test.SidebarTest",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
             "name": "DecryptPassword",
             "request": "launch",
             "mainClass": "backupmanager.Email.DecryptPassword",

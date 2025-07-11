@@ -54,6 +54,7 @@ import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
 import backupmanager.Table.TableDataManager;
+import backupmanager.Widgets.SideMenuPanel;
 
 /**
  * @author Dennis Turco
@@ -62,7 +63,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    
+
     private final BackupManager backupManager;
     private final BackupObserver observer;
     public static List<Backup> backups;
@@ -72,28 +73,23 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static BackupProgressGUI progressBar;
     private Integer selectedRow;
     private final String currentVersion;
-    
+    private final SideMenuPanel sp;
+
     public BackupManagerGUI() {
         ThemeManager.updateThemeFrame(this);
-        
-        initComponents();
 
+        initComponents();
         currentVersion = ConfigKey.VERSION.getValue();
-        
+
+        sp = new SideMenuPanel(this);
+
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
-                
-        // load Menu items
+
         initializeMenuItems();
-        
-        // set app sizes
         setScreenSize();
-
-        // icons
         researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new com.formdev.flatlaf.extras.FlatSVGIcon("res/img/search.svg", 16, 16));
-
-        // translations
         setTranslations();
 
         // first initialize the table, then start observer thread
@@ -101,22 +97,19 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         observer = new BackupObserver(dateForfolderNameFormatter, 1000);
         observer.start();
 
-        // disable interruption backup operation option
         interruptBackupPopupItem.setEnabled(false);
-        
-        // set all svg images
+
         setSvgImages();
-
         checkForFirstAccess();
-
         backupManager = new BackupManager(this);
-
         jSeparator5.setVisible(false);
 
         // TODO: remove this
         interruptBackupPopupItem.setVisible(false);
+
+        initSidebar();
     }
-    
+
     private void checkForFirstAccess() {
         logger.debug("Checking for first access");
         try {
@@ -153,7 +146,17 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         EmailSender.sendUserCreationEmail(newUser);
         EmailSender.sendConfirmEmailToUser(newUser);
     }
-    
+
+    private void initSidebar() {
+        sp.setMain(null);
+        sp.setSide(sidebar);
+        sp.setMinWidth(55);
+        sp.setMaxWidth(150);
+        sp.setMainAnimationEnabled(true);
+        sp.setSpeed(4);
+        sp.setResponsiveMinWidth(1300);
+    }
+
     private void setLanguageBasedOnPcLanguage() {
         Locale defaultLocale = Locale.getDefault();
         String language = defaultLocale.getLanguage();
@@ -210,16 +213,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
-        
+
         // load theme
         ThemeManager.updateThemeFrame(this);
         ThemeManager.refreshPopup(TablePopup);
         setSvgImages();
     }
-    
+
     private void displayBackupList() {
         BackupTableModel model = new BackupTableModel(getColumnTranslations(), 0);
-    
+
         // Populate the model with backup data
         for (Backup backup : backups) {
             model.addRow(new Object[]{
@@ -232,7 +235,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
             });
         }
-    
+
         backupTable = new BackupTable(model);
 
         // Add key bindings using InputMap and ActionMap
@@ -261,7 +264,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRows = backupTable.getSelectedRows();
                 if (selectedRows.length == 0) return;
-        
+
                 logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
 
                 int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -286,7 +289,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
             }
         }
-            
+
         // Add the existing mouse listener to the new table
         backupTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -294,38 +297,38 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 tableMouseClicked(evt); // Reuse the existing method
             }
         });
-    
+
         // Update the global model reference
         BackupManagerGUI.model = model;
-    
+
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
         table = backupTable; // Update the reference to the new table
         scrollPane.setViewportView(table); // Replace the table in the scroll pane
     }
-    
+
     private void researchInTable() {
         List<Backup> tempBackups = new ArrayList<>();
-        
+
         String research = researchField.getText();
-        
+
         for (Backup backup : backups) {
-            if (backup.getBackupName().contains(research) || 
-                    backup.getInitialPath().contains(research) || 
-                    backup.getDestinationPath().contains(research) || 
+            if (backup.getBackupName().contains(research) ||
+                    backup.getInitialPath().contains(research) ||
+                    backup.getDestinationPath().contains(research) ||
                     (backup.getLastBackup() != null && backup.getLastBackup().toString().contains(research)) ||
                     (backup.getNextDateBackup() != null && backup.getNextDateBackup().toString().contains(research)) ||
                     (backup.getTimeIntervalBackup() != null && backup.getTimeIntervalBackup().toString().contains(research))) {
                 tempBackups.add(backup);
             }
         }
-        
+
         TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
     }
 
     /**
      * This method is called from within the constructor to initialize the form.
-     *  
+     *
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
@@ -351,16 +354,23 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         CopyBackupNamePopupItem = new javax.swing.JMenuItem();
         CopyInitialPathPopupItem = new javax.swing.JMenuItem();
         CopyDestinationPathPopupItem = new javax.swing.JMenuItem();
+        sidebar = new javax.swing.JPanel();
+        pageHome = new javax.swing.JButton();
+        pageBackupList = new javax.swing.JButton();
+        pageDashboard = new javax.swing.JButton();
+        pageSettings = new javax.swing.JButton();
+        men = new javax.swing.JButton();
+        copyrightLabelSide = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        detailsLabel = new javax.swing.JLabel();
+        researchField = new javax.swing.JTextField();
+        exportAsPdfBtn = new backupmanager.svg.SVGButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        detailsLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         addBackupEntryButton = new backupmanager.svg.SVGButton();
-        jLabel1 = new javax.swing.JLabel();
-        researchField = new javax.swing.JTextField();
-        ExportLabel = new javax.swing.JLabel();
         exportAsCsvBtn = new backupmanager.svg.SVGButton();
-        exportAsPdfBtn = new backupmanager.svg.SVGButton();
+        ExportLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new backupmanager.svg.SVGMenuItem();
@@ -502,6 +512,179 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         setTitle("Backup Manager");
         setMinimumSize(new java.awt.Dimension(750, 450));
 
+        sidebar.setBackground(new java.awt.Color(16, 84, 129));
+        sidebar.setPreferredSize(new java.awt.Dimension(60, 32));
+
+        pageHome.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        pageHome.setForeground(new java.awt.Color(195, 217, 233));
+        pageHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
+        pageHome.setText("Home");
+        pageHome.setBorderPainted(false);
+        pageHome.setContentAreaFilled(false);
+        pageHome.setHideActionText(true);
+        pageHome.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        pageHome.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pageHome.setIconTextGap(20);
+        pageHome.setMargin(new java.awt.Insets(2, 0, 2, 14));
+        pageHome.setMinimumSize(new java.awt.Dimension(0, 0));
+        pageHome.setPreferredSize(new java.awt.Dimension(50, 574));
+        pageHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pageHomeActionPerformed(evt);
+            }
+        });
+
+        pageBackupList.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        pageBackupList.setForeground(new java.awt.Color(195, 217, 233));
+        pageBackupList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
+        pageBackupList.setText("Backup List");
+        pageBackupList.setBorderPainted(false);
+        pageBackupList.setContentAreaFilled(false);
+        pageBackupList.setHideActionText(true);
+        pageBackupList.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        pageBackupList.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pageBackupList.setIconTextGap(20);
+        pageBackupList.setMargin(new java.awt.Insets(2, 0, 2, 14));
+        pageBackupList.setMinimumSize(new java.awt.Dimension(0, 0));
+        pageBackupList.setPreferredSize(new java.awt.Dimension(50, 574));
+        pageBackupList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pageBackupListActionPerformed(evt);
+            }
+        });
+
+        pageDashboard.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        pageDashboard.setForeground(new java.awt.Color(195, 217, 233));
+        pageDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
+        pageDashboard.setText("Dashboard");
+        pageDashboard.setBorderPainted(false);
+        pageDashboard.setContentAreaFilled(false);
+        pageDashboard.setHideActionText(true);
+        pageDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        pageDashboard.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pageDashboard.setIconTextGap(20);
+        pageDashboard.setMargin(new java.awt.Insets(2, 0, 2, 14));
+        pageDashboard.setMinimumSize(new java.awt.Dimension(0, 0));
+        pageDashboard.setPreferredSize(new java.awt.Dimension(50, 574));
+        pageDashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pageDashboardActionPerformed(evt);
+            }
+        });
+
+        pageSettings.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        pageSettings.setForeground(new java.awt.Color(195, 217, 233));
+        pageSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/settings (Custom).png"))); // NOI18N
+        pageSettings.setText("Settings");
+        pageSettings.setBorderPainted(false);
+        pageSettings.setContentAreaFilled(false);
+        pageSettings.setFocusPainted(false);
+        pageSettings.setHideActionText(true);
+        pageSettings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        pageSettings.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pageSettings.setIconTextGap(20);
+        pageSettings.setMargin(new java.awt.Insets(2, 0, 2, 14));
+        pageSettings.setMinimumSize(new java.awt.Dimension(0, 35));
+        pageSettings.setPreferredSize(new java.awt.Dimension(50, 574));
+        pageSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pageSettingsActionPerformed(evt);
+            }
+        });
+
+        men.setBackground(new java.awt.Color(34, 40, 47));
+        men.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        men.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/menu_15.png"))); // NOI18N
+        men.setBorderPainted(false);
+        men.setContentAreaFilled(false);
+        men.setFocusPainted(false);
+        men.setHideActionText(true);
+        men.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        men.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        men.setIconTextGap(20);
+        men.setMargin(new java.awt.Insets(2, 3, 2, 14));
+        men.setMinimumSize(new java.awt.Dimension(0, 35));
+        men.setPreferredSize(new java.awt.Dimension(50, 574));
+        men.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menActionPerformed(evt);
+            }
+        });
+
+        copyrightLabelSide.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 10)); // NOI18N
+        copyrightLabelSide.setForeground(new java.awt.Color(126, 170, 214));
+        copyrightLabelSide.setText("Shard");
+        copyrightLabelSide.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        javax.swing.GroupLayout sidebarLayout = new javax.swing.GroupLayout(sidebar);
+        sidebar.setLayout(sidebarLayout);
+        sidebarLayout.setHorizontalGroup(
+            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidebarLayout.createSequentialGroup()
+                .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sidebarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pageHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pageBackupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pageDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(sidebarLayout.createSequentialGroup()
+                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(sidebarLayout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(copyrightLabelSide, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(sidebarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(sidebarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        sidebarLayout.setVerticalGroup(
+            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidebarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pageHome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pageBackupList, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pageDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(copyrightLabelSide, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+
+        jLabel3.setText("Version 2.0.2");
+
+        detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        researchField.setToolTipText("Research bar");
+        researchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                researchFieldKeyTyped(evt);
+            }
+        });
+
+        exportAsPdfBtn.setToolTipText("Export as .pdf");
+        exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportAsPdfBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel1.setText("|");
+        jLabel1.setAlignmentY(0.0F);
+
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -534,10 +717,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(table);
 
-        detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jLabel3.setText("Version 2.0.2");
-
         addBackupEntryButton.setToolTipText("Add new backup");
         addBackupEntryButton.setMaximumSize(new java.awt.Dimension(32, 32));
         addBackupEntryButton.setMinimumSize(new java.awt.Dimension(32, 32));
@@ -546,20 +725,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 addBackupEntryButtonActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel1.setText("|");
-        jLabel1.setAlignmentY(0.0F);
-
-        researchField.setToolTipText("Research bar");
-        researchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                researchFieldKeyTyped(evt);
-            }
-        });
-
-        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ExportLabel.setText("Export As:");
 
         exportAsCsvBtn.setToolTipText("Export as .csv");
         exportAsCsvBtn.setMaximumSize(new java.awt.Dimension(32, 32));
@@ -570,14 +735,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        exportAsPdfBtn.setToolTipText("Export as .pdf");
-        exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
-        exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportAsPdfBtnActionPerformed(evt);
-            }
-        });
+        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ExportLabel.setText("Export As:");
 
         jMenu1.setText("File");
 
@@ -742,42 +901,49 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                                .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -803,13 +969,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSaveActionPerformed
     }//GEN-LAST:event_MenuSaveActionPerformed
-    
+
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
         backupManager.menuItemNew(progressBar);
     }//GEN-LAST:event_MenuNewActionPerformed
-        
+
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups);        
+        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups);
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
@@ -935,7 +1101,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
         backupManager.menuItemShare();
     }//GEN-LAST:event_MenuShareActionPerformed
-    
+
     private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
         backupManager.menuItemWebsite();
     }//GEN-LAST:event_MenuWebsiteActionPerformed
@@ -943,7 +1109,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
         backupManager.menuItemSupport();
     }//GEN-LAST:event_MenuSupportActionPerformed
-    
+
     private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
         backupManager.menuItemInfoPage();
     }//GEN-LAST:event_MenuInfoPageActionPerformed
@@ -980,6 +1146,26 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         backupManager.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
 
+    private void menActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menActionPerformed
+        sp.toggleMenu();
+    }//GEN-LAST:event_menActionPerformed
+
+    private void pageHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageHomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pageHomeActionPerformed
+
+    private void pageSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageSettingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pageSettingsActionPerformed
+
+    private void pageDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageDashboardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pageDashboardActionPerformed
+
+    private void pageBackupListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageBackupListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pageBackupListActionPerformed
+
     private void setTranslations() {
         // update table translations
         if (backups != null)
@@ -987,7 +1173,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         // general
         jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + currentVersion);
-        
+
         // menu
         jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
         jMenu2.setText(TranslationCategory.MENU.getTranslation(TranslationKey.OPTIONS));
@@ -1136,6 +1322,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem RunBackupPopupItem;
     private javax.swing.JPopupMenu TablePopup;
     private backupmanager.svg.SVGButton addBackupEntryButton;
+    private javax.swing.JLabel copyrightLabelSide;
     private javax.swing.JLabel detailsLabel;
     private backupmanager.svg.SVGButton exportAsCsvBtn;
     private backupmanager.svg.SVGButton exportAsPdfBtn;
@@ -1154,8 +1341,14 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JButton men;
+    private javax.swing.JButton pageBackupList;
+    private javax.swing.JButton pageDashboard;
+    private javax.swing.JButton pageHome;
+    private javax.swing.JButton pageSettings;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
+    private javax.swing.JPanel sidebar;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -184,3 +184,170 @@
 10-07-2025 16:06:09.123 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
 10-07-2025 16:06:09.127 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
 10-07-2025 16:06:09.130 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:03:39.199 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:03:39.219 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:03:39.225 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:03:39.766 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:03:39.931 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:03:54.070 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
+11-07-2025 12:13:54.469 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:13:54.485 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:13:54.490 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:13:55.004 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:13:55.190 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:28:03.809 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:28:03.825 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:28:03.829 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:28:04.494 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:28:04.636 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:28:17.510 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:28:17.526 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:28:17.530 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:28:18.061 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:28:18.206 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:31:21.143 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:31:21.159 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:31:21.163 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:31:21.830 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:31:21.972 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:33:57.627 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:33:57.643 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:33:57.647 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:33:58.836 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:33:58.995 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:35:30.615 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:35:30.631 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:35:30.635 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:35:31.329 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:35:31.478 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:36:42.799 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:36:42.817 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:36:42.821 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:36:43.518 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:36:43.670 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:42:02.017 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:42:02.033 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:42:02.037 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:42:02.697 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:42:02.841 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:42:30.622 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:42:30.638 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:42:30.643 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:42:31.198 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:42:31.348 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:42:38.849 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> importing backup list
+11-07-2025 12:42:41.360 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - File imported: C:\Users\Utente\Desktop\Dennis\Programmazione\BackupManager\src\main\resources\res\backup_list.json
+11-07-2025 12:42:41.361 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:42:41.361 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JSONBackup - File initialized with empty JSON array: []
+11-07-2025 12:42:43.603 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> importing backup list
+11-07-2025 12:42:45.481 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - File imported: C:\Users\Utente\Desktop\Dennis\Programmazione\BackupManager\src\main\resources\res\backup_list2.0.5.json
+11-07-2025 12:42:45.482 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:44:33.534 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:44:33.549 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:44:33.554 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:44:34.124 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:44:34.269 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:44:56.052 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:44:56.068 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:44:56.074 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:44:56.599 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:44:56.748 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:45:18.197 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - Exporting backups to CSV
+11-07-2025 12:45:18.199 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
+11-07-2025 12:45:19.410 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - Exporting backups to CSV cancelled
+11-07-2025 12:49:37.756 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:49:37.771 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:49:37.776 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:49:38.296 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:49:38.446 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:50:13.911 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:50:13.927 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:50:13.931 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:50:14.621 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:50:14.765 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:50:49.753 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:50:49.773 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:50:49.795 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:50:50.319 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:50:50.470 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:52:06.551 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:52:06.567 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:52:06.572 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:52:07.107 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:52:07.253 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 12:52:58.112 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 12:52:58.128 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 12:52:58.133 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 12:52:59.053 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 12:52:59.202 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 13:20:07.016 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 13:20:07.033 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 13:20:07.038 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 13:20:07.685 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 13:20:07.837 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 13:25:43.853 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 13:25:43.870 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 13:25:43.875 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 13:25:44.368 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 13:25:44.525 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 13:31:44.310 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 13:31:44.326 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 13:31:44.330 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 13:31:44.809 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 13:31:44.968 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:01:30.903 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:01:30.920 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:01:30.925 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:01:31.386 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:01:31.532 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:03:13.593 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:03:13.610 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:03:13.615 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:03:14.086 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:03:14.233 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:04:22.159 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:04:22.175 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:04:22.179 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:04:22.662 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:04:22.810 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:04:35.340 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:04:35.356 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:04:35.362 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:04:35.853 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:04:36.004 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:21:45.717 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:21:45.733 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:21:45.738 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:21:46.204 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:21:46.347 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:28:42.728 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:28:42.744 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:28:42.748 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:28:43.221 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:28:43.367 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:30:27.134 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:30:27.150 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:30:27.154 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:30:27.622 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:30:27.768 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:32:08.241 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:32:08.257 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:32:08.262 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:32:08.730 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:32:08.875 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:32:10.735 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
+11-07-2025 14:32:40.534 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:32:40.549 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:32:40.555 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:32:41.033 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:32:41.180 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 14:34:50.838 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 14:34:50.855 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 14:34:50.860 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 14:34:51.341 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 14:34:51.487 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+11-07-2025 16:49:15.915 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
+11-07-2025 16:49:15.933 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
+11-07-2025 16:49:15.939 [main] [INFO ] backupmanager.MainApp - Application started
+11-07-2025 16:49:16.530 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+11-07-2025 16:49:16.683 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
