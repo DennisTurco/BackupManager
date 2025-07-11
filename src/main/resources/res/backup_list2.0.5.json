@@ -1,17 +1,5 @@
 [
   {
-    "backup_name": "testone",
-    "start_path": "CIAO899999",
-    "destination_path": "C:\\Users\\Utente\\Desktop^\u0026^",
-    "last_backup": "2025-02-02T13:25:36.508664500",
-    "automatic_backup": false,
-    "notes": "ghjgdsahjgdashjd\nasdiuasdh uijlasgdyhjkgasyjhdgasjhkgdhjasgdhjgashjgdhjasgd",
-    "creation_date": "2024-12-12T21:44:37.283133900",
-    "last_update_date": "2025-02-03T14:04:08.053368500",
-    "backup_count": 30,
-    "max_backups_to_keep": 3
-  },
-  {
     "backup_name": "test2",
     "start_path": "C:\\Users\\Utente\\Desktop\\test.txt",
     "destination_path": "C:\\Users\\Utente\\Desktop",
