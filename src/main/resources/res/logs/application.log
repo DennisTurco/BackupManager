@@ -1,952 +1,296 @@
-10-07-2025 14:40:29.877 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Light
-10-07-2025 14:40:29.906 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Light
-10-07-2025 14:40:29.911 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:40:30.426 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JSONBackup - New backup list created with name: src/main/resources/res/backup_list2.0.6.json
-10-07-2025 14:40:30.427 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JSONBackup - File initialized with empty JSON array: []
-10-07-2025 14:40:30.434 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:40:30.594 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 14:40:30.594 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 14:40:30.595 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 14:40:30.595 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:40:39.576 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: Dennsi asd, adsdasdsad@dasd.com, italiano (Italia)
-10-07-2025 14:40:39.580 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: Dennsi asd, adsdasdsad@dasd.com, italiano (Italia)
-10-07-2025 14:40:39.582 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: Dennsi asd, adsdasdsad@dasd.com, italiano (Italia)
-10-07-2025 14:45:00.196 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:45:00.214 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:45:00.225 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:45:00.743 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:45:00.902 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Dennsi asd, adsdasdsad@dasd.com, italiano (Italia)
-10-07-2025 14:45:03.616 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> history
-10-07-2025 14:49:49.268 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:49:49.289 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:49:49.298 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:49:49.798 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:49:49.943 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 14:49:49.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 14:49:49.943 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 14:49:49.944 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:49:57.822 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: dennis dsa, asdasd@gmail.cdss, italiano (Italia)
-10-07-2025 14:49:57.826 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: dennis dsa, asdasd@gmail.cdss, italiano (Italia)
-10-07-2025 14:49:57.827 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: dennis dsa, asdasd@gmail.cdss, italiano (Italia)
-10-07-2025 14:51:00.293 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:51:00.311 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:51:00.318 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:51:00.827 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:51:00.988 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dennis dsa, asdasd@gmail.cdss, italiano (Italia)
-10-07-2025 14:51:08.258 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:51:08.275 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:51:08.281 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:51:08.771 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:51:08.960 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 14:51:08.960 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 14:51:08.960 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 14:51:08.961 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:51:17.024 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:51:17.028 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:51:17.029 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:59:00.560 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:00.577 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:00.583 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:59:01.072 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:59:01.229 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:59:09.090 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:09.107 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:09.112 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:59:09.561 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:59:09.715 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:59:19.738 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:19.756 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:19.762 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:59:20.233 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:59:20.414 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 14:59:38.975 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:38.992 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 14:59:38.998 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 14:59:39.482 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 14:59:39.641 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, dasda@fsdaafsd.com, italiano (Italia)
-10-07-2025 15:00:12.118 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:00:12.135 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:00:12.141 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:00:12.638 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:00:12.782 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:00:12.782 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:00:12.782 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:00:12.783 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:00:22.512 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: dennis turco, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:00:22.518 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: dennis turco, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:00:22.522 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: dennis turco, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:06:51.507 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:06:51.524 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:06:51.531 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:06:52.069 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:06:52.224 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:06:52.225 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:06:52.225 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:06:52.225 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:06:58.699 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: sad asdasd, sadas@gmail.com, italiano (Italia)
-10-07-2025 15:06:58.705 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: sad asdasd, sadas@gmail.com, italiano (Italia)
-10-07-2025 15:06:58.707 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: sad asdasd, sadas@gmail.com, italiano (Italia)
-10-07-2025 15:07:27.259 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:07:27.276 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:07:27.284 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:07:27.780 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:07:27.936 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: sad asdasd, sadas@gmail.com, italiano (Italia)
-10-07-2025 15:07:40.131 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:07:40.148 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:07:40.153 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:07:40.637 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:07:40.792 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:07:40.793 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:07:40.793 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:07:40.794 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:07:46.843 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: qwdsasd asdasdas, asdasd@gmail.com, italiano (Italia)
-10-07-2025 15:07:46.849 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: qwdsasd asdasdas, asdasd@gmail.com, italiano (Italia)
-10-07-2025 15:07:46.851 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: qwdsasd asdasdas, asdasd@gmail.com, italiano (Italia)
-10-07-2025 15:10:28.994 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:10:29.010 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:10:29.017 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:10:29.551 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:10:29.712 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:10:29.712 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:10:29.712 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:10:29.713 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:10:38.479 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: asdas dasdasdas, dasdasd@gmail.com, italiano (Italia)
-10-07-2025 15:10:38.485 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asdas dasdasdas, dasdasd@gmail.com, italiano (Italia)
-10-07-2025 15:10:38.488 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asdas dasdasdas, dasdasd@gmail.com, italiano (Italia)
-10-07-2025 15:31:50.676 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:31:50.695 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:31:50.702 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:31:51.238 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:31:51.388 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:31:51.388 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:31:51.389 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:31:51.390 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:32:06.180 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: sadasd asdasd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:32:06.185 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: sadasd asdasd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:32:06.187 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: sadasd asdasd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:33:00.561 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:33:00.577 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:33:00.583 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:33:01.084 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:33:01.248 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: sadasd asdasd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:33:25.889 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:33:25.906 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:33:25.911 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:33:26.402 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:33:26.549 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:33:26.549 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:33:26.550 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:33:26.550 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:33:38.029 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: saddas saddsada, saddsasaD@gmail.com, italiano (Italia)
-10-07-2025 15:33:38.033 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: saddas saddsada, saddsasaD@gmail.com, italiano (Italia)
-10-07-2025 15:33:38.035 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: saddas saddsada, saddsasaD@gmail.com, italiano (Italia)
-10-07-2025 15:36:44.523 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 15:36:44.540 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:36:44.545 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 15:36:45.035 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 15:36:45.179 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 15:36:45.179 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 15:36:45.180 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 15:36:45.180 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 15:36:53.398 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: gh asd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:36:53.403 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: gh asd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 15:36:53.409 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: gh asd, dennisturco@gmail.com, italiano (Italia)
-10-07-2025 16:02:11.830 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 16:02:11.852 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:02:11.859 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 16:02:12.432 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 16:02:12.614 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 16:02:12.614 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 16:02:12.614 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 16:02:12.615 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:02:18.019 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:02:18.023 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:02:18.025 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:04:00.971 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 16:04:00.990 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:04:00.994 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 16:04:01.491 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 16:04:01.646 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 16:04:01.646 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 16:04:01.646 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 16:04:01.647 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:04:06.435 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:04:06.438 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:04:06.439 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asd asd, asdasd@gmail.com, italiano (Italia)
-10-07-2025 16:06:02.301 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-10-07-2025 16:06:02.318 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:06:02.323 [main] [INFO ] backupmanager.MainApp - Application started
-10-07-2025 16:06:02.837 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-10-07-2025 16:06:02.985 [AWT-EventQueue-0] [WARN ] backupmanager.Json.JsonUser - User file doesn't exist or is empty
-10-07-2025 16:06:02.985 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-10-07-2025 16:06:02.986 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-10-07-2025 16:06:02.987 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-10-07-2025 16:06:09.123 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JsonUser - User successfully written to JSON user file with data: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-10-07-2025 16:06:09.127 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-10-07-2025 16:06:09.130 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:03:39.199 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:03:39.219 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:03:39.225 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:03:39.766 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:03:39.931 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:03:54.070 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-11-07-2025 12:13:54.469 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:13:54.485 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:13:54.490 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:13:55.004 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:13:55.190 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:28:03.809 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:28:03.825 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:28:03.829 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:28:04.494 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:28:04.636 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:28:17.510 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:28:17.526 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:28:17.530 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:28:18.061 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:28:18.206 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:31:21.143 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:31:21.159 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:31:21.163 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:31:21.830 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:31:21.972 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:33:57.627 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:33:57.643 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:33:57.647 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:33:58.836 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:33:58.995 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:35:30.615 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:35:30.631 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:35:30.635 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:35:31.329 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:35:31.478 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:36:42.799 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:36:42.817 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:36:42.821 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:36:43.518 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:36:43.670 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:42:02.017 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:42:02.033 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:42:02.037 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:42:02.697 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:42:02.841 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:42:30.622 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:42:30.638 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:42:30.643 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:42:31.198 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:42:31.348 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:42:38.849 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> importing backup list
-11-07-2025 12:42:41.360 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - File imported: C:\Users\Utente\Desktop\Dennis\Programmazione\BackupManager\src\main\resources\res\backup_list.json
-11-07-2025 12:42:41.361 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:42:41.361 [AWT-EventQueue-0] [INFO ] backupmanager.Json.JSONBackup - File initialized with empty JSON array: []
-11-07-2025 12:42:43.603 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> importing backup list
-11-07-2025 12:42:45.481 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - File imported: C:\Users\Utente\Desktop\Dennis\Programmazione\BackupManager\src\main\resources\res\backup_list2.0.5.json
-11-07-2025 12:42:45.482 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:44:33.534 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:44:33.549 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:44:33.554 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:44:34.124 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:44:34.269 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:44:56.052 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:44:56.068 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:44:56.074 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:44:56.599 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:44:56.748 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:45:18.197 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - Exporting backups to CSV
-11-07-2025 12:45:18.199 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-11-07-2025 12:45:19.410 [AWT-EventQueue-0] [INFO ] b.Managers.ImportExportManager - Exporting backups to CSV cancelled
-11-07-2025 12:49:37.756 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:49:37.771 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:49:37.776 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:49:38.296 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:49:38.446 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:50:13.911 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:50:13.927 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:50:13.931 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:50:14.621 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:50:14.765 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:50:49.753 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:50:49.773 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:50:49.795 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:50:50.319 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:50:50.470 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:52:06.551 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:52:06.567 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:52:06.572 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:52:07.107 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:52:07.253 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 12:52:58.112 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 12:52:58.128 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 12:52:58.133 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 12:52:59.053 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 12:52:59.202 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 13:20:07.016 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 13:20:07.033 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 13:20:07.038 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 13:20:07.685 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 13:20:07.837 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 13:25:43.853 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 13:25:43.870 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 13:25:43.875 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 13:25:44.368 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 13:25:44.525 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 13:31:44.310 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 13:31:44.326 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 13:31:44.330 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 13:31:44.809 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 13:31:44.968 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:01:30.903 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:01:30.920 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:01:30.925 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:01:31.386 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:01:31.532 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:03:13.593 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:03:13.610 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:03:13.615 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:03:14.086 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:03:14.233 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:04:22.159 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:04:22.175 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:04:22.179 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:04:22.662 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:04:22.810 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:04:35.340 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:04:35.356 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:04:35.362 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:04:35.853 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:04:36.004 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:21:45.717 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:21:45.733 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:21:45.738 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:21:46.204 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:21:46.347 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:28:42.728 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:28:42.744 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:28:42.748 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:28:43.221 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:28:43.367 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:30:27.134 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:30:27.150 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:30:27.154 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:30:27.622 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:30:27.768 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:32:08.241 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:32:08.257 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:32:08.262 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:32:08.730 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:32:08.875 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:32:10.735 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-11-07-2025 14:32:40.534 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:32:40.549 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:32:40.555 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:32:41.033 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:32:41.180 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 14:34:50.838 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 14:34:50.855 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 14:34:50.860 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 14:34:51.341 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 14:34:51.487 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 16:49:15.915 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 16:49:15.933 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 16:49:15.939 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 16:49:16.530 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 16:49:16.683 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:09:59.904 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:09:59.920 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:09:59.924 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:09:59.925 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:10:00.418 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:10:00.558 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:10:00.568 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:10:33.615 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:10:33.631 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:10:33.635 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:10:33.635 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:10:34.108 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:10:34.247 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:10:34.256 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:10:48.136 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:11:34.030 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:11:34.047 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:11:34.051 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:11:34.051 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:11:34.535 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:11:34.677 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:11:34.685 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:11:42.430 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:11:43.643 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:11:44.028 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:11:44.619 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:11:45.042 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:11:45.408 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:11:45.828 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:11:46.131 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:11:46.757 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:11:47.147 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:11:47.575 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:11:48.127 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:11:49.031 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:12:49.453 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:12:49.469 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:12:49.473 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:12:49.473 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:12:49.966 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:12:50.114 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:12:50.124 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:16:14.034 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:16:14.050 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:16:14.054 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:16:14.054 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:16:14.521 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:16:14.661 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:16:14.670 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:17:09.809 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:17:09.825 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:17:09.829 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:17:09.829 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:17:10.298 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:17:10.440 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:17:10.449 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:17:47.610 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:17:47.626 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:17:47.630 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:17:47.630 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:17:48.107 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:17:48.246 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:17:48.256 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:19:38.285 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:19:38.946 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:19:39.378 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:19:39.938 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:19:40.419 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:19:40.821 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:19:41.105 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:19:41.380 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:19:41.870 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:19:42.273 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:19:42.579 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:19:42.954 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:19:43.495 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:19:43.871 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:19:44.171 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:19:44.426 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:19:44.695 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:19:45.012 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:19:45.430 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:19:45.708 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:19:45.969 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:19:46.238 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:22:07.101 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:22:07.117 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:22:07.121 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:22:07.121 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:22:07.602 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:22:07.740 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:22:07.750 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:22:58.751 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:22:58.767 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:22:58.771 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:22:58.771 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:22:59.243 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:22:59.382 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:22:59.392 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:23:05.718 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:23:06.547 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:23:07.051 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:23:07.419 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:23:07.729 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:23:08.099 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:23:08.887 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:23:20.454 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:23:41.080 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:23:41.096 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:23:41.100 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:23:41.100 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:23:41.572 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:23:41.713 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:23:41.723 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:23:47.539 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:24:05.721 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:24:05.737 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:24:05.741 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:24:05.741 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:24:06.219 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:24:06.360 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:24:06.371 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:26:54.614 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:26:54.631 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:26:54.637 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:26:54.637 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:26:55.115 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:26:55.257 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:26:55.265 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:28:48.600 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:28:48.615 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:28:48.620 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:28:48.620 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:28:49.084 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:28:49.227 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:28:49.237 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:38:06.763 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:38:06.778 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:38:06.783 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:38:06.783 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:38:07.259 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:38:07.396 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:38:07.404 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:38:37.312 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:38:37.329 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:38:37.333 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:38:37.333 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:38:37.800 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:38:37.939 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:38:37.949 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:40:42.348 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:40:42.364 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:40:42.368 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:40:42.368 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:40:42.838 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:40:42.975 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:40:42.985 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:41:18.724 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:41:18.740 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:41:18.745 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:41:18.745 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:41:19.226 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:41:19.368 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:41:19.378 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:42:52.770 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:42:52.786 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:42:52.791 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:42:52.791 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:42:53.305 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:42:53.454 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:42:53.464 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:43:00.751 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:43:01.565 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:43:02.037 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:43:02.436 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:43:02.819 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:43:03.202 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:43:03.643 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:43:03.948 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:43:04.235 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:43:04.668 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:43:05.142 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:43:13.441 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:43:13.972 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:43:14.431 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:43:14.769 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:43:15.044 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:43:15.351 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:43:16.130 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:43:16.611 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:43:17.322 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:43:24.130 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:43:24.831 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:43:25.126 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:43:58.357 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:44:28.301 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:44:28.317 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:44:28.321 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:44:28.321 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:44:28.800 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:44:28.938 [pool-2-thread-1] [WARN ] b.Entities.RunningBackups - The backup file does not exist or is empty. Attempt 1/5
-11-07-2025 17:44:28.941 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:44:28.949 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:44:40.234 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:44:40.803 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:44:41.141 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:44:41.451 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:44:41.876 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:44:42.212 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:44:42.480 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:44:42.822 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:44:43.217 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:45:32.228 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:45:32.244 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:45:32.249 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:45:32.249 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:45:33.015 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:45:33.153 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:45:33.164 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:45:39.951 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:45:40.856 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:45:41.254 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:45:41.581 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:00.261 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:46:00.277 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:46:00.281 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:46:00.282 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:46:00.773 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:46:00.916 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:46:00.925 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:46:06.607 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:07.232 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:07.866 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:46:08.406 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:46:08.857 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:09.154 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:46:09.736 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:46:10.245 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:46:10.773 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:11.328 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:11.776 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:46:12.673 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:13.302 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:46:13.803 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:46:14.326 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:46:15.105 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:46:16.774 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:46:16.973 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testone
-11-07-2025 17:46:16.973 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-11-07-2025 17:46:16.974 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-11-07-2025 17:46:17.017 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-11-07-2025 17:46:20.135 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Delete key pressed on rows: [0]
-11-07-2025 17:46:21.476 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> deleting backup
-11-07-2025 17:46:21.478 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> removing backup[Name: testone, InitialPath: CIAO899999, DestinationPath: C:\Users\Utente\Desktop^&^, LastBackup: 2025-02-02T13:25:36.508664500, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-11-07-2025 17:46:21.478 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Backup removed successfully: [Name: testone, InitialPath: CIAO899999, DestinationPath: C:\Users\Utente\Desktop^&^, LastBackup: 2025-02-02T13:25:36.508664500, IsAutoBackup: false, NextDate: null, Interval: , MaxBackupsToKeep: 3]
-11-07-2025 17:46:21.478 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup list
-11-07-2025 17:46:21.484 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-11-07-2025 17:46:28.580 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:46:29.018 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:29.459 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:30.105 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:46:30.539 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:30.841 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:31.166 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:31.754 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:46:32.068 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:46:33.089 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:33.686 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:34.012 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:46:35.733 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:36.019 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:36.978 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:37.831 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:46:38.457 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:39.007 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:46:39.365 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:46:43.365 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:46:43.807 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:44.290 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:45.734 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:46.480 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:47.120 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:46:47.859 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:48.295 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:48.577 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:46:48.865 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:46:49.141 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:46:49.636 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:46:49.936 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:46:50.778 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:46:51.147 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:46:51.709 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:46:54.278 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:54.994 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:55.326 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:46:55.773 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:46:56.145 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:56.494 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:46:56.881 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:46:57.173 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:46:57.871 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:46:58.147 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:46:58.396 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:46:58.854 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:59.078 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:46:59.342 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:46:59.767 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:47:00.012 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:47:00.480 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:47:00.765 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:47:01.226 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:47:53.543 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:47:53.559 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:47:53.564 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:47:53.565 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:47:54.134 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:47:54.285 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:47:54.296 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:48:10.275 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:10.294 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:10.299 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:48:10.300 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:48:10.843 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:48:10.995 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:48:11.005 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:48:28.608 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:28.625 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:28.630 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:48:28.631 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:48:29.136 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:48:29.284 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:48:29.295 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:48:42.788 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:42.806 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:48:42.812 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:48:42.812 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:48:43.348 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:48:43.496 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:48:43.508 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:48:50.665 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:48:51.036 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:48:51.930 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:48:52.266 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:48:52.658 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:48:52.999 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:48:53.565 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:48:53.856 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:48:54.129 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:48:54.419 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:48:54.718 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:48:55.163 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:48:55.652 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:48:58.551 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Enter key pressed on row: 12
-11-07-2025 17:48:58.552 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-11-07-2025 17:48:58.598 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-11-07-2025 17:49:02.298 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:49:02.773 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:49:09.127 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:49:09.145 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:49:09.150 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:49:09.150 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:49:09.654 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:49:09.808 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:49:09.819 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:49:30.322 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:49:30.340 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:49:30.345 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:49:30.345 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:49:30.868 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:49:31.029 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:49:31.039 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:50:29.999 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:50:30.015 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:50:30.019 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:50:30.019 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:50:30.499 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:50:30.641 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:50:30.651 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:51:29.894 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:51:29.910 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:51:29.915 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:51:29.915 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:51:30.489 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:51:30.626 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:51:30.635 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:53:43.575 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:53:43.591 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:53:43.595 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:53:43.595 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:53:44.066 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:53:44.207 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:53:44.218 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:54:21.184 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:54:21.199 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:54:21.203 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:54:21.203 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:54:21.676 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:54:21.814 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:54:21.825 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:54:44.433 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:54:44.449 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:54:44.452 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:54:44.452 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:54:44.926 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:54:45.064 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:54:45.075 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:55:11.868 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:55:11.884 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:55:11.888 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:55:11.888 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:55:12.356 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:55:12.500 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:55:12.509 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:56:01.001 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:56:01.020 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:56:01.025 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:56:01.025 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:56:01.514 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:56:01.652 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:56:01.662 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:57:13.450 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:57:13.466 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:57:13.471 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:57:13.471 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:57:13.948 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:57:14.092 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:57:14.101 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:57:23.545 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:57:24.133 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:57:24.482 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:57:24.763 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:57:25.054 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 17:57:25.711 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:57:26.042 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:57:26.663 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:57:28.815 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:57:29.130 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:57:29.664 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:57:30.032 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:57:30.295 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:57:31.317 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:57:31.705 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:57:31.981 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:57:32.258 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:57:33.034 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:57:33.427 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:57:33.864 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:57:34.351 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:57:34.774 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:57:35.071 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:57:35.453 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:57:35.846 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 17:57:36.126 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:57:36.403 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:57:36.697 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:57:37.357 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:57:38.002 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:57:38.287 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:57:38.649 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:57:39.016 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:57:39.513 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:57:39.903 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:57:40.374 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:58:05.586 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:58:05.601 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:58:05.605 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:58:05.605 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:58:06.078 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:58:06.221 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:58:06.229 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 17:58:12.690 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:58:12.994 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:58:13.237 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:58:13.473 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 17:58:13.814 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:58:14.236 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:58:14.513 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:58:14.763 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:58:16.526 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 17:58:16.777 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 17:58:17.249 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:58:17.712 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:58:19.078 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 17:58:19.374 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 17:58:20.121 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 17:58:20.371 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 17:58:20.631 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:58:20.876 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 17:58:21.524 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 17:58:21.944 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:58:22.212 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dsaj
-11-07-2025 17:58:22.732 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 17:58:23.459 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 17:58:24.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 17:59:40.662 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 17:59:40.677 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 17:59:40.681 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 17:59:40.682 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 17:59:41.153 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 17:59:41.294 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 17:59:41.302 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:01:35.442 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:01:35.457 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:01:35.462 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:01:35.462 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:01:35.941 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:01:36.079 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:01:36.088 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:01:50.744 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 18:01:51.397 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 18:01:52.164 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 18:01:52.643 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 18:01:53.168 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 18:01:53.495 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 18:01:53.792 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 18:01:54.061 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 18:01:54.311 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 18:01:56.330 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 18:01:56.583 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 18:01:56.799 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 18:01:57.431 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 18:01:57.988 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 18:01:58.446 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:01.294 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:01.607 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:01.863 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 18:02:02.158 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 18:02:02.410 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 18:02:02.695 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 18:02:03.541 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 18:02:03.871 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 18:02:04.329 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Immagini
-11-07-2025 18:02:05.245 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: lezioni
-11-07-2025 18:02:05.510 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
-11-07-2025 18:02:06.005 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:06.558 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 18:02:07.919 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asd_copy
-11-07-2025 18:02:11.101 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 18:02:11.828 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:12.170 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: hh
-11-07-2025 18:02:12.685 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 18:02:13.164 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 18:02:13.995 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2_copy
-11-07-2025 18:02:14.351 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 18:02:14.610 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:02:15.872 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testoso
-11-07-2025 18:02:16.679 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: test2
-11-07-2025 18:02:39.945 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:02:39.960 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:02:39.965 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:02:39.965 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:02:40.442 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:02:40.583 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:02:40.592 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:05:57.267 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:05:57.284 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:05:57.289 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:05:57.289 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:05:57.775 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:05:57.911 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:05:57.920 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:21:10.755 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:21:10.771 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:21:10.776 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:21:10.776 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:21:11.323 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:21:11.463 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:21:11.473 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:21:40.870 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:21:40.886 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:21:40.891 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:21:40.891 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:21:41.367 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:21:41.507 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:21:41.516 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:23:24.472 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:23:24.489 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:23:24.494 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:23:24.494 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:23:24.973 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:23:25.117 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:23:25.127 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:23:31.791 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 18:23:32.908 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 18:29:10.206 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Light
-11-07-2025 18:29:10.222 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Light
-11-07-2025 18:29:10.227 [main] [INFO ] backupmanager.MainApp - Application started
-11-07-2025 18:29:10.227 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-11-07-2025 18:29:10.715 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-11-07-2025 18:29:10.858 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-11-07-2025 18:29:10.866 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
-11-07-2025 18:29:20.192 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: kkk
-11-07-2025 18:29:20.851 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1_copy
-11-07-2025 18:29:21.220 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents2
-11-07-2025 18:29:21.636 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 18:29:22.614 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco
-11-07-2025 18:29:23.016 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: d.turco2
-11-07-2025 18:29:23.373 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: testooooo
-11-07-2025 18:29:23.656 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: Documents1
+13-07-2025 00:40:07.880 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 00:40:07.898 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 00:40:07.904 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 00:40:07.904 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 00:40:08.446 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 00:40:08.635 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 00:40:08.644 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: dsasd asdasd, dsadas@gmail.comn, italiano (Italia)
+13-07-2025 17:58:00.438 [main] [ERROR] backupmanager.MainApp - Unable to init the database
+13-07-2025 17:59:54.313 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 17:59:54.330 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 17:59:54.335 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 17:59:54.335 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 17:59:54.909 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 17:59:55.089 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 17:59:55.209 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 17:59:55.210 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 17:59:55.210 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:02:25.273 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\BackupManager\BackupManager.db
+13-07-2025 18:02:25.277 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:02:25.293 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:02:25.298 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:02:25.299 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:02:25.787 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:02:25.930 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:02:26.047 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:02:26.047 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:02:26.048 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:02:26.048 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:02:27.445 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User inserted succesfully
+13-07-2025 18:11:46.834 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\BackupManager\BackupManager.db
+13-07-2025 18:11:46.838 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:11:46.853 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:11:46.858 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:11:46.858 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:11:47.329 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:11:47.472 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:11:47.592 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:11:47.593 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:11:47.593 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:11:47.593 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:11:54.471 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - User inserting error: [SQLITE_BUSY] The database file is locked (database is locked)
+13-07-2025 18:12:51.683 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\BackupManager\BackupManager.db
+13-07-2025 18:12:51.686 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:12:51.703 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:12:51.709 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:12:51.710 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:12:52.229 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:12:52.393 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:12:52.510 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:12:52.511 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:12:52.511 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:12:52.511 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:12:56.692 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - User inserting error: [SQLITE_BUSY] The database file is locked (database is locked)
+13-07-2025 18:16:06.741 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\BackupManager\Shard\data\BackupManager.db
+13-07-2025 18:16:06.745 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:06.760 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:06.765 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:16:06.765 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:16:07.259 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:16:07.401 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:16:07.532 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:16:07.532 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:16:07.532 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:08.944 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User inserted succesfully
+13-07-2025 18:16:52.456 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:16:52.459 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:52.474 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:52.479 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:16:52.479 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:16:52.985 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:16:53.136 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:16:53.248 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:16:53.249 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:16:53.249 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:16:55.662 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User inserted succesfully
+13-07-2025 18:17:15.944 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:17:15.948 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:15.963 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:15.969 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:17:15.969 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:17:16.475 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:17:16.624 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:17:16.743 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:17:25.435 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:17:25.438 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:25.453 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:25.460 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:17:25.461 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:17:25.948 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:17:26.103 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:17:26.224 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:17:29.787 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:17:29.791 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:29.809 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:29.814 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:17:29.815 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:17:30.283 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:17:30.423 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:17:30.541 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:17:43.939 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:17:43.943 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:43.958 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:17:43.964 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:17:43.964 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:17:44.476 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:17:44.622 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:17:44.743 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:18:38.705 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:18:38.709 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:18:38.726 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:18:38.731 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:18:38.731 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:18:39.283 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:18:39.436 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:19:16.174 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:19:16.178 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:19:16.196 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:19:16.201 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:19:16.201 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:19:16.753 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:19:16.903 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:21:22.940 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:21:32.047 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:21:32.051 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:21:32.067 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:21:32.072 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:21:32.072 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:21:32.619 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:21:32.776 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:21:41.796 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)
+13-07-2025 18:22:09.549 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:22:09.553 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:22:09.569 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:22:09.573 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:22:09.573 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:22:10.104 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:22:10.265 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:23:30.032 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:23:30.035 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:23:30.052 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:23:30.057 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:23:30.057 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:23:30.585 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:23:30.742 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:25:48.137 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:25:48.140 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:25:48.156 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:25:48.162 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:25:48.163 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:25:48.705 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:25:48.850 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:27:31.528 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:27:31.532 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:27:31.548 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:27:31.553 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:27:31.553 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:27:32.085 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:27:32.259 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:28:51.907 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:28:51.910 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:28:51.927 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:28:51.932 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:28:51.932 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:28:52.459 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:28:52.616 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:30:05.402 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:30:05.406 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:30:05.421 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:30:05.426 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:30:05.426 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:30:05.935 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:30:06.085 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:34:10.138 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:34:10.142 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:10.159 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:10.164 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:34:10.164 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:34:10.681 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:34:10.893 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:34:44.504 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:34:44.508 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:44.525 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:44.531 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:34:44.532 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:34:45.048 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:34:45.194 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:34:53.702 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:34:53.705 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:53.722 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:34:53.727 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:34:53.727 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:34:54.276 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:34:54.430 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:35:01.917 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User updated succesfully
+13-07-2025 18:35:01.921 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asd asd, das@gmail.com, italiano (Italia)
+13-07-2025 18:35:01.923 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asd asd, das@gmail.com, italiano (Italia)
+13-07-2025 18:36:15.508 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:36:15.511 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:36:15.527 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:36:15.531 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:36:15.531 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:36:16.051 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:36:16.203 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:46:07.971 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:46:07.975 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:07.991 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:07.995 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:46:07.996 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:46:08.514 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:46:08.661 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:46:18.366 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User updated succesfully
+13-07-2025 18:46:18.369 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:46:18.370 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:46:28.514 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:46:28.517 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:28.533 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:28.538 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:46:28.538 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:46:29.051 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:46:29.208 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:46:29.328 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:46:49.640 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:46:49.643 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:49.659 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:46:49.664 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:46:49.664 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:46:50.134 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:46:50.281 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:46:50.400 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:47:01.543 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:47:01.546 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:47:01.562 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:47:01.567 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:47:01.567 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:47:02.032 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:47:02.177 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:47:02.316 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:47:18.701 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:47:18.704 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:47:18.720 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:47:18.725 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:47:18.725 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:47:19.268 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:47:19.424 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:47:19.549 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:48:10.140 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:48:10.144 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:48:10.161 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:48:10.166 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:48:10.167 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:48:10.672 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:48:10.829 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:48:10.956 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:48:31.448 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:48:31.452 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:48:31.469 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:48:31.474 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:48:31.474 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:48:31.993 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:48:32.143 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:48:32.273 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: asdasd asdasd, sdaasd@gmail.com, italiano (Italia)
+13-07-2025 18:49:14.476 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:49:14.481 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:49:14.498 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:49:14.503 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:49:14.504 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:49:15.029 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:49:15.196 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:49:15.319 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+13-07-2025 18:49:15.320 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+13-07-2025 18:49:15.320 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:49:21.161 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User inserted succesfully
+13-07-2025 18:49:37.673 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:49:37.677 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:49:37.697 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:49:37.703 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:49:37.703 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:49:38.208 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:49:38.357 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:50:13.619 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:50:13.623 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:50:13.643 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:50:13.651 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:50:13.653 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:50:14.164 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:50:14.327 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:50:22.870 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+13-07-2025 18:50:22.873 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
+13-07-2025 18:50:22.890 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
+13-07-2025 18:50:22.895 [main] [INFO ] backupmanager.MainApp - Application started
+13-07-2025 18:50:22.895 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+13-07-2025 18:50:23.386 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+13-07-2025 18:50:23.537 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+13-07-2025 18:50:29.394 [AWT-EventQueue-0] [INFO ] b.Repositories.Repository - User updated succesfully
+13-07-2025 18:50:29.397 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - User creation info email sent with user: asdasd adsdasd, asdasd@gmail.com, italiano (Italia)
+13-07-2025 18:50:29.399 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Confirmation registration email sent to the user: asdasd adsdasd, asdasd@gmail.com, italiano (Italia)

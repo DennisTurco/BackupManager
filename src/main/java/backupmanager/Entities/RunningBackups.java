@@ -34,7 +34,7 @@ public class RunningBackups {
         this.path = null;
         this.progress = 0;
         this.status = null;
-    }   
+    }
 
     public RunningBackups(String backupName, String path, int progress, BackupStatusEnum status) {
         this.backupName = backupName;
@@ -50,7 +50,7 @@ public class RunningBackups {
     public static synchronized List<RunningBackups> readBackupListFromJSON() {
         File file = getBackupFile();
         int attempts = 5;
-        
+
         for (int i = 0; i < attempts; i++) {
             try {
                 if (!file.exists() || file.length() == 0) {
@@ -58,7 +58,7 @@ public class RunningBackups {
                     Thread.sleep(new Random().nextInt(100, 150));
                     continue;
                 }
-    
+
                 return objectMapper.readValue(file, new TypeReference<List<RunningBackups>>() {});
             } catch (IOException e) {
                 logger.error("Error while reading the file: " + e.getMessage(), e);
@@ -66,7 +66,7 @@ public class RunningBackups {
                 Thread.currentThread().interrupt();
             }
         }
-    
+
         return new ArrayList<>();
     }
 
@@ -82,17 +82,17 @@ public class RunningBackups {
         }
         return null; // Return null if no backup with the specified name is found
     }
-    
+
     // the system is multi threading, it is possible that multiple threads call this method, so i need to use synchronized keyworl
     public static synchronized void updateBackupToJSON(RunningBackups backup) {
         List<RunningBackups> backups = readBackupListFromJSON();
         boolean updated = false;
-        
+
         // Iterate through existing backups to update
         for (ListIterator<RunningBackups> iterator = backups.listIterator(); iterator.hasNext(); ) {
             RunningBackups currentBackup = iterator.next();
             if (currentBackup.backupName.equals(backup.backupName)) {
-                
+
                 if (backup.progress == 100) {
                     backup.status = BackupStatusEnum.Finished;
                 } else if (backup.status != null && backup.status != BackupStatusEnum.Terminated) {
@@ -102,7 +102,7 @@ public class RunningBackups {
                 }
 
                 logger.debug("Backup '{}' updated with the status: {}", backup.backupName, backup.status);
-                
+
                 iterator.set(backup);
                 updated = true;
                 break;
@@ -124,7 +124,7 @@ public class RunningBackups {
         List<RunningBackups> backups = readBackupListFromJSON();
         boolean updated = false;
         BackupStatusEnum status = BackupStatusEnum.Finished;
-    
+
         for (RunningBackups backup : backups) {
             if (backup.backupName.equals(backupName)) {
                 if (backup.progress == 100) {
@@ -139,7 +139,7 @@ public class RunningBackups {
                 break;
             }
         }
-    
+
         if (updated) {
             updateBackupsToJSON(backups);
             logger.info("Backup '{}' updated with the status: {}", backupName, status);
@@ -147,11 +147,11 @@ public class RunningBackups {
             logger.warn("Backup '{}' didn't find. No status update", backupName);
         }
     }
-    
+
     private static synchronized void updateBackupsToJSON(List<RunningBackups> backups) {
         File file = getBackupFile();
         int attempts = 5;
-        
+
         for (int i = 0; i < attempts; i++) {
             try {
                 objectMapper.writeValue(file, backups);
@@ -165,7 +165,7 @@ public class RunningBackups {
                 }
             }
         }
-    
+
         logger.error("Error: unable to write to JSON after " + attempts + " attempts.");
     }
 
@@ -200,4 +200,4 @@ public class RunningBackups {
 
         updateBackupsToJSON(backups);
     }
-}   
+}

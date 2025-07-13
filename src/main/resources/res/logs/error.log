@@ -1,0 +1,6 @@
+13-07-2025 17:58:00.438 [main] [ERROR] backupmanager.MainApp - Unable to init the database
+13-07-2025 18:02:26.047 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:11:47.592 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:11:54.471 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - User inserting error: [SQLITE_BUSY] The database file is locked (database is locked)
+13-07-2025 18:12:52.510 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such column: UserId)
+13-07-2025 18:12:56.692 [AWT-EventQueue-0] [ERROR] b.Repositories.Repository - User inserting error: [SQLITE_BUSY] The database file is locked (database is locked)

@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.Managers.ImportExportManager;
+import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.Backup;
@@ -44,10 +45,10 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Json.JsonUser;
 import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ThemeManager;
+import backupmanager.Repositories.UsersRepository;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
@@ -113,39 +114,53 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void checkForFirstAccess() {
         logger.debug("Checking for first access");
-        try {
-            User user = JsonUser.readUserFromJson(ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+        User user = UsersRepository.getLastUser();
 
-            if (user != null) {
-                logger.info("Current user: " + user.toString());
-                return;
-            }
-
-            // set language based on PC language
+        if (user == null) { // first access
             setLanguageBasedOnPcLanguage();
-
-            // user creation
-            createUser();
-        } catch (IOException e) {
-            logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
-            JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+            createNewUser();
+        } else if (user.equals(User.getDefaultUser())) { // user unregistered
+            updateUnregisteredUser(user.id);
+        } else {
+            logger.info("Current user: " + user.toString());
         }
     }
 
-    private void createUser() {
-        // first access
-        EntryUserDialog userDialog = new EntryUserDialog(this, true);
-        userDialog.setVisible(true);
-        User newUser = userDialog.getUser();
+    private void createNewUser() {
+        User newUser = openUserDialogAndObtainTheResult();
 
         if (newUser == null) {
+            UsersRepository.insertUser(User.getDefaultUser());
             return;
         }
 
-        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+        UsersRepository.insertUser(newUser);
 
-        EmailSender.sendUserCreationEmail(newUser);
-        EmailSender.sendConfirmEmailToUser(newUser);
+        sendRegistrationEmail(newUser);
+    }
+
+    private void updateUnregisteredUser(int userId) {
+        User newUser = openUserDialogAndObtainTheResult();
+
+        if (newUser == null || newUser.equals(User.getDefaultUser())) {
+            return;
+        }
+
+        newUser.id = userId;
+        UsersRepository.updateUser(newUser);
+
+        sendRegistrationEmail(newUser);
+    }
+
+    private User openUserDialogAndObtainTheResult() {
+        EntryUserDialog userDialog = new EntryUserDialog(this, true);
+        userDialog.setVisible(true);
+        return userDialog.getUser();
+    }
+
+    private void sendRegistrationEmail(User user) {
+        EmailSender.sendUserCreationEmail(user);
+        EmailSender.sendConfirmEmailToUser(user);
     }
 
     private void initSidebar() {
@@ -356,12 +371,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         CopyInitialPathPopupItem = new javax.swing.JMenuItem();
         CopyDestinationPathPopupItem = new javax.swing.JMenuItem();
         sidebar = new javax.swing.JPanel();
-        pageHome = new javax.swing.JButton();
-        pageBackupList = new javax.swing.JButton();
-        pageDashboard = new javax.swing.JButton();
-        pageSettings = new javax.swing.JButton();
-        men = new javax.swing.JButton();
+        pageBackupList = new backupmanager.svg.SVGButton();
+        pageDashboard = new backupmanager.svg.SVGButton();
+        pageSettings = new backupmanager.svg.SVGButton();
+        men = new backupmanager.svg.SVGButton();
         copyrightLabelSide = new javax.swing.JLabel();
+        panelVersion = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         layeredCardPanel = new javax.swing.JLayeredPane();
         panelBackupList = new javax.swing.JPanel();
         detailsLabel = new javax.swing.JLabel();
@@ -374,9 +390,19 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         exportAsCsvBtn = new backupmanager.svg.SVGButton();
         ExportLabel = new javax.swing.JLabel();
         panelDashboard = new javax.swing.JPanel();
-        button1 = new java.awt.Button();
-        button2 = new java.awt.Button();
-        jLabel3 = new javax.swing.JLabel();
+        chart2 = new javax.swing.JPanel();
+        chart1 = new javax.swing.JPanel();
+        chart1TitleLabel = new javax.swing.JLabel();
+        chart2TitleLabel = new javax.swing.JLabel();
+        totalBackupsPanel = new javax.swing.JPanel();
+        totalBackupsTitleLabel = new javax.swing.JLabel();
+        totalBackupsNumber = new javax.swing.JLabel();
+        totalBackupConfigurationsPanel = new javax.swing.JPanel();
+        totalBackupConfigurationsTitleLabel = new javax.swing.JLabel();
+        totalBackupConfigurationsNumber = new javax.swing.JLabel();
+        totalSpaceUsedPanel = new javax.swing.JPanel();
+        totalSpaceTitleLabel = new javax.swing.JLabel();
+        totalSpaceNumber = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new backupmanager.svg.SVGMenuItem();
@@ -521,31 +547,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         sidebar.setBackground(new java.awt.Color(16, 84, 129));
         sidebar.setPreferredSize(new java.awt.Dimension(55, 32));
 
-        pageHome.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        pageHome.setForeground(new java.awt.Color(195, 217, 233));
-        pageHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
-        pageHome.setText("Home");
-        pageHome.setBorderPainted(false);
-        pageHome.setContentAreaFilled(false);
-        pageHome.setHideActionText(true);
-        pageHome.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        pageHome.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pageHome.setIconTextGap(20);
-        pageHome.setMargin(new java.awt.Insets(2, 0, 2, 14));
-        pageHome.setMinimumSize(new java.awt.Dimension(0, 0));
-        pageHome.setPreferredSize(new java.awt.Dimension(50, 574));
-        pageHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pageHomeActionPerformed(evt);
-            }
-        });
-
-        pageBackupList.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageBackupList.setForeground(new java.awt.Color(195, 217, 233));
-        pageBackupList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
         pageBackupList.setText("Backup List");
         pageBackupList.setBorderPainted(false);
         pageBackupList.setContentAreaFilled(false);
+        pageBackupList.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageBackupList.setHideActionText(true);
         pageBackupList.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         pageBackupList.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -559,12 +565,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        pageDashboard.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageDashboard.setForeground(new java.awt.Color(195, 217, 233));
-        pageDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/home (Custom).png"))); // NOI18N
         pageDashboard.setText("Dashboard");
         pageDashboard.setBorderPainted(false);
         pageDashboard.setContentAreaFilled(false);
+        pageDashboard.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageDashboard.setHideActionText(true);
         pageDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         pageDashboard.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -578,13 +583,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        pageSettings.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageSettings.setForeground(new java.awt.Color(195, 217, 233));
-        pageSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/settings (Custom).png"))); // NOI18N
         pageSettings.setText("Settings");
         pageSettings.setBorderPainted(false);
         pageSettings.setContentAreaFilled(false);
         pageSettings.setFocusPainted(false);
+        pageSettings.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         pageSettings.setHideActionText(true);
         pageSettings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         pageSettings.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -599,11 +603,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         });
 
         men.setBackground(new java.awt.Color(34, 40, 47));
-        men.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        men.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/img/menu_15.png"))); // NOI18N
         men.setBorderPainted(false);
         men.setContentAreaFilled(false);
         men.setFocusPainted(false);
+        men.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
         men.setHideActionText(true);
         men.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         men.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -629,12 +632,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             .addGroup(sidebarLayout.createSequentialGroup()
                 .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sidebarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pageHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pageBackupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pageDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(sidebarLayout.createSequentialGroup()
                         .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(sidebarLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
@@ -642,12 +639,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                             .addGroup(sidebarLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(sidebarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pageBackupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(sidebarLayout.createSequentialGroup()
+                                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(pageDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(sidebarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         sidebarLayout.setVerticalGroup(
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,19 +656,41 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pageHome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pageBackupList, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pageDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
                 .addComponent(copyrightLabelSide, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
 
         getContentPane().add(sidebar, java.awt.BorderLayout.WEST);
+
+        panelVersion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelVersion.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        jLabel3.setText("Version 2.0.2");
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout panelVersionLayout = new javax.swing.GroupLayout(panelVersion);
+        panelVersion.setLayout(panelVersionLayout);
+        panelVersionLayout.setHorizontalGroup(
+            panelVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVersionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelVersionLayout.setVerticalGroup(
+            panelVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVersionLayout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 4, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(panelVersion, java.awt.BorderLayout.PAGE_END);
 
         layeredCardPanel.setLayout(new java.awt.CardLayout());
 
@@ -761,7 +784,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
                 .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -781,52 +804,184 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                         .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
-                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         researchField.getAccessibleContext().setAccessibleName("");
 
         layeredCardPanel.add(panelBackupList, "BackupList");
 
-        button1.setLabel("button1");
+        chart2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chart2.setPreferredSize(new java.awt.Dimension(230, 180));
 
-        button2.setLabel("button1");
+        javax.swing.GroupLayout chart2Layout = new javax.swing.GroupLayout(chart2);
+        chart2.setLayout(chart2Layout);
+        chart2Layout.setHorizontalGroup(
+            chart2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart2Layout.setVerticalGroup(
+            chart2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 174, Short.MAX_VALUE)
+        );
+
+        chart1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chart1.setPreferredSize(new java.awt.Dimension(230, 180));
+
+        javax.swing.GroupLayout chart1Layout = new javax.swing.GroupLayout(chart1);
+        chart1.setLayout(chart1Layout);
+        chart1Layout.setHorizontalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart1Layout.setVerticalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 174, Short.MAX_VALUE)
+        );
+
+        chart1TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        chart1TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chart1TitleLabel.setText("Title Chart 1");
+
+        chart2TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        chart2TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chart2TitleLabel.setText("Title Chart 2");
+
+        totalBackupsPanel.setBorder(new javax.swing.border.MatteBorder(null));
+
+        totalBackupsTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalBackupsTitleLabel.setText("Total Backups");
+
+        totalBackupsNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalBackupsNumber.setText("10");
+
+        javax.swing.GroupLayout totalBackupsPanelLayout = new javax.swing.GroupLayout(totalBackupsPanel);
+        totalBackupsPanel.setLayout(totalBackupsPanelLayout);
+        totalBackupsPanelLayout.setHorizontalGroup(
+            totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupsPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalBackupsNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalBackupsTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalBackupsPanelLayout.setVerticalGroup(
+            totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupsPanelLayout.createSequentialGroup()
+                .addComponent(totalBackupsTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalBackupsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
+
+        totalBackupConfigurationsPanel.setBorder(new javax.swing.border.MatteBorder(null));
+        totalBackupConfigurationsPanel.setPreferredSize(new java.awt.Dimension(214, 104));
+
+        totalBackupConfigurationsTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalBackupConfigurationsTitleLabel.setText("Total Backups");
+
+        totalBackupConfigurationsNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalBackupConfigurationsNumber.setText("10");
+
+        javax.swing.GroupLayout totalBackupConfigurationsPanelLayout = new javax.swing.GroupLayout(totalBackupConfigurationsPanel);
+        totalBackupConfigurationsPanel.setLayout(totalBackupConfigurationsPanelLayout);
+        totalBackupConfigurationsPanelLayout.setHorizontalGroup(
+            totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupConfigurationsPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalBackupConfigurationsNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalBackupConfigurationsTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalBackupConfigurationsPanelLayout.setVerticalGroup(
+            totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupConfigurationsPanelLayout.createSequentialGroup()
+                .addComponent(totalBackupConfigurationsTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalBackupConfigurationsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
+
+        totalSpaceUsedPanel.setBorder(new javax.swing.border.MatteBorder(null));
+        totalSpaceUsedPanel.setPreferredSize(new java.awt.Dimension(214, 104));
+
+        totalSpaceTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalSpaceTitleLabel.setText("Total Space Used");
+
+        totalSpaceNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalSpaceNumber.setText("10");
+
+        javax.swing.GroupLayout totalSpaceUsedPanelLayout = new javax.swing.GroupLayout(totalSpaceUsedPanel);
+        totalSpaceUsedPanel.setLayout(totalSpaceUsedPanelLayout);
+        totalSpaceUsedPanelLayout.setHorizontalGroup(
+            totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalSpaceUsedPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalSpaceNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalSpaceTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalSpaceUsedPanelLayout.setVerticalGroup(
+            totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalSpaceUsedPanelLayout.createSequentialGroup()
+                .addComponent(totalSpaceTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalSpaceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout panelDashboardLayout = new javax.swing.GroupLayout(panelDashboard);
         panelDashboard.setLayout(panelDashboardLayout);
         panelDashboardLayout.setHorizontalGroup(
             panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
-                .addContainerGap(422, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(346, 346, 346))
-            .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
-                    .addContainerGap(421, Short.MAX_VALUE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(347, 347, 347)))
+                .addGap(52, 52, 52)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addComponent(totalBackupsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalBackupConfigurationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(totalSpaceUsedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(chart2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart2TitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart1TitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         panelDashboardLayout.setVerticalGroup(
             panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelDashboardLayout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
-            .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelDashboardLayout.createSequentialGroup()
-                    .addGap(162, 162, 162)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(391, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDashboardLayout.createSequentialGroup()
+                                .addComponent(chart1TitleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(totalBackupConfigurationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chart2TitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addComponent(totalBackupsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(totalSpaceUsedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         layeredCardPanel.add(panelDashboard, "Dashboard");
 
         getContentPane().add(layeredCardPanel, java.awt.BorderLayout.CENTER);
-
-        jLabel3.setText("Version 2.0.2");
-        getContentPane().add(jLabel3, java.awt.BorderLayout.SOUTH);
 
         jMenu1.setText("File");
 
@@ -1185,10 +1340,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         sp.toggleMenu();
     }//GEN-LAST:event_menActionPerformed
 
-    private void pageHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageHomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pageHomeActionPerformed
-
     private void pageSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageSettingsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pageSettingsActionPerformed
@@ -1196,6 +1347,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void pageDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageDashboardActionPerformed
         CardLayout cl = (CardLayout) layeredCardPanel.getLayout();
         cl.show(layeredCardPanel, "Dashboard");
+
+        Charts.createChart(chart1);
+        Charts.createChart(chart2);
     }//GEN-LAST:event_pageDashboardActionPerformed
 
     private void pageBackupListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageBackupListActionPerformed
@@ -1282,8 +1436,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
-    
+
     private void setSvgImages() {
+        men.setSvgImage("res/img/hamburger.svg", 30, 30);
+        pageBackupList.setSvgImage("res/img/list.svg", 30, 30);
+        pageDashboard.setSvgImage("res/img/dashboard.svg", 30, 30);
+        pageSettings.setSvgImage("res/img/settings2.svg", 30, 30);
         exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
         exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
         addBackupEntryButton.setSvgImage("res/img/add.svg", 30, 30);
@@ -1359,8 +1517,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem RunBackupPopupItem;
     private javax.swing.JPopupMenu TablePopup;
     private backupmanager.svg.SVGButton addBackupEntryButton;
-    private java.awt.Button button1;
-    private java.awt.Button button2;
+    private javax.swing.JPanel chart1;
+    private javax.swing.JLabel chart1TitleLabel;
+    private javax.swing.JPanel chart2;
+    private javax.swing.JLabel chart2TitleLabel;
     private javax.swing.JLabel copyrightLabelSide;
     private javax.swing.JLabel detailsLabel;
     private backupmanager.svg.SVGButton exportAsCsvBtn;
@@ -1381,16 +1541,25 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLayeredPane layeredCardPanel;
-    private javax.swing.JButton men;
-    private javax.swing.JButton pageBackupList;
-    private javax.swing.JButton pageDashboard;
-    private javax.swing.JButton pageHome;
-    private javax.swing.JButton pageSettings;
+    private backupmanager.svg.SVGButton men;
+    private backupmanager.svg.SVGButton pageBackupList;
+    private backupmanager.svg.SVGButton pageDashboard;
+    private backupmanager.svg.SVGButton pageSettings;
     private javax.swing.JPanel panelBackupList;
     private javax.swing.JPanel panelDashboard;
+    private javax.swing.JPanel panelVersion;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
     private javax.swing.JPanel sidebar;
     private javax.swing.JTable table;
+    private javax.swing.JLabel totalBackupConfigurationsNumber;
+    private javax.swing.JPanel totalBackupConfigurationsPanel;
+    private javax.swing.JLabel totalBackupConfigurationsTitleLabel;
+    private javax.swing.JLabel totalBackupsNumber;
+    private javax.swing.JPanel totalBackupsPanel;
+    private javax.swing.JLabel totalBackupsTitleLabel;
+    private javax.swing.JLabel totalSpaceNumber;
+    private javax.swing.JLabel totalSpaceTitleLabel;
+    private javax.swing.JPanel totalSpaceUsedPanel;
     // End of variables declaration//GEN-END:variables
 }

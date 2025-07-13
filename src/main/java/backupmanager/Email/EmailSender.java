@@ -9,7 +9,7 @@ import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JsonUser;
+import backupmanager.Repositories.UsersRepository;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.net.SMTPAppender;
 
@@ -104,18 +104,13 @@ public class EmailSender {
     }
 
     private static User getCurrentUser() {
-        try {
-            User user = JsonUser.readUserFromJson(
-                ConfigKey.USER_FILE_STRING.getValue(),
-                ConfigKey.CONFIG_DIRECTORY_STRING.getValue()
-            );
+        User user = UsersRepository.getLastUser();
 
-            return user;
-        } catch (IOException e) {
-            logger.error("Unable to retrieve user details for the email: " + e.getMessage(), e);
+        if (user == null) {
+            logger.error("Unable to retrieve user details for the email because there is no user registered");
         }
 
-        return null;
+        return user;
     }
 
     public static String getTextFromLogFile(int rows) {

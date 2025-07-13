@@ -11,7 +11,7 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
-
+import backupmanager.Repositories.Repository;
 import backupmanager.Services.BackugrundService;
 
 public class MainApp {
@@ -21,6 +21,13 @@ public class MainApp {
     public static void main(String[] args) {
         // load config keys
         ConfigKey.loadFromJson(CONFIG);
+
+        try {
+            Repository.initDatabaseIfNotExists();
+        } catch (IOException ex) {
+            logger.error("Unable to init the database");
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
 
         // load preferred language
         try {
@@ -37,10 +44,10 @@ public class MainApp {
             logger.error("Argument \"{}\" not valid!", args[0]);
             throw new IllegalArgumentException("Argument passed is not valid!");
         }
-        
+
         logger.info("Application started");
         logger.debug("Background mode: {}", isBackgroundMode);
-        
+
         if (isBackgroundMode) {
             logger.info("Backup service starting in the background");
             BackugrundService service = new BackugrundService();
