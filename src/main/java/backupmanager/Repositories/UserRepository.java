@@ -12,19 +12,19 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.User;
 
-public class UsersRepository extends Repository {
+public class UserRepository extends Repository {
 
-    private static final Logger logger = LoggerFactory.getLogger(Repository.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
     public static void insertUser(User user) {
         String sql = "INSERT INTO Users (Name, Surname, Email, Language, InsertDate) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(getUrlConnection());
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, user.name);
-            stmt.setString(2, user.surname);
-            stmt.setString(3, user.email);
-            stmt.setString(4, user.language);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getSurname());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getLanguage());
             stmt.setString(5, LocalDateTime.now().toString());
             stmt.executeUpdate();
 
@@ -62,10 +62,10 @@ public class UsersRepository extends Repository {
         try (Connection conn = DriverManager.getConnection(getUrlConnection());
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, user.name);
-            stmt.setString(2, user.surname);
-            stmt.setString(3, user.email);
-            stmt.setInt(4, user.id);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getSurname());
+            stmt.setString(3, user.getEmail());
+            stmt.setInt(4, user.getId());
             stmt.executeUpdate();
 
             logger.info("User updated succesfully");

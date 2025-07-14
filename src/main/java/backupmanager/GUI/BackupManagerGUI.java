@@ -43,12 +43,12 @@ import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ThemeManager;
-import backupmanager.Repositories.UsersRepository;
+import backupmanager.Repositories.BackupConfigurationRepository;
+import backupmanager.Repositories.UserRepository;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
@@ -114,13 +114,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void checkForFirstAccess() {
         logger.debug("Checking for first access");
-        User user = UsersRepository.getLastUser();
+        User user = UserRepository.getLastUser();
 
         if (user == null) { // first access
             setLanguageBasedOnPcLanguage();
             createNewUser();
         } else if (user.equals(User.getDefaultUser())) { // user unregistered
-            updateUnregisteredUser(user.id);
+            updateUnregisteredUser(user.getId());
         } else {
             logger.info("Current user: " + user.toString());
         }
@@ -130,11 +130,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         User newUser = openUserDialogAndObtainTheResult();
 
         if (newUser == null) {
-            UsersRepository.insertUser(User.getDefaultUser());
+            UserRepository.insertUser(User.getDefaultUser());
             return;
         }
 
-        UsersRepository.insertUser(newUser);
+        UserRepository.insertUser(newUser);
 
         sendRegistrationEmail(newUser);
     }
@@ -146,8 +146,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             return;
         }
 
-        newUser.id = userId;
-        UsersRepository.updateUser(newUser);
+        newUser.setId(userId);
+        UserRepository.updateUser(newUser);
 
         sendRegistrationEmail(newUser);
     }
@@ -242,12 +242,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         // Populate the model with backup data
         for (Backup backup : backups) {
             model.addRow(new Object[]{
-                backup.getBackupName(),
-                backup.getInitialPath(),
+                backup.getName(),
+                backup.getTargetPath(),
                 backup.getDestinationPath(),
-                backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                backup.isAutoBackup(),
-                backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "",
+                backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "",
+                backup.isAutomatic(),
+                backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "",
                 backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
             });
         }
@@ -267,7 +267,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                backupManager.openBackup((String) backupTable.getValueAt(selectedRow, 0));
+                backupManager.openBackupByName((String) backupTable.getValueAt(selectedRow, 0));
 
                 backupManager.openBackupEntryDialog();
             }
@@ -289,7 +289,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 }
 
                 for (int row : selectedRows) {
-                    backupManager.deleteBackup(row, backups, backupTable, false);
+                    backupManager.deleteBackup(row, backupTable, false);
                 }
             }
         });
@@ -329,11 +329,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         String research = researchField.getText();
 
         for (Backup backup : backups) {
-            if (backup.getBackupName().contains(research) ||
-                    backup.getInitialPath().contains(research) ||
+            if (backup.getName().contains(research) ||
+                    backup.getTargetPath().contains(research) ||
                     backup.getDestinationPath().contains(research) ||
-                    (backup.getLastBackup() != null && backup.getLastBackup().toString().contains(research)) ||
-                    (backup.getNextDateBackup() != null && backup.getNextDateBackup().toString().contains(research)) ||
+                    (backup.getLastBackupDate() != null && backup.getLastBackupDate().toString().contains(research)) ||
+                    (backup.getNextBackupDate() != null && backup.getNextBackupDate().toString().contains(research)) ||
                     (backup.getTimeIntervalBackup() != null && backup.getTimeIntervalBackup().toString().contains(research))) {
                 tempBackups.add(backup);
             }
@@ -1169,7 +1169,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
-        backupManager.popupItemDelete(selectedRow, backups, backupTable);
+        backupManager.popupItemDelete(selectedRow, backupTable);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
@@ -1192,7 +1192,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
                 logger.info("Right click on row: " + selectedRow);
-                AutoBackupMenuItem.setSelected(backup.isAutoBackup());
+                AutoBackupMenuItem.setSelected(backup.isAutomatic());
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
 
@@ -1209,7 +1209,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 logger.info("Double-click on row: " + selectedRow);
-                backupManager.openBackup(backupName);
+                backupManager.openBackupByName(backupName);
             }
 
             // Handling single left mouse button click
@@ -1227,16 +1227,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
                 detailsLabel.setText(
-                    "<html><b>" + backupNameStr + ":</b> " + backup.getBackupName() + ", " +
-                    "<b>" + initialPathStr + ":</b> " + backup.getInitialPath() + ", " +
+                    "<html><b>" + backupNameStr + ":</b> " + backup.getName() + ", " +
+                    "<b>" + initialPathStr + ":</b> " + backup.getTargetPath() + ", " +
                     "<b>" + destinationPathStr + ":</b> " + backup.getDestinationPath() + ", " +
-                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "") + ", " +
-                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "_") + ", " +
+                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "") + ", " +
+                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "_") + ", " +
                     "<b>" + timeIntervalBackupStr + ":</b> " + (backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "_") + ", " +
                     "<b>" + creationDateStr + ":</b> " + (backup.getCreationDate() != null ? backup.getCreationDate().format(formatter) : "_") + ", " +
                     "<b>" + lastUpdateDateStr + ":</b> " + (backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().format(formatter) : "_") + ", " +
-                    "<b>" + backupCountStr + ":</b> " + (backup.getBackupCount()) + ", " +
-                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxBackupsToKeep()) + ", " +
+                    "<b>" + backupCountStr + ":</b> " + (backup.getCount()) + ", " +
+                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxToKeep()) + ", " +
                     "<b>" + notesStr + ":</b> " + (backup.getNotes()) +
                     "</html>"
                 );
@@ -1245,7 +1245,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
-        backupManager.popupItemDuplicateBackup(selectedRow, backupTable, backups);
+        backupManager.popupItemDuplicateBackup(selectedRow, backupTable);
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void RunBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunBackupPopupItemActionPerformed
@@ -1427,14 +1427,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void initializeTable() {
-        try {
-            backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-            displayBackupList();
-        } catch (IOException ex) {
-            backups = null;
-            logger.error("An error occurred: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+        backups = BackupConfigurationRepository.getBackupList();
+        displayBackupList();
     }
 
     private void setSvgImages() {

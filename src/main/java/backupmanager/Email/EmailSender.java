@@ -9,7 +9,7 @@ import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Repositories.UsersRepository;
+import backupmanager.Repositories.UserRepository;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.net.SMTPAppender;
 
@@ -53,8 +53,8 @@ public class EmailSender {
             "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \nInstalled Version: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
-            user.email,
-            user.language,
+            user.getEmail(),
+            user.getLanguage(),
             ConfigKey.VERSION.getValue(),
             body,
             rows,
@@ -70,7 +70,7 @@ public class EmailSender {
      * Sends an informational email.
      */
     public static void sendUserCreationEmail(User user) {
-        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language + "\nInstalled version: " + ConfigKey.VERSION.getValue();
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.getEmail() + "\nLanguage: " + user.getLanguage() + "\nInstalled version: " + ConfigKey.VERSION.getValue();
 
         String emailMessage = "\n\n" + userDetails;
 
@@ -95,7 +95,7 @@ public class EmailSender {
 
         String emailMessage = subject + "\n\n" + body;
 
-        updateEmailRecipient(user.email);
+        updateEmailRecipient(user.getEmail());
 
         // Should be info, but if you change it, it doesn't work
         emailConfirmationLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
@@ -104,7 +104,7 @@ public class EmailSender {
     }
 
     private static User getCurrentUser() {
-        User user = UsersRepository.getLastUser();
+        User user = UserRepository.getLastUser();
 
         if (user == null) {
             logger.error("Unable to retrieve user details for the email because there is no user registered");

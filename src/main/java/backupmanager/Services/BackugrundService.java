@@ -24,16 +24,15 @@ import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+
 import backupmanager.BackupOperations;
 import backupmanager.Entities.Backup;
-import backupmanager.Entities.Preferences;
 import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.Json.JSONBackup;
 import backupmanager.Json.JSONConfigReader;
+import backupmanager.Repositories.BackupConfigurationRepository;
 
 public class BackugrundService {
     private static final Logger logger = LoggerFactory.getLogger(BackugrundService.class);
@@ -48,10 +47,10 @@ public class BackugrundService {
         if (trayIcon == null) {
             createHiddenIcon();
         }
-        
+
         // clear running backups json file (if last execution stopped brutally we have to delete the partial backups)
         RunningBackups.deletePartialBackupsStuckedJSONFile();
-        
+
         scheduler = Executors.newSingleThreadScheduledExecutor();
         long interval = jsonConfig.readCheckForBackupTimeInterval();
         scheduler.scheduleAtFixedRate(new BackupTask(), 0, interval, TimeUnit.MINUTES);
@@ -115,7 +114,7 @@ public class BackugrundService {
 
     private void showMainGUI() {
         logger.info("Showing the GUI");
-        
+
         if (guiInstance == null) {
             guiInstance = new BackupManagerGUI();
             guiInstance.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -136,33 +135,24 @@ public class BackugrundService {
             if (!isBackupping.compareAndSet(false, true)) {
                 return;
             }
-        
+
             logger.debug("Checking for automatic backup...");
-        
-            try {
-                List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
-                if (!runningBackups.isEmpty()) {
-                    logger.info("A backup is already running. Skipping this cycle.");
-                    isBackupping.set(false);
-                    return;
-                }
-        
-                List<Backup> backups = JSONBackup.readBackupListFromJSON(
-                    Preferences.getBackupList().getDirectory(),
-                    Preferences.getBackupList().getFile()
-                );
-        
-                List<Backup> needsBackup = getBackupsToDo(backups, 1);
-                if (!needsBackup.isEmpty()) {
-                    logger.info("Start backup process.");
-                    executeBackups(needsBackup);
-                } else {
-                    isBackupping.set(false);
-                    logger.debug("No backup needed at this time.");
-                }
-            } catch (IOException ex) {
+
+            List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
+            if (!runningBackups.isEmpty()) {
+                logger.info("A backup is already running. Skipping this cycle.");
                 isBackupping.set(false);
-                logger.error("An error occurred: " + ex.getMessage(), ex);
+                return;
+            }
+
+            List<Backup> backups = BackupConfigurationRepository.getBackupList();
+            List<Backup> needsBackup = getBackupsToDo(backups, 1);
+            if (!needsBackup.isEmpty()) {
+                logger.info("Start backup process.");
+                executeBackups(needsBackup);
+            } else {
+                isBackupping.set(false);
+                logger.debug("No backup needed at this time.");
             }
         }
 
@@ -172,16 +162,16 @@ public class BackugrundService {
 
             for (Backup backup : backups) {
 
-                // i have to check that the backup is not running 
+                // i have to check that the backup is not running
                 boolean found = false;
                 for (RunningBackups running : runningBackups) {
-                    if (backup.getBackupName().equals(running.backupName)){
+                    if (backup.getName().equals(running.getName())){
                         found = true;
                         break;
                     }
                 }
 
-                if (!found && maxBackupsToAdd > 0 && backup.isAutoBackup() && backup.getNextDateBackup() != null && backup.getNextDateBackup().isBefore(LocalDateTime.now())) {
+                if (!found && maxBackupsToAdd > 0 && backup.isAutomatic() && backup.getNextBackupDate() != null && backup.getNextBackupDate().isBefore(LocalDateTime.now())) {
                     backupsToDo.add(backup);
                     maxBackupsToAdd--;
                 }

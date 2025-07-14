@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import backupmanager.BackupOperations;
 import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ConfigKey;
+import lombok.Getter;
+import lombok.Setter;
 
 // this class contains only the RunningBackups entity
 // this entity is used to store the information of the backups that are currently running
@@ -24,20 +26,20 @@ public class RunningBackups {
     private static final Logger logger = LoggerFactory.getLogger(RunningBackups.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public final String backupName;
-    public final String path;
-    public int progress;
-    public BackupStatusEnum status;
+    @Getter private final String name;
+    @Getter private final String path;
+    @Getter @Setter private int progress;
+    @Getter @Setter private BackupStatusEnum status;
 
     public RunningBackups() {
-        this.backupName = null;
+        this.name = null;
         this.path = null;
         this.progress = 0;
         this.status = null;
     }
 
-    public RunningBackups(String backupName, String path, int progress, BackupStatusEnum status) {
-        this.backupName = backupName;
+    public RunningBackups(String name, String path, int progress, BackupStatusEnum status) {
+        this.name = name;
         this.path = path;
         this.progress = progress;
         this.status = status;
@@ -70,13 +72,13 @@ public class RunningBackups {
         return new ArrayList<>();
     }
 
-    public static RunningBackups readBackupFromJSON(String backupName) {
+    public static RunningBackups readBackupFromJSON(String name) {
         List<RunningBackups> backups = readBackupListFromJSON();
 
         if (backups == null || backups.isEmpty()) return null;
 
         for (RunningBackups backup : backups) {
-            if (backup.backupName.equals(backupName)) {
+            if (backup.name.equals(name)) {
                 return backup;
             }
         }
@@ -91,7 +93,7 @@ public class RunningBackups {
         // Iterate through existing backups to update
         for (ListIterator<RunningBackups> iterator = backups.listIterator(); iterator.hasNext(); ) {
             RunningBackups currentBackup = iterator.next();
-            if (currentBackup.backupName.equals(backup.backupName)) {
+            if (currentBackup.name.equals(backup.name)) {
 
                 if (backup.progress == 100) {
                     backup.status = BackupStatusEnum.Finished;
@@ -101,7 +103,7 @@ public class RunningBackups {
                     backup.status =  BackupStatusEnum.Terminated;
                 }
 
-                logger.debug("Backup '{}' updated with the status: {}", backup.backupName, backup.status);
+                logger.debug("Backup '{}' updated with the status: {}", backup.name, backup.status);
 
                 iterator.set(backup);
                 updated = true;
@@ -109,30 +111,30 @@ public class RunningBackups {
             }
         }
 
-         // If the backup wasn't found in the list, add it
+        // If the backup wasn't found in the list, add it
         if (!updated && backup.progress != 100) {
             backup.status = BackupStatusEnum.Progress;
             backups.add(backup);
 
-            logger.info("Backup '{}' created with the status: {}", backup.backupName, backup.status);
+            logger.info("Backup '{}' created with the status: {}", backup.name, backup.status);
         }
 
         updateBackupsToJSON(backups);
     }
 
-    public static synchronized void updateBackupStatusAfterCompletition(String backupName) {
+    public static synchronized void updateBackupStatusAfterCompletition(String name) {
         List<RunningBackups> backups = readBackupListFromJSON();
         boolean updated = false;
         BackupStatusEnum status = BackupStatusEnum.Finished;
 
         for (RunningBackups backup : backups) {
-            if (backup.backupName.equals(backupName)) {
+            if (backup.name.equals(name)) {
                 if (backup.progress == 100) {
                     backup.status = status;
                 } else {
                     status = BackupStatusEnum.Terminated;
                     backup.status = status;
-                    cleanRunningBackupsFromJSON(backupName); // delete partial backup
+                    cleanRunningBackupsFromJSON(name); // delete partial backup
                 }
 
                 updated = true;
@@ -142,9 +144,9 @@ public class RunningBackups {
 
         if (updated) {
             updateBackupsToJSON(backups);
-            logger.info("Backup '{}' updated with the status: {}", backupName, status);
+            logger.info("Backup '{}' updated with the status: {}", name, status);
         } else {
-            logger.warn("Backup '{}' didn't find. No status update", backupName);
+            logger.warn("Backup '{}' didn't find. No status update", name);
         }
     }
 
@@ -157,7 +159,7 @@ public class RunningBackups {
                 objectMapper.writeValue(file, backups);
                 return;
             } catch (IOException e) {
-                logger.warn("Attempt " + (i + 1) + " to write failed: " + e.getMessage());  
+                logger.warn("Attempt " + (i + 1) + " to write failed: " + e.getMessage());
                 try {
                     Thread.sleep(new Random().nextInt(100, 150));
                 } catch (InterruptedException ex) {
@@ -169,19 +171,19 @@ public class RunningBackups {
         logger.error("Error: unable to write to JSON after " + attempts + " attempts.");
     }
 
-    public static synchronized void cleanRunningBackupsFromJSON(String backupName) {
+    public static synchronized void cleanRunningBackupsFromJSON(String name) {
         List<RunningBackups> backups = readBackupListFromJSON();
-        backups.removeIf(runningBackup -> 
+        backups.removeIf(runningBackup ->
             (runningBackup.progress != 100 && BackupOperations.deletePartialBackup(runningBackup.path)) ||
-            (runningBackup.progress == 100 && runningBackup.backupName.equals(backupName))
+            (runningBackup.progress == 100 && runningBackup.name.equals(name))
         );
 
         updateBackupsToJSON(backups);
     }
 
-    public static synchronized void deleteCompletedBackup(String backupName) {
+    public static synchronized void deleteCompletedBackup(String name) {
         List<RunningBackups> backups = readBackupListFromJSON();
-        backups.removeIf(backup -> backup.backupName.equals(backupName) && (backup.status == BackupStatusEnum.Finished || backup.status == BackupStatusEnum.Terminated));
+        backups.removeIf(backup -> backup.name.equals(name) && (backup.status == BackupStatusEnum.Finished || backup.status == BackupStatusEnum.Terminated));
 
         updateBackupsToJSON(backups);
     }

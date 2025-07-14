@@ -1,5 +1,7 @@
 package backupmanager.Enums;
 
+import lombok.Getter;
+
 public enum ThemesEnum {
     INTELLIJ("Light"),
     DRACULA("Dark"),
@@ -12,13 +14,9 @@ public enum ThemesEnum {
     SOLARIZED_DARK("Solarized dark"),
     SOLARIZED_LIGHT("Solarized light");
 
-    private final String themeName;
+    @Getter private final String themeName;
 
     private ThemesEnum(String themeName) {
         this.themeName = themeName;
-    }
-
-    public String getThemeName() {
-        return themeName;
     }
 }

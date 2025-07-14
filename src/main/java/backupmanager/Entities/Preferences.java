@@ -18,19 +18,20 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
 import backupmanager.Managers.ExceptionManager;
+import lombok.Getter;
 
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
 
-    private static LanguagesEnum language;
-    private static ThemesEnum theme;
-    private static BackupList backupList;
+    @Getter private static LanguagesEnum language;
+    @Getter private static ThemesEnum theme;
+    @Getter private static BackupList backupList;
 
     public static void loadPreferencesFromJSON() {
         try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            
+
             language = getLanguageFromJson(jsonObject);
             theme = getThemeFromJson(jsonObject);
             backupList = getBackupListFromJson(jsonObject);
@@ -57,7 +58,7 @@ public class Preferences {
 
             JsonObject backupListObject = new JsonObject();
             backupListObject.addProperty("Directory", backupList.getDirectory());
-            backupListObject.addProperty("File", backupList.getFile());  
+            backupListObject.addProperty("File", backupList.getFile());
 
             jsonObject.add("BackupList", backupListObject);
 
@@ -84,7 +85,7 @@ public class Preferences {
         }
         return LanguagesEnum.ENG;
     }
-    
+
     private static ThemesEnum getThemeFromJson(JsonObject jsonObject) {
         if (jsonObject.has("Theme") && !jsonObject.get("Theme").isJsonNull()) {
             String themeName = jsonObject.get("Theme").getAsString();
@@ -96,7 +97,7 @@ public class Preferences {
         }
         return ThemesEnum.INTELLIJ;
     }
-    
+
     private static BackupList getBackupListFromJson(JsonObject jsonObject) {
         if (jsonObject.has("BackupList") && !jsonObject.get("BackupList").isJsonNull()) {
             JsonObject backupListObject = jsonObject.getAsJsonObject("BackupList");
@@ -114,15 +115,6 @@ public class Preferences {
         return getDefaultBackupList();
     }
 
-    public static LanguagesEnum getLanguage() {
-        return language;
-    }
-    public static ThemesEnum getTheme() {
-        return theme;
-    }
-    public static BackupList getBackupList() {
-        return backupList;
-    }
     public static BackupList getDefaultBackupList() {
         return new BackupList(
             ConfigKey.RES_DIRECTORY_STRING.getValue(),
@@ -131,12 +123,6 @@ public class Preferences {
     }
     public static void setLanguage(LanguagesEnum language) {
         Preferences.language = language;
-    }
-    public static void setTheme(ThemesEnum theme) {
-        Preferences.theme = theme;
-    }
-    public static void setBackupList(BackupList backupList) {
-        Preferences.backupList = backupList;
     }
     public static void setLanguage(String selectedLanguage) {
         try {
@@ -153,6 +139,9 @@ public class Preferences {
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
+    public static void setTheme(ThemesEnum theme) {
+        Preferences.theme = theme;
+    }
     public static void setTheme(String selectedTheme) {
         try {
             for (ThemesEnum t : ThemesEnum.values()) {
@@ -167,5 +156,8 @@ public class Preferences {
             logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
+    }
+    public static void setBackupList(BackupList backupList) {
+        Preferences.backupList = backupList;
     }
 }

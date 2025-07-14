@@ -2,12 +2,15 @@ package backupmanager.Entities;
 
 import java.util.Locale;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class User {
-    public int id;
-    public String name;
-    public String surname;
-    public String email;
-    public String language;
+    @Getter @Setter private int id;
+    @Getter private String name;
+    @Getter private String surname;
+    @Getter private String email;
+    @Getter private String language;
 
     public User(int id, String name, String surname, String email, String language) {
         this.id = id;

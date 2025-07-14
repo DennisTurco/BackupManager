@@ -31,7 +31,7 @@ public class BackupObserver {
         this.formatter = formatter;
         this.scheduler = Executors.newSingleThreadScheduledExecutor(); // create single thread
     }
-    
+
     public void start() {
         logger.info("Observer for running backups started");
 
@@ -44,12 +44,12 @@ public class BackupObserver {
                     logger.debug("Observer has found a running backup");
 
                     for (RunningBackups backup : runningBackups) {
-                        Backup backupEntity = Backup.getBackupByName(backup.backupName);
+                        Backup backupEntity = Backup.getBackupByName(backup.getName());
 
-                        if (backup.progress < 100 && backup.status == BackupStatusEnum.Progress) {
-                            TableDataManager.updateProgressBarPercentage(backupEntity, backup.progress, formatter);
+                        if (backup.getProgress() < 100 && backup.getStatus() == BackupStatusEnum.Progress) {
+                            TableDataManager.updateProgressBarPercentage(backupEntity, backup.getProgress(), formatter);
                         } else {
-                            RunningBackups.deleteCompletedBackup(backup.backupName);
+                            RunningBackups.deleteCompletedBackup(backup.getName());
                             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, formatter);
                         }
                     }
@@ -62,6 +62,6 @@ public class BackupObserver {
 
     public void stop() {
         logger.info("Observer for running backups stopped");
-        scheduler.shutdownNow(); 
+        scheduler.shutdownNow();
     }
 }

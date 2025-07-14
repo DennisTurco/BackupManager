@@ -80,7 +80,7 @@ public class TimePicker extends javax.swing.JDialog {
         Integer hours = (Integer) hoursSpinner.getValue();
         return (days == 0 && hours == 0);
     }
-    
+
     private void mouseWeel(java.awt.event.MouseWheelEvent evt) {
         javax.swing.JSpinner spinner = (javax.swing.JSpinner) evt.getSource();
         int rotation = evt.getWheelRotation();
@@ -249,7 +249,7 @@ public class TimePicker extends javax.swing.JDialog {
     private void minutesSpinnerMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_minutesSpinnerMouseWheelMoved
         mouseWeel(evt);
     }//GEN-LAST:event_minutesSpinnerMouseWheelMoved
-    
+
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         if (checkInputCorrectness()) {
 
@@ -260,7 +260,6 @@ public class TimePicker extends javax.swing.JDialog {
                     return;
                 }
             }
-            
 
             timeInterval = new TimeInterval((int)daysSpinner.getValue(), (int)hoursSpinner.getValue(), (int)minutesSpinner.getValue());
             closeOk = true;

@@ -25,7 +25,6 @@ import backupmanager.Dialogs.BackupEntryDialog;
 import backupmanager.Dialogs.PreferencesDialog;
 import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.Backup;
-import backupmanager.Entities.Preferences;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
@@ -33,7 +32,7 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
-import backupmanager.Json.JSONBackup;
+import backupmanager.Repositories.BackupConfigurationRepository;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
@@ -42,49 +41,58 @@ public final class BackupManager {
     private static final Logger logger = LoggerFactory.getLogger(BackupManager.class);
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    
+
     private final BackupManagerGUI main;
 
     public BackupManager(BackupManagerGUI main) {
         this.main = main;
-    } 
+    }
 
     private void renameBackup(List<Backup> backups, Backup backup) {
         logger.info("Event --> backup renaming");
-        
-        String backup_name = getBackupName(backups, backup.getBackupName(), false);
-        if (backup_name == null || backup_name.isEmpty()) return;
-        
-        backup.setBackupName(backup_name);
+
+        String backupName = getBackupName(backups, backup.getName(), false);
+        if (backupName == null || backupName.isEmpty()) return;
+
+        backup.setName(backupName);
         backup.setLastUpdateDate(LocalDateTime.now());
-        updateBackupList(backups);
+        updateBackup(backup);
     }
 
-    public void openBackup(String backupName) {
+    public void openBackupByName(String backupName) {
         logger.info("Event --> opening backup");
 
-        Backup backup = Backup.getBackupByName(backupName);
-        
+        Backup backup = BackupConfigurationRepository.getBackupByName(backupName);
+
+        BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
+        dialog.setVisible(true);
+    }
+
+    public void openBackupById(int id) {
+        logger.info("Event --> opening backup");
+
+        Backup backup = BackupConfigurationRepository.getBackupById(id);
+
         BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
         dialog.setVisible(true);
     }
 
     public void newBackup(BackupProgressGUI progressBar) {
         logger.info("Event --> new backup");
-        
+
         BackupEntryDialog dialog = new BackupEntryDialog(main, false);
         dialog.setVisible(true);
     }
 
     public static void newBackup(Backup backup) {
-        List<Backup> backups = getBackupList();
-        backups.add(backup);
-        updateBackupList(backups);
+        BackupConfigurationRepository.insertBackup(backup);
+
+        updateBackupTable();
     }
 
-    public void deleteBackup(int selectedRow, List<Backup> backups, BackupTable backupTable, boolean isConfermationRequired) {
+    public void deleteBackup(int selectedRow, BackupTable backupTable, boolean isConfermationRequired) {
         logger.info("Event --> deleting backup");
-        
+
         if (isConfermationRequired) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
@@ -92,89 +100,65 @@ public final class BackupManager {
             }
         }
 
-        // get correct backup
         String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-        Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-
-        RemoveBackup(backup.getBackupName(), backups);
+        RemoveBackup(backupName);
     }
 
-    public void deleteBackup(int selectedRow, List<Backup> backups, BackupTable backupTable) {
+    public void deleteBackup(int selectedRow, BackupTable backupTable) {
         logger.info("Event --> deleting backup");
-        
+
         if (selectedRow != -1) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                // get correct backup
                 String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-                Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
-
-                RemoveBackup(backup.getBackupName(), backups);
+                RemoveBackup(backupName);
             }
         }
     }
 
     public static void RemoveBackup(String backupName) {
-        List<Backup> backups = getBackupList();
         Backup backup = Backup.getBackupByName(backupName);
-        RemoveBackup(backup, backups);
+        RemoveBackup(backup);
     }
 
-    public static void RemoveBackup(String backupName, List<Backup> backups) {
-        Backup backup = Backup.getBackupByName(backupName);
-        RemoveBackup(backup, backups);
+    public static void RemoveBackup(Backup backup) {
+        logger.info("Event --> removing backup" + backup.getName());
+
+        BackupConfigurationRepository.deleteBackup(backup.getId());
+
+        updateBackupTable();
     }
 
-    public static void RemoveBackup(Backup backup, List<Backup> backups) {
-        logger.info("Event --> removing backup" + backupmanager.Entities.Backup.getBackupByName(backups, backup.getBackupName()).toString());
-
-        // backup list update
-        for (Backup back : backups) {
-            if (backup.getBackupName().equals(back.getBackupName())) {
-                backups.remove(back);
-                logger.info("Backup removed successfully: " + back.toString());
-                break;
-            }
-        }
-
-        updateBackupList(backups);
-    }
-
-    public static void updateBackupList(List<Backup> backups) {
-        if (backups == null) throw new IllegalArgumentException("Backup list is null!");
-
-        logger.info("Updating backup list");
-        
-        // update
-        JSONBackup.updateBackupListJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), backups);
-        
-        // get the new backup updated
-        backups = getBackupList();
-        
-        if (BackupManagerGUI.model != null)
-            TableDataManager.updateTableWithNewBackupList(backups, formatter);
-    }
-    
     public static void updateBackup(Backup updatedBackup) {
-        if (updatedBackup == null) throw new IllegalArgumentException("Backup is null!");
-
-        logger.info("Updating backup: " + updatedBackup.getBackupName());
-        
-        JSONBackup.updateSingleBackupInJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile(), updatedBackup);
-        List<Backup> backups = getBackupList();
-
-        if (BackupManagerGUI.model != null) {
-            TableDataManager.updateTableWithNewBackupList(backups, formatter);
+        if (updatedBackup == null) {
+            throw new IllegalArgumentException("Backup is null!");
         }
+
+        if (updatedBackup.getId() == 0) {
+            String errorMsg = "Cannot update backup: ID is 0.";
+            logger.error(errorMsg);
+            ExceptionManager.openExceptionMessage(errorMsg, Arrays.toString(Thread.currentThread().getStackTrace()));
+            return;
+        }
+
+        logger.info("Updating backup: " + updatedBackup.getName());
+
+        BackupConfigurationRepository.updateBackup(updatedBackup);
+        updateBackupTable();
     }
-    
+
+    public static void updateBackupTable() {
+        if (BackupManagerGUI.model != null)
+            TableDataManager.updateTableWithNewBackupList(getBackupList(), formatter);
+    }
+
     private void OpenFolder(String path) {
         logger.info("Event --> opening folder");
-        
+
         File folder = new File(path);
 
         // if the object is a file i want to obtain the folder that contains that file
-        if (folder.exists() && folder.isFile()) { 
+        if (folder.exists() && folder.isFile()) {
             folder = folder.getParentFile();
         }
 
@@ -199,18 +183,18 @@ public final class BackupManager {
 
     private String getBackupName(List<Backup> backups, String oldName, boolean canOverwrite) {
         while (true) {
-            String backupName = JOptionPane.showInputDialog(null, 
+            String backupName = JOptionPane.showInputDialog(null,
                 TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT), oldName);
-    
+
             // If the user cancels the operation
             if (backupName == null || backupName.trim().isEmpty()) {
                 return null;
             }
-            
+
             Optional<Backup> existingBackup = backups.stream()
-                .filter(b -> b.getBackupName().equals(backupName))
+                .filter(b -> b.getName().equals(backupName))
                 .findFirst();
-    
+
             if (existingBackup.isPresent()) {
                 if (canOverwrite) {
                     int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_BACKUP_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -233,7 +217,7 @@ public final class BackupManager {
         BackupEntryDialog dialog = new BackupEntryDialog(main, false);
         dialog.setVisible(true);
     }
-    
+
     public static LocalDateTime getNexDateBackup(TimeInterval timeInterval) {
         return LocalDateTime.now()
             .plusDays(timeInterval.getDays())
@@ -242,20 +226,11 @@ public final class BackupManager {
     }
 
     public static List<Backup> getBackupList() {
-        try {
-            List<Backup> backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-            BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
-            return backups;
-        } catch (IOException e) {
-            logger.error("An error occurred while trying to get the backup list from json file: " + e.getMessage(), e);
-            ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
-        } catch (Exception e) {
-            logger.error("An error occurred: " + e.getMessage(), e);
-        }
-
-        return null;
+        List<Backup> backups = BackupConfigurationRepository.getBackupList();
+        BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
+        return backups;
     }
-    
+
     // ################################################# Menu Items
 
     public void menuItemDonateViaBuymeacoffe() {
@@ -340,16 +315,16 @@ public final class BackupManager {
     // returns the new time inteval
     public static Backup toggleAutomaticBackup(Backup backup) {
         logger.info("Event --> automatic backup");
-        
-        if (backup.isAutoBackup()) {
+
+        if (backup.isAutomatic()) {
             int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 return null;
             }
 
-            backup.setAutoBackup(false);
+            backup.setAutomatic(false);
             backup.setTimeIntervalBackup(null);
-            backup.setNextDateBackup(null);
+            backup.setNextBackupDate(null);
             backup.setLastUpdateDate(LocalDateTime.now());
 
             logger.info("Automatic backup turned off");
@@ -358,32 +333,30 @@ public final class BackupManager {
             return backup;
         }
 
-        if(!BackupOperations.CheckInputCorrect(backup.getBackupName(),backup.getInitialPath(), backup.getDestinationPath(), null)) return null;
+        if(!BackupOperations.CheckInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null)) return null;
 
         // if the file has not been saved you need to save it before setting the auto backup
-        if(!backup.isAutoBackup() || backup.getNextDateBackup() == null || backup.getTimeIntervalBackup() == null) {
-            if (backup.getBackupName() == null || backup.getBackupName().isEmpty()) return null;
+        if(!backup.isAutomatic() || backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {
+            if (backup.getName() == null || backup.getName().isEmpty()) return null;
 
             // message
             TimeInterval timeInterval = openTimePicker(null, null);
             if (timeInterval == null) return null;
 
             //set date for next backup
-            LocalDateTime nextDateBackup = getNexDateBackup(timeInterval);  
+            LocalDateTime nextDateBackup = getNexDateBackup(timeInterval);
 
-            backup.setAutoBackup(true);
+            backup.setAutomatic(true);
             backup.setTimeIntervalBackup(timeInterval);
-            backup.setNextDateBackup(nextDateBackup);
+            backup.setNextBackupDate(nextDateBackup);
             backup.setLastUpdateDate(LocalDateTime.now());
 
             logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
 
-            showMessageActivationAutoBackup(timeInterval, backup.getInitialPath(), backup.getDestinationPath());
+            showMessageActivationAutoBackup(timeInterval, backup.getTargetPath(), backup.getDestinationPath());
 
-            updateBackup(backup);
             return backup;
-
-        } 
+        }
 
         return null;
     }
@@ -400,7 +373,7 @@ public final class BackupManager {
         String activated = TranslationCategory.DIALOGS.getTranslation(TranslationKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
         String setted = TranslationCategory.DIALOGS.getTranslation(TranslationKey.SETTED_EVERY_MESSAGE);
         String days = TranslationCategory.DIALOGS.getTranslation(TranslationKey.DAYS_MESSAGE);
-        
+
         JOptionPane.showMessageDialog(null,
                 activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
                 + destinationPath + setted + " " + timeInterval.toString() + days,
@@ -445,7 +418,7 @@ public final class BackupManager {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
 
-            OpenFolder(backup.getInitialPath());
+            OpenFolder(backup.getTargetPath());
         }
     }
 
@@ -455,7 +428,7 @@ public final class BackupManager {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
 
-            autoBackupMenuItem.setSelected(!backup.isAutoBackup());
+            autoBackupMenuItem.setSelected(!backup.isAutomatic());
             toggleAutomaticBackup(backup);
         }
     }
@@ -477,7 +450,7 @@ public final class BackupManager {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
 
-            StringSelection selection = new StringSelection(backup.getInitialPath());
+            StringSelection selection = new StringSelection(backup.getTargetPath());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }
@@ -488,19 +461,19 @@ public final class BackupManager {
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
 
-            StringSelection selection = new StringSelection(backup.getBackupName());
+            StringSelection selection = new StringSelection(backup.getName());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }
 
     public void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<Backup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
-            
+
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
             Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-            
-            BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getInitialPath(), backup.getDestinationPath());
+
+            BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
 
             ZippingContext context = new ZippingContext(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
             BackupOperations.SingleBackup(context);
@@ -514,40 +487,44 @@ public final class BackupManager {
             Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
 
             logger.info("Edit row : " + selectedRow);
-            openBackup(backup.getBackupName());
+            openBackupById(backup.getId());
         }
     }
 
-    public void popupItemDuplicateBackup(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public void popupItemDuplicateBackup(int selectedRow, BackupTable backupTable) {
         logger.info("Event --> duplicating backup");
-        
+
         if (selectedRow != -1) {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            Backup backup = BackupConfigurationRepository.getBackupByName(backupName);
 
             LocalDateTime dateNow = LocalDateTime.now();
             Backup newBackup = new Backup(
-                    backup.getBackupName() + "_copy",
-                    backup.getInitialPath(),
+                    backup.getName() + "_copy",
+                    backup.getTargetPath(),
                     backup.getDestinationPath(),
                     null,
-                    backup.isAutoBackup(),
-                    backup.getNextDateBackup(),
+                    backup.isAutomatic(),
+                    backup.getNextBackupDate(),
                     backup.getTimeIntervalBackup(),
                     backup.getNotes(),
                     dateNow,
                     dateNow,
                     0,
-                    backup.getMaxBackupsToKeep()
+                    backup.getMaxToKeep()
             );
-            
-            backups.add(newBackup); 
-            updateBackupList(backups);
-        }
+
+            BackupConfigurationRepository.insertBackup(newBackup);
+
+            List<Backup> backups = getBackupList();
+
+            if (BackupManagerGUI.model != null)
+                TableDataManager.updateTableWithNewBackupList(backups, formatter);
+            }
     }
 
-    public void popupItemDelete(int selectedRow, List<Backup> backups, BackupTable backupTable) {
-        deleteBackup(selectedRow, backups, backupTable);
+    public void popupItemDelete(int selectedRow, BackupTable backupTable) {
+        deleteBackup(selectedRow, backupTable);
     }
 }
