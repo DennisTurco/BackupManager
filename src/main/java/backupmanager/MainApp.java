@@ -19,19 +19,17 @@ public class MainApp {
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     public static void main(String[] args) {
-        // load config keys
         ConfigKey.loadFromJson(CONFIG);
 
         try {
             Repository.initDatabaseIfNotExists();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             logger.error("Unable to init the database");
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
 
-        // load preferred language
         try {
-            Preferences.loadPreferencesFromJSON();
+            Preferences.loadAllPreferences();
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
@@ -39,7 +37,6 @@ public class MainApp {
 
         boolean isBackgroundMode = args.length > 0 && args[0].equalsIgnoreCase("--background");
 
-        // check argument correction
         if (!isBackgroundMode && args.length > 0) {
             logger.error("Argument \"{}\" not valid!", args[0]);
             throw new IllegalArgumentException("Argument passed is not valid!");
@@ -59,7 +56,6 @@ public class MainApp {
             }
         }
         else if (!isBackgroundMode) {
-            // GUI starting
             javax.swing.SwingUtilities.invokeLater(() -> {
                 BackupManagerGUI gui = new BackupManagerGUI();
                 gui.showWindow();

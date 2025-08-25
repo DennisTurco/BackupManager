@@ -1,620 +1,257 @@
-14-07-2025 11:05:04.995 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 11:05:04.998 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 11:05:05.016 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 11:05:05.023 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 11:05:05.023 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 11:05:05.864 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Error fetching backup list: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-	at org.sqlite.core.DB.newSQLException(DB.java:1179)
-	at org.sqlite.core.DB.newSQLException(DB.java:1190)
-	at org.sqlite.core.DB.throwex(DB.java:1150)
-	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
-	at org.sqlite.core.NativeDB.prepare(NativeDB.java:132)
-	at org.sqlite.core.DB.prepare(DB.java:264)
-	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
-	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
-	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
-	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
-	at backupmanager.Repositories.BackupConfigurationRepository.getBackupList(BackupConfigurationRepository.java:118)
-	at backupmanager.GUI.BackupManagerGUI.initializeTable(BackupManagerGUI.java:1430)
-	at backupmanager.GUI.BackupManagerGUI.<init>(BackupManagerGUI.java:98)
-	at backupmanager.MainApp.lambda$0(MainApp.java:64)
-	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-14-07-2025 11:05:05.876 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 11:05:06.031 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 11:05:06.034 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-14-07-2025 11:05:06.035 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-14-07-2025 11:05:06.035 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 11:06:03.164 [AWT-EventQueue-0] [INFO ] b.Repositories.UserRepository - User inserted succesfully
-14-07-2025 11:06:16.823 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 11:06:20.064 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 11:06:20.065 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:06:23.826 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 11:06:24.569 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 11:06:24.569 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:06:27.273 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 11:06:45.090 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Error fetching backup by Name: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-	at org.sqlite.core.DB.newSQLException(DB.java:1179)
-	at org.sqlite.core.DB.newSQLException(DB.java:1190)
-	at org.sqlite.core.DB.throwex(DB.java:1150)
-	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
-	at org.sqlite.core.NativeDB.prepare(NativeDB.java:132)
-	at org.sqlite.core.DB.prepare(DB.java:264)
-	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
-	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
-	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
-	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
-	at backupmanager.Repositories.BackupConfigurationRepository.getBackupByName(BackupConfigurationRepository.java:222)
-	at backupmanager.Entities.Backup.getBackupByName(Backup.java:134)
-	at backupmanager.Dialogs.BackupEntryDialog.okButtonActionPerformed(BackupEntryDialog.java:643)
-	at backupmanager.Dialogs.BackupEntryDialog$9.actionPerformed(BackupEntryDialog.java:467)
-	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
-	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
-	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
-	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
-	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-14-07-2025 11:06:45.093 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Backup inserting error: [SQLITE_ERROR] SQL error or missing database (unrecognized token: "";
-")
-14-07-2025 11:06:45.094 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Error fetching backup list: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such column: Name)
-	at org.sqlite.core.DB.newSQLException(DB.java:1179)
-	at org.sqlite.core.DB.newSQLException(DB.java:1190)
-	at org.sqlite.core.DB.throwex(DB.java:1150)
-	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
-	at org.sqlite.core.NativeDB.prepare(NativeDB.java:132)
-	at org.sqlite.core.DB.prepare(DB.java:264)
-	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
-	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
-	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
-	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
-	at backupmanager.Repositories.BackupConfigurationRepository.getBackupList(BackupConfigurationRepository.java:118)
-	at backupmanager.Managers.BackupManager.getBackupList(BackupManager.java:222)
-	at backupmanager.Managers.BackupManager.updateBackupTable(BackupManager.java:145)
-	at backupmanager.Managers.BackupManager.newBackup(BackupManager.java:90)
-	at backupmanager.Dialogs.BackupEntryDialog.okButtonActionPerformed(BackupEntryDialog.java:651)
-	at backupmanager.Dialogs.BackupEntryDialog$9.actionPerformed(BackupEntryDialog.java:467)
-	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
-	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
-	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
-	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
-	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-14-07-2025 11:06:45.097 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 11:08:54.635 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 11:08:54.638 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 11:08:54.653 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 11:08:54.659 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 11:08:54.659 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 11:08:55.288 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 11:08:55.445 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 11:08:58.040 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 11:09:05.224 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 11:09:05.225 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:09:12.689 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 11:09:13.754 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 11:09:13.754 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:09:14.734 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 11:09:22.473 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Backup inserting error: [SQLITE_ERROR] SQL error or missing database (unrecognized token: "";
-")
-14-07-2025 11:09:22.474 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 11:11:29.472 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 11:11:29.475 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 11:11:29.492 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 11:11:29.497 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 11:11:29.497 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 11:11:30.118 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 11:11:30.270 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 11:11:33.479 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 11:11:38.946 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 11:11:38.947 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:11:41.303 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 11:11:42.223 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 11:11:42.223 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:11:43.518 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 11:15:50.858 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 11:15:50.861 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 11:15:50.877 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 11:15:50.882 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 11:15:50.882 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 11:15:51.488 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 11:15:51.639 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 11:15:53.877 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 11:15:59.679 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 11:15:59.681 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:16:04.542 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 11:16:05.254 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 11:16:05.254 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 11:16:06.498 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 11:16:17.606 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 11:16:17.608 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Error fetching backup list: Error parsing time stamp
-java.sql.SQLException: Error parsing time stamp
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:452)
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:499)
-	at backupmanager.Repositories.BackupConfigurationRepository.getBackupList(BackupConfigurationRepository.java:138)
-	at backupmanager.Managers.BackupManager.getBackupList(BackupManager.java:222)
-	at backupmanager.Managers.BackupManager.updateBackupTable(BackupManager.java:145)
-	at backupmanager.Managers.BackupManager.newBackup(BackupManager.java:90)
-	at backupmanager.Dialogs.BackupEntryDialog.okButtonActionPerformed(BackupEntryDialog.java:651)
-	at backupmanager.Dialogs.BackupEntryDialog$9.actionPerformed(BackupEntryDialog.java:467)
-	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
-	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
-	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
-	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
-	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-Caused by: java.text.ParseException: Unparseable date: "2025-07-14T11:16:17.593382100" does not match (\p{Nd}++)\Q-\E(\p{Nd}++)\Q-\E(\p{Nd}++)\Q \E(\p{Nd}++)\Q:\E(\p{Nd}++)\Q:\E(\p{Nd}++)\Q.\E(\p{Nd}++)
-	at org.sqlite.date.FastDateParser.parse(FastDateParser.java:311)
-	at org.sqlite.date.FastDateFormat.parse(FastDateFormat.java:449)
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:450)
-	... 42 common frames omitted
-14-07-2025 11:16:17.612 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:17:55.596 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 13:17:55.599 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 13:17:55.615 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 13:17:55.621 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 13:17:55.621 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 13:17:56.280 [AWT-EventQueue-0] [ERROR] b.R.BackupConfigurationRepository - Error fetching backup list: Error parsing time stamp
-java.sql.SQLException: Error parsing time stamp
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:452)
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:499)
-	at backupmanager.Repositories.BackupConfigurationRepository.getBackupList(BackupConfigurationRepository.java:138)
-	at backupmanager.GUI.BackupManagerGUI.initializeTable(BackupManagerGUI.java:1430)
-	at backupmanager.GUI.BackupManagerGUI.<init>(BackupManagerGUI.java:98)
-	at backupmanager.MainApp.lambda$0(MainApp.java:64)
-	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-Caused by: java.text.ParseException: Unparseable date: "2025-07-14T11:16:17.593382100" does not match (\p{Nd}++)\Q-\E(\p{Nd}++)\Q-\E(\p{Nd}++)\Q \E(\p{Nd}++)\Q:\E(\p{Nd}++)\Q:\E(\p{Nd}++)\Q.\E(\p{Nd}++)
-	at org.sqlite.date.FastDateParser.parse(FastDateParser.java:311)
-	at org.sqlite.date.FastDateFormat.parse(FastDateFormat.java:449)
-	at org.sqlite.jdbc3.JDBC3ResultSet.getTimestamp(JDBC3ResultSet.java:450)
-	... 18 common frames omitted
-14-07-2025 13:17:56.295 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 13:17:56.465 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 13:24:13.590 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 13:24:13.595 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 13:24:13.612 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 13:24:13.619 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 13:24:13.619 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 13:24:14.307 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 13:24:14.465 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 13:24:17.904 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup test
-14-07-2025 13:24:19.944 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 13:24:22.582 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 13:24:22.584 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 13:24:25.611 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 13:24:26.628 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 13:24:26.629 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 13:24:27.497 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 13:24:28.993 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 13:24:28.996 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:24:30.507 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:24:31.192 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup test
-14-07-2025 13:24:31.950 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:24:39.113 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:24:39.114 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 1
-14-07-2025 13:28:03.712 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:28:03.855 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:28:03.855 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 1
-14-07-2025 13:28:03.855 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:28:03.867 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:28:08.518 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 13:28:08.519 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 13:28:11.229 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-07-29T13:28:11.229670400
-14-07-2025 13:28:12.345 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: sad
-14-07-2025 13:29:19.071 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 13:29:19.075 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 13:29:19.091 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 13:29:19.097 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 13:29:19.097 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 13:29:19.765 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 13:29:19.929 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 13:29:22.292 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:29:22.435 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sad
-14-07-2025 13:29:22.435 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 1
-14-07-2025 13:29:22.435 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:29:22.475 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:29:47.603 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 13:29:47.603 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 13:29:51.114 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-08-17T13:29:51.114504400
-14-07-2025 13:29:52.106 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: sad
-14-07-2025 13:48:48.684 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 13:48:48.688 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 13:48:48.705 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 13:48:48.713 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 13:48:48.714 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 13:48:49.356 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 13:48:49.504 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 13:48:49.507 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-14-07-2025 13:48:49.507 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-14-07-2025 13:48:49.508 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 13:49:16.656 [AWT-EventQueue-0] [INFO ] b.Repositories.UserRepository - User inserted succesfully
-14-07-2025 13:49:18.143 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 13:49:22.518 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 13:49:22.523 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:49:23.726 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:49:23.872 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:49:23.873 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 13:49:23.873 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:49:23.889 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:49:28.006 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 13:49:28.007 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 13:49:28.008 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:49:29.678 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:49:34.848 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:49:35.004 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:49:35.004 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 13:49:35.005 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:49:35.020 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:49:38.334 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 13:49:38.335 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 13:49:38.337 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:50:04.330 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:50:04.502 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:50:04.502 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 13:50:04.502 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:50:04.516 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:50:07.933 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 13:50:07.934 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 13:50:07.935 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 13:54:36.673 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:54:36.831 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 13:54:36.832 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 13:54:36.832 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 13:54:36.844 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 13:54:38.996 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 14:09:13.146 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 14:09:13.150 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 14:09:13.167 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 14:09:13.172 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 14:09:13.172 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 14:09:13.841 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 14:09:13.995 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 14:09:21.487 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:09:21.644 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:09:21.644 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 14:09:21.644 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 14:09:21.687 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 14:09:25.892 [AWT-EventQueue-0] [ERROR] b.Managers.BackupManager - Cannot update backup because id is 0: null
-java.lang.IllegalStateException: null
-	at backupmanager.Managers.BackupManager.updateBackup(BackupManager.java:136)
-	at backupmanager.Dialogs.BackupEntryDialog.okButtonActionPerformed(BackupEntryDialog.java:653)
-	at backupmanager.Dialogs.BackupEntryDialog$9.actionPerformed(BackupEntryDialog.java:467)
-	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
-	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2313)
-	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:405)
-	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
-	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6620)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6385)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4995)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4827)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
-14-07-2025 14:09:25.904 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-14-07-2025 14:09:49.387 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 14:10:49.270 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 14:10:49.276 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 14:10:49.294 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 14:10:49.299 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 14:10:49.299 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 14:10:49.945 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 14:10:50.104 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 14:10:51.787 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:10:51.905 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:10:51.905 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 14:10:51.907 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 14:10:51.949 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 14:10:56.774 [AWT-EventQueue-0] [ERROR] b.Managers.BackupManager - Cannot update backup: ID is 0.
-14-07-2025 14:10:56.780 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-14-07-2025 14:18:47.131 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 14:18:47.136 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 14:18:47.153 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 14:18:47.158 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 14:18:47.158 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 14:18:47.835 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 14:18:48.005 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 14:18:57.822 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:18:57.996 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:18:57.996 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 14:18:57.996 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 14:18:58.054 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 14:23:11.223 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 14:23:11.227 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 14:23:11.244 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 14:23:11.250 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 14:23:11.250 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 14:23:11.909 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 14:23:12.077 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 14:23:18.456 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:23:18.604 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 14:23:18.604 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 14:23:18.604 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 14:23:18.658 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 14:23:32.460 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 14:23:33.491 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 14:23:33.493 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 14:23:40.326 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 18:36:53.457 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 18:36:53.460 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 18:36:53.477 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 18:36:53.483 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 18:36:53.484 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 18:36:54.167 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 18:36:54.321 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 18:47:58.326 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 18:47:58.329 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = Dark
-14-07-2025 18:47:58.349 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = Dark
-14-07-2025 18:47:58.354 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 18:47:58.354 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 18:47:59.004 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 18:47:59.157 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 18:48:01.854 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 18:51:50.858 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
-14-07-2025 18:51:54.118 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: High contrast
-14-07-2025 18:51:54.118 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language set to: Italiano
-14-07-2025 18:51:54.119 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: High contrast
-14-07-2025 18:51:54.150 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-14-07-2025 18:51:54.151 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 18:51:55.998 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 21:26:52.793 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 21:26:52.799 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = High contrast
-14-07-2025 21:26:52.818 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 21:26:52.828 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 21:26:52.828 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 21:26:53.705 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 21:26:53.898 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 21:26:57.894 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 21:26:59.488 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 21:26:59.491 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 21:27:03.428 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 21:27:03.952 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 21:27:03.953 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 21:27:05.709 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 21:27:16.300 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 21:27:16.300 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 21:27:18.187 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-07-19T21:27:18.187242800
-14-07-2025 21:27:18.964 [AWT-EventQueue-0] [ERROR] b.Managers.BackupManager - Cannot update backup: ID is 0.
-14-07-2025 21:27:18.972 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-14-07-2025 21:27:28.153 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 21:27:28.156 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 21:27:30.225 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup manager
-14-07-2025 22:33:26.017 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 22:33:26.020 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:33:26.037 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:33:26.042 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 22:33:26.043 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 22:33:26.784 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 22:33:26.971 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 22:33:30.427 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 22:33:33.276 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 22:33:33.277 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:33:36.037 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 22:33:37.391 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 22:33:37.391 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:33:39.228 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 22:33:40.824 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 22:33:40.825 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 22:33:43.578 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-07-26T22:33:43.578530600
-14-07-2025 22:33:44.744 [AWT-EventQueue-0] [ERROR] b.Managers.BackupManager - Cannot update backup: ID is 0.
-14-07-2025 22:33:44.751 [AWT-EventQueue-0] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-14-07-2025 22:33:54.051 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 22:33:54.054 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 22:35:16.143 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 22:35:16.147 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:35:16.164 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:35:16.169 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 22:35:16.170 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 22:35:16.823 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 22:35:16.978 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 22:35:19.487 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 22:35:22.792 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 22:35:22.793 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:35:24.822 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 22:35:25.434 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 22:35:25.434 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:35:26.596 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 22:35:27.827 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 22:35:27.827 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 22:35:29.799 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-07-22T22:35:29.799027900
-14-07-2025 22:35:55.955 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 22:35:55.959 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:35:55.975 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:35:55.980 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 22:35:55.980 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 22:35:56.622 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 22:35:56.777 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 22:36:01.781 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
-14-07-2025 22:36:05.424 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: true
-14-07-2025 22:36:05.425 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:36:07.565 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop\BackupManager
-14-07-2025 22:36:08.138 [AWT-EventQueue-0] [DEBUG] b.Dialogs.BackupEntryDialog - File chooser: null, files allowed: false
-14-07-2025 22:36:08.138 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - Event --> File chooser
-14-07-2025 22:36:09.741 [AWT-EventQueue-0] [INFO ] backupmanager.BackupOperations - You selected the directory: C:\Users\Utente\Desktop
-14-07-2025 22:36:11.901 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> Changing auto backup preference
-14-07-2025 22:36:11.902 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 22:36:15.528 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned On and next date backup setted to 2025-07-29T22:36:15.528022800
-14-07-2025 22:36:26.818 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
-14-07-2025 22:36:26.821 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 22:36:29.943 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:31.163 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sdaas
-14-07-2025 22:36:31.565 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup manager
-14-07-2025 22:36:31.912 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sdaas
-14-07-2025 22:36:32.242 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:43.625 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
-14-07-2025 22:36:43.629 [main] [INFO ] backupmanager.Entities.Preferences - Preferences loaded from JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:36:43.648 [main] [INFO ] backupmanager.Entities.Preferences - Preferences updated to JSON file: language = ita.json, theme = High contrast
-14-07-2025 22:36:43.653 [main] [INFO ] backupmanager.MainApp - Application started
-14-07-2025 22:36:43.653 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-14-07-2025 22:36:44.334 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-14-07-2025 22:36:44.486 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-14-07-2025 22:36:47.841 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:48.000 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:48.001 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 3
-14-07-2025 22:36:48.001 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 22:36:49.780 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:49.932 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:49.932 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Right click on row: 3
-14-07-2025 22:36:52.664 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> automatic backup
-14-07-2025 22:36:53.852 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Automatic backup turned off
-14-07-2025 22:36:53.852 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: TEST
-14-07-2025 22:36:53.862 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 22:36:53.865 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 22:36:55.231 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:56.490 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup manager
-14-07-2025 22:36:56.968 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sdaas
-14-07-2025 22:36:57.482 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:36:58.580 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 22:36:59.892 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 22:37:00.045 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 22:37:00.046 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Double-click on row: 0
-14-07-2025 22:37:00.046 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening backup
-14-07-2025 22:37:00.061 [AWT-EventQueue-0] [INFO ] b.Dialogs.BackupEntryDialog - Event --> auto backup disabled
-14-07-2025 22:37:14.786 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Updating backup: dasd
-14-07-2025 22:37:14.797 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - User updated succesfully
-14-07-2025 22:37:14.800 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
-14-07-2025 22:37:17.699 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: TEST
-14-07-2025 22:37:18.815 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: dasd
-14-07-2025 22:37:22.005 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: sdaas
-14-07-2025 22:37:23.020 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: backup manager
+30-07-2025 16:56:39.458 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 16:56:39.582 [main] [INFO ] b.Repositories.Repository - Initializing database migration
+30-07-2025 16:56:39.582 [main] [DEBUG] b.Repositories.Repository - Executing: INSERT INTO Preferences (Code, Value) VALUES
+('Language', 'eng.json'),
+('Theme', 'light')
+30-07-2025 16:56:39.596 [main] [INFO ] b.Repositories.Repository - Database initialized.
+30-07-2025 16:56:39.602 [main] [WARN ] backupmanager.Entities.Preferences - Invalid language name: eng.json
+30-07-2025 16:56:39.604 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 16:59:47.738 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 16:59:47.875 [main] [WARN ] backupmanager.Entities.Preferences - Invalid language name: eng.json
+30-07-2025 16:59:47.877 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:04:11.747 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:04:11.883 [main] [WARN ] backupmanager.Entities.Preferences - Invalid language name: eng.json
+30-07-2025 17:04:11.884 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:04:43.055 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:05:12.513 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:05:16.468 [main] [WARN ] backupmanager.Entities.Preferences - Invalid language name: eng.json
+30-07-2025 17:06:44.854 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:08:09.108 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:08:11.998 [main] [WARN ] backupmanager.Entities.Preferences - Invalid language name: Language
+30-07-2025 17:10:28.446 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:15:13.894 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:15:16.083 [main] [WARN ] backupmanager.Entities.Preferences - Invalid file name: Language
+30-07-2025 17:15:46.306 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:15:46.431 [main] [INFO ] backupmanager.Entities.Preferences - Language set to: English
+30-07-2025 17:15:48.386 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:15:48.405 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:15:48.406 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:15:48.939 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:15:49.106 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:15:49.108 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+30-07-2025 17:15:49.108 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:15:58.517 [AWT-EventQueue-0] [INFO ] b.Repositories.UserRepository - User inserted succesfully
+30-07-2025 17:17:17.799 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:17:21.003 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Dark
+30-07-2025 17:17:21.003 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language set to: English
+30-07-2025 17:17:21.005 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:17:21.019 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:17:42.858 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:17:42.982 [main] [INFO ] backupmanager.Entities.Preferences - Language set to: English
+30-07-2025 17:17:46.250 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:17:46.268 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:17:46.268 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:17:46.767 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:17:46.954 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:21:43.611 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:21:43.733 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:21:43.734 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:21:43.752 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:21:43.752 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:21:44.263 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:21:44.427 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:21:55.141 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:21:57.559 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Dark
+30-07-2025 17:21:57.559 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:21:57.561 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:21:57.577 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:22:38.672 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:22:38.803 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:22:38.804 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:22:38.821 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:22:38.821 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:22:39.361 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:22:39.514 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:22:42.864 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:22:45.044 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Dark
+30-07-2025 17:22:45.045 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:22:45.046 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:22:45.060 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:22:48.929 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Dark
+30-07-2025 17:22:48.929 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:22:48.930 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:22:48.947 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:23:25.643 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:23:28.068 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Dark
+30-07-2025 17:23:28.069 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:23:28.070 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:23:28.083 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:25:56.266 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:25:56.402 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:25:56.403 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:25:56.420 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:25:56.420 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:25:56.954 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:25:57.117 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:26:00.115 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:26:01.973 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Carbon
+30-07-2025 17:26:01.974 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:26:01.975 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Carbon
+30-07-2025 17:26:02.002 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:26:08.828 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference updated succesfully
+30-07-2025 17:26:08.829 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference updated succesfully
+30-07-2025 17:26:18.096 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:26:20.196 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Carbon
+30-07-2025 17:26:20.196 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:26:20.197 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Carbon
+30-07-2025 17:26:20.215 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:26:20.216 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference updated succesfully
+30-07-2025 17:26:20.218 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference updated succesfully
+30-07-2025 17:27:42.080 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:27:42.201 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:27:42.203 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:27:42.219 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:27:42.219 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:27:42.714 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:27:42.865 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:27:45.387 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:27:48.252 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Arc - Orange
+30-07-2025 17:27:48.253 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:27:48.254 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Arc - Orange
+30-07-2025 17:27:48.278 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:27:48.281 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference %s updated succesfully with value %s
+30-07-2025 17:27:48.282 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference %s updated succesfully with value %s
+30-07-2025 17:28:42.329 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:28:42.479 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:28:42.481 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:28:42.498 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:28:42.499 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:28:43.034 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:28:43.223 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:29:04.698 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:29:07.566 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Carbon
+30-07-2025 17:29:07.566 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:29:07.568 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Carbon
+30-07-2025 17:29:07.595 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:29:07.597 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value ita.json
+30-07-2025 17:29:07.599 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Carbon
+30-07-2025 17:29:41.469 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:29:44.060 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Dark
+30-07-2025 17:29:44.061 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:29:44.062 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:29:44.075 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:30:13.331 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value eng.json
+30-07-2025 17:40:26.784 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:40:26.913 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:40:26.915 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:40:26.931 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:40:26.931 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:40:27.429 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:40:27.589 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:40:58.130 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:41:01.404 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Carbon
+30-07-2025 17:41:01.405 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:41:01.406 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Carbon
+30-07-2025 17:41:01.434 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:45:45.798 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:45:45.926 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:45:45.928 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:45:45.943 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:45:45.944 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:45:46.424 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:45:46.573 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:45:49.751 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:45:52.741 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Carbon
+30-07-2025 17:45:52.741 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:45:52.743 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Carbon
+30-07-2025 17:45:52.770 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:45:54.947 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Eseguo la query: UPDATE Preferences SET Value = 'ita.json' WHERE Code = 'Language'
+30-07-2025 17:45:58.255 [AWT-EventQueue-0] [ERROR] b.Repositories.PreferenceRepository - Preference updating error: [SQLITE_BUSY] The database file is locked (database is locked)
+30-07-2025 17:47:06.553 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:47:06.677 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:47:06.678 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:47:06.695 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:47:06.695 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:47:07.195 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:47:07.343 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:47:12.652 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:47:16.239 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Nord
+30-07-2025 17:47:16.240 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:47:16.241 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Nord
+30-07-2025 17:47:16.269 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:47:16.272 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value eng.json
+30-07-2025 17:47:16.273 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Nord
+30-07-2025 17:47:49.355 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Nord
+30-07-2025 17:47:49.356 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:47:49.357 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Nord
+30-07-2025 17:47:49.375 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:47:49.376 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value eng.json
+30-07-2025 17:47:49.377 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Nord
+30-07-2025 17:47:54.065 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: English; Theme: Nord
+30-07-2025 17:47:54.066 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:47:54.067 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Nord
+30-07-2025 17:47:54.084 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:48:02.613 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value eng.json
+30-07-2025 17:48:18.708 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Nord
+30-07-2025 17:50:26.610 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:50:27.294 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:50:27.296 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:50:27.319 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:50:27.319 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:50:27.818 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:50:27.971 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:50:30.582 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> shard website
+30-07-2025 17:50:34.498 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:50:37.990 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Español; Theme: Dark
+30-07-2025 17:50:37.991 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Español
+30-07-2025 17:50:37.992 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:50:38.008 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:50:38.010 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value esp.json
+30-07-2025 17:50:38.011 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Dark
+30-07-2025 17:51:01.017 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:51:01.138 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:51:01.139 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:51:01.155 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:51:01.155 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:51:01.651 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:51:01.801 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:51:32.368 [main] [INFO ] b.Repositories.Repository - Database copied to: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:51:36.622 [main] [INFO ] b.Repositories.Repository - Initializing database migration
+30-07-2025 17:51:36.623 [main] [DEBUG] b.Repositories.Repository - Executing: INSERT INTO Preferences (Code, Value) VALUES
+('Language', 'eng.json'),
+('Theme', 'light')
+30-07-2025 17:51:36.661 [main] [INFO ] b.Repositories.Repository - Database initialized.
+30-07-2025 17:51:36.668 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:51:36.670 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:51:36.687 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:51:36.687 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:51:37.176 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:51:37.342 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:51:37.343 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
+30-07-2025 17:51:37.344 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:51:37.346 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value ita.json
+30-07-2025 17:51:37.347 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Light
+30-07-2025 17:51:39.104 [AWT-EventQueue-0] [INFO ] b.Repositories.UserRepository - User inserted succesfully
+30-07-2025 17:51:40.890 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> opening preferences dialog
+30-07-2025 17:51:46.310 [AWT-EventQueue-0] [INFO ] b.Dialogs.PreferencesDialog - Updating preferences -> Language: Italiano; Theme: Dark
+30-07-2025 17:51:46.311 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+30-07-2025 17:51:46.312 [AWT-EventQueue-0] [INFO ] backupmanager.Entities.Preferences - Theme set to: Dark
+30-07-2025 17:51:46.326 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
+30-07-2025 17:51:46.328 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value ita.json
+30-07-2025 17:51:46.330 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Dark
+30-07-2025 17:51:52.783 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:51:52.906 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:51:52.907 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:51:52.924 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:51:52.924 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:51:53.404 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:51:53.554 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:52:45.136 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:52:45.260 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:52:45.262 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:52:45.279 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:52:45.279 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:52:45.793 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:52:45.952 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:52:48.296 [AWT-EventQueue-0] [INFO ] b.Managers.BackupManager - Event --> new backup
+30-07-2025 17:52:58.070 [AWT-EventQueue-0] [INFO ] b.R.BackupConfigurationRepository - Backup inserted succesfully
+30-07-2025 17:52:58.074 [AWT-EventQueue-0] [DEBUG] b.Table.TableDataManager - updating backup list
+30-07-2025 17:53:03.584 [main] [INFO ] b.Repositories.Repository - Database already exists: C:\Users\Utente\Shard\data\BackupManager.db
+30-07-2025 17:53:03.708 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
+30-07-2025 17:53:03.710 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+30-07-2025 17:53:03.726 [main] [INFO ] backupmanager.MainApp - Application started
+30-07-2025 17:53:03.726 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+30-07-2025 17:53:04.208 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+30-07-2025 17:53:04.359 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+30-07-2025 17:53:07.196 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asddasd
+30-07-2025 17:53:33.276 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Selected backup: asddasd

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import backupmanager.Managers.ImportExportManager;
+import backupmanager.Managers.ExportManager;
 import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
@@ -219,7 +219,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public void reloadPreferences() {
         logger.info("Reloading preferences");
 
-        Preferences.updatePreferencesToJSON();
+        Preferences.updateAllPreferences();
 
         // load language
         try {
@@ -1013,19 +1013,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.add(jSeparator4);
 
         MenuImport.setText("Import backup list");
-        MenuImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuImportActionPerformed(evt);
-            }
-        });
         jMenu1.add(MenuImport);
 
         MenuExport.setText("Export backup list");
-        MenuExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuExportActionPerformed(evt);
-            }
-        });
         jMenu1.add(MenuExport);
         jMenu1.add(jSeparator5);
 
@@ -1308,24 +1298,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         backupManager.menuItemOpenPreferences();
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
-    private void MenuImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImportActionPerformed
-        backups = backupManager.menuItemImportFromJson();
-    }//GEN-LAST:event_MenuImportActionPerformed
-
-    private void MenuExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportActionPerformed
-        backupManager.menuItemExportToJson();
-    }//GEN-LAST:event_MenuExportActionPerformed
-
     private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
         backupManager.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        ImportExportManager.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        ImportExportManager.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed

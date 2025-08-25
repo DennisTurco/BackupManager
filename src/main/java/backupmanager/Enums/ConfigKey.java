@@ -13,6 +13,7 @@ import com.google.gson.JsonParser;
 
 public enum ConfigKey {
     LOG_FILE_STRING,
+    MIGRATION_FILE,
     LOG_DIRECTORY_STRING,
     BACKUP_FILE_STRING,
     CONFIG_FILE_STRING,

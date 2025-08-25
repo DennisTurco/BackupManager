@@ -243,16 +243,6 @@ public final class BackupManager {
         WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue());
     }
 
-    public void menuItemExportToJson() {
-        logger.info("Event --> exporting backup list");
-        ImportExportManager.exportListToJson();
-    }
-
-    public List<Backup> menuItemImportFromJson() {
-        logger.info("Event --> importing backup list");
-        return ImportExportManager.importListFromJson(main, formatter);
-    }
-
     public void menuItemOpenPreferences() {
         logger.info("Event --> opening preferences dialog");
         PreferencesDialog prefs = new PreferencesDialog(main, true, main);

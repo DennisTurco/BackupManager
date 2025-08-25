@@ -140,7 +140,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         try {
             // translactions
-            Preferences.setLanguage(selectedLanguage);
+            Preferences.setLanguageByLanguageName(selectedLanguage);
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
             setTranslations();
 

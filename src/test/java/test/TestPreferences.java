@@ -30,8 +30,8 @@ public class TestPreferences {
         Preferences.setLanguage(LanguagesEnum.ENG);
         Preferences.setTheme(ThemesEnum.INTELLIJ);
 
-        Preferences.updatePreferencesToJSON(); // update
-        Preferences.loadPreferencesFromJSON(); // reload
+        Preferences.updateAllPreferences(); // update
+        Preferences.loadAllPreferences(); // reload
 
         // check if update changed everything correctly
         assertEquals(LanguagesEnum.ENG.getLanguageName(), Preferences.getLanguage().getLanguageName());
