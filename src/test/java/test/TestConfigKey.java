@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
 
 import backupmanager.Enums.ConfigKey;
 
 public class TestConfigKey {
+
     private final String LOG_FILE_STRING = "log_file";
-    private final String BACKUP_FILE_STRING = "backup_list.json";
+    private final String BACKUP_LIST_FILE_STRING = "backup_list.json";
     private final String CONFIG_FILE_STRING = "config.json";
     private final String RES_DIRECTORY_STRING = "src/main/resources/res/";
     private final String DONATE_PAGE_LINK = "https://buymeacoffee.com/denno";
@@ -23,50 +24,15 @@ public class TestConfigKey {
     private final String SHARE_LINK = "https://github.com/DennisTurco/BackupManager/releases";
     private final String EMAIL = "assistenza@shardpc.it";
 
-    private static File temp_file;
-
-    @BeforeEach
-    void setup() throws IOException {
-        // json test
-        String jsonContent = String.format("""
-                             {
-                             "LOG_FILE_STRING": "%s",
-                             "BACKUP_FILE_STRING": "%s",
-                             "CONFIG_FILE_STRING": "%s",
-                             "RES_DIRECTORY_STRING": "%s",
-                             "DONATE_PAGE_LINK": "%s",
-                             "ISSUE_PAGE_LINK": "%s",
-                             "INFO_PAGE_LINK": "%s",
-                             "EMAIL": "%s",
-                             "SHARD_WEBSITE": "%s",
-                             "LOGO_IMG": "%s",
-                             "SHARE_LINK": "%s"
-                             }""",
-                             LOG_FILE_STRING,
-                             BACKUP_FILE_STRING,
-                             CONFIG_FILE_STRING,
-                             RES_DIRECTORY_STRING,
-                             DONATE_PAGE_LINK,
-                             ISSUE_PAGE_LINK,
-                             INFO_PAGE_LINK,
-                             EMAIL,
-                             SHARD_WEBSITE,
-                             LOGO_IMG,
-                             SHARE_LINK);
-
-        // write json test
-        temp_file = File.createTempFile("src/test/resources/config_test", ".json");
-        Files.write(temp_file.toPath(), jsonContent.getBytes());
-    }
+    private static File tempFile;
 
     @Test
-    void testLoadFromJson() {
-        // load the values from JSON test 
-        ConfigKey.loadFromJson(temp_file.getPath());
+    public void equals_shouldReturnTrue_forJsonConfigFileNotEmpty() throws IOException {
+        createAndSetupTempFileWithData();
+        deleteTempFile();
 
-        // check if the values are correctly loaded
         assertEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
-        assertEquals(BACKUP_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
+        assertEquals(BACKUP_LIST_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
         assertEquals(CONFIG_FILE_STRING, ConfigKey.CONFIG_FILE_STRING.getValue());
         assertEquals(RES_DIRECTORY_STRING, ConfigKey.RES_DIRECTORY_STRING.getValue());
         assertEquals(ISSUE_PAGE_LINK, ConfigKey.ISSUE_PAGE_LINK.getValue());
@@ -77,38 +43,56 @@ public class TestConfigKey {
         assertEquals(SHARE_LINK, ConfigKey.SHARE_LINK.getValue());
     }
 
-    //@Test
-    void testMissingKeys() {
-        String jsonContent = String.format("""
-                             {
-                             "LOG_FILE_STRING": "log_file",
-                             "BACKUP_FILE_STRING": "backup_list.json"
-                             }""",
-                             LOGO_IMG,
-                             BACKUP_FILE_STRING);
+    @Test
+    public void equals_shouldReturnFalse_forEmptyJsonObject() throws IOException {
+        createAndSetupTempFileWithoutData();
+        deleteTempFile();
 
-        try {
-            Files.write(temp_file.toPath(), jsonContent.getBytes());
-        } catch (IOException e) { }
-
-        // load the values
-        ConfigKey.loadFromJson(temp_file.getPath());
-
-        // checks
-        assertEquals(CONFIG_FILE_STRING, ConfigKey.CONFIG_FILE_STRING.getValue());
-        assertEquals(RES_DIRECTORY_STRING, ConfigKey.RES_DIRECTORY_STRING.getValue());
+        assertNotEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
+        assertNotEquals(BACKUP_LIST_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
     }
 
-    @Test
-    void testEmptyJsonFile() {
+    private void createAndSetupTempFileWithData() throws IOException {
+        String jsonContent = String.format("""
+                             {
+                             "LOG_FILE_STRING": "%s",
+                             "BACKUP_LIST_FILE_STRING": "%s",
+                             "CONFIG_FILE_STRING": "%s",
+                             "RES_DIRECTORY_STRING": "%s",
+                             "DONATE_PAGE_LINK": "%s",
+                             "ISSUE_PAGE_LINK": "%s",
+                             "INFO_PAGE_LINK": "%s",
+                             "EMAIL": "%s",
+                             "SHARD_WEBSITE": "%s",
+                             "LOGO_IMG": "%s",
+                             "SHARE_LINK": "%s"
+                             }""",
+                LOG_FILE_STRING,
+                BACKUP_LIST_FILE_STRING,
+                CONFIG_FILE_STRING,
+                RES_DIRECTORY_STRING,
+                DONATE_PAGE_LINK,
+                ISSUE_PAGE_LINK,
+                INFO_PAGE_LINK,
+                EMAIL,
+                SHARD_WEBSITE,
+                LOGO_IMG,
+                SHARE_LINK);
+        createFileAndLoad(jsonContent);
+    }
+
+    private void createAndSetupTempFileWithoutData() throws IOException {
         String emptyJsonContent = "{}";
-        try {
-            Files.write(temp_file.toPath(), emptyJsonContent.getBytes());
-        } catch (IOException e) { }
+        createFileAndLoad(emptyJsonContent);
+    }
 
-        ConfigKey.loadFromJson(temp_file.getPath());
+    private void createFileAndLoad(String jsonString) throws IOException {
+        tempFile = File.createTempFile("src/test/resources/config_test", ".json");
+        Files.write(tempFile.toPath(), jsonString.getBytes());
+        ConfigKey.loadFromJson(tempFile.getPath());
+    }
 
-        assertEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
-        assertEquals(BACKUP_FILE_STRING, ConfigKey.BACKUP_FILE_STRING.getValue());
+    private void deleteTempFile() {
+        if (tempFile.exists()) tempFile.delete();
     }
 }
