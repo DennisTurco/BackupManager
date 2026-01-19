@@ -1,43 +1,53 @@
 package test;
 
-import java.io.File;
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
+import backupmanager.Repositories.Repository;
 
 public class PreferencesTest {
 
-    private final String directory = "src/test/resources/";
-    private final String filename = "tempLogFile.json";
-    private File tempLogFile;
+    private LanguagesEnum language;
+    private ThemesEnum theme;
+
+    @BeforeEach
+    protected void initDbAndBuildPreferences() throws Exception {
+        Repository.initDatabaseIfNotExists();
+
+        Preferences.loadAllPreferences();
+        language = Preferences.getLanguage();
+        theme = Preferences.getTheme();
+
+        buildAndReloadPreferences();
+    }
+
+    @AfterEach
+    protected void resetValuesBeforeTest() {
+        Preferences.setLanguage(language);
+        Preferences.setTheme(theme.getThemeName());
+        Preferences.updateAllPreferences();
+    }
 
     @Test
-    public void equals_shouldReturnTrue_forSameLanguage() throws IOException {
-        buildAndReloadPreferences();
+    protected void equals_shouldReturnTrue_forSameLanguage() throws IOException {
         assertEquals(LanguagesEnum.DEU, Preferences.getLanguage());
     }
 
     @Test
-    public void equals_shouldReturnTrue_forSameTheme() throws IOException {
-        buildAndReloadPreferences();
+    protected void equals_shouldReturnTrue_forSameTheme() throws IOException {
         assertEquals(ThemesEnum.CARBON, Preferences.getTheme());
     }
 
     private void buildAndReloadPreferences() throws IOException {
-        buildTempFile();
         buildValidPreferencesObject();
         realodPreferences();
-
-        deleteTempFile();
-    }
-
-    private void buildTempFile() throws IOException {
-        tempLogFile = File.createTempFile(directory + filename, "");
     }
 
     private void buildValidPreferencesObject()  {
@@ -49,11 +59,4 @@ public class PreferencesTest {
         Preferences.updateAllPreferences();
         Preferences.loadAllPreferences();
     }
-
-    private void deleteTempFile() {
-        if (tempLogFile.exists()) {
-            tempLogFile.delete();
-        }
-    }
-
 }
