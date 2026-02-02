@@ -2,28 +2,27 @@ package backupmanager.Entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Repositories.BackupConfigurationRepository;
-import lombok.Getter;
-import lombok.Setter;
 
 public class Backup {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
 
-    @Getter @Setter private int id;
-    @Getter @Setter private String name;
-    @Getter @Setter private String targetPath;
-    @Getter @Setter private String destinationPath;
-    @Getter @Setter private LocalDateTime lastBackupDate;
-    @Getter @Setter private boolean automatic;
-    @Getter @Setter private LocalDateTime nextBackupDate;
-    @Getter @Setter private TimeInterval timeIntervalBackup;
-    @Getter @Setter private String notes;
-    @Getter @Setter private LocalDateTime creationDate;
-    @Getter @Setter private LocalDateTime lastUpdateDate;
-    @Getter @Setter private int count;
-    @Getter @Setter private int maxToKeep;
+    private int id;
+    private String name;
+    private String targetPath;
+    private String destinationPath;
+    private LocalDateTime lastBackupDate;
+    private boolean automatic;
+    private LocalDateTime nextBackupDate;
+    private TimeInterval timeIntervalBackup;
+    private String notes;
+    private LocalDateTime creationDate;
+    private LocalDateTime lastUpdateDate;
+    private int count;
+    private int maxToKeep;
 
     public Backup() {
         id = 0;
@@ -136,5 +135,105 @@ public class Backup {
 
     public static String getCSVHeader() {
         return "BackupName,targetPath,DestinationPath,lastBackupDate,IsAutoBackup,NextDate,Interval (gg.HH:mm),MaxBackupsToKeep";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTargetPath() {
+        return targetPath;
+    }
+
+    public String getDestinationPath() {
+        return destinationPath;
+    }
+
+    public LocalDateTime getLastBackupDate() {
+        return lastBackupDate;
+    }
+
+    public boolean isAutomatic() {
+        return automatic;
+    }
+
+    public LocalDateTime getNextBackupDate() {
+        return nextBackupDate;
+    }
+
+    public TimeInterval getTimeIntervalBackup() {
+        return timeIntervalBackup;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public LocalDateTime getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getMaxToKeep() {
+        return maxToKeep;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setAutomatic(boolean automatic) {
+        this.automatic = automatic;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setDestinationPath(String destinationPath) {
+        this.destinationPath = destinationPath;
+    }
+
+    public void setLastBackupDate(LocalDateTime lastBackupDate) {
+        this.lastBackupDate = lastBackupDate;
+    }
+
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public void setNextBackupDate(LocalDateTime nextBackupDate) {
+        this.nextBackupDate = nextBackupDate;
+    }
+
+    public void setTargetPath(String targetPath) {
+        this.targetPath = targetPath;
+    }
+
+    public void setTimeIntervalBackup(TimeInterval timeIntervalBackup) {
+        this.timeIntervalBackup = timeIntervalBackup;
+    }
+
+    public void setMaxToKeep(int maxToKeep) {
+        this.maxToKeep = maxToKeep;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

@@ -16,8 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import backupmanager.BackupOperations;
 import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ConfigKey;
-import lombok.Getter;
-import lombok.Setter;
 
 // this class contains only the RunningBackups entity
 // this entity is used to store the information of the backups that are currently running
@@ -26,17 +24,10 @@ public class RunningBackups {
     private static final Logger logger = LoggerFactory.getLogger(RunningBackups.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Getter private final String name;
-    @Getter private final String path;
-    @Getter @Setter private int progress;
-    @Getter @Setter private BackupStatusEnum status;
-
-    public RunningBackups() {
-        this.name = null;
-        this.path = null;
-        this.progress = 0;
-        this.status = null;
-    }
+    private final String name;
+    private final String path;
+    private int progress;
+    private BackupStatusEnum status;
 
     public RunningBackups(String name, String path, int progress, BackupStatusEnum status) {
         this.name = name;
@@ -201,5 +192,29 @@ public class RunningBackups {
         backups.removeIf(backup -> BackupOperations.deletePartialBackup(backup.path));
 
         updateBackupsToJSON(backups);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public BackupStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public void setStatus(BackupStatusEnum status) {
+        this.status = status;
     }
 }

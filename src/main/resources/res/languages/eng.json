@@ -48,7 +48,7 @@
     "AutoBackupButtonOFF": "Auto Backup (OFF)",
     "InitialPathPlaceholder": "Initial path",
     "DestinationPathPlaceholder": "Destination path",
-    "BackupName": "Backup name: ",
+    "BackupName": "Backup name",
     "BackupNameTooltip": "(Required) Backup name",
     "InitialPathTooltip": "(Required) Initial path",
     "DestinationPathTooltip": "(Required) Destination path",
@@ -131,6 +131,8 @@
   },
   "TrayIcon": {
     "TrayTooltip":"Backup Service",
+    "OpenAction": "Quick Access",
+    "ExitAction": "Exit",
     "SuccessMessage":"\nThe backup was successfully completed:",
     "ErrorMessageInputMissing":"\nError during automatic backup.\nInput Missing!",
     "ErrorMessageFilesNotExisting":"\nError during automatic backup.\nOne or both paths do not exist!",

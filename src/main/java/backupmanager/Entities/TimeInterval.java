@@ -1,11 +1,6 @@
 package backupmanager.Entities;
 
-import lombok.Getter;
-
-public class TimeInterval {
-    @Getter private int days;
-    @Getter private int hours;
-    @Getter private int minutes;
+public record TimeInterval (int days, int hours, int minutes) {
 
     public TimeInterval(int days, int hours, int minutes) {
         if (days < 0) throw new IllegalArgumentException("Days cannot be negative");

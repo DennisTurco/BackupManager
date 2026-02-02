@@ -23,7 +23,7 @@ public class JSONConfigReader {
         this.directoryPath = directoryPath;
         loadConfig(); // Load configuration at instantiation
     }
-    
+
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
             logger.warn("Configuration not loaded. Cannot check menu items");

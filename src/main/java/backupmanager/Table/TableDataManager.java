@@ -72,7 +72,7 @@ public class TableDataManager {
         });
     }
 
-    public static void updateTableWithNewBackupList(List<Backup> updatedBackups, DateTimeFormatter formatter) { 
+    public static void updateTableWithNewBackupList(List<Backup> updatedBackups, DateTimeFormatter formatter) {
         logger.debug("updating backup list");
 
         SwingUtilities.invokeLater(() -> {

@@ -1,7 +1,6 @@
 package backupmanager.Repositories;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Managers.ExceptionManager;
 
-public class PreferenceRepository extends Repository {
+public class PreferenceRepository {
 
 private static final Logger logger = LoggerFactory.getLogger(PreferenceRepository.class);
 
     public static String getPreferenceValueByCode(String code) {
         String sql = "SELECT Code, Value FROM Preferences WHERE Code = ?";
-        try (Connection conn = DriverManager.getConnection(getUrlConnection());
+        try (Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, code);
@@ -37,11 +36,11 @@ private static final Logger logger = LoggerFactory.getLogger(PreferenceRepositor
 
     public static void updatePreferenceValueByCode(String code, String value) {
         String sql = "UPDATE Preferences SET Value = ? WHERE Code = ?";
-        try (Connection conn = DriverManager.getConnection(getUrlConnection());
+        try (Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, code);
-            stmt.setString(2, value);
+            stmt.setString(1, value);
+            stmt.setString(2, code);
             stmt.executeUpdate();
 
             logger.info("Preference {} updated succesfully with value {}", code, value);

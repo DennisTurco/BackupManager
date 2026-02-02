@@ -9,13 +9,11 @@ import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Repositories.PreferenceRepository;
-import lombok.Getter;
 
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
-
-    @Getter private static LanguagesEnum language;
-    @Getter private static ThemesEnum theme;
+    private static LanguagesEnum language;
+    private static ThemesEnum theme;
 
     public static void loadAllPreferences() {
         setLanguageByFileName(PreferenceRepository.getPreferenceValueByCode("Language"));
@@ -80,5 +78,13 @@ public class Preferences {
             logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
+    }
+
+    public static LanguagesEnum getLanguage() {
+        return language;
+    }
+
+    public static ThemesEnum getTheme() {
+        return theme;
     }
 }

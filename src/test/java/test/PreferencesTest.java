@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-import backupmanager.Repositories.Repository;
+import backupmanager.Repositories.DatabaseInitializer;
 
 public class PreferencesTest {
 
@@ -19,7 +19,7 @@ public class PreferencesTest {
 
     @BeforeEach
     protected void initDbAndBuildPreferences() throws Exception {
-        Repository.initDatabaseIfNotExists();
+        DatabaseInitializer.init();
 
         Preferences.loadAllPreferences();
         language = Preferences.getLanguage();

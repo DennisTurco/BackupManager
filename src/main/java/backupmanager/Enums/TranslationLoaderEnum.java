@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import lombok.Getter;
-
 public class TranslationLoaderEnum {
 
     private static final Logger logger = LoggerFactory.getLogger(TranslationLoaderEnum.class);
@@ -31,7 +29,7 @@ public class TranslationLoaderEnum {
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
 
-        @Getter private final String categoryName;
+        private final String categoryName;
         private final Map<TranslationKey, String> translations = new HashMap<>();
 
         TranslationCategory(String categoryName) {
@@ -45,6 +43,10 @@ public class TranslationLoaderEnum {
         // Updated getTranslation method
         public String getTranslation(TranslationKey key) {
             return translations.getOrDefault(key, key.getDefaultValue());
+        }
+
+        public String getCategoryName() {
+            return categoryName;
         }
     }
 
@@ -98,7 +100,7 @@ public class TranslationLoaderEnum {
         AUTO_BACKUP_BUTTON_OFF("AutoBackupButtonOFF", "Auto Backup (OFF)"),
         INITIAL_PATH_PLACEHOLDER("InitialPathPlaceholder", "Initial path"),
         DESTINATION_PATH_PLACEHOLDER("DestinationPathPlaceholder", "Destination path"),
-        BACKUP_NAME("BackupName", "Backup name: "),
+        BACKUP_NAME("BackupName", "Backup name"),
         BACKUP_NAME_TOOLTIP("BackupNameTooltip", "(Required) Backup name"),
         INITIAL_PATH_TOOLTIP("InitialPathTooltip", "(Required) Initial path"),
         DESTINATION_PATH_TOOLTIP("DestinationPathTooltip", "(Required) Destination path"),
@@ -181,6 +183,8 @@ public class TranslationLoaderEnum {
 
         // TrayIcon
         TRAY_TOOLTIP("TrayTooltip", "Backup Service"),
+        OPEN_ACTION("OpenAction", "Quick Access"),
+        EXIT_ACTION("ExitAction", "Exit"),
         SUCCESS_MESSAGE("SuccessMessage", "\nThe backup was successfully completed:"),
         ERROR_MESSAGE_INPUT_MISSING("ErrorMessageInputMissing", "\nError during automatic backup.\nInput Missing!"),
         ERROR_MESSAGE_FILES_NOT_EXISTING("ErrorMessageFilesNotExisting", "\nError during automatic backup.\nOne or both paths do not exist!"),
@@ -264,8 +268,8 @@ public class TranslationLoaderEnum {
         INFO_PAGE_CREDITS("InfoPageCredits", "Credits"),
         INFO_PAGE_LICENSE("InfoPageLicense", "License");
 
-        @Getter private final String keyName;
-        @Getter private final String defaultValue;
+        private final String keyName;
+        private final String defaultValue;
 
         private static final Map<String, TranslationKey> lookup = new HashMap<>();
 
@@ -284,6 +288,14 @@ public class TranslationLoaderEnum {
         // Lookup by keyName (JSON key)
         public static TranslationKey fromKeyName(String keyName) {
             return lookup.get(keyName);
+        }
+
+        public String getKeyName() {
+            return keyName;
+        }
+
+        public String getDefaultValue() {
+            return defaultValue;
         }
     }
 

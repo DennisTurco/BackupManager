@@ -1,7 +1,6 @@
 package backupmanager.Repositories;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import backupmanager.Entities.Backup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Managers.ExceptionManager;
 
-public class BackupConfigurationRepository extends Repository{
+public class BackupConfigurationRepository {
     private static final Logger logger = LoggerFactory.getLogger(BackupConfigurationRepository.class);
 
     public static void insertBackup(Backup backup) {
@@ -27,7 +26,7 @@ public class BackupConfigurationRepository extends Repository{
         VALUES
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """;
-        try (Connection conn = DriverManager.getConnection(getUrlConnection());
+        try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, backup.getName());
@@ -46,9 +45,9 @@ public class BackupConfigurationRepository extends Repository{
 
             logger.info("Backup inserted succesfully");
 
-        } catch (SQLException e) {
-            logger.error("Backup inserting error: " + e.getMessage());
-            ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+        } catch (SQLException ex) {
+            logger.error("Backup inserting error: " + ex.getMessage());
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
@@ -63,7 +62,7 @@ public class BackupConfigurationRepository extends Repository{
         WHERE
             BackupId = ?
         """;
-        try (Connection conn = DriverManager.getConnection(getUrlConnection());
+        try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, backup.getName());
@@ -90,7 +89,7 @@ public class BackupConfigurationRepository extends Repository{
 
     public static void deleteBackup(int backupId) {
         String sql = "DELETE BackupConfigurations WHERE BackupId = ?";
-        try (Connection conn = DriverManager.getConnection(getUrlConnection());
+        try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, backupId);
@@ -116,7 +115,7 @@ public class BackupConfigurationRepository extends Repository{
         List<Backup> backups = new ArrayList<>();
 
         try (
-            Connection conn = DriverManager.getConnection(getUrlConnection());
+            Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
         ) {
@@ -168,7 +167,8 @@ public class BackupConfigurationRepository extends Repository{
                 BackupId = ?
             """;
 
-        try (Connection conn = DriverManager.getConnection(getUrlConnection()); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, backupId);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -222,7 +222,8 @@ public class BackupConfigurationRepository extends Repository{
                 BackupName = ?
             """;
 
-        try (Connection conn = DriverManager.getConnection(getUrlConnection()); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, backupName);
 
             try (ResultSet rs = stmt.executeQuery()) {

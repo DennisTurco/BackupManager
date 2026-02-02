@@ -48,7 +48,7 @@
       "AutoBackupButtonOFF": "Sauvegarde Automatique (DÉSACTIVÉE)",
       "InitialPathPlaceholder": "Chemin initial",
       "DestinationPathPlaceholder": "Chemin de destination",
-      "BackupName": "Nom de la sauvegarde : ",
+      "BackupName": "Nom de la sauvegarde",
       "BackupNameTooltip": "(Requis) Nom de la sauvegarde",
       "InitialPathTooltip": "(Requis) Chemin initial",
       "DestinationPathTooltip": "(Requis) Chemin de destination",
@@ -131,6 +131,8 @@
     },
     "TrayIcon": {
       "TrayTooltip": "Service de Sauvegardes",
+      "OpenAction": "Accès Rapide",
+      "ExitAction": "Quitter",
       "SuccessMessage": "\nLa sauvegarde a été effectuée avec succès :",
       "ErrorMessageInputMissing": "\nErreur lors de la sauvegarde automatique.\nEntrée manquante !",
       "ErrorMessageFilesNotExisting": "\nErreur lors de la sauvegarde automatique.\nUn ou les deux chemins n'existent pas !",

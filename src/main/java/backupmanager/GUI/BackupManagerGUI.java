@@ -1,5 +1,6 @@
 package backupmanager.GUI;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import backupmanager.Managers.ExportManager;
 import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
@@ -43,9 +43,12 @@ import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.Controllers.BackupMenuController;
+import backupmanager.GUI.Controllers.BackupPopupController;
+import backupmanager.Helpers.BackupHelper;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Repositories.BackupConfigurationRepository;
 import backupmanager.Repositories.UserRepository;
@@ -56,7 +59,6 @@ import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
 import backupmanager.Table.TableDataManager;
 import backupmanager.Widgets.SideMenuPanel;
-import java.awt.CardLayout;
 
 /**
  * @author Dennis Turco
@@ -66,7 +68,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    private final BackupManager backupManager;
     private final BackupObserver observer;
     public static List<Backup> backups;
     public static DefaultTableModel model;
@@ -103,7 +104,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         setSvgImages();
         checkForFirstAccess();
-        backupManager = new BackupManager(this);
         jSeparator5.setVisible(false);
 
         // TODO: remove this
@@ -120,7 +120,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             setLanguageBasedOnPcLanguage();
             createNewUser();
         } else if (user.equals(User.getDefaultUser())) { // user unregistered
-            updateUnregisteredUser(user.getId());
+            updateUnregisteredUser(user.id());
         } else {
             logger.info("Current user: " + user.toString());
         }
@@ -146,7 +146,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             return;
         }
 
-        newUser.setId(userId);
+        newUser = new User(userId, newUser.name(), newUser.surname(), newUser.email());
         UserRepository.updateUser(newUser);
 
         sendRegistrationEmail(newUser);
@@ -180,23 +180,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en":
-                Preferences.setLanguage(LanguagesEnum.ENG);
-                break;
-            case "it":
-                Preferences.setLanguage(LanguagesEnum.ITA);
-                break;
-            case "es":
-                Preferences.setLanguage(LanguagesEnum.ESP);
-                break;
-            case "de":
-                Preferences.setLanguage(LanguagesEnum.DEU);
-                break;
-            case "fr":
-                Preferences.setLanguage(LanguagesEnum.FRA);
-                break;
-            default:
-                Preferences.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Preferences.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Preferences.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Preferences.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Preferences.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Preferences.setLanguage(LanguagesEnum.FRA);
+            default -> Preferences.setLanguage(LanguagesEnum.ENG);
         }
 
         reloadPreferences();
@@ -237,11 +226,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void displayBackupList() {
-        BackupTableModel model = new BackupTableModel(getColumnTranslations(), 0);
+        BackupTableModel tempModel = new BackupTableModel(getColumnTranslations(), 0);
+        BackupManagerGUI main = this;
 
         // Populate the model with backup data
         for (Backup backup : backups) {
-            model.addRow(new Object[]{
+            tempModel.addRow(new Object[]{
                 backup.getName(),
                 backup.getTargetPath(),
                 backup.getDestinationPath(),
@@ -252,7 +242,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             });
         }
 
-        backupTable = new BackupTable(model);
+        backupTable = new BackupTable(tempModel);
 
         // Add key bindings using InputMap and ActionMap
         InputMap inputMap = backupTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -267,9 +257,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                backupManager.openBackupByName((String) backupTable.getValueAt(selectedRow, 0));
+                BackupHelper.openBackupByName((String) backupTable.getValueAt(selectedRow, 0), main);
 
-                backupManager.openBackupEntryDialog();
+                BackupHelper.openBackupEntryDialog(main);
             }
         });
 
@@ -289,7 +279,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 }
 
                 for (int row : selectedRows) {
-                    backupManager.deleteBackup(row, backupTable, false);
+                    BackupHelper.deleteBackup(row, backupTable, false);
                 }
             }
         });
@@ -315,7 +305,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         });
 
         // Update the global model reference
-        BackupManagerGUI.model = model;
+        BackupManagerGUI.model = tempModel;
 
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
@@ -1134,11 +1124,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
-        backupManager.menuItemQuit(observer);
+        BackupMenuController.menuItemQuit(observer, this);
     }//GEN-LAST:event_MenuQuitActionPerformed
 
     private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
-        backupManager.menuItemHistory();
+        BackupMenuController.menuItemHistory();
     }//GEN-LAST:event_MenuHistoryActionPerformed
 
     private void MenuClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClearActionPerformed
@@ -1151,15 +1141,15 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuSaveActionPerformed
 
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
-        backupManager.menuItemNew(progressBar);
+        BackupMenuController.menuItemNew(progressBar, this);
     }//GEN-LAST:event_MenuNewActionPerformed
 
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemEditBackupName(selectedRow, backupTable, backups, this);
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
-        backupManager.popupItemDelete(selectedRow, backupTable);
+        BackupPopupController.popupItemDelete(selectedRow, backupTable);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
@@ -1199,7 +1189,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 logger.info("Double-click on row: " + selectedRow);
-                backupManager.openBackupByName(backupName);
+                BackupHelper.openBackupByName(backupName, this);
             }
 
             // Handling single left mouse button click
@@ -1235,71 +1225,71 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
-        backupManager.popupItemDuplicateBackup(selectedRow, backupTable);
+        BackupPopupController.popupItemDuplicateBackup(selectedRow, backupTable);
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void RunBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunBackupPopupItemActionPerformed
-        backupManager.popupItemRunBackup(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
+        BackupPopupController.popupItemRunBackup(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_RunBackupPopupItemActionPerformed
 
     private void CopyBackupNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyBackupNamePopupItemActionPerformed
-        backupManager.popupItemCopyBackupName(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyBackupName(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyBackupNamePopupItemActionPerformed
 
     private void CopyInitialPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyInitialPathPopupItemActionPerformed
-        backupManager.popupItemCopyInitialPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyInitialPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyInitialPathPopupItemActionPerformed
 
     private void CopyDestinationPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyDestinationPathPopupItemActionPerformed
-        backupManager.popupItemCopyDestinationPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyDestinationPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyDestinationPathPopupItemActionPerformed
 
     private void AutoBackupMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutoBackupMenuItemActionPerformed
-        backupManager.popupItemAutoBackup(selectedRow, backupTable, backups, AutoBackupMenuItem);
+        BackupPopupController.popupItemAutoBackup(selectedRow, backupTable, backups, AutoBackupMenuItem);
     }//GEN-LAST:event_AutoBackupMenuItemActionPerformed
 
     private void OpenInitialFolderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialFolderItemActionPerformed
-        backupManager.popupItemOpenInitialPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemOpenInitialPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_OpenInitialFolderItemActionPerformed
 
     private void OpenInitialDestinationItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialDestinationItemActionPerformed
-        backupManager.popupItemOpenDestinationPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemOpenDestinationPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_OpenInitialDestinationItemActionPerformed
 
     private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
-        backupManager.popupItemRenameBackup(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemRenameBackup(selectedRow, backupTable, backups);
     }//GEN-LAST:event_renamePopupItemActionPerformed
 
     private void MenuPaypalDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPaypalDonateActionPerformed
-        backupManager.menuItemDonateViaPaypal();
+        BackupMenuController.menuItemDonateViaPaypal();
     }//GEN-LAST:event_MenuPaypalDonateActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
-        backupManager.menuItemBugReport();
+        BackupMenuController.menuItemBugReport();
     }//GEN-LAST:event_MenuBugReportActionPerformed
 
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
-        backupManager.menuItemShare();
+        BackupMenuController.menuItemShare();
     }//GEN-LAST:event_MenuShareActionPerformed
 
     private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
-        backupManager.menuItemWebsite();
+        BackupMenuController.menuItemWebsite();
     }//GEN-LAST:event_MenuWebsiteActionPerformed
 
     private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
-        backupManager.menuItemSupport();
+        BackupMenuController.menuItemSupport();
     }//GEN-LAST:event_MenuSupportActionPerformed
 
     private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
-        backupManager.menuItemInfoPage();
+        BackupMenuController.menuItemInfoPage();
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
-        backupManager.menuItemOpenPreferences();
+        BackupMenuController.menuItemOpenPreferences(this);
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
     private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
-        backupManager.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
+        BackupPopupController.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
@@ -1311,11 +1301,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        backupManager.newBackup(progressBar);
+        BackupHelper.newBackup(progressBar, this);
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void MenuBuyMeACoffeDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuyMeACoffeDonateActionPerformed
-        backupManager.menuItemDonateViaBuymeacoffe();
+        BackupMenuController.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
 
     private void menActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menActionPerformed
@@ -1323,7 +1313,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_menActionPerformed
 
     private void pageSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageSettingsActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_pageSettingsActionPerformed
 
     private void pageDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageDashboardActionPerformed

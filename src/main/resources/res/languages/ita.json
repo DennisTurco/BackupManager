@@ -48,7 +48,7 @@
     "AutoBackupButtonOFF": "Backup Automatico (OFF)",
     "InitialPathPlaceholder": "Percorso iniziale",
     "DestinationPathPlaceholder": "Percorso di destinazione",
-    "BackupName": "Nome del backup: ",
+    "BackupName": "Nome del backup",
     "BackupNameTooltip": "(Obbligatorio) Nome del backup",
     "InitialPathTooltip": "(Obbligatorio) Percorso iniziale",
     "DestinationPathTooltip": "(Obbligatorio) Percorso di destinazione",
@@ -131,6 +131,8 @@
   },
   "TrayIcon": {
     "TrayTooltip": "Servizio di Backup",
+    "OpenAction": "Accesso Rapido",
+    "ExitAction": "Esci",
     "SuccessMessage": "\nIl backup è stato completato con successo:",
     "ErrorMessageInputMissing": "\nErrore durante il backup automatico.\nPercorso mancante!",
     "ErrorMessageFilesNotExisting": "\nErrore durante il backup automatico.\nUno o entrambi i percorsi non esistono!",

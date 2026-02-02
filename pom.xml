@@ -6,8 +6,8 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
     <dependencies>
         <!-- Dependency for json -->
@@ -27,19 +27,17 @@
             <version>2.15.2</version>
         </dependency>
 
-        <!-- Dependency for JUnit 4 -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>[4.13.1,)</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- JUnit 5 dependency -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.1</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -87,6 +85,13 @@
             <type>jar</type>
         </dependency>
 
+        <!-- Timing Framework -->
+        <dependency>
+            <groupId>com.kenai.nbpwr</groupId>
+            <artifactId>org-jdesktop-animation-timing</artifactId>
+            <version>1.0-201002281504</version>
+        </dependency>
+
         <!--LOGGING-->
         <!-- SLF4J API -->
         <dependency>
@@ -123,13 +128,6 @@
             <artifactId>jfreechart</artifactId>
             <version>1.5.4</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
     <build>
     <plugins>
@@ -149,8 +147,8 @@
             </configuration>
             <executions>
                 <execution>
-                    <id>make-assembly</id> 
-                    <phase>package</phase> 
+                    <id>make-assembly</id>
+                    <phase>package</phase>
                     <goals>
                         <goal>single</goal>
                     </goals>

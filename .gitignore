@@ -1,1 +1,8 @@
 /target/
+/src/main/resources/res/logs/*
+logs/*
+/jre/
+BackupManager.exe
+/Output
+config.enc
+config.txt

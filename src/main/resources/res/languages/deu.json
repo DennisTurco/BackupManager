@@ -48,7 +48,7 @@
       "AutoBackupButtonOFF": "Auto-Backup (AUS)",
       "InitialPathPlaceholder": "Anfangspfad",
       "DestinationPathPlaceholder": "Zielpfad",
-      "BackupName": "Sicherungsname: ",
+      "BackupName": "Sicherungsname",
       "BackupNameTooltip": "(Erforderlich) Sicherungsname",
       "InitialPathTooltip": "(Erforderlich) Anfangspfad",
       "DestinationPathTooltip": "(Erforderlich) Zielpfad",
@@ -131,6 +131,8 @@
     },
     "TrayIcon": {
       "TrayTooltip": "Backup-Dienst",
+      "OpenAction": "Schnellzugriff",
+      "ExitAction": "Beenden",
       "SuccessMessage": "\nDas Backup wurde erfolgreich abgeschlossen:",
       "ErrorMessageInputMissing": "\nFehler beim automatischen Backup.\nEingabe fehlt!",
       "ErrorMessageFilesNotExisting": "\nFehler beim automatischen Backup.\nEin oder beide Pfade existieren nicht!",

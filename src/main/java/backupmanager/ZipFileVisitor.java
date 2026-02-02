@@ -39,7 +39,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackups.updateBackupStatusAfterCompletition(context.getBackup().getName());
+            RunningBackups.updateBackupStatusAfterCompletition(context.backup().getName());
             logger.info("Zipping process manually interrupted");
             return FileVisitResult.TERMINATE;
         }
@@ -56,7 +56,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackups.updateBackupStatusAfterCompletition(context.getBackup().getName());
+            RunningBackups.updateBackupStatusAfterCompletition(context.backup().getName());
             logger.info("Zipping process manually interrupted");
             return FileVisitResult.TERMINATE;
         }

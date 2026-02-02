@@ -69,7 +69,7 @@ public class ZippingThread {
 
     private static void handleError(String message, ErrorTypes errorType, ZippingContext context) {
         logger.error(message);
-        BackupOperations.setError(errorType, context.getTrayIcon(), null);
+        BackupOperations.setError(errorType, context.trayIcon(), null);
         BackupOperations.reEnableButtonsAndTable(context);
     }
 
