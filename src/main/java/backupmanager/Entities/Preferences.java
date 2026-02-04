@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.Repositories.PreferenceRepository;
+import backupmanager.database.Repositories.PreferenceRepository;
 
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);

@@ -1,4 +1,4 @@
-package backupmanager.Repositories;
+package backupmanager.database;
 
 import java.io.InputStream;
 import java.nio.file.Files;

@@ -1,76 +1,8 @@
-02-02-2026 16:25:32.785 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:25:32.875 [main] [ERROR] backupmanager.MainApp - Unable to init the database
-02-02-2026 16:25:32.886 [main] [ERROR] b.Repositories.UserRepository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such table: Users)
-02-02-2026 16:25:32.886 [main] [ERROR] backupmanager.Email.EmailSender - Unable to retrieve user details for the email because there is no user registered
-02-02-2026 16:25:32.887 [main] [WARN ] backupmanager.Email.EmailSender - User is null, using a default user for the email
-02-02-2026 16:25:32.899 [main] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-02-02-2026 16:27:19.082 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:27:19.170 [main] [ERROR] backupmanager.MainApp - Unable to init the database
-02-02-2026 16:27:19.178 [main] [ERROR] b.Repositories.UserRepository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such table: Users)
-02-02-2026 16:27:19.178 [main] [ERROR] backupmanager.Email.EmailSender - Unable to retrieve user details for the email because there is no user registered
-02-02-2026 16:27:19.178 [main] [WARN ] backupmanager.Email.EmailSender - User is null, using a default user for the email
-02-02-2026 16:27:19.191 [main] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-02-02-2026 16:27:21.105 [main] [ERROR] b.Repositories.PreferenceRepository - Error fetching preference with code Language: [SQLITE_ERROR] SQL error or missing database (no such table: Preferences)
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such table: Preferences)
-	at org.sqlite.core.DB.newSQLException(DB.java:1179)
-	at org.sqlite.core.DB.newSQLException(DB.java:1190)
-	at org.sqlite.core.DB.throwex(DB.java:1150)
-	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
-	at org.sqlite.core.NativeDB.prepare(NativeDB.java:132)
-	at org.sqlite.core.DB.prepare(DB.java:264)
-	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
-	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
-	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
-	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
-	at backupmanager.Repositories.PreferenceRepository.getPreferenceValueByCode(PreferenceRepository.java:21)
-	at backupmanager.Entities.Preferences.loadAllPreferences(Preferences.java:19)
-	at backupmanager.MainApp.loadPreferredLanguage(MainApp.java:52)
-	at backupmanager.MainApp.main(MainApp.java:26)
-02-02-2026 16:27:21.108 [main] [ERROR] b.Repositories.UserRepository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such table: Users)
-02-02-2026 16:27:21.109 [main] [ERROR] backupmanager.Email.EmailSender - Unable to retrieve user details for the email because there is no user registered
-02-02-2026 16:27:21.109 [main] [WARN ] backupmanager.Email.EmailSender - User is null, using a default user for the email
-02-02-2026 16:27:21.110 [main] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-02-02-2026 16:27:25.287 [main] [WARN ] backupmanager.Entities.Preferences - Invalid file name: null
-02-02-2026 16:27:25.288 [main] [ERROR] b.Repositories.PreferenceRepository - Error fetching preference with code Theme: [SQLITE_ERROR] SQL error or missing database (no such table: Preferences)
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (no such table: Preferences)
-	at org.sqlite.core.DB.newSQLException(DB.java:1179)
-	at org.sqlite.core.DB.newSQLException(DB.java:1190)
-	at org.sqlite.core.DB.throwex(DB.java:1150)
-	at org.sqlite.core.NativeDB.prepare_utf8(Native Method)
-	at org.sqlite.core.NativeDB.prepare(NativeDB.java:132)
-	at org.sqlite.core.DB.prepare(DB.java:264)
-	at org.sqlite.core.CorePreparedStatement.<init>(CorePreparedStatement.java:46)
-	at org.sqlite.jdbc3.JDBC3PreparedStatement.<init>(JDBC3PreparedStatement.java:32)
-	at org.sqlite.jdbc4.JDBC4PreparedStatement.<init>(JDBC4PreparedStatement.java:25)
-	at org.sqlite.jdbc4.JDBC4Connection.prepareStatement(JDBC4Connection.java:34)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:225)
-	at org.sqlite.jdbc3.JDBC3Connection.prepareStatement(JDBC3Connection.java:205)
-	at backupmanager.Repositories.PreferenceRepository.getPreferenceValueByCode(PreferenceRepository.java:21)
-	at backupmanager.Entities.Preferences.loadAllPreferences(Preferences.java:20)
-	at backupmanager.MainApp.loadPreferredLanguage(MainApp.java:52)
-	at backupmanager.MainApp.main(MainApp.java:26)
-02-02-2026 16:27:25.291 [main] [ERROR] b.Repositories.UserRepository - Error fetching last user: [SQLITE_ERROR] SQL error or missing database (no such table: Users)
-02-02-2026 16:27:25.291 [main] [ERROR] backupmanager.Email.EmailSender - Unable to retrieve user details for the email because there is no user registered
-02-02-2026 16:27:25.292 [main] [WARN ] backupmanager.Email.EmailSender - User is null, using a default user for the email
-02-02-2026 16:27:25.294 [main] [INFO ] backupmanager.Email.EmailSender - Error email sent with subject: Critical Error Report
-02-02-2026 16:27:26.266 [main] [WARN ] backupmanager.Entities.Preferences - Invalid theme name: null
-02-02-2026 16:29:47.909 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:41:01.711 [main] [INFO ] b.Repositories.DatabaseInitializer - Database already exists: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:41:33.709 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:45:48.135 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:46:52.085 [main] [INFO ] b.Repositories.DatabaseInitializer - Database already exists: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:50:11.360 [main] [INFO ] b.Repositories.DatabaseInitializer - Creating database: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:51:19.553 [main] [INFO ] b.Repositories.DatabaseInitializer - Database already exists: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-02-02-2026 16:51:36.361 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: English
-02-02-2026 16:51:38.016 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
-02-02-2026 16:51:38.031 [main] [INFO ] backupmanager.MainApp - Application started
-02-02-2026 16:51:38.032 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-02-02-2026 16:51:38.559 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-02-02-2026 16:51:38.706 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-02-02-2026 16:51:38.709 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Setting default language to: it
-02-02-2026 16:51:38.709 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Reloading preferences
-02-02-2026 16:51:42.011 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Language updated succesfully with value ita.json
-02-02-2026 16:51:42.014 [AWT-EventQueue-0] [INFO ] b.Repositories.PreferenceRepository - Preference Theme updated succesfully with value Light
-02-02-2026 16:51:43.600 [AWT-EventQueue-0] [INFO ] b.Repositories.UserRepository - User inserted succesfully
+04-02-2026 12:48:32.748 [main] [INFO ] b.database.DatabaseInitializer - Database already exists: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
+04-02-2026 12:48:32.883 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
+04-02-2026 12:48:32.885 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
+04-02-2026 12:48:32.901 [main] [INFO ] backupmanager.MainApp - Application started
+04-02-2026 12:48:32.902 [main] [DEBUG] backupmanager.MainApp - Background mode: false
+04-02-2026 12:48:33.598 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
+04-02-2026 12:48:33.783 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
+04-02-2026 12:48:33.801 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)

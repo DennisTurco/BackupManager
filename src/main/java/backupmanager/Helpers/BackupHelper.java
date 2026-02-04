@@ -20,9 +20,9 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.Repositories.BackupConfigurationRepository;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class BackupHelper {
 

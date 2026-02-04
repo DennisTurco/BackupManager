@@ -1,4 +1,4 @@
-package backupmanager.Repositories;
+package backupmanager.database.Repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import backupmanager.Entities.Backup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.database.Database;
 
 public class BackupConfigurationRepository {
     private static final Logger logger = LoggerFactory.getLogger(BackupConfigurationRepository.class);

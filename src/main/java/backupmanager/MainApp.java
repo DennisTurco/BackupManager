@@ -12,9 +12,9 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.Repositories.Database;
-import backupmanager.Repositories.DatabaseInitializer;
-import backupmanager.Repositories.DatabasePaths;
+import backupmanager.database.Database;
+import backupmanager.database.DatabaseInitializer;
+import backupmanager.database.DatabasePaths;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";

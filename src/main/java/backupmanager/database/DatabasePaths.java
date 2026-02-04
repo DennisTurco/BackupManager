@@ -1,4 +1,4 @@
-package backupmanager.Repositories;
+package backupmanager.database;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

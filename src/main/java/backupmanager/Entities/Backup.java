@@ -5,7 +5,7 @@ import java.util.List;
 
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class Backup {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());

@@ -19,7 +19,7 @@ import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);

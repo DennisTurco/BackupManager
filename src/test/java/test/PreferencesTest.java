@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import backupmanager.Entities.Preferences;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-import backupmanager.Repositories.DatabaseInitializer;
+import backupmanager.database.DatabaseInitializer;
 
 public class PreferencesTest {
 

@@ -1,4 +1,4 @@
-package backupmanager.Repositories;
+package backupmanager.database.Repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.database.Database;
 
 public class PreferenceRepository {
 

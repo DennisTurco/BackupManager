@@ -1,6 +1,9 @@
 /target/
 /src/main/resources/res/logs/*
 logs/*
+**/logs/
+**/*.log
+
 /jre/
 BackupManager.exe
 /Output

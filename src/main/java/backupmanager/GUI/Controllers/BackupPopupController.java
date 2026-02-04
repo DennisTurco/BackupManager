@@ -27,9 +27,9 @@ import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.Repositories.BackupConfigurationRepository;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class BackupPopupController {
 

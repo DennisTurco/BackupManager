@@ -50,8 +50,6 @@ import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
-import backupmanager.Repositories.BackupConfigurationRepository;
-import backupmanager.Repositories.UserRepository;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
@@ -59,6 +57,8 @@ import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
 import backupmanager.Table.TableDataManager;
 import backupmanager.Widgets.SideMenuPanel;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.UserRepository;
 
 /**
  * @author Dennis Turco
