@@ -2,14 +2,19 @@ package backupmanager.Controllers;
 
 import java.awt.Frame;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Subscription;
 import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.Helpers.SubscriptionNotifier;
 import backupmanager.Services.BackgroundService;
+import backupmanager.database.Repositories.SubscriptionRepository;
 
 public class AppController {
 
@@ -34,8 +39,30 @@ public class AppController {
             this::exitApp
         );
 
-        backgroundService.start(this.trayController);
         trayController.start();
+
+        if (canBackgroundServiceStartsBasedOnSubscription())
+            backgroundService.start(this.trayController);
+    }
+
+    private boolean canBackgroundServiceStartsBasedOnSubscription() {
+        if (!Preferences.isSubscriptionNedded()) return true;
+
+        Subscription subscription = SubscriptionRepository.getAnySubscriptionValid();
+
+        if (subscription == null) {
+            SubscriptionNotifier.showExpiredAlert(trayController);
+            return false;
+        }
+
+        LocalDate now = LocalDate.now();
+        LocalDate endMinus7Days = subscription.endDate().minusDays(7);
+
+        if (now.isAfter(endMinus7Days)) {
+            SubscriptionNotifier.showExpiringWarning(trayController);
+        }
+
+        return true;
     }
 
     private void openGui() {

@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -17,7 +16,6 @@ public class TestConfigKey {
 
     private final String LOG_FILE_STRING = "application.log";
     private final String CONFIG_FILE_STRING = "config.json";
-    private final String RES_DIRECTORY_STRING = "src/main/resources/res/";
     private final String DONATE_PAGE_LINK = "https://buymeacoffee.com/denno";
     private final String ISSUE_PAGE_LINK = "https://github.com/DennisTurco/BackupManager/issues";
     private final String INFO_PAGE_LINK = "https://github.com/DennisTurco/BackupManager";
@@ -40,7 +38,6 @@ public class TestConfigKey {
 
         assertEquals(LOG_FILE_STRING, ConfigKey.LOG_FILE_STRING.getValue());
         assertEquals(CONFIG_FILE_STRING, ConfigKey.CONFIG_FILE_STRING.getValue());
-        assertEquals(RES_DIRECTORY_STRING, ConfigKey.RES_DIRECTORY_STRING.getValue());
         assertEquals(ISSUE_PAGE_LINK, ConfigKey.ISSUE_PAGE_LINK.getValue());
         assertEquals(INFO_PAGE_LINK, ConfigKey.INFO_PAGE_LINK.getValue());
         assertEquals(EMAIL, ConfigKey.EMAIL.getValue());
@@ -49,18 +46,11 @@ public class TestConfigKey {
         assertEquals(SHARE_LINK, ConfigKey.SHARE_LINK.getValue());
     }
 
-    @Test
-    public void equals_shouldReturnTrue_forEmptyJsonObject() throws IOException {
-        createAndSetupTempFileWithoutData();
-        assertNull(ConfigKey.LOG_FILE_STRING.getValue());
-    }
-
     private void createAndSetupTempFileWithData() throws IOException {
         String jsonContent = String.format("""
                 {
                   "LOG_FILE_STRING": "%s",
                   "CONFIG_FILE_STRING": "%s",
-                  "RES_DIRECTORY_STRING": "%s",
                   "DONATE_PAGE_LINK": "%s",
                   "ISSUE_PAGE_LINK": "%s",
                   "INFO_PAGE_LINK": "%s",
@@ -72,7 +62,6 @@ public class TestConfigKey {
                 """,
                 LOG_FILE_STRING,
                 CONFIG_FILE_STRING,
-                RES_DIRECTORY_STRING,
                 DONATE_PAGE_LINK,
                 ISSUE_PAGE_LINK,
                 INFO_PAGE_LINK,
@@ -82,10 +71,6 @@ public class TestConfigKey {
                 SHARE_LINK);
 
         createFileAndLoad(jsonContent);
-    }
-
-    private void createAndSetupTempFileWithoutData() throws IOException {
-        createFileAndLoad("{}");
     }
 
     private void createFileAndLoad(String jsonString) throws IOException {

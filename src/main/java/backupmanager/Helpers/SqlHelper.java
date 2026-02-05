@@ -1,9 +1,9 @@
 package backupmanager.Helpers;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 
 import backupmanager.Entities.TimeInterval;
 
@@ -25,8 +25,10 @@ public class SqlHelper {
         return date;
     }
 
-    public static Date toDate(Long millis) {
-        return (millis != null && millis > 0) ? new Date(millis) : null;
+    public static LocalDate toLocalDate(Long millis) {
+        return (millis != null && millis > 0)
+            ? Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
+            : null;
     }
 
     public static TimeInterval toTimeInterval(String str) {

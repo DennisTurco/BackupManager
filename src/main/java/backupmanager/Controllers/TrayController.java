@@ -98,7 +98,7 @@ public class TrayController {
         }
     }
 
-    public TrayIcon geTrayIcon() {
+    public TrayIcon getTrayIcon() {
         return trayIcon;
     }
 }

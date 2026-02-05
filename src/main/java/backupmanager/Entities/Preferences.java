@@ -14,12 +14,15 @@ public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
     private static LanguagesEnum language;
     private static ThemesEnum theme;
+    private static boolean subscriptionNedded; // if true the subscription is needed to use the backuground service
 
     public static void loadAllPreferences() {
         setLanguageByFileName(PreferenceRepository.getPreferenceValueByCode("Language"));
         setTheme(PreferenceRepository.getPreferenceValueByCode("Theme"));
+        setSubscriptionNedded(PreferenceRepository.getPreferenceValueByCode("SubscriptionNedded"));
     }
 
+    // i don't want to update the subscription value from the code. for now the only method is doing manually
     public static void updateAllPreferences() {
         PreferenceRepository.updatePreferenceValueByCode("Language", language.getFileName());
         PreferenceRepository.updatePreferenceValueByCode("Theme", theme.getThemeName());
@@ -45,7 +48,7 @@ public class Preferences {
         }
     }
 
-    public static void setLanguageByFileName(String filename) {
+    private static void setLanguageByFileName(String filename) {
         try {
             for (LanguagesEnum lang : LanguagesEnum.values()) {
                 if (lang.getFileName().equalsIgnoreCase(filename)) {
@@ -80,11 +83,20 @@ public class Preferences {
         }
     }
 
+    private static void setSubscriptionNedded(String subscriptionValue) {
+        subscriptionValue = subscriptionValue.trim().toLowerCase();
+        subscriptionNedded = subscriptionValue.equals("true") || subscriptionValue.equals("1");
+    }
+
     public static LanguagesEnum getLanguage() {
         return language;
     }
 
     public static ThemesEnum getTheme() {
         return theme;
+    }
+
+    public static boolean isSubscriptionNedded() {
+        return subscriptionNedded;
     }
 }

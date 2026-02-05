@@ -121,7 +121,7 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 try {
                     for (ConfigurationBackup backup : backups) {
-                        ZippingContext context = ZippingContext.create(backup, trayIcon.geTrayIcon(), null, null, null, null, BackupTriggeredEnum.SCHEDULER);
+                        ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null, BackupTriggeredEnum.SCHEDULER);
                         BackupOperations.SingleBackup(context);
                     }
                 } finally {
