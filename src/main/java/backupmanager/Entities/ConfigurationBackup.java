@@ -7,7 +7,7 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 
-public class Backup {
+public class ConfigurationBackup {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
 
     private int id;
@@ -24,7 +24,7 @@ public class Backup {
     private int count;
     private int maxToKeep;
 
-    public Backup() {
+    public ConfigurationBackup() {
         id = 0;
         name = "";
         targetPath = "";
@@ -40,7 +40,7 @@ public class Backup {
         maxToKeep = configReader.getMaxCountForSameBackup();
     }
 
-    public Backup(String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
+    public ConfigurationBackup(String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
         this.name = name;
         this.targetPath = targetPath;
         this.destinationPath = destinationPath;
@@ -55,7 +55,7 @@ public class Backup {
         this.maxToKeep = maxToKeep;
     }
 
-    public Backup(int id, String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
+    public ConfigurationBackup(int id, String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
         this.id = id;
         this.name = name;
         this.targetPath = targetPath;
@@ -71,12 +71,12 @@ public class Backup {
         this.maxToKeep = maxToKeep;
     }
 
-    public Backup(Backup backup) {
+    public ConfigurationBackup(ConfigurationBackup backup) {
         UpdateBackup(backup);
     }
 
     // make it final to avoid the warning (now this method cannot be overrided by the subclasses)
-    public final void UpdateBackup(Backup backupUpdated) {
+    public final void UpdateBackup(ConfigurationBackup backupUpdated) {
         this.id = backupUpdated.getId();
         this.name = backupUpdated.getName();
         this.targetPath = backupUpdated.getTargetPath();
@@ -120,8 +120,8 @@ public class Backup {
         );
     }
 
-    public static Backup getBackupByName(List<Backup> backups, String name) {
-        for (Backup backup : backups) {
+    public static ConfigurationBackup getBackupByName(List<ConfigurationBackup> backups, String name) {
+        for (ConfigurationBackup backup : backups) {
             if (backup.getName().equals(name)) {
                 return backup;
             }
@@ -129,7 +129,7 @@ public class Backup {
         return null;
     }
 
-    public static Backup getBackupByName(String name) {
+    public static ConfigurationBackup getBackupByName(String name) {
         return BackupConfigurationRepository.getBackupByName(name);
     }
 

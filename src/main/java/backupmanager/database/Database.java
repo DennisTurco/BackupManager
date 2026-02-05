@@ -5,34 +5,32 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Managers.ExceptionManager;
-
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
 
-    private static Path dbPath;
+    private static String url;
 
-    public static void init(Path path) { dbPath = path; }
+    public static void init(Path dbPath) {
+        url = "jdbc:sqlite:" + dbPath;
+    }
 
     public static Connection getConnection() {
-        Connection c;
         try {
-            c = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-            try (Statement st = c.createStatement()) {
-                st.execute("PRAGMA foreign_keys = ON");
-            } catch (SQLException e) {
-                logger.error("Error during the PRAGMA foreign_keys = ON operation: " + e.getMessage());
+            Connection conn = DriverManager.getConnection(url);
+
+            try (Statement st = conn.createStatement()) {
+                st.execute("PRAGMA foreign_keys = ON;");
             }
-            return c;
+
+            return conn;
+
         } catch (SQLException e) {
-            logger.error("Error during the connection enstablishing: " + e.getMessage());
-            ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+            logger.error("Cannot open database connection", e);
+            throw new IllegalStateException("Cannot open database connection", e);
         }
-        return null;
     }
 }

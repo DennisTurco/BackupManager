@@ -9,14 +9,14 @@ import javax.swing.table.TableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.GUI.BackupManagerGUI;
 
 public class TableDataManager {
 
     private static final Logger logger = LoggerFactory.getLogger(TableDataManager.class);
 
-    public static void removeProgressInTheTableAndRestoreAsDefault(Backup backup, DateTimeFormatter formatter) {
+    public static void removeProgressInTheTableAndRestoreAsDefault(ConfigurationBackup backup, DateTimeFormatter formatter) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null");
         if (formatter == null) throw new IllegalArgumentException("Formatter cannot be null");
 
@@ -36,7 +36,7 @@ public class TableDataManager {
         BackupManagerGUI.backupTable.revalidate(); // Revalidates the table layout
     }
 
-    public static void updateProgressBarPercentage(Backup backup, int value, DateTimeFormatter formatter) {
+    public static void updateProgressBarPercentage(ConfigurationBackup backup, int value, DateTimeFormatter formatter) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null");
         if (value < 0 || value > 100) throw new IllegalArgumentException("Value must be between 0 and 100");
         if (formatter == null) throw new IllegalArgumentException("Formatter cannot be null");
@@ -72,13 +72,13 @@ public class TableDataManager {
         });
     }
 
-    public static void updateTableWithNewBackupList(List<Backup> updatedBackups, DateTimeFormatter formatter) {
+    public static void updateTableWithNewBackupList(List<ConfigurationBackup> updatedBackups, DateTimeFormatter formatter) {
         logger.debug("updating backup list");
 
         SwingUtilities.invokeLater(() -> {
             BackupManagerGUI.model.setRowCount(0);
 
-            for (Backup backup : updatedBackups) {
+            for (ConfigurationBackup backup : updatedBackups) {
                 BackupManagerGUI.model.addRow(new Object[]{
                     backup.getName(),
                     backup.getTargetPath(),
@@ -92,7 +92,7 @@ public class TableDataManager {
         });
     }
 
-    private static int findBackupRowIndex(Backup backup, BackupTable table) {
+    private static int findBackupRowIndex(ConfigurationBackup backup, BackupTable table) {
         if (backup == null) throw new IllegalArgumentException("Backup cannot be null");
         if (table == null) throw new IllegalArgumentException("Table cannot be null");
 

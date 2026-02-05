@@ -11,8 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import backupmanager.BackupOperations;
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupTriggeredEnum;
 
 public class BackupProcessTest {
 
@@ -31,8 +32,8 @@ public class BackupProcessTest {
         String backupName = "TestBackup";
         LocalDateTime date = LocalDateTime.now();
 
-        Backup backup = new Backup(backupName, sourceDir.toString(), targetDir.toString(), null, false, null, null, "Test notes", date, date, 0, 1);
-        ZippingContext context = new ZippingContext(backup, null, null, null, null, null);
+        ConfigurationBackup backup = new ConfigurationBackup(backupName, sourceDir.toString(), targetDir.toString(), null, false, null, null, "Test notes", date, date, 0, 1);
+        ZippingContext context = ZippingContext.create(backup, null, null, null, null, null, BackupTriggeredEnum.USER);
 
         BackupOperations.SingleBackup(context);
 

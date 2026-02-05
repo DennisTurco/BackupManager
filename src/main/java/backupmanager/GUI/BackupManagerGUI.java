@@ -33,9 +33,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.Preferences;
-import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
@@ -51,6 +50,7 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.BackupObserver;
+import backupmanager.Services.RunningBackupService;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
@@ -69,7 +69,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     private final BackupObserver observer;
-    public static List<Backup> backups;
+    public static List<ConfigurationBackup> backups;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
     public static BackupTableModel tableModel;
@@ -230,7 +230,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         BackupManagerGUI main = this;
 
         // Populate the model with backup data
-        for (Backup backup : backups) {
+        for (ConfigurationBackup backup : backups) {
             tempModel.addRow(new Object[]{
                 backup.getName(),
                 backup.getTargetPath(),
@@ -314,11 +314,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void researchInTable() {
-        List<Backup> tempBackups = new ArrayList<>();
+        List<ConfigurationBackup> tempBackups = new ArrayList<>();
 
         String research = researchField.getText();
 
-        for (Backup backup : backups) {
+        for (ConfigurationBackup backup : backups) {
             if (backup.getName().contains(research) ||
                     backup.getTargetPath().contains(research) ||
                     backup.getDestinationPath().contains(research) ||
@@ -1165,7 +1165,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         } else {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backups, backupName);
 
             logger.debug("Selected backup: " + backupName);
 
@@ -1176,14 +1176,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
 
-                // check if the backup is running
-                if (RunningBackups.readBackupFromJSON(backupName) == null) {
-                    DeletePopupItem.setEnabled(true);
-                    interruptBackupPopupItem.setEnabled(false);
-                } else {
-                    DeletePopupItem.setEnabled(false);
-                    interruptBackupPopupItem.setEnabled(true);
-                }
+                boolean isRunning = RunningBackupService.getRunningBackupByName(backupName).isPresent();
+
+                DeletePopupItem.setEnabled(!isRunning);
+                interruptBackupPopupItem.setEnabled(isRunning);
             }
 
             // Handling left mouse button double-click
@@ -1293,11 +1289,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        ExportManager.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsCSV(new ArrayList<>(backups), ConfigurationBackup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        ExportManager.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsPDF(new ArrayList<>(backups), ConfigurationBackup.getCSVHeader());
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupTriggeredEnum;
 import backupmanager.Services.ZippingThread;
 
 class ZippingThreadTest {
@@ -30,7 +31,7 @@ class ZippingThreadTest {
             fos.write("hello".getBytes());
         }
 
-        ZippingContext context = new ZippingContext(null, null, null, null, null, null);
+        ZippingContext context = ZippingContext.create(null, null, null, null, null, null, BackupTriggeredEnum.USER);
 
         ZippingThread.zipDirectory(sourceDir.toString(), zipFile.toString(),context);
 

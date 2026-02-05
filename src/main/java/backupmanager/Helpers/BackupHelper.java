@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import backupmanager.BackupOperations;
 import backupmanager.Dialogs.BackupEntryDialog;
 import backupmanager.Dialogs.TimePicker;
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -33,7 +33,7 @@ public class BackupHelper {
     public static void openBackupById(int id, BackupManagerGUI main) {
         logger.info("Event --> opening backup");
 
-        Backup backup = BackupConfigurationRepository.getBackupById(id);
+        ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
 
         BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
         dialog.setVisible(true);
@@ -46,7 +46,7 @@ public class BackupHelper {
         dialog.setVisible(true);
     }
 
-    public static void newBackup(Backup backup) {
+    public static void newBackup(ConfigurationBackup backup) {
         BackupConfigurationRepository.insertBackup(backup);
 
         updateBackupTable();
@@ -66,7 +66,7 @@ public class BackupHelper {
         removeBackup(backupName);
     }
 
-    public static void updateBackup(Backup updatedBackup) {
+    public static void updateBackup(ConfigurationBackup updatedBackup) {
         if (updatedBackup == null) {
             throw new IllegalArgumentException("Backup is null!");
         }
@@ -84,8 +84,8 @@ public class BackupHelper {
         updateBackupTable();
     }
 
-    public static List<Backup> getBackupList() {
-        List<Backup> backups = BackupConfigurationRepository.getBackupList();
+    public static List<ConfigurationBackup> getBackupList() {
+        List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
         BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
         return backups;
     }
@@ -112,7 +112,7 @@ public class BackupHelper {
     public static void openBackupByName(String backupName, BackupManagerGUI main) {
         logger.info("Event --> opening backup");
 
-        Backup backup = BackupConfigurationRepository.getBackupByName(backupName);
+        ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backupName);
 
         BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
         dialog.setVisible(true);
@@ -143,11 +143,11 @@ public class BackupHelper {
     }
 
     public static void removeBackup(String backupName) {
-        Backup backup = Backup.getBackupByName(backupName);
+        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
         removeBackup(backup);
     }
 
-    private static void removeBackup(Backup backup) {
+    private static void removeBackup(ConfigurationBackup backup) {
         logger.info("Event --> removing backup" + backup.getName());
         BackupConfigurationRepository.deleteBackup(backup.getId());
         updateBackupTable();
@@ -159,7 +159,7 @@ public class BackupHelper {
     }
 
     // returns the new time inteval
-    public static Backup toggleAutomaticBackup(Backup backup) {
+    public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
         logger.info("Event --> automatic backup");
 
         if (backup.isAutomatic()) {

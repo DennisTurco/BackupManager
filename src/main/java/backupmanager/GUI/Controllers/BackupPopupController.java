@@ -19,8 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupTriggeredEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
@@ -35,109 +36,89 @@ public class BackupPopupController {
 
     private static final Logger logger = LoggerFactory.getLogger(BackupPopupController.class);
 
-    public static void popupItemInterrupt(int selectedRow, BackupTable backupTable, List<Backup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+    public static void popupItemInterrupt(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-            ZippingContext context = new ZippingContext(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
+
+            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem, BackupTriggeredEnum.USER);
             BackupOperations.interruptBackupProcess(context);
         }
     }
 
-    public static void popupItemRenameBackup(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemRenameBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
             renameBackup(backups, backup);
         }
     }
 
-    public static void popupItemOpenDestinationPath(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemOpenDestinationPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
-
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
             openFolder(backup.getDestinationPath());
         }
     }
 
-    public static void popupItemOpenInitialPath(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemOpenInitialPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             openFolder(backup.getTargetPath());
         }
     }
 
-    public static void popupItemAutoBackup(int selectedRow, BackupTable backupTable, List<Backup> backups, JCheckBoxMenuItem autoBackupMenuItem) {
+    public static void popupItemAutoBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JCheckBoxMenuItem autoBackupMenuItem) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             autoBackupMenuItem.setSelected(!backup.isAutomatic());
             BackupHelper.toggleAutomaticBackup(backup);
         }
     }
 
-    public static void popupItemCopyDestinationPath(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemCopyDestinationPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             StringSelection selection = new StringSelection(backup.getDestinationPath());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }
 
-    public static void popupItemCopyInitialPath(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemCopyInitialPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             StringSelection selection = new StringSelection(backup.getTargetPath());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }
 
-    public static void popupItemCopyBackupName(int selectedRow, BackupTable backupTable, List<Backup> backups) {
+    public static void popupItemCopyBackupName(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             StringSelection selection = new StringSelection(backup.getName());
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
         }
     }
 
-    public static void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<Backup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+    public static void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
-
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
             BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
 
-            ZippingContext context = new ZippingContext(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem, BackupTriggeredEnum.USER);
             BackupOperations.SingleBackup(context);
         }
     }
 
-    public static void popupItemEditBackupName(int selectedRow, BackupTable backupTable, List<Backup> backups, BackupManagerGUI main) {
+    public static void popupItemEditBackupName(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, BackupManagerGUI main) {
         if (selectedRow != -1) {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = backupmanager.Entities.Backup.getBackupByName(new ArrayList<>(backups), backupName);
+            ConfigurationBackup backup = ConfigurationBackup.getBackupByName(new ArrayList<>(backups), backupName);
 
             logger.info("Edit row : " + selectedRow);
             BackupHelper.openBackupById(backup.getId(), main);
@@ -148,12 +129,10 @@ public class BackupPopupController {
         logger.info("Event --> duplicating backup");
 
         if (selectedRow != -1) {
-            // get correct backup
-            String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            Backup backup = BackupConfigurationRepository.getBackupByName(backupName);
+            ConfigurationBackup backup = getBackupByName(selectedRow, backupTable);
 
             LocalDateTime dateNow = LocalDateTime.now();
-            Backup newBackup = new Backup(
+            ConfigurationBackup newBackup = new ConfigurationBackup(
                     backup.getName() + "_copy",
                     backup.getTargetPath(),
                     backup.getDestinationPath(),
@@ -170,7 +149,7 @@ public class BackupPopupController {
 
             BackupConfigurationRepository.insertBackup(newBackup);
 
-            List<Backup> backups = BackupHelper.getBackupList();
+            List<ConfigurationBackup> backups = BackupHelper.getBackupList();
 
             if (BackupManagerGUI.model != null)
                 TableDataManager.updateTableWithNewBackupList(backups, BackupHelper.formatter);
@@ -181,7 +160,17 @@ public class BackupPopupController {
         BackupHelper.deleteBackup(selectedRow, backupTable);
     }
 
-    private static void renameBackup(List<Backup> backups, Backup backup) {
+    private static ConfigurationBackup getBackupByName(int selectedRow, BackupTable backupTable) {
+        String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+        return BackupConfigurationRepository.getBackupByName(backupName);
+    }
+
+    private static ConfigurationBackup getBackupByName(List<ConfigurationBackup> backups, int selectedRow, BackupTable backupTable) {
+        String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+        return ConfigurationBackup.getBackupByName(backups, backupName);
+    }
+
+    private static void renameBackup(List<ConfigurationBackup> backups, ConfigurationBackup backup) {
         logger.info("Event --> backup renaming");
 
         String backupName = getBackupNameFromInputDialog(backups, backup.getName(), false);
@@ -192,7 +181,7 @@ public class BackupPopupController {
         BackupHelper.updateBackup(backup);
     }
 
-    private static String getBackupNameFromInputDialog(List<Backup> backups, String oldName, boolean canOverwrite) {
+    private static String getBackupNameFromInputDialog(List<ConfigurationBackup> backups, String oldName, boolean canOverwrite) {
         while (true) {
             String backupName = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT), oldName);
 
@@ -201,7 +190,7 @@ public class BackupPopupController {
                 return null;
             }
 
-            Optional<Backup> existingBackup = backups.stream()
+            Optional<ConfigurationBackup> existingBackup = backups.stream()
                 .filter(b -> b.getName().equals(backupName))
                 .findFirst();
 

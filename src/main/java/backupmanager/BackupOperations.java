@@ -18,11 +18,10 @@ import javax.swing.filechooser.FileSystemView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.BackupRequest;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -31,8 +30,11 @@ import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
 import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
+import backupmanager.Utils.FolderUtils;
+import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
@@ -76,9 +78,8 @@ public class BackupOperations {
 
     public static String removeExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
-        if (dotIndex > 0) {
+        if (dotIndex > 0)
             return fileName.substring(0, dotIndex);
-        }
         return fileName;
     }
 
@@ -102,9 +103,9 @@ public class BackupOperations {
         context.backup().setCount(context.backup().getCount()+1);
 
         try {
-            List<Backup> backups = BackupHelper.getBackupList();
+            List<ConfigurationBackup> backups = BackupHelper.getBackupList();
 
-            for (Backup b : backups) {
+            for (ConfigurationBackup b : backups) {
                 if (b.getName().equals(context.backup().getName())) {
                     b.UpdateBackup(context.backup());
                     break;
@@ -115,9 +116,8 @@ public class BackupOperations {
 
             logger.info("Backup :\"" + context.backup().getName() + "\" updated after the backup");
 
-            if (context.trayIcon() != null) {
+            if (context.trayIcon() != null)
                 context.trayIcon().displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + context.backup().getName() + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.SUCCESS_MESSAGE) + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM) + ": " + path1 + "\n" + TranslationCategory.GENERAL.getTranslation(TranslationKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
-            }
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
@@ -138,11 +138,10 @@ public class BackupOperations {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
 
-            if (selectedFile.isDirectory()) {
+            if (selectedFile.isDirectory())
                 logger.info("You selected the directory: " + selectedFile);
-            } else if (selectedFile.isFile()) {
+            else if (selectedFile.isFile())
                 logger.info("You selected the file: " + selectedFile);
-            }
 
             return selectedFile.toString();
         }
@@ -185,8 +184,7 @@ public class BackupOperations {
         if (context.interruptBackupPopupItem() != null) context.interruptBackupPopupItem().setEnabled(false);
         if (context.deleteBackupPopupItem() != null) context.deleteBackupPopupItem().setEnabled(true);
 
-        // edit the backup running state
-        RunningBackups.updateBackupStatusAfterCompletition(context.backup().getName());
+        RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.backup().getId());
 
         if (BackupManagerGUI.backupTable != null)
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup(), formatter);
@@ -196,32 +194,29 @@ public class BackupOperations {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             logger.info("Zipping progress: " + value + "%");
 
-        if (context.progressBar() != null) {
+        if (context.progressBar() != null)
             context.progressBar().updateProgressBar(value, fileProcessed, filesCopiedSoFar, totalFilesCount);
-        }
 
-        if (BackupManagerGUI.backupTable != null) {
+        if (BackupManagerGUI.backupTable != null)
             TableDataManager.updateProgressBarPercentage(context.backup(), value, formatter);
-        }
 
-        // updating running backups file .json
-        RunningBackups running = RunningBackups.readBackupFromJSON(context.backup().getName());
-        if (running != null) {
-            running.setProgress(value);
-            RunningBackups.updateBackupToJSON(running);
-        }else {
-            RunningBackups.updateBackupToJSON(new RunningBackups(context.backup().getName(), path2, value, BackupStatusEnum.Progress));
-        }
-
-        // if (value == 100) {
-        //     RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.name, path2, value, BackupStatusEnum.Finished));
-        // } else {
-        //     RunningBackups.updateBackupToJSON(new RunningBackups(context.backup.name, path2, value, BackupStatusEnum.Progress));
-        // }
+        updateOrCreateBackupRequest(context, value);
 
         if (value == 100) {
+            long folderSize = FolderUtils.calculateFolderSize(path2);
+            BackupRequestRepository.updateZippedTargetSizeByRequestId(context.backup().getId(), folderSize);
             updateAfterBackup(path1, path2, context);
             deleteOldBackupsIfNecessary(context.backup().getMaxToKeep(), path2);
+        }
+    }
+
+    private static void updateOrCreateBackupRequest(ZippingContext context, int value) {
+        BackupRequest request = BackupRequestRepository.getBackupByConfigurationId(context.backup().getId());
+        if (request != null) {
+            BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), value);
+        } else {
+            request = BackupRequest.createNewBackupRequest(context.backup().getId(), context.triggerType(), value, context.folderUnzippedSize());
+            BackupRequestRepository.insertBackupRequest(request);
         }
     }
 
@@ -269,11 +264,10 @@ public class BackupOperations {
                 // delete older files
                 for (int i = 0; i < matchingFiles.length - maxBackupsToKeep; i++) {
                     File fileToDelete = matchingFiles[i];
-                    if (fileToDelete.delete()) {
+                    if (fileToDelete.delete())
                         logger.info("Deleted old backup: " + fileToDelete.getName());
-                    } else {
+                    else
                         logger.warn("Failed to delete old backup: " + fileToDelete.getName());
-                    }
                 }
             }
         } else {
@@ -322,9 +316,8 @@ public class BackupOperations {
         Pattern regex = Pattern.compile(pattern);
         Matcher matcher = regex.matcher(fileName);
 
-        if (matcher.find()) {
+        if (matcher.find())
             return matcher.group(1);
-        }
 
         throw new Exception("No date found in file name: " + fileName);
     }
@@ -333,59 +326,52 @@ public class BackupOperations {
         switch (error) {
             case InputMissing -> {
                 logger.warn("Input Missing!");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case InputError -> {
                 logger.warn("Input Error! One or both paths do not exist.");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_PATH_NOT_EXISTING), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case SamePaths -> {
                 logger.warn("The initial path and destination path cannot be the same. Please choose different paths");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case ErrorCountingFiles -> {
                 logger.warn("Error during counting files in directory");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_COUNTING_FILES), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case ZippingGenericError -> {
                 logger.warn("Error during zipping directory");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case ZippingIOError -> {
                 logger.warn("I/O error occurred while zipping directory");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_IO), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             case ZippingSecurityError -> {
                 logger.warn("Security exception while zipping directory");
-                if (trayIcon != null) {
+                if (trayIcon != null)
                     trayIcon.displayMessage(TranslationCategory.GENERAL.getTranslation(TranslationKey.APP_NAME), TranslationCategory.GENERAL.getTranslation(TranslationKey.BACKUP) + ": " + backupName + TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
-                } else {
+                else
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_ZIPPING_SECURITY), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                }
             }
             default -> throw new IllegalArgumentException("Error type not recognized: " + error);
         }

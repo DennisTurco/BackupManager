@@ -19,7 +19,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
 import backupmanager.BackupOperations;
-import backupmanager.Entities.Backup;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 
@@ -27,7 +27,7 @@ public class ExportManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ExportManager.class);
 
-    public static void exportAsPDF(ArrayList<Backup> backups, String headers) {
+    public static void exportAsPDF(ArrayList<ConfigurationBackup> backups, String headers) {
         logger.info("Exporting backups to PDF");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);
@@ -83,7 +83,7 @@ public class ExportManager {
 
             // Add backup data
             if (backups != null && !backups.isEmpty()) {
-                for (Backup backup : backups) {
+                for (ConfigurationBackup backup : backups) {
                     String[] data = backup.toCsvString().split(","); // Assuming backup data is comma-separated
                     for (String value : data) {
                         // new line every 25 characters
@@ -114,7 +114,7 @@ public class ExportManager {
         }
     }
 
-    public static void exportAsCSV(ArrayList<Backup> backups, String header) {
+    public static void exportAsCSV(ArrayList<ConfigurationBackup> backups, String header) {
         logger.info("Exporting backups to CSV");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);
@@ -158,7 +158,7 @@ public class ExportManager {
 
             // Prepare data rows
             if (backups != null && !backups.isEmpty()) {
-                for (Backup backup : backups) {
+                for (ConfigurationBackup backup : backups) {
                     writer.append(backup.toCsvString()).append("\n");
                 }
             }

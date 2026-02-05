@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,12 +15,14 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
 import backupmanager.Controllers.TrayController;
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.BackupRequest;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupTriggeredEnum;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
@@ -39,7 +42,9 @@ public class BackgroundService {
         this.trayIcon = trayIcon;
 
         // clear running backups json file (if last execution stopped brutally we have to delete the partial backups)
-        RunningBackups.deletePartialBackupsStuckedJSONFile();
+        List<BackupRequest> requests = BackupRequestRepository.getRunningBackups();
+        if (requests != null)
+            BackupOperations.deletePartialBackup(requests);
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
 
@@ -73,40 +78,38 @@ public class BackgroundService {
 
             logger.debug("Checking for automatic backup...");
 
-            List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
-            if (!runningBackups.isEmpty()) {
+            if (BackupRequestRepository.isAnyBackupRunning()) {
                 logger.info("A backup is already running. Skipping this cycle.");
                 isBackingUp.set(false);
                 return;
             }
 
-            List<Backup> backups = BackupConfigurationRepository.getBackupList();
-            List<Backup> needsBackup = getBackupsToDo(backups, 1);
-            if (!needsBackup.isEmpty()) {
+            Map<Integer, ConfigurationBackup> backupMap = BackupConfigurationRepository.getBackupMap();
+            List<ConfigurationBackup> backupsToDo = getBackupsToDo(backupMap, 1);
+
+            if (!backupsToDo.isEmpty()) {
                 logger.info("Start backup process.");
-                executeBackups(needsBackup);
+                executeBackups(backupsToDo);
             } else {
                 isBackingUp.set(false);
                 logger.debug("No backup needed at this time.");
             }
         }
 
-        private List<Backup> getBackupsToDo(List<Backup> backups, int maxBackupsToAdd) {
-            List<Backup> backupsToDo = new ArrayList<>();
-            List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
+        private List<ConfigurationBackup> getBackupsToDo(Map<Integer, ConfigurationBackup> backupMap, int maxBackupsToAdd) {
+            List<ConfigurationBackup> backupsToDo = new ArrayList<>();
+            List<BackupRequest> running = BackupRequestRepository.getRunningBackups();
 
-            for (Backup backup : backups) {
+            for (ConfigurationBackup backup : backupMap.values()) {
+                boolean alreadyRunning = running.stream()
+                        .anyMatch(r -> r.backupConfigurationId() == backup.getId() &&
+                                       r.status() == backupmanager.Enums.BackupStatusEnum.IN_PROGRESS);
 
-                // i have to check that the backup is not running
-                boolean found = false;
-                for (RunningBackups running : runningBackups) {
-                    if (backup.getName().equals(running.getName())){
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found && maxBackupsToAdd > 0 && backup.isAutomatic() && backup.getNextBackupDate() != null && backup.getNextBackupDate().isBefore(LocalDateTime.now())) {
+                if (!alreadyRunning
+                        && maxBackupsToAdd > 0
+                        && backup.isAutomatic()
+                        && backup.getNextBackupDate() != null
+                        && backup.getNextBackupDate().isBefore(LocalDateTime.now())) {
                     backupsToDo.add(backup);
                     maxBackupsToAdd--;
                 }
@@ -114,11 +117,11 @@ public class BackgroundService {
             return backupsToDo;
         }
 
-        private void executeBackups(List<Backup> backups) {
+        private void executeBackups(List<ConfigurationBackup> backups) {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 try {
-                    for (Backup backup : backups) {
-                        ZippingContext context = new ZippingContext(backup, trayIcon.geTrayIcon(), null, null, null, null);
+                    for (ConfigurationBackup backup : backups) {
+                        ZippingContext context = ZippingContext.create(backup, trayIcon.geTrayIcon(), null, null, null, null, BackupTriggeredEnum.SCHEDULER);
                         BackupOperations.SingleBackup(context);
                     }
                 } finally {

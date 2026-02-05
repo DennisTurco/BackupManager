@@ -52,11 +52,10 @@ public class ZippingThread {
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(targetZipPath))) {
                 Path sourceDir = Paths.get(sourceDirectoryPath);
 
-                if (sourceFile.isFile()) {
+                if (sourceFile.isFile())
                     addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, sourceFile.toPath(), sourceFile.getName(), copiedFilesCount, totalFilesCount, context);
-                } else {
+                else
                     Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, targetFile, zipOut, copiedFilesCount, totalFilesCount, context));
-                }
 
             } catch (IOException e) {
                 logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);

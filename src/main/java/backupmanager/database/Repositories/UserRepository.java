@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.User;
+import backupmanager.Helpers.SqlHelper;
 import backupmanager.database.Database;
 
 public class UserRepository {
@@ -25,7 +26,7 @@ public class UserRepository {
             stmt.setString(2, user.surname());
             stmt.setString(3, user.email());
             stmt.setString(4, user.language());
-            stmt.setString(5, LocalDateTime.now().toString());
+            stmt.setLong(5, SqlHelper.toMilliseconds(LocalDateTime.now()));
             stmt.executeUpdate();
 
             logger.info("User inserted succesfully");

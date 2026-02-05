@@ -2,17 +2,22 @@ package backupmanager.Services;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.SwingUtilities;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.BackupRequest;
+import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Table.TableDataManager;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.BackupRequestRepository;
 
 /*
  * I need a task that constantly checks if there are something running and i can't use a simple method calls instead because
@@ -35,28 +40,33 @@ public class BackupObserver {
     public void start() {
         logger.info("Observer for running backups started");
 
-        RunningBackups.deleteCompletedBackups();
-
-        scheduler.scheduleAtFixedRate(() -> {
+        scheduler.scheduleWithFixedDelay(() -> {
             try {
-                List<RunningBackups> runningBackups = RunningBackups.readBackupListFromJSON();
-                if (!runningBackups.isEmpty()) {
-                    logger.debug("Observer has found a running backup");
+                List<BackupRequest> running = BackupRequestRepository.getRunningBackups();
 
-                    for (RunningBackups backup : runningBackups) {
-                        Backup backupEntity = Backup.getBackupByName(backup.getName());
+                Map<Integer, ConfigurationBackup> configs = BackupConfigurationRepository.getBackupMap();
 
-                        if (backup.getProgress() < 100 && backup.getStatus() == BackupStatusEnum.Progress) {
-                            TableDataManager.updateProgressBarPercentage(backupEntity, backup.getProgress(), formatter);
+                for (BackupRequest request : running) {
+
+                    ConfigurationBackup config = configs.get(request.backupConfigurationId());
+
+                    if (config == null)
+                        continue;
+
+                    SwingUtilities.invokeLater(() -> {
+
+                        if (request.status() == BackupStatusEnum.IN_PROGRESS) {
+                            TableDataManager.updateProgressBarPercentage(config, request.progress(), formatter);
                         } else {
-                            RunningBackups.deleteCompletedBackup(backup.getName());
-                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(backupEntity, formatter);
+                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(config, formatter);
                         }
-                    }
+                    });
                 }
+
             } catch (Exception ex) {
-                logger.error("An error occurred: " + ex.getMessage(), ex);
+                logger.error("Observer error", ex);
             }
+
         }, 0, millisecondsToWait, TimeUnit.MILLISECONDS); // run now and periodically
     }
 

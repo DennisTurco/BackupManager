@@ -17,17 +17,28 @@ public class DatabaseInitializer {
         Path dbPath = DatabasePaths.getDatabasePath();
         Files.createDirectories(dbPath.getParent());
 
-        if (Files.exists(dbPath)) {
-            logger.info("Database already exists: {}", dbPath);
-        } else {
-            logger.info("Creating database: {}", dbPath);
-        }
+        boolean isNewDatabase = !Files.exists(dbPath);
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)) {
-            conn.setAutoCommit(false);
-            runSql(conn, "/db/schema.sql");
-            runSql(conn, "/db/seed.sql");
-            conn.commit();
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+            Statement st = conn.createStatement()) {
+
+            st.execute("PRAGMA journal_mode=WAL;");
+            st.execute("PRAGMA synchronous=NORMAL;");
+            st.execute("PRAGMA temp_store=MEMORY;");
+            st.execute("PRAGMA foreign_keys=ON;");
+
+            if (isNewDatabase) {
+                logger.info("Creating database: {}", dbPath);
+
+                conn.setAutoCommit(false);
+
+                runSql(conn, "/db/schema.sql");
+                runSql(conn, "/db/seed.sql");
+
+                conn.commit();
+            } else {
+                logger.info("Database already exists: {}", dbPath);
+            }
         }
     }
 
