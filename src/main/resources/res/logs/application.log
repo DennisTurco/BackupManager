@@ -1,8 +1,0 @@
-04-02-2026 12:48:32.748 [main] [INFO ] b.database.DatabaseInitializer - Database already exists: C:\Users\Dennis\Documents\Shard\data\BackupManager.db
-04-02-2026 12:48:32.883 [main] [INFO ] backupmanager.Entities.Preferences - Language setted to: Italiano
-04-02-2026 12:48:32.885 [main] [INFO ] backupmanager.Entities.Preferences - Theme set to: Light
-04-02-2026 12:48:32.901 [main] [INFO ] backupmanager.MainApp - Application started
-04-02-2026 12:48:32.902 [main] [DEBUG] backupmanager.MainApp - Background mode: false
-04-02-2026 12:48:33.598 [AWT-EventQueue-0] [INFO ] b.Services.BackupObserver - Observer for running backups started
-04-02-2026 12:48:33.783 [AWT-EventQueue-0] [DEBUG] backupmanager.GUI.BackupManagerGUI - Checking for first access
-04-02-2026 12:48:33.801 [AWT-EventQueue-0] [INFO ] backupmanager.GUI.BackupManagerGUI - Current user: Unregistered User, , italiano (Italia)

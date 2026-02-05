@@ -44,5 +44,10 @@
     "value": 1,
     "type": "int",
     "description": "Max count for the same backup in the same directory"
+  },
+  "SubscriptionWarningDays": {
+    "value": 7,
+    "type": "int",
+    "description": "Number of days before subscription expiration to show a warning"
   }
 }

@@ -37,7 +37,7 @@ public class ConfigurationBackup {
         creationDate = null;
         lastUpdateDate = null;
         count = 0;
-        maxToKeep = configReader.getMaxCountForSameBackup();
+        maxToKeep = configReader.getConfigValue("MaxCountForSameBackup", 1);
     }
 
     public ConfigurationBackup(String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {

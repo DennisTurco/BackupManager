@@ -11,13 +11,15 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Preferences;
 import backupmanager.Entities.Subscription;
+import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Helpers.SubscriptionNotifier;
+import backupmanager.Json.JSONConfigReader;
 import backupmanager.Services.BackgroundService;
 import backupmanager.database.Repositories.SubscriptionRepository;
 
 public class AppController {
-
+    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
     private BackupManagerGUI guiInstance;
@@ -55,10 +57,11 @@ public class AppController {
             return false;
         }
 
+        int days = configReader.getConfigValue("SubscriptionWarningDays", 7);
         LocalDate now = LocalDate.now();
-        LocalDate endMinus7Days = subscription.endDate().minusDays(7);
+        LocalDate endMinusDays = subscription.endDate().minusDays(days);
 
-        if (now.isAfter(endMinus7Days)) {
+        if (now.isAfter(endMinusDays)) {
             SubscriptionNotifier.showExpiringWarning(trayController);
         }
 

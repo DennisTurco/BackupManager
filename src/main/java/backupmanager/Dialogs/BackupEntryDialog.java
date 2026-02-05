@@ -65,7 +65,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     private void initializeDialog() {
         initComponents();
 
-        setCurrentBackupMaxBackupsToKeep(configReader.getMaxCountForSameBackup());
+        setCurrentBackupMaxBackupsToKeep(configReader.getConfigValue("MaxCountForSameBackup", 1));
 
         setSvgImages();
         setTranslations();
