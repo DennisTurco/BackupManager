@@ -23,7 +23,6 @@ import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Services.ZippingThread;
 import backupmanager.Table.BackupTable;
 import backupmanager.database.Repositories.BackupRequestRepository;
 
@@ -198,8 +197,9 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         BackupManagerGUI.progressBar = new BackupProgressGUI(path1, path2);
         BackupManagerGUI.progressBar.setVisible(true);
 
-        ZippingContext context = ZippingContext.create(currentBackup, null, backupTable, BackupManagerGUI.progressBar, null, null, BackupTriggeredEnum.USER);
-        ZippingThread.zipDirectory(path1, path2 + ".zip", context);
+        ZippingContext context = ZippingContext.create(currentBackup, null, backupTable, BackupManagerGUI.progressBar, null, null);
+
+        BackupOperations.executeBackup(context, BackupTriggeredEnum.USER, path1, path2);
 
         //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
         if (currentBackup.getName() != null && !currentBackup.getName().isEmpty()) {

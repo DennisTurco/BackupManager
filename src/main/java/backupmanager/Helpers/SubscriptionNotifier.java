@@ -8,19 +8,21 @@ import backupmanager.Controllers.TrayController;
 
 public class SubscriptionNotifier {
     public static void showExpiringWarning(TrayController trayController) {
-        String title = "Subscription in scadenza";
-        String message = "La tua subscription sta per scadere.\n"
-                       + "I backup automatici continueranno a funzionare fino alla scadenza.\n"
-                       + "Contatta l'assistenza per rinnovarla.";
+        String title = "Abbonamento di BackupManager in scadenza";
+        String message = """
+                         Il tuo abbonamento a BackupManager sta per scadere.
+                         I backup automatici continueranno a funzionare fino alla scadenza.
+                         Contatta l'assistenza per rinnovarlo.""";
 
         showMessage(trayController, title, message, TrayIcon.MessageType.WARNING);
     }
 
     public static void showExpiredAlert(TrayController trayController) {
-        String title = "Subscription scaduta";
-        String message = "La tua subscription è scaduta.\n"
-                       + "I backup automatici non funzioneranno più.\n"
-                       + "Contatta l'assistenza per riattivarla.";
+        String title = "Abbonamento di BackupManager scaduto";
+        String message = """
+                         Il tuo abbonamento a BackupManager \u00e8 scaduto.
+                         I backup automatici non funzioneranno pi\u00f9.
+                         Contatta l'assistenza per riattivarlo.""";
 
         showMessage(trayController, title, message, TrayIcon.MessageType.ERROR);
     }

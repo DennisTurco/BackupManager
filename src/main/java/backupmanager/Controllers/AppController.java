@@ -9,7 +9,8 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Entities.Preferences;
+import backupmanager.BackupOperations;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Entities.Subscription;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.GUI.BackupManagerGUI;
@@ -32,7 +33,7 @@ public class AppController {
     }
 
     private AppController() throws IOException {
-        logger.info("Starting RemindMe application");
+        logger.info("Starting BackupManager application");
 
         this.backgroundService = new BackgroundService();
 
@@ -41,18 +42,23 @@ public class AppController {
             this::exitApp
         );
 
+        BackupOperations.deletePotentiallyIncompletedBackupsFromLastExecution();
+
         trayController.start();
 
-        if (canBackgroundServiceStartsBasedOnSubscription())
+        if (canBackgroundServiceStartsBasedOnSubscription()) {
+            logger.info("Backup service starting in the background");
             backgroundService.start(this.trayController);
+        }
     }
 
     private boolean canBackgroundServiceStartsBasedOnSubscription() {
-        if (!Preferences.isSubscriptionNedded()) return true;
+        if (!Confingurations.isSubscriptionNedded()) return true;
 
         Subscription subscription = SubscriptionRepository.getAnySubscriptionValid();
 
         if (subscription == null) {
+            logger.info("Subscription expired alert");
             SubscriptionNotifier.showExpiredAlert(trayController);
             return false;
         }
@@ -62,6 +68,7 @@ public class AppController {
         LocalDate endMinusDays = subscription.endDate().minusDays(days);
 
         if (now.isAfter(endMinusDays)) {
+            logger.info("Subscription is expiring alert");
             SubscriptionNotifier.showExpiringWarning(trayController);
         }
 

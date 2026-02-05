@@ -40,7 +40,7 @@ public class BackupPopupController {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
 
-            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem, BackupTriggeredEnum.USER);
+            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
             BackupOperations.interruptBackupProcess(context);
         }
     }
@@ -109,8 +109,8 @@ public class BackupPopupController {
 
             BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
 
-            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem, BackupTriggeredEnum.USER);
-            BackupOperations.SingleBackup(context);
+            ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+            BackupOperations.SingleBackup(context, BackupTriggeredEnum.USER);
         }
     }
 

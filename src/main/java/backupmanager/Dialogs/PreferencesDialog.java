@@ -1,6 +1,6 @@
 package backupmanager.Dialogs;
 
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
@@ -140,12 +140,12 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         try {
             // translactions
-            Preferences.setLanguageByLanguageName(selectedLanguage);
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            Confingurations.setLanguageByLanguageName(selectedLanguage);
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
             setTranslations();
 
             // theme
-            Preferences.setTheme(selectedTheme);
+            Confingurations.setTheme(selectedTheme);
             ThemeManager.updateThemeDialog(this);
 
             // update globally
@@ -167,7 +167,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         languagesComboBox.addItem(LanguagesEnum.DEU.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.FRA.getLanguageName());
 
-        languagesComboBox.setSelectedItem(Preferences.getLanguage().getLanguageName());
+        languagesComboBox.setSelectedItem(Confingurations.getLanguage().getLanguageName());
     }
 
     private void setThemes() {
@@ -182,7 +182,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         themesComboBox.addItem(ThemesEnum.SOLARIZED_DARK.getThemeName());
         themesComboBox.addItem(ThemesEnum.SOLARIZED_LIGHT.getThemeName());
 
-        themesComboBox.setSelectedItem(Preferences.getTheme().getThemeName());
+        themesComboBox.setSelectedItem(Confingurations.getTheme().getThemeName());
     }
 
     private void setTranslations() {

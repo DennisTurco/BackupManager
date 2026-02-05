@@ -27,7 +27,7 @@ import backupmanager.database.Repositories.BackupConfigurationRepository;
 public class BackupHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(BackupHelper.class);
-    public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
+    public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public static void openBackupById(int id, BackupManagerGUI main) {

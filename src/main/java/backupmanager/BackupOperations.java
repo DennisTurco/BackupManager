@@ -2,13 +2,12 @@ package backupmanager;
 
 import java.awt.TrayIcon;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
@@ -22,13 +21,15 @@ import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupStatusEnum;
+import backupmanager.Enums.BackupTriggeredEnum;
 import backupmanager.Enums.ErrorTypes;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
-import static backupmanager.GUI.BackupManagerGUI.dateForfolderNameFormatter;
-import static backupmanager.GUI.BackupManagerGUI.formatter;
 import backupmanager.Helpers.BackupHelper;
+import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
+import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
@@ -38,7 +39,7 @@ import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    public static void SingleBackup(ZippingContext context) {
+    public static void SingleBackup(ZippingContext context, BackupTriggeredEnum triggeredBy) {
         if (context.backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
 
         logger.info("Event --> manual backup started");
@@ -64,16 +65,33 @@ public class BackupOperations {
             }
 
             name1 = removeExtension(name1);
-            path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
+            path2 = path2 + "\\" + name1 + "_" + date;
 
             logger.info("date backup: " + date);
 
-            ZippingThread.zipDirectory(path1, path2 + ".zip", context);
+            executeBackup(context, triggeredBy, path1, path2);
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             reEnableButtonsAndTable(context);
         }
+    }
+
+    public static void executeBackup(ZippingContext context, BackupTriggeredEnum triggeredBy, String path1, String path2) {
+        File sourceFile = new File(path1.trim());
+        File outputFile = new File((path2+".zip").trim());
+
+        int totalFilesCount = sourceFile.isDirectory() ? FolderUtils.countFilesInDirectory(sourceFile) : 1;
+
+        createBackupRequest(context, triggeredBy, sourceFile, outputFile, totalFilesCount);
+
+        ZippingThread.zipDirectory(sourceFile, outputFile, context, totalFilesCount);
+    }
+
+    private static void createBackupRequest(ZippingContext context, BackupTriggeredEnum triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
+        long targetSize = FolderUtils.calculateFolderSize(sourceFile.getAbsolutePath());
+
+        BackupRequestRepository.insertBackupRequest(BackupRequest.createNewBackupRequest(context.backup().getId(), triggeredBy, outputFile.getAbsolutePath(), targetSize, totalFilesCount));
     }
 
     public static String removeExtension(String fileName) {
@@ -200,82 +218,77 @@ public class BackupOperations {
         if (BackupManagerGUI.backupTable != null)
             TableDataManager.updateProgressBarPercentage(context.backup(), value, formatter);
 
-        updateOrCreateBackupRequest(context, value);
+        updateProgressBackupRequest(context, value);
 
         if (value == 100) {
             long folderSize = FolderUtils.calculateFolderSize(path2);
-            BackupRequestRepository.updateZippedTargetSizeByRequestId(context.backup().getId(), folderSize);
+            RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.backup().getId(), folderSize);
             updateAfterBackup(path1, path2, context);
             deleteOldBackupsIfNecessary(context.backup().getMaxToKeep(), path2);
         }
     }
 
-    private static void updateOrCreateBackupRequest(ZippingContext context, int value) {
-        BackupRequest request = BackupRequestRepository.getBackupByConfigurationId(context.backup().getId());
+    private static void updateProgressBackupRequest(ZippingContext context, int value) {
+        BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.backup().getId());
         if (request != null) {
             BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), value);
-        } else {
-            request = BackupRequest.createNewBackupRequest(context.backup().getId(), context.triggerType(), value, context.folderUnzippedSize());
-            BackupRequestRepository.insertBackupRequest(request);
         }
     }
 
     private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
+
         logger.info("Deleting old backups if necessary");
 
-        File folder = new File(destinationPath).getParentFile();
-        String fileBackuppedToSearch = new File(destinationPath).getName();
+        File file = new File(destinationPath);
+        File folder = file.getParentFile();
+        String baseName = file.getName().split("_")[0];
 
-        // extract the file name (before the parentesis)
-        String baseName = fileBackuppedToSearch.substring(0, fileBackuppedToSearch.indexOf(" (Backup"));
+        if (folder == null || !folder.isDirectory()) {
+            logger.warn("Destination path is not a directory: {}", destinationPath);
+            return;
+        }
 
-        if (folder != null && folder.isDirectory()) {
-            // get current count
-            FilenameFilter filter = (dir, name) -> name.matches(baseName + " \\(Backup \\d{2}-\\d{2}-\\d{4} \\d{2}\\.\\d{2}\\.\\d{2}\\)\\.zip");
-            File[] matchingFiles = folder.listFiles(filter); // getting files for that filter
+        String regex = Pattern.quote(baseName) + "_\\d{2}-\\d{2}-\\d{4}T\\d{2}-\\d{2}-\\d{2}\\.zip";
 
-            if (matchingFiles == null) {
-                logger.warn("Error during deleting old backups: none matching files");
-                return;
-            }
+        File[] matchingFiles = folder.listFiles((dir, name) -> name.matches(regex));
 
-            // check if the max is passed, and if it is, remove the oldest
-            if (matchingFiles.length > maxBackupsToKeep) {
-                logger.info("Found " + matchingFiles.length + " matching files, exceeding max allowed: " + maxBackupsToKeep);
+        if (matchingFiles == null) {
+            logger.warn("Error during deleting old backups: none matching files");
+            return;
+        }
 
-                Arrays.sort(matchingFiles, (f1, f2) -> {
-                    String datePattern = "\\(Backup (\\d{2}-\\d{2}-\\d{4} \\d{2}\\.\\d{2}\\.\\d{2})\\)\\.zip"; // regex aggiornata
+        if (matchingFiles.length <= maxBackupsToKeep)
+            return;
 
-                    try {
-                        // extracting dates from file names
-                        String date1 = extractDateFromFileName(f1.getName(), datePattern);
-                        String date2 = extractDateFromFileName(f2.getName(), datePattern);
+        logger.info("Found {} matching files, exceeding max allowed: {}", matchingFiles.length, maxBackupsToKeep);
 
-                        LocalDateTime dateTime1 = LocalDateTime.parse(date1, BackupManagerGUI.dateForfolderNameFormatter);
-                        LocalDateTime dateTime2 = LocalDateTime.parse(date2, BackupManagerGUI.dateForfolderNameFormatter);
+        Arrays.sort(matchingFiles, Comparator.comparingLong(File::lastModified));
 
-                        return dateTime1.compareTo(dateTime2);
-                    } catch (Exception e) {
-                        logger.error("Error parsing dates: " + e.getMessage(), e);
-                        return 0;
-                    }
-                });
+        for (int i = 0; i < matchingFiles.length - maxBackupsToKeep; i++) {
+            File fileToDelete = matchingFiles[i];
 
-                // delete older files
-                for (int i = 0; i < matchingFiles.length - maxBackupsToKeep; i++) {
-                    File fileToDelete = matchingFiles[i];
-                    if (fileToDelete.delete())
-                        logger.info("Deleted old backup: " + fileToDelete.getName());
-                    else
-                        logger.warn("Failed to delete old backup: " + fileToDelete.getName());
-                }
-            }
-        } else {
-            logger.warn("Destination path is not a directory: " + destinationPath);
+            if (fileToDelete.delete())
+                logger.info("Deleted old backup: {}", fileToDelete.getName());
+            else
+                logger.warn("Failed to delete old backup: {}", fileToDelete.getName());
         }
     }
 
-    public static boolean deletePartialBackup(String filePath) {
+    // if last execution stopped brutally we have to delete the partial backups
+    // for example if the computer has turned down before complete the backup process
+    public static void deletePotentiallyIncompletedBackupsFromLastExecution() {
+        List<BackupRequest> requests = BackupRequestRepository.getRunningBackups();
+        if (requests != null) {
+            for (BackupRequest request : requests) {
+                boolean deleted = deletePartialBackup(request.outputPath());
+                if (deleted) {
+                    BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatusEnum.TERMINATED);
+                }
+            }
+        }
+    }
+
+    private static boolean deletePartialBackup(String filePath) {
         logger.info("Attempting to delete partial backup: " + filePath);
 
         ZippingThread.stopExecutorService(1);
@@ -310,16 +323,6 @@ public class BackupOperations {
         }
 
         return false;
-    }
-
-    private static String extractDateFromFileName(String fileName, String pattern) throws Exception {
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(fileName);
-
-        if (matcher.find())
-            return matcher.group(1);
-
-        throw new Exception("No date found in file name: " + fileName);
     }
 
     public static void setError(ErrorTypes error, TrayIcon trayIcon, String backupName) {

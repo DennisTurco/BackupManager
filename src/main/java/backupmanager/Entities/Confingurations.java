@@ -8,28 +8,28 @@ import org.slf4j.LoggerFactory;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.database.Repositories.PreferenceRepository;
+import backupmanager.database.Repositories.ConfigurationRepository;
 
-public class Preferences {
-    private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
+public class Confingurations {
+    private static final Logger logger = LoggerFactory.getLogger(Confingurations.class);
     private static LanguagesEnum language;
     private static ThemesEnum theme;
     private static boolean subscriptionNedded; // if true the subscription is needed to use the backuground service
 
-    public static void loadAllPreferences() {
-        setLanguageByFileName(PreferenceRepository.getPreferenceValueByCode("Language"));
-        setTheme(PreferenceRepository.getPreferenceValueByCode("Theme"));
-        setSubscriptionNedded(PreferenceRepository.getPreferenceValueByCode("SubscriptionNedded"));
+    public static void loadAllConfigurations() {
+        setLanguageByFileName(ConfigurationRepository.getConfigurationValueByCode("Language"));
+        setTheme(ConfigurationRepository.getConfigurationValueByCode("Theme"));
+        setSubscriptionNedded(ConfigurationRepository.getConfigurationValueByCode("SubscriptionNedded"));
     }
 
     // i don't want to update the subscription value from the code. for now the only method is doing manually
-    public static void updateAllPreferences() {
-        PreferenceRepository.updatePreferenceValueByCode("Language", language.getFileName());
-        PreferenceRepository.updatePreferenceValueByCode("Theme", theme.getThemeName());
+    public static void updateAllConfigurations() {
+        ConfigurationRepository.updateConfigurationValueByCode("Language", language.getFileName());
+        ConfigurationRepository.updateConfigurationValueByCode("Theme", theme.getThemeName());
     }
 
     public static void setLanguage(LanguagesEnum language) {
-        Preferences.language = language;
+        Confingurations.language = language;
     }
 
     public static void setLanguageByLanguageName(String selectedLanguage) {
@@ -65,7 +65,7 @@ public class Preferences {
     }
 
     public static void setTheme(ThemesEnum theme) {
-        Preferences.theme = theme;
+        Confingurations.theme = theme;
     }
     public static void setTheme(String selectedTheme) {
         try {

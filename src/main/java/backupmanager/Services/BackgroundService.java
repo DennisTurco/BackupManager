@@ -41,11 +41,6 @@ public class BackgroundService {
 
         this.trayIcon = trayIcon;
 
-        // clear running backups json file (if last execution stopped brutally we have to delete the partial backups)
-        List<BackupRequest> requests = BackupRequestRepository.getRunningBackups();
-        if (requests != null)
-            BackupOperations.deletePartialBackup(requests);
-
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
 
         long interval = jsonConfig.readCheckForBackupTimeInterval();
@@ -121,8 +116,8 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 try {
                     for (ConfigurationBackup backup : backups) {
-                        ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null, BackupTriggeredEnum.SCHEDULER);
-                        BackupOperations.SingleBackup(context);
+                        ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null);
+                        BackupOperations.SingleBackup(context, BackupTriggeredEnum.SCHEDULER);
                     }
                 } finally {
                     logger.info("All backups completed. Resetting isBackingUp flag.");

@@ -24,7 +24,7 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 
 // https://www.formdev.com/flatlaf/#demo
 // https://www.formdev.com/flatlaf/themes/
@@ -63,7 +63,7 @@ public class ThemeManager {
 
     private static void updateTheme() {
         try {
-            String selectedTheme = Preferences.getTheme().getThemeName();
+            String selectedTheme = Confingurations.getTheme().getThemeName();
 
             switch (selectedTheme.toLowerCase()) {
                 case "light" -> UIManager.setLookAndFeel(new FlatIntelliJLaf());

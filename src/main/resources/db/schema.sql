@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS "BackupConfigurations" (
 	"Notes"	TEXT
 );
 
--- Table: Backups
+-- Table: BackupRequests
 -- Status: is a int for a enum because it is used a lot
 CREATE TABLE IF NOT EXISTS "BackupRequests" (
 	"BackupRequestId" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS "BackupRequests" (
 	"Progress" INTEGER DEFAULT 0 CHECK(Progress BETWEEN 0 AND 100),
 	"TriggeredBy" INTEGER,
 	"DurationMs" INTEGER,
+	"OutputPath" TEXT,
 	"UnzippedTargetSize" INTEGER NOT NULL DEFAULT 0,
 	"ZippedTargetSize" INTEGER,
 	"FilesCount" INTEGER DEFAULT NULL,
@@ -42,8 +43,8 @@ CREATE TABLE IF NOT EXISTS "BackupRequests" (
 CREATE INDEX IF NOT EXISTS idx_backup_status_started
 ON BackupRequests(Status, StartedDate DESC);
 
--- Table: Preferences
-CREATE TABLE IF NOT EXISTS "Preferences" (
+-- Table: Configurations
+CREATE TABLE IF NOT EXISTS "Configurations" (
 	"Code" TEXT PRIMARY KEY,
 	"Value" TEXT NOT NULL
 );

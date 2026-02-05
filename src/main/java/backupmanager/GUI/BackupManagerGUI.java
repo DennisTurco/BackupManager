@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +33,7 @@ import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
@@ -45,6 +44,8 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.Controllers.BackupMenuController;
 import backupmanager.GUI.Controllers.BackupPopupController;
 import backupmanager.Helpers.BackupHelper;
+import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
+import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ExportManager;
@@ -65,8 +66,6 @@ import backupmanager.database.Repositories.UserRepository;
  */
 public final class BackupManagerGUI extends javax.swing.JFrame {
     private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
-    public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     private final BackupObserver observer;
     public static List<ConfigurationBackup> backups;
@@ -180,12 +179,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en" -> Preferences.setLanguage(LanguagesEnum.ENG);
-            case "it" -> Preferences.setLanguage(LanguagesEnum.ITA);
-            case "es" -> Preferences.setLanguage(LanguagesEnum.ESP);
-            case "de" -> Preferences.setLanguage(LanguagesEnum.DEU);
-            case "fr" -> Preferences.setLanguage(LanguagesEnum.FRA);
-            default -> Preferences.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Confingurations.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Confingurations.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Confingurations.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Confingurations.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Confingurations.setLanguage(LanguagesEnum.FRA);
+            default -> Confingurations.setLanguage(LanguagesEnum.ENG);
         }
 
         reloadPreferences();
@@ -208,11 +207,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public void reloadPreferences() {
         logger.info("Reloading preferences");
 
-        Preferences.updateAllPreferences();
+        Confingurations.updateAllConfigurations();
 
         // load language
         try {
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
             setTranslations();
         } catch (IOException ex) {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);

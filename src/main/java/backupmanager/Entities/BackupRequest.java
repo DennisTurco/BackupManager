@@ -14,13 +14,14 @@ public record BackupRequest (
     int progress,
     BackupTriggeredEnum triggeredBy,
     Long durationMs,
-    long unzippedTagetSize,
-    Long zippedTagetSize,
+    String outputPath,
+    long unzippedTargetSize,
+    Long zippedTargetSize,
     int filesCount,
     String errorMessage
 )
 {
-    public static BackupRequest createNewBackupRequest(int backupConfigurationId, BackupTriggeredEnum type, int progress, long targetSize) {
-        return new BackupRequest(0, backupConfigurationId, LocalDateTime.now(), null, BackupStatusEnum.IN_PROGRESS, progress, type, null, targetSize, null, 0, null);
+    public static BackupRequest createNewBackupRequest(int backupConfigurationId, BackupTriggeredEnum type, String outputPath, long targetSize, int filesCount) {
+        return new BackupRequest(0, backupConfigurationId, LocalDateTime.now(), null, BackupStatusEnum.IN_PROGRESS, 0, type, null, outputPath, targetSize, null, filesCount, null);
     }
 }

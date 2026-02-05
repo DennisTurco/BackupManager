@@ -27,18 +27,16 @@ public class ZippingThread {
     private static final Logger logger = LoggerFactory.getLogger(ZippingThread.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public static void zipDirectory(String sourceDirectoryPath, String targetZipPath, ZippingContext context) {
+    public static void zipDirectory(File sourceFile, File outputFile, ZippingContext context, int totalFilesCount) {
         logger.info("Starting zipping process");
 
-        File sourceFile = new File(sourceDirectoryPath.trim());
-        File targetFile = new File(targetZipPath.trim());
+        String sourceDirectoryPath = sourceFile.getAbsolutePath();
+        String outupZipPath = outputFile.getAbsolutePath();
 
         if (!sourceFile.exists()) {
             handleError("Source directory does not exist: " + sourceDirectoryPath, ErrorTypes.ZippingIOError, context);
             return;
         }
-
-        int totalFilesCount = sourceFile.isDirectory() ? countFilesInDirectory(sourceFile) : 1;
 
         AtomicInteger copiedFilesCount = new AtomicInteger(0);
 
@@ -49,13 +47,13 @@ public class ZippingThread {
         }
 
         executorService.submit(() -> {
-            try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(targetZipPath))) {
+            try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(outupZipPath))) {
                 Path sourceDir = Paths.get(sourceDirectoryPath);
 
                 if (sourceFile.isFile())
-                    addFileToZip(sourceDirectoryPath, targetZipPath, zipOut, sourceFile.toPath(), sourceFile.getName(), copiedFilesCount, totalFilesCount, context);
+                    addFileToZip(sourceDirectoryPath, outupZipPath, zipOut, sourceFile.toPath(), sourceFile.getName(), copiedFilesCount, totalFilesCount, context);
                 else
-                    Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, targetFile, zipOut, copiedFilesCount, totalFilesCount, context));
+                    Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, outputFile, zipOut, copiedFilesCount, totalFilesCount, context));
 
             } catch (IOException e) {
                 logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);
@@ -94,32 +92,6 @@ public class ZippingThread {
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
         BackupOperations.UpdateProgressPercentage(actualProgress, sourceDirectoryPath, destinationDirectoryPath, context, zipEntryName, filesCopiedSoFar, totalFilesCount);
-    }
-
-    private static int countFilesInDirectory(File directory) {
-        if (directory == null) {
-            logger.warn("Directory is null");
-            return -1;
-        }
-        if (!directory.canRead()) {
-            logger.warn("Unable to read directory: " + directory.getAbsolutePath());
-            return -1;
-        }
-        File[] files = directory.listFiles();
-        if (files == null) {
-            logger.warn("Unable to list files for directory: " + directory.getAbsolutePath());
-            return -1;
-        }
-
-    	int count = 0;
-        for (File file : files) {
-            if (file.isFile()) {
-                count++;
-            } else if (file.isDirectory()) {
-                count += countFilesInDirectory(file); // Recursively count files in subdirectories.
-            }
-        }
-        return count;
     }
 
     /**

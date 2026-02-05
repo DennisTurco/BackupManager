@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
 
-public class PreferenceRepository {
+public class ConfigurationRepository {
 
-private static final Logger logger = LoggerFactory.getLogger(PreferenceRepository.class);
+private static final Logger logger = LoggerFactory.getLogger(ConfigurationRepository.class);
 
-    public static String getPreferenceValueByCode(String code) {
-        String sql = "SELECT Code, Value FROM Preferences WHERE Code = ?";
+    public static String getConfigurationValueByCode(String code) {
+        String sql = "SELECT Code, Value FROM Configurations WHERE Code = ?";
         try (Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -28,15 +28,15 @@ private static final Logger logger = LoggerFactory.getLogger(PreferenceRepositor
                 }
             }
         } catch (SQLException e) {
-            logger.error("Error fetching preference with code " + code + ": " + e.getMessage(), e);
+            logger.error("Error fetching configuration with code " + code + ": " + e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
 
         return null;
     }
 
-    public static void updatePreferenceValueByCode(String code, String value) {
-        String sql = "UPDATE Preferences SET Value = ? WHERE Code = ?";
+    public static void updateConfigurationValueByCode(String code, String value) {
+        String sql = "UPDATE Configurations SET Value = ? WHERE Code = ?";
         try (Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -44,10 +44,10 @@ private static final Logger logger = LoggerFactory.getLogger(PreferenceRepositor
             stmt.setString(2, code);
             stmt.executeUpdate();
 
-            logger.info("Preference {} updated succesfully with value {}", code, value);
+            logger.info("Configuration {} updated succesfully with value {}", code, value);
 
         } catch (SQLException e) {
-            logger.error("Preference updating error: " + e.getMessage());
+            logger.error("Configuration updating error: " + e.getMessage());
         }
     }
 }

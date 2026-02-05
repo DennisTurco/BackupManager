@@ -21,47 +21,47 @@ public class SubscriptionRepository {
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionRepository.class);
 
     public static Subscription getAnySubscriptionValid() {
-    String sql = """
-        SELECT
-            SubscriptionId,
-            InsertDate,
-            StartDate,
-            EndDate
-        FROM
-            Subscription
-        WHERE
-            StartDate <= ? AND EndDate >= ?
-        ORDER BY EndDate DESC
-        LIMIT 1
-        """;
+        String sql = """
+            SELECT
+                SubscriptionId,
+                InsertDate,
+                StartDate,
+                EndDate
+            FROM
+                Subscriptions
+            WHERE
+                StartDate <= ? AND EndDate >= ?
+            ORDER BY EndDate DESC
+            LIMIT 1
+            """;
 
-    long nowMillis = System.currentTimeMillis();
+        long nowMillis = System.currentTimeMillis();
 
-    try (Connection conn = Database.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setLong(1, nowMillis);
-        stmt.setLong(2, nowMillis);
+            stmt.setLong(1, nowMillis);
+            stmt.setLong(2, nowMillis);
 
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                int id = rs.getInt("SubscriptionId");
-                long insertDateLong = rs.getLong("InsertDate");
-                long startDateLong = rs.getLong("StartDate");
-                long endDateLong = rs.getLong("EndDate");
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("SubscriptionId");
+                    long insertDateLong = rs.getLong("InsertDate");
+                    long startDateLong = rs.getLong("StartDate");
+                    long endDateLong = rs.getLong("EndDate");
 
-                LocalDateTime insertDate = SqlHelper.toLocalDateTime(insertDateLong);
-                LocalDate startDate = SqlHelper.toLocalDate(startDateLong);
-                LocalDate endDate = SqlHelper.toLocalDate(endDateLong);
+                    LocalDateTime insertDate = SqlHelper.toLocalDateTime(insertDateLong);
+                    LocalDate startDate = SqlHelper.toLocalDate(startDateLong);
+                    LocalDate endDate = SqlHelper.toLocalDate(endDateLong);
 
-                return new Subscription(id, insertDate, startDate, endDate);
+                    return new Subscription(id, insertDate, startDate, endDate);
+                }
             }
+
+        } catch (SQLException e) {
+            logger.error("Error fetching a valid subscription", e);
         }
 
-    } catch (SQLException e) {
-        logger.error("Error fetching a valid subscription", e);
+        return null;
     }
-
-    return null;
-}
 }

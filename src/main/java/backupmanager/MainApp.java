@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Controllers.AppController;
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
@@ -52,8 +52,8 @@ public class MainApp {
 
     private static void loadPreferredLanguage() {
         try {
-            Preferences.loadAllPreferences();
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            Confingurations.loadAllConfigurations();
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }
@@ -71,7 +71,6 @@ public class MainApp {
     }
 
     private static void runBackgroundProcess() {
-        logger.info("Backup service starting in the background");
         try {
             AppController.startBackgroundProcess();
         } catch (IOException ex) {
