@@ -27,7 +27,8 @@ public class TranslationLoaderEnum {
         USER_DIALOG("UserDialog"),
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
-        DIALOGS("Dialogs");
+        DIALOGS("Dialogs"),
+        SUBSCRIPTION("Subscription");
 
         private final String categoryName;
         private final Map<TranslationKey, String> translations = new HashMap<>();
@@ -266,7 +267,13 @@ public class TranslationLoaderEnum {
         INFO_PAGE_VERSION("InfoPageVersion", "Version: "),
         INFO_PAGE_DEVELOPER("InfoPageDeveloper", "Developer: "),
         INFO_PAGE_CREDITS("InfoPageCredits", "Credits"),
-        INFO_PAGE_LICENSE("InfoPageLicense", "License");
+        INFO_PAGE_LICENSE("InfoPageLicense", "License"),
+
+        // Subscription
+        SUBSCRIPTION_EXPIRING_TITLE("ExpiringTitle", "Backup Manager subscription expiring soon"),
+        SUBSCRIPTION_EXPIRING_MESSAGE("ExpiringMessage", "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it."),
+        SUBSCRIPTION_EXPIRED_TITLE("ExpiredTitle", "Backup Manager subscription expired"),
+        SUBSCRIPTION_EXPIRED_MESSAGE("ExpiredMessage", "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it.");
 
         private final String keyName;
         private final String defaultValue;

@@ -5,24 +5,20 @@ import java.awt.TrayIcon;
 import javax.swing.JOptionPane;
 
 import backupmanager.Controllers.TrayController;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
+import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 
 public class SubscriptionNotifier {
     public static void showExpiringWarning(TrayController trayController) {
-        String title = "Abbonamento di BackupManager in scadenza";
-        String message = """
-                         Il tuo abbonamento a BackupManager sta per scadere.
-                         I backup automatici continueranno a funzionare fino alla scadenza.
-                         Contatta l'assistenza per rinnovarlo.""";
+        String title = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRING_TITLE);
+        String message = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRING_MESSAGE);
 
         showMessage(trayController, title, message, TrayIcon.MessageType.WARNING);
     }
 
     public static void showExpiredAlert(TrayController trayController) {
-        String title = "Abbonamento di BackupManager scaduto";
-        String message = """
-                         Il tuo abbonamento a BackupManager \u00e8 scaduto.
-                         I backup automatici non funzioneranno pi\u00f9.
-                         Contatta l'assistenza per riattivarlo.""";
+        String title = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRED_TITLE);
+        String message = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRED_MESSAGE);
 
         showMessage(trayController, title, message, TrayIcon.MessageType.ERROR);
     }

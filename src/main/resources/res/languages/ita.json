@@ -198,5 +198,11 @@
     "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo caratteri alfanumerici, trattini e underscore.",
     "ConfirmationDeletionTitle": "Conferma Eliminazione",
     "ConfirmationDeletionMessage": "Sei sicuro di voler eliminare le righe selezionate?"
+  },
+  "Subscription": {
+    "ExpiringTitle": "Abbonamento Backup Manager in scadenza",
+    "ExpiringMessage": "Il tuo abbonamento a Backup Manager sta per scadere.\nI backup automatici continueranno a funzionare fino alla data di scadenza.\nContatta l'assistenza per rinnovarlo.",
+    "ExpiredTitle": "Abbonamento Backup Manager scaduto",
+    "ExpiredMessage": "Il tuo abbonamento a Backup Manager è scaduto.\nI backup automatici non verranno più eseguiti.\nContatta l'assistenza per riattivarlo."
   }
 }

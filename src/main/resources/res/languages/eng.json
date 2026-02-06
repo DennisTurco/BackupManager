@@ -198,5 +198,11 @@
     "ErrorMessageInvalidFilename":"Invalid file name. Use only alphanumeric characters, dashes, and underscores.",
     "ConfirmationDeletionTitle":"Confirm Deletion",
     "ConfirmationDeletionMessage":"Are you sure you want to delete the selected rows?"
+  },
+  "Subscription": {
+    "ExpiringTitle": "Backup Manager subscription expiring soon",
+    "ExpiringMessage": "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it.",
+    "ExpiredTitle": "Backup Manager subscription expired",
+    "ExpiredMessage": "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it."
   }
 }
