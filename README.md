@@ -1,4 +1,4 @@
-![logo](src/main/resources/res/img/logo.ico)
+![logo](./src/main/resources/res/img/banner_resized.png)
 
 # Backup Manager
 
@@ -17,30 +17,21 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 
 ## Screenshots and Videos
 
-![](./docs/imgs/BackupManagerPresentation.gif)
+![gif](./docs/imgs/BackupManagerPresentation.gif)
 
-![](./docs/imgs/AutoBackup.png)
-![](./docs/imgs/BackupList.png)
-![](./docs/imgs/CompletedBackup.png)
-![](./docs/imgs/ThemeLanguage.png)
+| ![image1](./docs/imgs/AutoBackup.png) | ![image2](./docs/imgs/BackupList.png) |
+| ------------------------ | ------------------------ |
+| ![image3](./docs/imgs/CompletedBackup.png) | ![image4](./docs/imgs/ThemeLanguage.png) |
 
 ### Multi theme
 
-![](./docs/imgs/Home.png)
-![](./docs/imgs/Home2.png)
-![](./docs/imgs/Home3.png)
+| ![image5](./docs/imgs/Home.png) | ![image6](./docs/imgs/Home2.png) |
+| ------------------------ | ------------------------ |
+| ![image7](./docs/imgs/Home3.png) | . |
 
+## Code Ducumentation
 
-## Startup Logic
-
-```mermaid
-graph TD
-  n1(((PC Startup))) --> n2(Start Background Service)
-  n2 --> n3(Start TrayIcon)
-  n2 --> n4(Periodic Auto Backup Check)
-  n3 -->|click| n5(Start GUI)
-  n3 -->|exit| n6(Shutdown Backup Service)
-```
+$\rightarrow$ [Code tecnical documentation](./docs/code_documentation.md)
 
 ## Important Notes
 

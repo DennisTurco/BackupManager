@@ -82,9 +82,19 @@ ON Emails(Type, InsertDate);
 CREATE TABLE IF NOT EXISTS "Subscriptions" (
 	"SubscriptionId" INTEGER PRIMARY KEY AUTOINCREMENT,
 	"InsertDate" INTEGER NOT NULL,
-	"StartDate" INTEGER NOT NULL,
+	"StartDate" INTEGER NOT NULL UNIQUE,
 	"EndDate" INTEGER NOT NULL,
 	CHECK("StartDate" <= "EndDate")
 );
+
+-- View: Subscriptions
+CREATE VIEW IF NOT EXISTS v_Subscriptions AS
+SELECT
+    SubscriptionId,
+    datetime(InsertDate / 1000, 'unixepoch', 'localtime') AS InsertDate,
+    datetime(StartDate / 1000, 'unixepoch', 'localtime') AS StartDate,
+    datetime(EndDate / 1000, 'unixepoch', 'localtime') AS EndDate
+FROM Subscriptions;
+
 
 PRAGMA foreign_keys = on;

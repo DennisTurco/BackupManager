@@ -1,6 +1,6 @@
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
 
-    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> <!--Scan this configuration for errors-->
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> Scan this configuration for errors-->
 
     <define name="smtpPassword" class="backupmanager.Email.EncryptedPasswordDefiner" />
 
@@ -10,7 +10,7 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.host" value="${smtp.smtp}" />
     <property name="smtp.email_confirmation_to" value="${smtp.email_confirmation_to}" />
-    <property name="EMAIL_TO" value="NONEassistenza@shardpc.it" /> <!-- test1@shardpc.it -->
+    <property name="EMAIL_TO" value="assistenza@shardpc.it" /> <!-- test1@shardpc.it -->
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ BackupManager - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 BackupManager - New user registered!! 🆕" />
     <property name="EMAIL_CONFIRMATION_SUBJECT" value="BackupManager - Welcome!" />
@@ -126,7 +126,7 @@
     </logger>
 
     <!-- Root logger -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC" />
         <appender-ref ref="ERROR_FILE" />
