@@ -45,10 +45,10 @@ public class BackupRequestRepository {
             stmt.setObject(12, backup.errorMessage());
             stmt.executeUpdate();
 
-            logger.info("Backup request inserted succesfully");
+            logger.info("Backup request inserted: configurationId={}, target={}", backup.backupConfigurationId(), backup.outputPath());
 
         } catch (SQLException e) {
-            logger.error("Backup request inserting error: " + e.getMessage());
+            logger.error("Failed to insert backup request for configurationId={}", backup.backupConfigurationId(), e);
         }
     }
 
@@ -103,6 +103,7 @@ public class BackupRequestRepository {
                     BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
 
                     backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
+                    logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
                 }
             }
 
@@ -153,7 +154,7 @@ public class BackupRequestRepository {
             logger.info("Backup request status updated succesfully");
 
         } catch (SQLException e) {
-            logger.error("Backup request status updating error: " + e.getMessage());
+            logger.error("Failed to update backup request status for requestId={}", backupRequestId, e);
         }
     }
 
@@ -177,7 +178,31 @@ public class BackupRequestRepository {
             logger.info("Backup request progress updated succesfully");
 
         } catch (SQLException e) {
-            logger.error("Backup request progress updating error: " + e.getMessage());
+            logger.error("Failed to update backup request progress for requestId={}", backupRequestId, e);
+        }
+    }
+
+    public static void updateRequestFolderSizeZippedByRequestId(int backupRequestId, long folderSize) {
+        String sql = """
+        UPDATE
+            BackupRequests
+        SET
+            ZippedTargetSize = ?
+        WHERE
+            BackupRequestId = ?
+                """;
+
+        try (Connection conn = Database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, folderSize);
+            stmt.setInt(2, backupRequestId);
+            stmt.executeUpdate();
+
+            logger.info("Backup request zipped folder size updated succesfully");
+
+        } catch (SQLException e) {
+            logger.error("Failed to update backup request zipped folder size for requestId={}", backupRequestId, e);
         }
     }
 
@@ -221,7 +246,7 @@ public class BackupRequestRepository {
             logger.info("Backup request updated succesfully");
 
         } catch (SQLException e) {
-            logger.error("Backup request updating error: " + e.getMessage());
+            logger.error("Failed to update backup request for requestId={}", backupRequestId, e);
         }
     }
 
@@ -254,28 +279,91 @@ public class BackupRequestRepository {
             stmt.setInt(1, configurationId);
 
             try (ResultSet rs = stmt.executeQuery()){
-                int backupRequestId = rs.getInt("BackupRequestId");
-                Long startedDateMills = rs.getLong("StartedDate");
-                Long completionDateStr = rs.getLong("CompletionDate");
-                int statusInt = rs.getInt("Status");
-                int progress = rs.getInt("Progress");
-                int triggeredByInt = rs.getInt("TriggeredBy");
-                Long durationMs = rs.getLong("DurationMs");
-                String outputPath = rs.getString("OutputPath");
-                long unzippedTargetSize = rs.getLong("UnzippedTargetSize");
-                long zippedTargetSize = rs.getLong("ZippedTargetSize");
-                int filesCount = rs.getInt("FilesCount");
-                String errorMessage = rs.getString("ErrorMessage");
+                if (rs.next()) {
+                    int backupRequestId = rs.getInt("BackupRequestId");
+                    Long startedDateMills = rs.getLong("StartedDate");
+                    Long completionDateStr = rs.getLong("CompletionDate");
+                    int statusInt = rs.getInt("Status");
+                    int progress = rs.getInt("Progress");
+                    int triggeredByInt = rs.getInt("TriggeredBy");
+                    Long durationMs = rs.getLong("DurationMs");
+                    String outputPath = rs.getString("OutputPath");
+                    long unzippedTargetSize = rs.getLong("UnzippedTargetSize");
+                    long zippedTargetSize = rs.getLong("ZippedTargetSize");
+                    int filesCount = rs.getInt("FilesCount");
+                    String errorMessage = rs.getString("ErrorMessage");
 
-                LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
-                LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
-                BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
-                BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+                    LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
+                    LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
+                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
+                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
 
-                return new BackupRequest(backupRequestId, configurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
+                    return new BackupRequest(backupRequestId, configurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
+                } else {
+                    logger.debug("No backup in progress found for configurationId={}", configurationId);
+                }
             }
         } catch (SQLException e) {
-            logger.error("Error fetching backup request by configuration id: " + e.getMessage(), e);
+            logger.error("Failed to update backup request for requestId={}", configurationId, e);
+        }
+
+        return null;
+    }
+
+
+    public static BackupRequest getBackupRequestById(int requestId) {
+        String sql = """
+        SELECT
+            BackupRequestId,
+            BackupConfigurationId,
+            StartedDate,
+            CompletionDate,
+            Status,
+            Progress,
+            TriggeredBy,
+            DurationMs,
+            OutputPath,
+            UnzippedTargetSize,
+            ZippedTargetSize,
+            FilesCount,
+            ErrorMessage
+        FROM
+            BackupRequests
+        WHERE
+            BackupRequestId = ?
+            """;
+
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, requestId);
+
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()) {
+                    int backupConfigurationId = rs.getInt("BackupConfigurationId");
+                    Long startedDateMills = rs.getLong("StartedDate");
+                    Long completionDateStr = rs.getLong("CompletionDate");
+                    int statusInt = rs.getInt("Status");
+                    int progress = rs.getInt("Progress");
+                    int triggeredByInt = rs.getInt("TriggeredBy");
+                    Long durationMs = rs.getLong("DurationMs");
+                    String outputPath = rs.getString("OutputPath");
+                    long unzippedTargetSize = rs.getLong("UnzippedTargetSize");
+                    long zippedTargetSize = rs.getLong("ZippedTargetSize");
+                    int filesCount = rs.getInt("FilesCount");
+                    String errorMessage = rs.getString("ErrorMessage");
+
+                    LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
+                    LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
+                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
+                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+
+                    return new BackupRequest(requestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
+                } else {
+                    logger.debug("No backup found for requestId={}", requestId);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to fetch backup request for requestId={}", requestId, e);
         }
 
         return null;

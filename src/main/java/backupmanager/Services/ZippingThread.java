@@ -91,7 +91,7 @@ public class ZippingThread {
 
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDirectoryPath, destinationDirectoryPath, context, zipEntryName, filesCopiedSoFar, totalFilesCount);
+        BackupOperations.updateProgressPercentage(actualProgress, sourceDirectoryPath, destinationDirectoryPath, context, zipEntryName, filesCopiedSoFar, totalFilesCount);
     }
 
     /**

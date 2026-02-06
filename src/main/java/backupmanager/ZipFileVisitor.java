@@ -72,7 +72,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context, zipEntryName, filesCopiedSoFar, totalFilesCount);
+        BackupOperations.updateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context, zipEntryName, filesCopiedSoFar, totalFilesCount);
 
         return FileVisitResult.CONTINUE;
     }
@@ -85,7 +85,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
     private boolean isZippingThreadInterrupted() {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.backup().getId());
+            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.backup().getId());
             logger.info("Zipping process manually interrupted");
             return true;
         }

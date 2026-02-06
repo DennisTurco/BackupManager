@@ -1,6 +1,5 @@
 package backupmanager.GUI;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import backupmanager.Charts;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
@@ -164,7 +162,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void initSidebar() {
         sp.setMain(null);
-        sp.setSide(sidebar);
         sp.setMinWidth(55);
         sp.setMaxWidth(150);
         sp.setMainAnimationEnabled(true);
@@ -359,12 +356,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         CopyBackupNamePopupItem = new javax.swing.JMenuItem();
         CopyInitialPathPopupItem = new javax.swing.JMenuItem();
         CopyDestinationPathPopupItem = new javax.swing.JMenuItem();
-        sidebar = new javax.swing.JPanel();
-        pageBackupList = new backupmanager.svg.SVGButton();
-        pageDashboard = new backupmanager.svg.SVGButton();
-        pageSettings = new backupmanager.svg.SVGButton();
-        men = new backupmanager.svg.SVGButton();
-        copyrightLabelSide = new javax.swing.JLabel();
         panelVersion = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         layeredCardPanel = new javax.swing.JLayeredPane();
@@ -533,130 +524,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         setTitle("Backup Manager");
         setMinimumSize(new java.awt.Dimension(750, 450));
 
-        sidebar.setBackground(new java.awt.Color(16, 84, 129));
-        sidebar.setPreferredSize(new java.awt.Dimension(55, 32));
-
-        pageBackupList.setForeground(new java.awt.Color(195, 217, 233));
-        pageBackupList.setText("Backup List");
-        pageBackupList.setBorderPainted(false);
-        pageBackupList.setContentAreaFilled(false);
-        pageBackupList.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        pageBackupList.setHideActionText(true);
-        pageBackupList.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        pageBackupList.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pageBackupList.setIconTextGap(20);
-        pageBackupList.setMargin(new java.awt.Insets(2, 0, 2, 14));
-        pageBackupList.setMinimumSize(new java.awt.Dimension(0, 0));
-        pageBackupList.setPreferredSize(new java.awt.Dimension(50, 574));
-        pageBackupList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pageBackupListActionPerformed(evt);
-            }
-        });
-
-        pageDashboard.setForeground(new java.awt.Color(195, 217, 233));
-        pageDashboard.setText("Dashboard");
-        pageDashboard.setBorderPainted(false);
-        pageDashboard.setContentAreaFilled(false);
-        pageDashboard.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        pageDashboard.setHideActionText(true);
-        pageDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        pageDashboard.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pageDashboard.setIconTextGap(20);
-        pageDashboard.setMargin(new java.awt.Insets(2, 0, 2, 14));
-        pageDashboard.setMinimumSize(new java.awt.Dimension(0, 0));
-        pageDashboard.setPreferredSize(new java.awt.Dimension(50, 574));
-        pageDashboard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pageDashboardActionPerformed(evt);
-            }
-        });
-
-        pageSettings.setForeground(new java.awt.Color(195, 217, 233));
-        pageSettings.setText("Settings");
-        pageSettings.setBorderPainted(false);
-        pageSettings.setContentAreaFilled(false);
-        pageSettings.setFocusPainted(false);
-        pageSettings.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        pageSettings.setHideActionText(true);
-        pageSettings.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        pageSettings.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pageSettings.setIconTextGap(20);
-        pageSettings.setMargin(new java.awt.Insets(2, 0, 2, 14));
-        pageSettings.setMinimumSize(new java.awt.Dimension(0, 35));
-        pageSettings.setPreferredSize(new java.awt.Dimension(50, 574));
-        pageSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pageSettingsActionPerformed(evt);
-            }
-        });
-
-        men.setBackground(new java.awt.Color(34, 40, 47));
-        men.setBorderPainted(false);
-        men.setContentAreaFilled(false);
-        men.setFocusPainted(false);
-        men.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 14)); // NOI18N
-        men.setHideActionText(true);
-        men.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        men.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        men.setIconTextGap(20);
-        men.setMargin(new java.awt.Insets(2, 3, 2, 14));
-        men.setMinimumSize(new java.awt.Dimension(0, 35));
-        men.setPreferredSize(new java.awt.Dimension(50, 574));
-        men.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menActionPerformed(evt);
-            }
-        });
-
-        copyrightLabelSide.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 10)); // NOI18N
-        copyrightLabelSide.setForeground(new java.awt.Color(126, 170, 214));
-        copyrightLabelSide.setText("Shard");
-        copyrightLabelSide.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        javax.swing.GroupLayout sidebarLayout = new javax.swing.GroupLayout(sidebar);
-        sidebar.setLayout(sidebarLayout);
-        sidebarLayout.setHorizontalGroup(
-            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidebarLayout.createSequentialGroup()
-                .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sidebarLayout.createSequentialGroup()
-                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(sidebarLayout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(copyrightLabelSide, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(sidebarLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(sidebarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pageBackupList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(sidebarLayout.createSequentialGroup()
-                                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(pageDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        sidebarLayout.setVerticalGroup(
-            sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidebarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pageBackupList, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pageDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(pageSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
-                .addComponent(copyrightLabelSide, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-        );
-
-        getContentPane().add(sidebar, java.awt.BorderLayout.WEST);
-
         panelVersion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panelVersion.setPreferredSize(new java.awt.Dimension(100, 30));
 
@@ -731,7 +598,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         table.setRowHeight(50);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -773,27 +640,28 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
-                .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ExportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
         panelBackupListLayout.setVerticalGroup(
             panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackupListLayout.createSequentialGroup()
-                .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -937,7 +805,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(totalBackupConfigurationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(totalSpaceUsedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                 .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(chart2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
@@ -1303,27 +1171,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         BackupMenuController.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
 
-    private void menActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menActionPerformed
-        sp.toggleMenu();
-    }//GEN-LAST:event_menActionPerformed
-
-    private void pageSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageSettingsActionPerformed
-
-    }//GEN-LAST:event_pageSettingsActionPerformed
-
-    private void pageDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageDashboardActionPerformed
-        CardLayout cl = (CardLayout) layeredCardPanel.getLayout();
-        cl.show(layeredCardPanel, "Dashboard");
-
-        Charts.createChart(chart1);
-        Charts.createChart(chart2);
-    }//GEN-LAST:event_pageDashboardActionPerformed
-
-    private void pageBackupListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pageBackupListActionPerformed
-        CardLayout cl = (CardLayout) layeredCardPanel.getLayout();
-        cl.show(layeredCardPanel, "BackupList");
-    }//GEN-LAST:event_pageBackupListActionPerformed
-
     private void setTranslations() {
         // update table translations
         if (backups != null)
@@ -1399,10 +1246,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void setSvgImages() {
-        men.setSvgImage("res/img/hamburger.svg", 30, 30);
-        pageBackupList.setSvgImage("res/img/list.svg", 30, 30);
-        pageDashboard.setSvgImage("res/img/dashboard.svg", 30, 30);
-        pageSettings.setSvgImage("res/img/settings2.svg", 30, 30);
         exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
         exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
         addBackupEntryButton.setSvgImage("res/img/add.svg", 30, 30);
@@ -1482,7 +1325,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel chart1TitleLabel;
     private javax.swing.JPanel chart2;
     private javax.swing.JLabel chart2TitleLabel;
-    private javax.swing.JLabel copyrightLabelSide;
     private javax.swing.JLabel detailsLabel;
     private backupmanager.svg.SVGButton exportAsCsvBtn;
     private backupmanager.svg.SVGButton exportAsPdfBtn;
@@ -1502,16 +1344,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLayeredPane layeredCardPanel;
-    private backupmanager.svg.SVGButton men;
-    private backupmanager.svg.SVGButton pageBackupList;
-    private backupmanager.svg.SVGButton pageDashboard;
-    private backupmanager.svg.SVGButton pageSettings;
     private javax.swing.JPanel panelBackupList;
     private javax.swing.JPanel panelDashboard;
     private javax.swing.JPanel panelVersion;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
-    private javax.swing.JPanel sidebar;
     private javax.swing.JTable table;
     private javax.swing.JLabel totalBackupConfigurationsNumber;
     private javax.swing.JPanel totalBackupConfigurationsPanel;

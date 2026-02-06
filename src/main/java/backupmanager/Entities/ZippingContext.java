@@ -18,7 +18,7 @@ public record ZippingContext (
     long folderUnzippedSize
 ) {
     public static ZippingContext create(ConfigurationBackup backup, TrayIcon trayIcon, BackupTable backupTable, BackupProgressGUI progressBar, JMenuItem interruptBackupPopupItem, JMenuItem deleteBackupPopupItem) {
-        long folderSize = FolderUtils.calculateFolderSize(backup.getTargetPath());
+        long folderSize = FolderUtils.calculateFileOrFolderSize(backup.getTargetPath());
         return new ZippingContext(backup, trayIcon, backupTable, progressBar, interruptBackupPopupItem, deleteBackupPopupItem, folderSize);
     }
 }
