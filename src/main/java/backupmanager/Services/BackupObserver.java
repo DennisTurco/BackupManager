@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.BackupStatusEnum;
 import backupmanager.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
@@ -55,8 +54,10 @@ public class BackupObserver {
 
                     SwingUtilities.invokeLater(() -> {
 
-                        if (request.status() == BackupStatusEnum.IN_PROGRESS) {
-                            TableDataManager.updateProgressBarPercentage(config, request.progress(), formatter);
+                        BackupRequest updatedRequest = BackupRequestRepository.getBackupRequestById(request.backupRequestId());
+
+                        if (updatedRequest != null && updatedRequest.progress() < 99) {
+                            TableDataManager.updateProgressBarPercentage(config, updatedRequest.progress(), formatter);
                         } else {
                             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(config, formatter);
                         }

@@ -92,7 +92,7 @@ public class BackupConfigurationRepository {
     }
 
     public static void deleteBackup(int backupId) {
-        String sql = "DELETE BackupConfigurations WHERE BackupId = ?";
+        String sql = "DELETE FROM BackupConfigurations WHERE BackupId = ?";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 

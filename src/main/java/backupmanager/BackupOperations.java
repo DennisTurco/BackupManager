@@ -45,7 +45,6 @@ public class BackupOperations {
         logger.info("Event --> manual backup started");
 
         try {
-            String temp = "\\";
             String path1 = context.backup().getTargetPath();
             String path2 = context.backup().getDestinationPath();
 
@@ -57,13 +56,7 @@ public class BackupOperations {
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
-            String name1 = path1.substring(path1.length()-1, path1.length()-1);
-
-            for(int i = path1.length() - 1; i >= 0; i--) {
-                if(path1.charAt(i) != temp.charAt(0)) name1 = path1.charAt(i) + name1;
-                else break;
-            }
-
+            String name1 = new File(path1).getName();
             name1 = removeExtension(name1);
             path2 = path2 + "\\" + name1 + "_" + date;
 
@@ -89,8 +82,7 @@ public class BackupOperations {
     }
 
     private static void createBackupRequest(ZippingContext context, BackupTriggeredEnum triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
-        long targetSize = FolderUtils.calculateFolderSize(sourceFile.getAbsolutePath());
-
+        long targetSize = FolderUtils.calculateFileOrFolderSize(sourceFile.getAbsolutePath());
         BackupRequestRepository.insertBackupRequest(BackupRequest.createNewBackupRequest(context.backup().getId(), triggeredBy, outputFile.getAbsolutePath(), targetSize, totalFilesCount));
     }
 
@@ -208,7 +200,7 @@ public class BackupOperations {
             TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup(), formatter);
     }
 
-    public static void UpdateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
+    public static void updateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             logger.info("Zipping progress: " + value + "%");
 
@@ -218,20 +210,17 @@ public class BackupOperations {
         if (BackupManagerGUI.backupTable != null)
             TableDataManager.updateProgressBarPercentage(context.backup(), value, formatter);
 
-        updateProgressBackupRequest(context, value);
-
-        if (value == 100) {
-            long folderSize = FolderUtils.calculateFolderSize(path2);
-            RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.backup().getId(), folderSize);
-            updateAfterBackup(path1, path2, context);
-            deleteOldBackupsIfNecessary(context.backup().getMaxToKeep(), path2);
-        }
-    }
-
-    private static void updateProgressBackupRequest(ZippingContext context, int value) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.backup().getId());
         if (request != null) {
-            BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), value);
+
+            if (value < 100)
+                BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), value);
+            else if (value == 100) {
+                RunningBackupService.updateBackupZippedFolderSizeById(request.backupRequestId(), path2);
+
+                updateAfterBackup(path1, path2, context);
+                deleteOldBackupsIfNecessary(context.backup().getMaxToKeep(), path2);
+            }
         }
     }
 
@@ -241,13 +230,14 @@ public class BackupOperations {
 
         File file = new File(destinationPath);
         File folder = file.getParentFile();
-        String baseName = file.getName().split("_")[0];
 
-        if (folder == null || !folder.isDirectory()) {
-            logger.warn("Destination path is not a directory: {}", destinationPath);
-            return;
+        String baseName = removeExtension(file.getName());
+        int lastUnderscore = baseName.lastIndexOf('_');
+        if (lastUnderscore > 0) {
+            baseName = baseName.substring(0, lastUnderscore);
         }
 
+        // regex: baseName + "_" + timestamp
         String regex = Pattern.quote(baseName) + "_\\d{2}-\\d{2}-\\d{4}T\\d{2}-\\d{2}-\\d{2}\\.zip";
 
         File[] matchingFiles = folder.listFiles((dir, name) -> name.matches(regex));
@@ -257,8 +247,14 @@ public class BackupOperations {
             return;
         }
 
-        if (matchingFiles.length <= maxBackupsToKeep)
+        if (matchingFiles.length <= maxBackupsToKeep) {
+            logger.info("No old backups to delete, {} files within limit {}", matchingFiles.length, maxBackupsToKeep);
+            logger.info("Files retained:");
+            for (File f : matchingFiles) {
+                logger.info(" - {}", f.getName());
+            }
             return;
+        }
 
         logger.info("Found {} matching files, exceeding max allowed: {}", matchingFiles.length, maxBackupsToKeep);
 
@@ -271,6 +267,11 @@ public class BackupOperations {
                 logger.info("Deleted old backup: {}", fileToDelete.getName());
             else
                 logger.warn("Failed to delete old backup: {}", fileToDelete.getName());
+        }
+
+        logger.info("Files retained after deletion:");
+        for (int i = matchingFiles.length - maxBackupsToKeep; i < matchingFiles.length; i++) {
+            logger.info(" - {}", matchingFiles[i].getName());
         }
     }
 
@@ -323,7 +324,7 @@ public class BackupOperations {
         }
 
         return false;
-    }
+}
 
     public static void setError(ErrorTypes error, TrayIcon trayIcon, String backupName) {
         switch (error) {
