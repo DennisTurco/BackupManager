@@ -175,7 +175,7 @@ public class BackupRequestRepository {
             stmt.setInt(2, backupRequestId);
             stmt.executeUpdate();
 
-            logger.info("Backup request progress updated succesfully");
+            logger.debug("Backup request progress updated succesfully");
 
         } catch (SQLException e) {
             logger.error("Failed to update backup request progress for requestId={}", backupRequestId, e);
