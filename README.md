@@ -1,4 +1,4 @@
-![logo](src/main/resources/res/img/logo.ico)
+![logo](./src/main/resources/res/img/banner_resized.png)
 
 # Backup Manager
 
@@ -7,6 +7,7 @@
 Each backup is carefully saved, and the program maintains a detailed log of all completed operations. Users can also view, manage, and edit the details of each backup, ensuring complete control and customization over saved data. This tool is an ideal solution for efficiently and securely protecting files, minimizing the risk of data loss.
 
 ## Features
+
 * 📁 Automatic backup of folders and subfolders
 * 🕒 Flexible scheduling for recurring backups
 * 🖱️ Simple GUI with tray icon support
@@ -15,34 +16,27 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 * 🪟 Auto-start with the operating system (configurable)
 
 ## Screenshots and Videos
-![](./docs/imgs/BackupManagerPresentation.gif)
 
-![](./docs/imgs/AutoBackup.png)
-![](./docs/imgs/BackupList.png)
-![](./docs/imgs/CompletedBackup.png)
-![](./docs/imgs/ThemeLanguage.png)
+![gif](./docs/imgs/BackupManagerPresentation.gif)
+
+| ![image1](./docs/imgs/AutoBackup.png) | ![image2](./docs/imgs/BackupList.png) |
+| ------------------------ | ------------------------ |
+| ![image3](./docs/imgs/CompletedBackup.png) | ![image4](./docs/imgs/ThemeLanguage.png) |
 
 ### Multi theme
-![](./docs/imgs/Home.png)
-![](./docs/imgs/Home2.png)
-![](./docs/imgs/Home3.png)
 
+| ![image5](./docs/imgs/Home.png) | ![image6](./docs/imgs/Home2.png) |
+| ------------------------ | ------------------------ |
+| ![image7](./docs/imgs/Home3.png) | . |
 
-## Startup Logic
-```mermaid
-graph TD
-  n1(((PC Startup))) --> n2(Start Background Service)
-  n2 --> n3(Start TrayIcon)
-  n2 --> n4(Periodic Auto Backup Check)
-  n3 -->|click| n5(Start GUI)
-  n3 -->|exit| n6(Shutdown Backup Service)
-```
+## Code Ducumentation
 
+$\rightarrow$ [Code tecnical documentation](./docs/code_documentation.md)
 
-## Important Notes:
+## Important Notes
+
 * If, for any reason, the setup program doesn't add the application to the startup registry (`regedit`), you can manually run "add_to_startup.bat" located in the installation folder by double-clicking it.
 * This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
-
 
 ## Platforms
 
@@ -67,13 +61,13 @@ graph TD
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 ## Time report
+
 [![wakatime](https://wakatime.com/badge/user/ce36d0fc-2f0b-4e85-b318-872804ab18b6/project/882e0afb-87a6-495d-9082-a9de9f9f4f19.svg)](https://wakatime.com/badge/user/ce36d0fc-2f0b-4e85-b318-872804ab18b6/project/882e0afb-87a6-495d-9082-a9de9f9f4f19)
 
 ## Authors
 
-- [DennisTurco](https://www.github.com/DennisTurco)
-
+* [DennisTurco](https://www.github.com/DennisTurco)
 
 ## Support
 
-For support, email: dennisturco@gmail.com
+For support, email: [dennisturco@gmail.com](dennisturco@gmail.com)

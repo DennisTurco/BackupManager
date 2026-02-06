@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,12 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import backupmanager.Managers.ImportExportManager;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
-import backupmanager.Entities.Backup;
-import backupmanager.Entities.Preferences;
-import backupmanager.Entities.RunningBackups;
+import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
@@ -42,58 +39,57 @@ import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONBackup;
+import backupmanager.GUI.Controllers.BackupMenuController;
+import backupmanager.GUI.Controllers.BackupPopupController;
+import backupmanager.Helpers.BackupHelper;
+import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
+import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Json.JSONConfigReader;
-import backupmanager.Json.JsonUser;
-import backupmanager.Managers.BackupManager;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.BackupObserver;
+import backupmanager.Services.RunningBackupService;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
 import backupmanager.Table.TableDataManager;
+import backupmanager.Widgets.SideMenuPanel;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.UserRepository;
 
 /**
  * @author Dennis Turco
  */
 public final class BackupManagerGUI extends javax.swing.JFrame {
     private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
-    public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    
-    private final BackupManager backupManager;
+
     private final BackupObserver observer;
-    public static List<Backup> backups;
+    public static List<ConfigurationBackup> backups;
     public static DefaultTableModel model;
     public static BackupTable backupTable;
     public static BackupTableModel tableModel;
     public static BackupProgressGUI progressBar;
     private Integer selectedRow;
     private final String currentVersion;
-    
+    private final SideMenuPanel sp;
+
     public BackupManagerGUI() {
         ThemeManager.updateThemeFrame(this);
-        
-        initComponents();
 
+        initComponents();
         currentVersion = ConfigKey.VERSION.getValue();
-        
+
+        sp = new SideMenuPanel(this);
+
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
-                
-        // load Menu items
+
         initializeMenuItems();
-        
-        // set app sizes
         setScreenSize();
-
-        // icons
         researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new com.formdev.flatlaf.extras.FlatSVGIcon("res/img/search.svg", 16, 16));
-
-        // translations
         setTranslations();
 
         // first initialize the table, then start observer thread
@@ -101,59 +97,78 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         observer = new BackupObserver(dateForfolderNameFormatter, 1000);
         observer.start();
 
-        // disable interruption backup operation option
         interruptBackupPopupItem.setEnabled(false);
-        
-        // set all svg images
+
         setSvgImages();
-
         checkForFirstAccess();
-
-        backupManager = new BackupManager(this);
-
         jSeparator5.setVisible(false);
 
         // TODO: remove this
         interruptBackupPopupItem.setVisible(false);
+
+        initSidebar();
     }
-    
+
     private void checkForFirstAccess() {
         logger.debug("Checking for first access");
-        try {
-            User user = JsonUser.readUserFromJson(ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+        User user = UserRepository.getLastUser();
 
-            if (user != null) {
-                logger.info("Current user: " + user.toString());
-                return;
-            }
-
-            // set language based on PC language
+        if (user == null) { // first access
             setLanguageBasedOnPcLanguage();
-
-            // user creation
-            createUser();
-        } catch (IOException e) {
-            logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
-            JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+            createNewUser();
+        } else if (user.equals(User.getDefaultUser())) { // user unregistered
+            updateUnregisteredUser(user.id());
+        } else {
+            logger.info("Current user: " + user.toString());
         }
     }
 
-    private void createUser() {
-        // first access
-        EntryUserDialog userDialog = new EntryUserDialog(this, true);
-        userDialog.setVisible(true);
-        User newUser = userDialog.getUser();
+    private void createNewUser() {
+        User newUser = openUserDialogAndObtainTheResult();
 
         if (newUser == null) {
+            UserRepository.insertUser(User.getDefaultUser());
             return;
         }
 
-        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+        UserRepository.insertUser(newUser);
 
-        EmailSender.sendUserCreationEmail(newUser);
-        EmailSender.sendConfirmEmailToUser(newUser);
+        sendRegistrationEmail(newUser);
     }
-    
+
+    private void updateUnregisteredUser(int userId) {
+        User newUser = openUserDialogAndObtainTheResult();
+
+        if (newUser == null || newUser.equals(User.getDefaultUser())) {
+            return;
+        }
+
+        newUser = new User(userId, newUser.name(), newUser.surname(), newUser.email());
+        UserRepository.updateUser(newUser);
+
+        sendRegistrationEmail(newUser);
+    }
+
+    private User openUserDialogAndObtainTheResult() {
+        EntryUserDialog userDialog = new EntryUserDialog(this, true);
+        userDialog.setVisible(true);
+        return userDialog.getUser();
+    }
+
+    private void sendRegistrationEmail(User user) {
+        EmailSender.sendUserCreationEmail(user);
+        EmailSender.sendConfirmEmailToUser(user);
+    }
+
+    private void initSidebar() {
+        sp.setMain(null);
+        sp.setMinWidth(55);
+        sp.setMaxWidth(150);
+        sp.setMainAnimationEnabled(true);
+        sp.setSpeed(4);
+        sp.setResponsiveMinWidth(1300);
+    }
+
     private void setLanguageBasedOnPcLanguage() {
         Locale defaultLocale = Locale.getDefault();
         String language = defaultLocale.getLanguage();
@@ -161,23 +176,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en":
-                Preferences.setLanguage(LanguagesEnum.ENG);
-                break;
-            case "it":
-                Preferences.setLanguage(LanguagesEnum.ITA);
-                break;
-            case "es":
-                Preferences.setLanguage(LanguagesEnum.ESP);
-                break;
-            case "de":
-                Preferences.setLanguage(LanguagesEnum.DEU);
-                break;
-            case "fr":
-                Preferences.setLanguage(LanguagesEnum.FRA);
-                break;
-            default:
-                Preferences.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Confingurations.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Confingurations.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Confingurations.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Confingurations.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Confingurations.setLanguage(LanguagesEnum.FRA);
+            default -> Confingurations.setLanguage(LanguagesEnum.ENG);
         }
 
         reloadPreferences();
@@ -200,40 +204,41 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public void reloadPreferences() {
         logger.info("Reloading preferences");
 
-        Preferences.updatePreferencesToJSON();
+        Confingurations.updateAllConfigurations();
 
         // load language
         try {
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
             setTranslations();
         } catch (IOException ex) {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
-        
+
         // load theme
         ThemeManager.updateThemeFrame(this);
         ThemeManager.refreshPopup(TablePopup);
         setSvgImages();
     }
-    
+
     private void displayBackupList() {
-        BackupTableModel model = new BackupTableModel(getColumnTranslations(), 0);
-    
+        BackupTableModel tempModel = new BackupTableModel(getColumnTranslations(), 0);
+        BackupManagerGUI main = this;
+
         // Populate the model with backup data
-        for (Backup backup : backups) {
-            model.addRow(new Object[]{
-                backup.getBackupName(),
-                backup.getInitialPath(),
+        for (ConfigurationBackup backup : backups) {
+            tempModel.addRow(new Object[]{
+                backup.getName(),
+                backup.getTargetPath(),
                 backup.getDestinationPath(),
-                backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "",
-                backup.isAutoBackup(),
-                backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "",
+                backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "",
+                backup.isAutomatic(),
+                backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "",
                 backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : ""
             });
         }
-    
-        backupTable = new BackupTable(model);
+
+        backupTable = new BackupTable(tempModel);
 
         // Add key bindings using InputMap and ActionMap
         InputMap inputMap = backupTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -248,9 +253,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                backupManager.openBackup((String) backupTable.getValueAt(selectedRow, 0));
+                BackupHelper.openBackupByName((String) backupTable.getValueAt(selectedRow, 0), main);
 
-                backupManager.openBackupEntryDialog();
+                BackupHelper.openBackupEntryDialog(main);
             }
         });
 
@@ -261,7 +266,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRows = backupTable.getSelectedRows();
                 if (selectedRows.length == 0) return;
-        
+
                 logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
 
                 int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -270,7 +275,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 }
 
                 for (int row : selectedRows) {
-                    backupManager.deleteBackup(row, backups, backupTable, false);
+                    BackupHelper.deleteBackup(row, backupTable, false);
                 }
             }
         });
@@ -286,7 +291,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
             }
         }
-            
+
         // Add the existing mouse listener to the new table
         backupTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -294,38 +299,38 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 tableMouseClicked(evt); // Reuse the existing method
             }
         });
-    
+
         // Update the global model reference
-        BackupManagerGUI.model = model;
-    
+        BackupManagerGUI.model = tempModel;
+
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
         table = backupTable; // Update the reference to the new table
         scrollPane.setViewportView(table); // Replace the table in the scroll pane
     }
-    
+
     private void researchInTable() {
-        List<Backup> tempBackups = new ArrayList<>();
-        
+        List<ConfigurationBackup> tempBackups = new ArrayList<>();
+
         String research = researchField.getText();
-        
-        for (Backup backup : backups) {
-            if (backup.getBackupName().contains(research) || 
-                    backup.getInitialPath().contains(research) || 
-                    backup.getDestinationPath().contains(research) || 
-                    (backup.getLastBackup() != null && backup.getLastBackup().toString().contains(research)) ||
-                    (backup.getNextDateBackup() != null && backup.getNextDateBackup().toString().contains(research)) ||
+
+        for (ConfigurationBackup backup : backups) {
+            if (backup.getName().contains(research) ||
+                    backup.getTargetPath().contains(research) ||
+                    backup.getDestinationPath().contains(research) ||
+                    (backup.getLastBackupDate() != null && backup.getLastBackupDate().toString().contains(research)) ||
+                    (backup.getNextBackupDate() != null && backup.getNextBackupDate().toString().contains(research)) ||
                     (backup.getTimeIntervalBackup() != null && backup.getTimeIntervalBackup().toString().contains(research))) {
                 tempBackups.add(backup);
             }
         }
-        
+
         TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
     }
 
     /**
      * This method is called from within the constructor to initialize the form.
-     *  
+     *
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
@@ -351,16 +356,33 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         CopyBackupNamePopupItem = new javax.swing.JMenuItem();
         CopyInitialPathPopupItem = new javax.swing.JMenuItem();
         CopyDestinationPathPopupItem = new javax.swing.JMenuItem();
+        panelVersion = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        layeredCardPanel = new javax.swing.JLayeredPane();
+        panelBackupList = new javax.swing.JPanel();
+        detailsLabel = new javax.swing.JLabel();
+        researchField = new javax.swing.JTextField();
+        exportAsPdfBtn = new backupmanager.svg.SVGButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        detailsLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         addBackupEntryButton = new backupmanager.svg.SVGButton();
-        jLabel1 = new javax.swing.JLabel();
-        researchField = new javax.swing.JTextField();
-        ExportLabel = new javax.swing.JLabel();
         exportAsCsvBtn = new backupmanager.svg.SVGButton();
-        exportAsPdfBtn = new backupmanager.svg.SVGButton();
+        ExportLabel = new javax.swing.JLabel();
+        panelDashboard = new javax.swing.JPanel();
+        chart2 = new javax.swing.JPanel();
+        chart1 = new javax.swing.JPanel();
+        chart1TitleLabel = new javax.swing.JLabel();
+        chart2TitleLabel = new javax.swing.JLabel();
+        totalBackupsPanel = new javax.swing.JPanel();
+        totalBackupsTitleLabel = new javax.swing.JLabel();
+        totalBackupsNumber = new javax.swing.JLabel();
+        totalBackupConfigurationsPanel = new javax.swing.JPanel();
+        totalBackupConfigurationsTitleLabel = new javax.swing.JLabel();
+        totalBackupConfigurationsNumber = new javax.swing.JLabel();
+        totalSpaceUsedPanel = new javax.swing.JPanel();
+        totalSpaceTitleLabel = new javax.swing.JLabel();
+        totalSpaceNumber = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new backupmanager.svg.SVGMenuItem();
@@ -502,6 +524,57 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         setTitle("Backup Manager");
         setMinimumSize(new java.awt.Dimension(750, 450));
 
+        panelVersion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelVersion.setPreferredSize(new java.awt.Dimension(100, 30));
+
+        jLabel3.setText("Version 2.0.2");
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout panelVersionLayout = new javax.swing.GroupLayout(panelVersion);
+        panelVersion.setLayout(panelVersionLayout);
+        panelVersionLayout.setHorizontalGroup(
+            panelVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVersionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelVersionLayout.setVerticalGroup(
+            panelVersionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVersionLayout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 4, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(panelVersion, java.awt.BorderLayout.PAGE_END);
+
+        layeredCardPanel.setLayout(new java.awt.CardLayout());
+
+        panelBackupList.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelBackupList.setVerifyInputWhenFocusTarget(false);
+
+        detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        researchField.setToolTipText("Research bar");
+        researchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                researchFieldKeyTyped(evt);
+            }
+        });
+
+        exportAsPdfBtn.setToolTipText("Export as .pdf");
+        exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
+        exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportAsPdfBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel1.setText("|");
+        jLabel1.setAlignmentY(0.0F);
+
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -525,7 +598,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         table.setRowHeight(50);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -533,10 +606,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(table);
-
-        detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jLabel3.setText("Version 2.0.2");
 
         addBackupEntryButton.setToolTipText("Add new backup");
         addBackupEntryButton.setMaximumSize(new java.awt.Dimension(32, 32));
@@ -547,20 +616,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel1.setText("|");
-        jLabel1.setAlignmentY(0.0F);
-
-        researchField.setToolTipText("Research bar");
-        researchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                researchFieldKeyTyped(evt);
-            }
-        });
-
-        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ExportLabel.setText("Export As:");
-
         exportAsCsvBtn.setToolTipText("Export as .csv");
         exportAsCsvBtn.setMaximumSize(new java.awt.Dimension(32, 32));
         exportAsCsvBtn.setMinimumSize(new java.awt.Dimension(32, 32));
@@ -570,14 +625,220 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             }
         });
 
-        exportAsPdfBtn.setToolTipText("Export as .pdf");
-        exportAsPdfBtn.setMaximumSize(new java.awt.Dimension(32, 32));
-        exportAsPdfBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        exportAsPdfBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportAsPdfBtnActionPerformed(evt);
-            }
-        });
+        ExportLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ExportLabel.setText("Export As:");
+
+        javax.swing.GroupLayout panelBackupListLayout = new javax.swing.GroupLayout(panelBackupList);
+        panelBackupList.setLayout(panelBackupListLayout);
+        panelBackupListLayout.setHorizontalGroup(
+            panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(panelBackupListLayout.createSequentialGroup()
+                .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ExportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+        );
+        panelBackupListLayout.setVerticalGroup(
+            panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackupListLayout.createSequentialGroup()
+                .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBackupListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        researchField.getAccessibleContext().setAccessibleName("");
+
+        layeredCardPanel.add(panelBackupList, "BackupList");
+
+        chart2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chart2.setPreferredSize(new java.awt.Dimension(230, 180));
+
+        javax.swing.GroupLayout chart2Layout = new javax.swing.GroupLayout(chart2);
+        chart2.setLayout(chart2Layout);
+        chart2Layout.setHorizontalGroup(
+            chart2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart2Layout.setVerticalGroup(
+            chart2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 174, Short.MAX_VALUE)
+        );
+
+        chart1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chart1.setPreferredSize(new java.awt.Dimension(230, 180));
+
+        javax.swing.GroupLayout chart1Layout = new javax.swing.GroupLayout(chart1);
+        chart1.setLayout(chart1Layout);
+        chart1Layout.setHorizontalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        chart1Layout.setVerticalGroup(
+            chart1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 174, Short.MAX_VALUE)
+        );
+
+        chart1TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        chart1TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chart1TitleLabel.setText("Title Chart 1");
+
+        chart2TitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        chart2TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chart2TitleLabel.setText("Title Chart 2");
+
+        totalBackupsPanel.setBorder(new javax.swing.border.MatteBorder(null));
+
+        totalBackupsTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalBackupsTitleLabel.setText("Total Backups");
+
+        totalBackupsNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalBackupsNumber.setText("10");
+
+        javax.swing.GroupLayout totalBackupsPanelLayout = new javax.swing.GroupLayout(totalBackupsPanel);
+        totalBackupsPanel.setLayout(totalBackupsPanelLayout);
+        totalBackupsPanelLayout.setHorizontalGroup(
+            totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupsPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalBackupsNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalBackupsTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalBackupsPanelLayout.setVerticalGroup(
+            totalBackupsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupsPanelLayout.createSequentialGroup()
+                .addComponent(totalBackupsTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalBackupsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
+
+        totalBackupConfigurationsPanel.setBorder(new javax.swing.border.MatteBorder(null));
+        totalBackupConfigurationsPanel.setPreferredSize(new java.awt.Dimension(214, 104));
+
+        totalBackupConfigurationsTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalBackupConfigurationsTitleLabel.setText("Total Backups");
+
+        totalBackupConfigurationsNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalBackupConfigurationsNumber.setText("10");
+
+        javax.swing.GroupLayout totalBackupConfigurationsPanelLayout = new javax.swing.GroupLayout(totalBackupConfigurationsPanel);
+        totalBackupConfigurationsPanel.setLayout(totalBackupConfigurationsPanelLayout);
+        totalBackupConfigurationsPanelLayout.setHorizontalGroup(
+            totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupConfigurationsPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalBackupConfigurationsNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalBackupConfigurationsTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalBackupConfigurationsPanelLayout.setVerticalGroup(
+            totalBackupConfigurationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalBackupConfigurationsPanelLayout.createSequentialGroup()
+                .addComponent(totalBackupConfigurationsTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalBackupConfigurationsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
+
+        totalSpaceUsedPanel.setBorder(new javax.swing.border.MatteBorder(null));
+        totalSpaceUsedPanel.setPreferredSize(new java.awt.Dimension(214, 104));
+
+        totalSpaceTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalSpaceTitleLabel.setText("Total Space Used");
+
+        totalSpaceNumber.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalSpaceNumber.setText("10");
+
+        javax.swing.GroupLayout totalSpaceUsedPanelLayout = new javax.swing.GroupLayout(totalSpaceUsedPanel);
+        totalSpaceUsedPanel.setLayout(totalSpaceUsedPanelLayout);
+        totalSpaceUsedPanelLayout.setHorizontalGroup(
+            totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalSpaceUsedPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalSpaceNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalSpaceTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        totalSpaceUsedPanelLayout.setVerticalGroup(
+            totalSpaceUsedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(totalSpaceUsedPanelLayout.createSequentialGroup()
+                .addComponent(totalSpaceTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalSpaceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelDashboardLayout = new javax.swing.GroupLayout(panelDashboard);
+        panelDashboard.setLayout(panelDashboardLayout);
+        panelDashboardLayout.setHorizontalGroup(
+            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addComponent(totalBackupsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalBackupConfigurationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(totalSpaceUsedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(chart2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart2TitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(chart1TitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
+        );
+        panelDashboardLayout.setVerticalGroup(
+            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDashboardLayout.createSequentialGroup()
+                                .addComponent(chart1TitleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(totalBackupConfigurationsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chart2TitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDashboardLayout.createSequentialGroup()
+                        .addComponent(totalBackupsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(totalSpaceUsedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        layeredCardPanel.add(panelDashboard, "Dashboard");
+
+        getContentPane().add(layeredCardPanel, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("File");
 
@@ -609,19 +870,9 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         jMenu1.add(jSeparator4);
 
         MenuImport.setText("Import backup list");
-        MenuImport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuImportActionPerformed(evt);
-            }
-        });
         jMenu1.add(MenuImport);
 
         MenuExport.setText("Export backup list");
-        MenuExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuExportActionPerformed(evt);
-            }
-        });
         jMenu1.add(MenuExport);
         jMenu1.add(jSeparator5);
 
@@ -735,64 +986,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addContainerGap())
-        );
-
-        researchField.getAccessibleContext().setAccessibleName("");
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
-        backupManager.menuItemQuit(observer);
+        BackupMenuController.menuItemQuit(observer, this);
     }//GEN-LAST:event_MenuQuitActionPerformed
 
     private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
-        backupManager.menuItemHistory();
+        BackupMenuController.menuItemHistory();
     }//GEN-LAST:event_MenuHistoryActionPerformed
 
     private void MenuClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClearActionPerformed
@@ -803,17 +1006,17 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void MenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSaveActionPerformed
     }//GEN-LAST:event_MenuSaveActionPerformed
-    
+
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
-        backupManager.menuItemNew(progressBar);
+        BackupMenuController.menuItemNew(progressBar, this);
     }//GEN-LAST:event_MenuNewActionPerformed
-        
+
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        backupManager.popupItemEditBackupName(selectedRow, backupTable, backups);        
+        BackupPopupController.popupItemEditBackupName(selectedRow, backupTable, backups, this);
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
-        backupManager.popupItemDelete(selectedRow, backups, backupTable);
+        BackupPopupController.popupItemDelete(selectedRow, backupTable);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
@@ -829,31 +1032,27 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         } else {
             // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            backupmanager.Entities.Backup backup = backupmanager.Entities.Backup.getBackupByName(backups, backupName);
+            ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backups, backupName);
 
             logger.debug("Selected backup: " + backupName);
 
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
                 logger.info("Right click on row: " + selectedRow);
-                AutoBackupMenuItem.setSelected(backup.isAutoBackup());
+                AutoBackupMenuItem.setSelected(backup.isAutomatic());
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
 
-                // check if the backup is running
-                if (RunningBackups.readBackupFromJSON(backupName) == null) {
-                    DeletePopupItem.setEnabled(true);
-                    interruptBackupPopupItem.setEnabled(false);
-                } else {
-                    DeletePopupItem.setEnabled(false);
-                    interruptBackupPopupItem.setEnabled(true);
-                }
+                boolean isRunning = RunningBackupService.getRunningBackupByName(backupName).isPresent();
+
+                DeletePopupItem.setEnabled(!isRunning);
+                interruptBackupPopupItem.setEnabled(isRunning);
             }
 
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 logger.info("Double-click on row: " + selectedRow);
-                backupManager.openBackup(backupName);
+                BackupHelper.openBackupByName(backupName, this);
             }
 
             // Handling single left mouse button click
@@ -871,16 +1070,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
                 String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
                 detailsLabel.setText(
-                    "<html><b>" + backupNameStr + ":</b> " + backup.getBackupName() + ", " +
-                    "<b>" + initialPathStr + ":</b> " + backup.getInitialPath() + ", " +
+                    "<html><b>" + backupNameStr + ":</b> " + backup.getName() + ", " +
+                    "<b>" + initialPathStr + ":</b> " + backup.getTargetPath() + ", " +
                     "<b>" + destinationPathStr + ":</b> " + backup.getDestinationPath() + ", " +
-                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackup() != null ? backup.getLastBackup().format(formatter) : "") + ", " +
-                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextDateBackup() != null ? backup.getNextDateBackup().format(formatter) : "_") + ", " +
+                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "") + ", " +
+                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "_") + ", " +
                     "<b>" + timeIntervalBackupStr + ":</b> " + (backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "_") + ", " +
                     "<b>" + creationDateStr + ":</b> " + (backup.getCreationDate() != null ? backup.getCreationDate().format(formatter) : "_") + ", " +
                     "<b>" + lastUpdateDateStr + ":</b> " + (backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().format(formatter) : "_") + ", " +
-                    "<b>" + backupCountStr + ":</b> " + (backup.getBackupCount()) + ", " +
-                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxBackupsToKeep()) + ", " +
+                    "<b>" + backupCountStr + ":</b> " + (backup.getCount()) + ", " +
+                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxToKeep()) + ", " +
                     "<b>" + notesStr + ":</b> " + (backup.getNotes()) +
                     "</html>"
                 );
@@ -889,95 +1088,87 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
-        backupManager.popupItemDuplicateBackup(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemDuplicateBackup(selectedRow, backupTable);
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void RunBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunBackupPopupItemActionPerformed
-        backupManager.popupItemRunBackup(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
+        BackupPopupController.popupItemRunBackup(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_RunBackupPopupItemActionPerformed
 
     private void CopyBackupNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyBackupNamePopupItemActionPerformed
-        backupManager.popupItemCopyBackupName(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyBackupName(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyBackupNamePopupItemActionPerformed
 
     private void CopyInitialPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyInitialPathPopupItemActionPerformed
-        backupManager.popupItemCopyInitialPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyInitialPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyInitialPathPopupItemActionPerformed
 
     private void CopyDestinationPathPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyDestinationPathPopupItemActionPerformed
-        backupManager.popupItemCopyDestinationPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemCopyDestinationPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_CopyDestinationPathPopupItemActionPerformed
 
     private void AutoBackupMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutoBackupMenuItemActionPerformed
-        backupManager.popupItemAutoBackup(selectedRow, backupTable, backups, AutoBackupMenuItem);
+        BackupPopupController.popupItemAutoBackup(selectedRow, backupTable, backups, AutoBackupMenuItem);
     }//GEN-LAST:event_AutoBackupMenuItemActionPerformed
 
     private void OpenInitialFolderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialFolderItemActionPerformed
-        backupManager.popupItemOpenInitialPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemOpenInitialPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_OpenInitialFolderItemActionPerformed
 
     private void OpenInitialDestinationItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenInitialDestinationItemActionPerformed
-        backupManager.popupItemOpenDestinationPath(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemOpenDestinationPath(selectedRow, backupTable, backups);
     }//GEN-LAST:event_OpenInitialDestinationItemActionPerformed
 
     private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
-        backupManager.popupItemRenameBackup(selectedRow, backupTable, backups);
+        BackupPopupController.popupItemRenameBackup(selectedRow, backupTable, backups);
     }//GEN-LAST:event_renamePopupItemActionPerformed
 
     private void MenuPaypalDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPaypalDonateActionPerformed
-        backupManager.menuItemDonateViaPaypal();
+        BackupMenuController.menuItemDonateViaPaypal();
     }//GEN-LAST:event_MenuPaypalDonateActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
-        backupManager.menuItemBugReport();
+        BackupMenuController.menuItemBugReport();
     }//GEN-LAST:event_MenuBugReportActionPerformed
 
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
-        backupManager.menuItemShare();
+        BackupMenuController.menuItemShare();
     }//GEN-LAST:event_MenuShareActionPerformed
-    
+
     private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
-        backupManager.menuItemWebsite();
+        BackupMenuController.menuItemWebsite();
     }//GEN-LAST:event_MenuWebsiteActionPerformed
 
     private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
-        backupManager.menuItemSupport();
+        BackupMenuController.menuItemSupport();
     }//GEN-LAST:event_MenuSupportActionPerformed
-    
+
     private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
-        backupManager.menuItemInfoPage();
+        BackupMenuController.menuItemInfoPage();
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
-        backupManager.menuItemOpenPreferences();
+        BackupMenuController.menuItemOpenPreferences(this);
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
-    private void MenuImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImportActionPerformed
-        backups = backupManager.menuItemImportFromJson();
-    }//GEN-LAST:event_MenuImportActionPerformed
-
-    private void MenuExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportActionPerformed
-        backupManager.menuItemExportToJson();
-    }//GEN-LAST:event_MenuExportActionPerformed
-
     private void interruptBackupPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBackupPopupItemActionPerformed
-        backupManager.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
+        BackupPopupController.popupItemInterrupt(selectedRow, backupTable, backups, interruptBackupPopupItem, RunBackupPopupItem);
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        ImportExportManager.exportAsCSV(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsCSV(new ArrayList<>(backups), ConfigurationBackup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        ImportExportManager.exportAsPDF(new ArrayList<>(backups), backupmanager.Entities.Backup.getCSVHeader());
+        ExportManager.exportAsPDF(new ArrayList<>(backups), ConfigurationBackup.getCSVHeader());
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        backupManager.newBackup(progressBar);
+        BackupHelper.newBackup(progressBar, this);
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void MenuBuyMeACoffeDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuyMeACoffeDonateActionPerformed
-        backupManager.menuItemDonateViaBuymeacoffe();
+        BackupMenuController.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
 
     private void setTranslations() {
@@ -987,7 +1178,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         // general
         jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + currentVersion);
-        
+
         // menu
         jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
         jMenu2.setText(TranslationCategory.MENU.getTranslation(TranslationKey.OPTIONS));
@@ -1050,16 +1241,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void initializeTable() {
-        try {
-            backups = JSONBackup.readBackupListFromJSON(Preferences.getBackupList().getDirectory(), Preferences.getBackupList().getFile());
-            displayBackupList();
-        } catch (IOException ex) {
-            backups = null;
-            logger.error("An error occurred: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+        backups = BackupConfigurationRepository.getBackupList();
+        displayBackupList();
     }
-    
+
     private void setSvgImages() {
         exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
         exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
@@ -1136,6 +1321,10 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem RunBackupPopupItem;
     private javax.swing.JPopupMenu TablePopup;
     private backupmanager.svg.SVGButton addBackupEntryButton;
+    private javax.swing.JPanel chart1;
+    private javax.swing.JLabel chart1TitleLabel;
+    private javax.swing.JPanel chart2;
+    private javax.swing.JLabel chart2TitleLabel;
     private javax.swing.JLabel detailsLabel;
     private backupmanager.svg.SVGButton exportAsCsvBtn;
     private backupmanager.svg.SVGButton exportAsPdfBtn;
@@ -1154,8 +1343,21 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JLayeredPane layeredCardPanel;
+    private javax.swing.JPanel panelBackupList;
+    private javax.swing.JPanel panelDashboard;
+    private javax.swing.JPanel panelVersion;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
     private javax.swing.JTable table;
+    private javax.swing.JLabel totalBackupConfigurationsNumber;
+    private javax.swing.JPanel totalBackupConfigurationsPanel;
+    private javax.swing.JLabel totalBackupConfigurationsTitleLabel;
+    private javax.swing.JLabel totalBackupsNumber;
+    private javax.swing.JPanel totalBackupsPanel;
+    private javax.swing.JLabel totalBackupsTitleLabel;
+    private javax.swing.JLabel totalSpaceNumber;
+    private javax.swing.JLabel totalSpaceTitleLabel;
+    private javax.swing.JPanel totalSpaceUsedPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -48,7 +48,7 @@
     "AutoBackupButtonOFF": "Auto Backup (OFF)",
     "InitialPathPlaceholder": "Initial path",
     "DestinationPathPlaceholder": "Destination path",
-    "BackupName": "Backup name: ",
+    "BackupName": "Backup name",
     "BackupNameTooltip": "(Required) Backup name",
     "InitialPathTooltip": "(Required) Initial path",
     "DestinationPathTooltip": "(Required) Destination path",
@@ -131,6 +131,8 @@
   },
   "TrayIcon": {
     "TrayTooltip":"Backup Service",
+    "OpenAction": "Quick Access",
+    "ExitAction": "Exit",
     "SuccessMessage":"\nThe backup was successfully completed:",
     "ErrorMessageInputMissing":"\nError during automatic backup.\nInput Missing!",
     "ErrorMessageFilesNotExisting":"\nError during automatic backup.\nOne or both paths do not exist!",
@@ -196,5 +198,11 @@
     "ErrorMessageInvalidFilename":"Invalid file name. Use only alphanumeric characters, dashes, and underscores.",
     "ConfirmationDeletionTitle":"Confirm Deletion",
     "ConfirmationDeletionMessage":"Are you sure you want to delete the selected rows?"
+  },
+  "Subscription": {
+    "ExpiringTitle": "Backup Manager subscription expiring soon",
+    "ExpiringMessage": "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it.",
+    "ExpiredTitle": "Backup Manager subscription expired",
+    "ExpiredMessage": "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it."
   }
 }

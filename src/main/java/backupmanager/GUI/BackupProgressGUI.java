@@ -14,37 +14,37 @@ import backupmanager.Services.ZippingThread;
 public class BackupProgressGUI extends javax.swing.JDialog {
     public BackupProgressGUI(String initialPath, String destinationPath) {
         initComponents();
-                
+
         // logo application
-       Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-       this.setIconImage(icon);
-        
+        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
+        this.setIconImage(icon);
+
         initialPathLabel.setText(initialPath);
         destinationPathLabel.setText(destinationPath);
-        
+
         closeButton.setEnabled(false);
 
         setTranslations();
    }
-    
+
     public void updateProgressBar(int value, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
         // editing the percentage
         progressBar.setValue(value);
         percentageLabel.setText(value + " %");
-        
+
         // editing the current file zipped
         fileZippedLabel.setText(fileProcessed);
 
         // edit the title with counts
         setTitle(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.PROGRESS_BACKUP_TITLE) + " - " + filesCopiedSoFar + "/" + totalFilesCount);
-        
+
         if (value == 100) {
             loadingMessageLabel.setText(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.STATUS_COMPLETED));
             closeButton.setEnabled(true);
             CancelButton.setEnabled(false);
             fileZippedLabel.setText("");
             this.setAlwaysOnTop(true);
-        } 
+        }
     }
 
     @SuppressWarnings("unchecked")

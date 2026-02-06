@@ -15,8 +15,8 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Entities.RunningBackups;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Services.RunningBackupService;
 
 public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     private static final Logger logger = LoggerFactory.getLogger(ZipFileVisitor.class);
@@ -38,11 +38,8 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        if (Thread.currentThread().isInterrupted()) {
-            RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
-            logger.info("Zipping process manually interrupted");
+        if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
-        }
 
         String zipEntryName = sourceDir.relativize(dir).toString() + "/";
         logger.debug("Adding directory to zip: " + zipEntryName);
@@ -55,11 +52,8 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if (Thread.currentThread().isInterrupted()) {
-            RunningBackups.updateBackupStatusAfterCompletition(context.backup.getBackupName());
-            logger.info("Zipping process manually interrupted");
+        if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
-        }
 
         String zipEntryName = sourceDir.relativize(file).toString();
         logger.debug("Adding file to zip: " + zipEntryName);
@@ -78,7 +72,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
         int filesCopiedSoFar = copiedFilesCount.incrementAndGet();
         int actualProgress = (int) (((double) filesCopiedSoFar / totalFilesCount) * 100);
-        BackupOperations.UpdateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context, zipEntryName, filesCopiedSoFar, totalFilesCount);
+        BackupOperations.updateProgressPercentage(actualProgress, sourceDir.toString(), destinationDir.toString(), context, zipEntryName, filesCopiedSoFar, totalFilesCount);
 
         return FileVisitResult.CONTINUE;
     }
@@ -87,5 +81,14 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
         logger.error("Failed to visit file: " + file + ". Error: " + exc.getMessage(), exc);
         return FileVisitResult.CONTINUE;
+    }
+
+    private boolean isZippingThreadInterrupted() {
+        if (Thread.currentThread().isInterrupted()) {
+            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.backup().getId());
+            logger.info("Zipping process manually interrupted");
+            return true;
+        }
+        return false;
     }
 }

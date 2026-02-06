@@ -24,7 +24,7 @@ import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 
 // https://www.formdev.com/flatlaf/#demo
 // https://www.formdev.com/flatlaf/themes/
@@ -48,6 +48,9 @@ public class ThemeManager {
     }
 
     private static void repaint(Object objectToRepaint) {
+        if (objectToRepaint == null)
+            throw new NullPointerException("objectToRepaint cannot be null");
+
         if (objectToRepaint instanceof Dialog || objectToRepaint instanceof JPopupMenu || objectToRepaint instanceof Frame) {
             // Update all components and revalidate and repaint
             SwingUtilities.updateComponentTreeUI((Component) objectToRepaint);
@@ -60,45 +63,21 @@ public class ThemeManager {
 
     private static void updateTheme() {
         try {
-            String selectedTheme = Preferences.getTheme().getThemeName();
+            String selectedTheme = Confingurations.getTheme().getThemeName();
 
             switch (selectedTheme.toLowerCase()) {
-                case "light":
-                    UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                    break;
-                case "dark":
-                    UIManager.setLookAndFeel(new FlatDarculaLaf());
-                    break;
-                case "carbon":
-                    UIManager.setLookAndFeel(new FlatCarbonIJTheme());
-                    break;
-                case "arc - orange":
-                    UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
-                    break;
-                case "arc dark - orange":
-                    UIManager.setLookAndFeel(new FlatArcDarkOrangeIJTheme());
-                    break;
-                case "cyan light":
-                    UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
-                    break;
-                case "nord":
-                    UIManager.setLookAndFeel(new FlatNordIJTheme());
-                    break;
-                case "high contrast":
-                    UIManager.setLookAndFeel(new FlatHighContrastIJTheme());
-                    break;
-                case "solarized dark":
-                    UIManager.setLookAndFeel(new FlatSolarizedDarkIJTheme());
-                    break;
-                case "solarized light":
-                    UIManager.setLookAndFeel(new FlatSolarizedLightIJTheme());
-                    break;
-                default:
-                    // If no match, apply the default theme
-                    UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                    break;
+                case "light" -> UIManager.setLookAndFeel(new FlatIntelliJLaf());
+                case "dark" -> UIManager.setLookAndFeel(new FlatDarculaLaf());
+                case "carbon" -> UIManager.setLookAndFeel(new FlatCarbonIJTheme());
+                case "arc - orange" -> UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+                case "arc dark - orange" -> UIManager.setLookAndFeel(new FlatArcDarkOrangeIJTheme());
+                case "cyan light" -> UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
+                case "nord" -> UIManager.setLookAndFeel(new FlatNordIJTheme());
+                case "high contrast" -> UIManager.setLookAndFeel(new FlatHighContrastIJTheme());
+                case "solarized dark" -> UIManager.setLookAndFeel(new FlatSolarizedDarkIJTheme());
+                case "solarized light" -> UIManager.setLookAndFeel(new FlatSolarizedLightIJTheme());
+                default -> UIManager.setLookAndFeel(new FlatIntelliJLaf()); // If no match, apply the default theme
             }
-
         } catch (UnsupportedLookAndFeelException ex) {
             logger.error("Error setting LookAndFeel: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));

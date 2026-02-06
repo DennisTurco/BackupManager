@@ -23,7 +23,7 @@ public class JSONConfigReader {
         this.directoryPath = directoryPath;
         loadConfig(); // Load configuration at instantiation
     }
-    
+
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
             logger.warn("Configuration not loaded. Cannot check menu items");
@@ -37,13 +37,10 @@ public class JSONConfigReader {
         }
         return true; // Default to true
     }
-    public int getMaxCountForSameBackup() {
-        return getConfigValue("MaxCountForSameBackup", 1); // Default to 1
-    }
 
     public int readCheckForBackupTimeInterval() throws IOException {
         try {
-            JsonObject backupService = getBackupServiceConfig();
+            JsonObject backupService = getConfig("BackupService");
             JsonElement interval = backupService.get("value");
 
             // if the interval is null, set to default of 5 minutes
@@ -57,9 +54,9 @@ public class JSONConfigReader {
         }
     }
 
-    private int getConfigValue(String key, int defaultValue) {
+    public int getConfigValue(String key, int defaultValue) {
         try {
-            JsonObject logService = getMaxCountForSameBackupConfig();
+            JsonObject logService = getConfig(key);
             JsonElement value = logService.get(key);
 
             return (value != null && value.isJsonPrimitive()) ? value.getAsInt() : defaultValue;
@@ -79,17 +76,10 @@ public class JSONConfigReader {
         }
     }
 
-    private JsonObject getMaxCountForSameBackupConfig() throws IOException {
+    private JsonObject getConfig(String key) throws IOException {
         if (config == null) {
             throw new IOException("Configuration not loaded.");
         }
-        return config.getAsJsonObject("MaxCountForSameBackup");
-    }
-
-    private JsonObject getBackupServiceConfig() throws IOException {
-        if (config == null) {
-            throw new IOException("Configuration not loaded.");
-        }
-        return config.getAsJsonObject("BackupService");
+        return config.getAsJsonObject(key);
     }
 }

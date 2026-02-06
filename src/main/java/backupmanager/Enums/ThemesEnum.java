@@ -14,11 +14,11 @@ public enum ThemesEnum {
 
     private final String themeName;
 
-    private ThemesEnum(String themeName) {
-        this.themeName = themeName;
-    }
-
     public String getThemeName() {
         return themeName;
+    }
+
+    private ThemesEnum(String themeName) {
+        this.themeName = themeName;
     }
 }

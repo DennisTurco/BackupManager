@@ -1,14 +1,7 @@
 {
-  "BACKUP_FILE_STRING": "backup_list",
   "CONFIG_FILE_STRING": "config.json",
   "LOG_FILE_STRING": "application.log",
   "LOG_DIRECTORY_STRING": "src/main/resources/res/logs/",
-  "RUNNING_BACKUPS_FILE_STRING": "running_backups.json",
-  "PREFERENCES_FILE_STRING": "preferences.json",
-  "USER_FILE_STRING": "user.json",
-  "RES_DIRECTORY_STRING": "src/main/resources/res/",
-  "PROPERTIES_FILE_STRING": "config.properties",
-  "RESURCES_DIRECTORY_STRING": "src/main/resources/",
   "LANGUAGES_DIRECTORY_STRING": "src/main/resources/res/languages/",
   "CONFIG_DIRECTORY_STRING": "src/main/resources/res/config/",
   "DONATE_BUYMEACOFFE_LINK": "https://buymeacoffee.com/denno",
@@ -19,7 +12,7 @@
   "EMAIL": "assistenza@shardpc.it",
   "SHARD_WEBSITE": "https://www.shardpc.it/",
   "LOGO_IMG": "/res/img/logo.png",
-  "VERSION": "2.0.6",
+  "VERSION": "2.1.0",
   "GUI_WIDTH": "982",
   "GUI_HEIGHT": "715",
 
@@ -35,8 +28,8 @@
     "New": true,
     "Quit": true,
     "Save": false,
-    "Import": true,
-    "Export": true,
+    "Import": false,
+    "Export": false,
     "SaveWithName": false,
     "Share": true,
     "Support": true,
@@ -51,5 +44,10 @@
     "value": 1,
     "type": "int",
     "description": "Max count for the same backup in the same directory"
+  },
+  "SubscriptionWarningDays": {
+    "value": 7,
+    "type": "int",
+    "description": "Number of days before subscription expiration to show a warning"
   }
 }

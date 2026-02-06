@@ -1,6 +1,6 @@
 package backupmanager.Dialogs;
 
-import backupmanager.Entities.Preferences;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
@@ -26,13 +26,13 @@ public class PreferencesDialog extends javax.swing.JDialog {
     public PreferencesDialog(java.awt.Frame parent, boolean modal, BackupManagerGUI mainGui) {
         super(parent, modal);
         this.mainGui = mainGui;
-        
+
         initComponents();
-        
+
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon); 
-        
+        this.setIconImage(icon);
+
         ThemeManager.updateThemeDialog(this);
         setLanguages();
         setThemes();
@@ -140,12 +140,12 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         try {
             // translactions
-            Preferences.setLanguage(selectedLanguage);
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            Confingurations.setLanguageByLanguageName(selectedLanguage);
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
             setTranslations();
 
             // theme
-            Preferences.setTheme(selectedTheme);
+            Confingurations.setTheme(selectedTheme);
             ThemeManager.updateThemeDialog(this);
 
             // update globally
@@ -153,23 +153,23 @@ public class PreferencesDialog extends javax.swing.JDialog {
         } catch (IOException ex) {
             logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }  
+        }
     }//GEN-LAST:event_applyBtnActionPerformed
 
     private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeBtnActionPerformed
-    
+
     private void setLanguages() {
         languagesComboBox.addItem(LanguagesEnum.ENG.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.ITA.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.ESP.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.DEU.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.FRA.getLanguageName());
-        
-        languagesComboBox.setSelectedItem(Preferences.getLanguage().getLanguageName());
+
+        languagesComboBox.setSelectedItem(Confingurations.getLanguage().getLanguageName());
     }
-    
+
     private void setThemes() {
         themesComboBox.addItem(ThemesEnum.INTELLIJ.getThemeName());
         themesComboBox.addItem(ThemesEnum.DRACULA.getThemeName());
@@ -182,9 +182,9 @@ public class PreferencesDialog extends javax.swing.JDialog {
         themesComboBox.addItem(ThemesEnum.SOLARIZED_DARK.getThemeName());
         themesComboBox.addItem(ThemesEnum.SOLARIZED_LIGHT.getThemeName());
 
-        themesComboBox.setSelectedItem(Preferences.getTheme().getThemeName());
+        themesComboBox.setSelectedItem(Confingurations.getTheme().getThemeName());
     }
-    
+
     private void setTranslations() {
         setTitle(TranslationCategory.PREFERENCES_DIALOG.getTranslation(TranslationKey.PREFERENCES_TITLE));
         applyBtn.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.APPLY_BUTTON));

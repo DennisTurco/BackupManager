@@ -1,10 +1,12 @@
 package test;
 
-import backupmanager.MainApp;
-import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+
+import backupmanager.MainApp;
 
 public class TestMainApp {
+
     @Test
     void testWrongArgument() {
         String[] arguments = {"--wrong_argument"};

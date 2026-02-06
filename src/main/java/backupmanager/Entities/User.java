@@ -2,27 +2,24 @@ package backupmanager.Entities;
 
 import java.util.Locale;
 
-public class User {
-    public final String name;
-    public final String surname;
-    public final String email; // nullable
-    public final String language;
+public record User (int id, String name, String surname, String email, String language) {
 
     public User(String name, String surname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.language = Locale.getDefault().getDisplayName();
+        this(0, name, surname, email, Locale.getDefault().getDisplayName());
+    }
+
+    public User(int id, String name, String surname, String email) {
+        this(id, name, surname, email, Locale.getDefault().getDisplayName());
     }
 
     public String getUserCompleteName() {
-        return name + " " + surname; 
-    } 
-    
+        return name + " " + surname;
+    }
+
     @Override
     public String toString() {
-        return name + " " + surname + ", " + email + ", " + language; 
-    } 
+        return name + " " + surname + ", " + email + ", " + language;
+    }
 
     public static User getDefaultUser() {
         return new User("Unregistered", "User", "");

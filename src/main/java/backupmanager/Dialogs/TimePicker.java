@@ -13,61 +13,61 @@ public class TimePicker extends javax.swing.JDialog {
 
     private TimeInterval timeInterval;
     private boolean closeOk;
-    
+
     public TimePicker(java.awt.Dialog parent, TimeInterval timeInterval, boolean modal) {
         super(parent, modal);
-        
+
         closeOk = false;
 
         initComponents();
-        
+
         this.timeInterval = timeInterval;
         if (timeInterval != null) {
-            daysSpinner.setValue(timeInterval.getDays());
-            hoursSpinner.setValue(timeInterval.getHours());
-            minutesSpinner.setValue(timeInterval.getMinutes());
+            daysSpinner.setValue(timeInterval.days());
+            hoursSpinner.setValue(timeInterval.hours());
+            minutesSpinner.setValue(timeInterval.minutes());
         }
-        
+
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon); 
+        this.setIconImage(icon);
 
         setTranslations();
     }
-    
+
     public TimeInterval getTimeInterval() {
         if (closeOk) return timeInterval;
         return null;
-    }  
-    
-    private void daysIntervalSpinnerChange() {        
+    }
+
+    private void daysIntervalSpinnerChange() {
         Integer days = (Integer) daysSpinner.getValue();
-        
+
         if (days == null || days < 0) {
             daysSpinner.setValue(0);
-        }         
+        }
     }
-    
-    private void hoursIntervalSpinnerChange() {        
+
+    private void hoursIntervalSpinnerChange() {
         Integer hours = (Integer) hoursSpinner.getValue();
-        
+
         if (hours == null || hours < 0) {
             hoursSpinner.setValue(0);
         } else if (hours > 23) {
             hoursSpinner.setValue(23);
-        }       
+        }
     }
-    
-    private void minutesIntervalSpinnerChange() {        
+
+    private void minutesIntervalSpinnerChange() {
         Integer minutes = (Integer) minutesSpinner.getValue();
-        
+
         if (minutes == null || minutes < 0) {
             minutesSpinner.setValue(0);
         }  else if (minutes > 59) {
             minutesSpinner.setValue(59);
-        } 
+        }
     }
-    
+
     private boolean checkInputCorrectness() {
         Integer days = (Integer) daysSpinner.getValue();
         Integer hours = (Integer) hoursSpinner.getValue();
@@ -80,7 +80,7 @@ public class TimePicker extends javax.swing.JDialog {
         Integer hours = (Integer) hoursSpinner.getValue();
         return (days == 0 && hours == 0);
     }
-    
+
     private void mouseWeel(java.awt.event.MouseWheelEvent evt) {
         javax.swing.JSpinner spinner = (javax.swing.JSpinner) evt.getSource();
         int rotation = evt.getWheelRotation();
@@ -249,7 +249,7 @@ public class TimePicker extends javax.swing.JDialog {
     private void minutesSpinnerMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_minutesSpinnerMouseWheelMoved
         mouseWeel(evt);
     }//GEN-LAST:event_minutesSpinnerMouseWheelMoved
-    
+
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         if (checkInputCorrectness()) {
 
@@ -260,7 +260,6 @@ public class TimePicker extends javax.swing.JDialog {
                     return;
                 }
             }
-            
 
             timeInterval = new TimeInterval((int)daysSpinner.getValue(), (int)hoursSpinner.getValue(), (int)minutesSpinner.getValue());
             closeOk = true;

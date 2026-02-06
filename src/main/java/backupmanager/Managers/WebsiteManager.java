@@ -1,9 +1,10 @@
 package backupmanager.Managers;
 
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.awt.Desktop;
+
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class WebsiteManager {
         }
     }
 
-    public static void sendEmail() {        
+    public static void sendEmail() {
         if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
 

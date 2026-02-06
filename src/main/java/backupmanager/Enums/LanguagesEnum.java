@@ -1,5 +1,4 @@
 package backupmanager.Enums;
-
 public enum LanguagesEnum {
     ITA("Italiano", "ita.json"),
     ENG("English", "eng.json"),
@@ -10,16 +9,16 @@ public enum LanguagesEnum {
     private final String languageName;
     private final String fileName;
 
-    private LanguagesEnum(String languageName, String fileName) {
-        this.languageName = languageName;
-        this.fileName = fileName;
+    public String getFileName() {
+        return fileName;
     }
 
     public String getLanguageName() {
         return languageName;
     }
 
-    public String getFileName() {
-        return fileName;
+    private LanguagesEnum(String languageName, String fileName) {
+        this.languageName = languageName;
+        this.fileName = fileName;
     }
 }

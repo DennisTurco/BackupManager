@@ -2,6 +2,7 @@ package backupmanager.Table;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,9 +17,9 @@ public class ProgressBarRenderer extends DefaultTableCellRenderer {
         Component c = stripedRowRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         // If the value is an Integer (assuming progress data), show the progress bar
-        if (value instanceof Integer) {
-            progressBar.setValue((Integer) value);
-            progressBar.setString((Integer) value + "%");
+        if (value instanceof Integer integer) {
+            progressBar.setValue(integer);
+            progressBar.setString(integer + "%");
             progressBar.setStringPainted(true);
 
             // Set the progress bar background color based on the row (even/odd striped rows)

@@ -27,26 +27,27 @@ public class TranslationLoaderEnum {
         USER_DIALOG("UserDialog"),
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
-        DIALOGS("Dialogs");
-    
+        DIALOGS("Dialogs"),
+        SUBSCRIPTION("Subscription");
+
         private final String categoryName;
         private final Map<TranslationKey, String> translations = new HashMap<>();
-    
+
         TranslationCategory(String categoryName) {
             this.categoryName = categoryName;
         }
-    
-        public String getCategoryName() {
-            return categoryName;
-        }
-    
+
         public void addTranslation(TranslationKey key, String value) {
             translations.put(key, value);
         }
-    
+
         // Updated getTranslation method
         public String getTranslation(TranslationKey key) {
             return translations.getOrDefault(key, key.getDefaultValue());
+        }
+
+        public String getCategoryName() {
+            return categoryName;
         }
     }
 
@@ -100,7 +101,7 @@ public class TranslationLoaderEnum {
         AUTO_BACKUP_BUTTON_OFF("AutoBackupButtonOFF", "Auto Backup (OFF)"),
         INITIAL_PATH_PLACEHOLDER("InitialPathPlaceholder", "Initial path"),
         DESTINATION_PATH_PLACEHOLDER("DestinationPathPlaceholder", "Destination path"),
-        BACKUP_NAME("BackupName", "Backup name: "),
+        BACKUP_NAME("BackupName", "Backup name"),
         BACKUP_NAME_TOOLTIP("BackupNameTooltip", "(Required) Backup name"),
         INITIAL_PATH_TOOLTIP("InitialPathTooltip", "(Required) Initial path"),
         DESTINATION_PATH_TOOLTIP("DestinationPathTooltip", "(Required) Destination path"),
@@ -175,14 +176,16 @@ public class TranslationLoaderEnum {
         ERROR_MESSAGE_FOR_WRONG_EMAIL("ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
         EMAIL_CONFIRMATION_SUBJECT("EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
         EMAIL_CONFIRMATION_BODY("EmailConfirmationBody", "Hi [UserName],\n\nThank you for downloading and registering **Backup Manager**, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at **[SupportEmail]**.\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"),
-    
+
         // ProgressBackupFrame
         PROGRESS_BACKUP_TITLE("ProgressBackupTitle", "Backup in progress"),
         STATUS_COMPLETED("StatusCompleted", "Backup completed!"),
-        STATUS_LOADING("StatusLoading", "Loading..."), 
+        STATUS_LOADING("StatusLoading", "Loading..."),
 
         // TrayIcon
         TRAY_TOOLTIP("TrayTooltip", "Backup Service"),
+        OPEN_ACTION("OpenAction", "Quick Access"),
+        EXIT_ACTION("ExitAction", "Exit"),
         SUCCESS_MESSAGE("SuccessMessage", "\nThe backup was successfully completed:"),
         ERROR_MESSAGE_INPUT_MISSING("ErrorMessageInputMissing", "\nError during automatic backup.\nInput Missing!"),
         ERROR_MESSAGE_FILES_NOT_EXISTING("ErrorMessageFilesNotExisting", "\nError during automatic backup.\nOne or both paths do not exist!"),
@@ -264,7 +267,13 @@ public class TranslationLoaderEnum {
         INFO_PAGE_VERSION("InfoPageVersion", "Version: "),
         INFO_PAGE_DEVELOPER("InfoPageDeveloper", "Developer: "),
         INFO_PAGE_CREDITS("InfoPageCredits", "Credits"),
-        INFO_PAGE_LICENSE("InfoPageLicense", "License");
+        INFO_PAGE_LICENSE("InfoPageLicense", "License"),
+
+        // Subscription
+        SUBSCRIPTION_EXPIRING_TITLE("ExpiringTitle", "Backup Manager subscription expiring soon"),
+        SUBSCRIPTION_EXPIRING_MESSAGE("ExpiringMessage", "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it."),
+        SUBSCRIPTION_EXPIRED_TITLE("ExpiredTitle", "Backup Manager subscription expired"),
+        SUBSCRIPTION_EXPIRED_MESSAGE("ExpiredMessage", "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it.");
 
         private final String keyName;
         private final String defaultValue;
@@ -283,22 +292,17 @@ public class TranslationLoaderEnum {
             this.defaultValue = defaultValue;
         }
 
+        // Lookup by keyName (JSON key)
+        public static TranslationKey fromKeyName(String keyName) {
+            return lookup.get(keyName);
+        }
+
         public String getKeyName() {
             return keyName;
         }
 
         public String getDefaultValue() {
             return defaultValue;
-        }
-
-        // Lookup by keyName (JSON key)
-        public static TranslationKey fromKeyName(String keyName) {
-            return lookup.get(keyName);
-        }
-
-        @Override
-        public String toString() {
-            return keyName;
         }
     }
 
@@ -331,9 +335,5 @@ public class TranslationLoaderEnum {
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
         }
-    }
-
-    public static String getTranslation(TranslationCategory category, TranslationKey key) {
-        return category.translations.getOrDefault(key, key.getDefaultValue()); // Use default value if not found
     }
 }

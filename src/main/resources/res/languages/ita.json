@@ -48,7 +48,7 @@
     "AutoBackupButtonOFF": "Backup Automatico (OFF)",
     "InitialPathPlaceholder": "Percorso iniziale",
     "DestinationPathPlaceholder": "Percorso di destinazione",
-    "BackupName": "Nome del backup: ",
+    "BackupName": "Nome del backup",
     "BackupNameTooltip": "(Obbligatorio) Nome del backup",
     "InitialPathTooltip": "(Obbligatorio) Percorso iniziale",
     "DestinationPathTooltip": "(Obbligatorio) Percorso di destinazione",
@@ -131,6 +131,8 @@
   },
   "TrayIcon": {
     "TrayTooltip": "Servizio di Backup",
+    "OpenAction": "Accesso Rapido",
+    "ExitAction": "Esci",
     "SuccessMessage": "\nIl backup è stato completato con successo:",
     "ErrorMessageInputMissing": "\nErrore durante il backup automatico.\nPercorso mancante!",
     "ErrorMessageFilesNotExisting": "\nErrore durante il backup automatico.\nUno o entrambi i percorsi non esistono!",
@@ -196,5 +198,11 @@
     "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo caratteri alfanumerici, trattini e underscore.",
     "ConfirmationDeletionTitle": "Conferma Eliminazione",
     "ConfirmationDeletionMessage": "Sei sicuro di voler eliminare le righe selezionate?"
+  },
+  "Subscription": {
+    "ExpiringTitle": "Abbonamento Backup Manager in scadenza",
+    "ExpiringMessage": "Il tuo abbonamento a Backup Manager sta per scadere.\nI backup automatici continueranno a funzionare fino alla data di scadenza.\nContatta l'assistenza per rinnovarlo.",
+    "ExpiredTitle": "Abbonamento Backup Manager scaduto",
+    "ExpiredMessage": "Il tuo abbonamento a Backup Manager è scaduto.\nI backup automatici non verranno più eseguiti.\nContatta l'assistenza per riattivarlo."
   }
 }

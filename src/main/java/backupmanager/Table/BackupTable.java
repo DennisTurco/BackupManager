@@ -10,7 +10,7 @@ public class BackupTable extends JTable {
     public BackupTable(TableModel model) {
         super(model);
         setRowHeight(35);
-        
+
         //! TODO: I disable table sorting bacause indexes are not correct when is active
         //setAutoCreateRowSorter(true); // Enable column sorting
 

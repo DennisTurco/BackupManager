@@ -1,6 +1,11 @@
 package backupmanager.Email;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,15 +14,9 @@ import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JsonUser;
+import backupmanager.database.Repositories.UserRepository;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.net.SMTPAppender;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Utility class for sending emails through logback SMTPAppender.
@@ -53,8 +52,8 @@ public class EmailSender {
             "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \nInstalled Version: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
-            user.email,
-            user.language,
+            user.email(),
+            user.language(),
             ConfigKey.VERSION.getValue(),
             body,
             rows,
@@ -70,7 +69,7 @@ public class EmailSender {
      * Sends an informational email.
      */
     public static void sendUserCreationEmail(User user) {
-        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language + "\nInstalled version: " + ConfigKey.VERSION.getValue();
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language() + "\nInstalled version: " + ConfigKey.VERSION.getValue();
 
         String emailMessage = "\n\n" + userDetails;
 
@@ -95,7 +94,7 @@ public class EmailSender {
 
         String emailMessage = subject + "\n\n" + body;
 
-        updateEmailRecipient(user.email);
+        updateEmailRecipient(user.email());
 
         // Should be info, but if you change it, it doesn't work
         emailConfirmationLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
@@ -104,18 +103,13 @@ public class EmailSender {
     }
 
     private static User getCurrentUser() {
-        try {
-            User user = JsonUser.readUserFromJson(
-                ConfigKey.USER_FILE_STRING.getValue(),
-                ConfigKey.CONFIG_DIRECTORY_STRING.getValue()
-            );
+        User user = UserRepository.getLastUser();
 
-            return user;
-        } catch (IOException e) {
-            logger.error("Unable to retrieve user details for the email: " + e.getMessage(), e);
+        if (user == null) {
+            logger.error("Unable to retrieve user details for the email because there is no user registered");
         }
 
-        return null;
+        return user;
     }
 
     public static String getTextFromLogFile(int rows) {

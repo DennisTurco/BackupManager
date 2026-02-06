@@ -8,4 +8,4 @@ public enum ErrorTypes {
     ZippingIOError,
     ZippingSecurityError,
     ZippingGenericError
-}   
+}

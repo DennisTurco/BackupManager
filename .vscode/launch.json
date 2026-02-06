@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EncryptConfigFile",
+            "request": "launch",
+            "mainClass": "backupmanager.Email.EncryptConfigFile",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
+            "name": "ConfigReader",
+            "request": "launch",
+            "mainClass": "backupmanager.Email.ConfigReader",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
+            "name": "SidebarTest",
+            "request": "launch",
+            "mainClass": "test.SidebarTest",
+            "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
             "name": "DecryptPassword",
             "request": "launch",
             "mainClass": "backupmanager.Email.DecryptPassword",
@@ -37,6 +58,14 @@
             "request": "launch",
             "mainClass": "backupmanager.MainApp",
             "projectName": "BackupManager"
+        },
+        {
+            "type": "java",
+            "name": "Background service",
+            "request": "launch",
+            "mainClass": "backupmanager.MainApp",
+            "projectName": "BackupManager",
+            "args": "--background"
         }
     ]
 }

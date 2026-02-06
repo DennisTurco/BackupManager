@@ -5,7 +5,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 public class LimitDocument extends PlainDocument {
-    private int limit;
+    private final int limit;
 
     public LimitDocument(int limit) {
         this.limit = limit;
@@ -15,7 +15,7 @@ public class LimitDocument extends PlainDocument {
     public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
         if (str == null) return;
 
-        // Controlla che la lunghezza attuale più la nuova non superi il limite
+        // check if the lenght does't exeed the limit
         if ((getLength() + str.length()) <= limit) {
             super.insertString(offset, str, attr);
         }

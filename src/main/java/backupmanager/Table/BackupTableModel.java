@@ -6,7 +6,7 @@ public class BackupTableModel extends DefaultTableModel {
     public BackupTableModel(Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
-            
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return columnIndex == 4 ? Boolean.class : super.getColumnClass(columnIndex);
