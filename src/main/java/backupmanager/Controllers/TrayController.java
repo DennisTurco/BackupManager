@@ -47,7 +47,7 @@ public class TrayController {
 
         PopupMenu popup = setupAndGetPopupMenu();
 
-        trayIcon = new TrayIcon(image, "Remind Service", popup);
+        trayIcon = new TrayIcon(image, "Backup Service", popup);
         trayIcon.setImageAutoSize(true);
 
         try {

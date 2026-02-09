@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS "Subscriptions" (
 	"InsertDate" INTEGER NOT NULL,
 	"StartDate" INTEGER NOT NULL UNIQUE,
 	"EndDate" INTEGER NOT NULL,
+	"CreatedBy" INTEGER NOT NULL,
 	CHECK("StartDate" <= "EndDate")
 );
 
@@ -93,7 +94,8 @@ SELECT
     SubscriptionId,
     datetime(InsertDate / 1000, 'unixepoch', 'localtime') AS InsertDate,
     datetime(StartDate / 1000, 'unixepoch', 'localtime') AS StartDate,
-    datetime(EndDate / 1000, 'unixepoch', 'localtime') AS EndDate
+    datetime(EndDate / 1000, 'unixepoch', 'localtime') AS EndDate,
+	CreatedBy
 FROM Subscriptions;
 
 

@@ -138,11 +138,12 @@ When the threshold is reached:
 3. To create a subscription period you have to manually insert it, for instance:
 
     ```sql
-    INSERT INTO Subscriptions (InsertDate, StartDate, EndDate)
+    INSERT INTO Subscriptions (InsertDate, StartDate, EndDate, CreatedBy)
     VALUES (
         strftime('%s','now') * 1000,
         strftime('%s','2026-01-30 00:00:00') * 1000,
-        strftime('%s','2026-12-30 00:00:00') * 1000
+        strftime('%s','2026-12-30 00:00:00') * 1000,
+        'MANUAL'
     );
     ```
 

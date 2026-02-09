@@ -23,11 +23,11 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-    # Step 2: Set up JDK 25
-    - name: Set up JDK 25
+    # Step 2: Set up JDK 21
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
-        java-version: '25'
+        java-version: '21'
         distribution: 'temurin'  # Use the Temurin distribution for OpenJDK
         cache: maven  # Cache Maven dependencies to speed up subsequent builds
 
@@ -36,8 +36,8 @@ jobs:
       run: mvn -B clean package --file pom.xml  # Build the project with Maven, suppress the interactive mode
 
     # Step 4: Run Tests
-    - name: Run Tests
-      run: mvn test --file pom.xml  # Run the tests to ensure the code works as expected
+    # - name: Run Tests
+    #   run: mvn test --file pom.xml  # Run the tests to ensure the code works as expected
 
     # # Step 5: Upload the built JAR file as an artifact
     # - name: Upload JAR Artifact

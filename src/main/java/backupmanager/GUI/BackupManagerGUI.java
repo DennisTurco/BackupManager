@@ -116,35 +116,19 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         if (user == null) { // first access
             setLanguageBasedOnPcLanguage();
             createNewUser();
-        } else if (user.equals(User.getDefaultUser())) { // user unregistered
-            updateUnregisteredUser(user.id());
         } else {
             logger.info("Current user: " + user.toString());
         }
     }
 
     private void createNewUser() {
-        User newUser = openUserDialogAndObtainTheResult();
+        User newUser = null;
 
-        if (newUser == null) {
-            UserRepository.insertUser(User.getDefaultUser());
-            return;
+        while (newUser == null) {
+            newUser = openUserDialogAndObtainTheResult();
         }
 
         UserRepository.insertUser(newUser);
-
-        sendRegistrationEmail(newUser);
-    }
-
-    private void updateUnregisteredUser(int userId) {
-        User newUser = openUserDialogAndObtainTheResult();
-
-        if (newUser == null || newUser.equals(User.getDefaultUser())) {
-            return;
-        }
-
-        newUser = new User(userId, newUser.name(), newUser.surname(), newUser.email());
-        UserRepository.updateUser(newUser);
 
         sendRegistrationEmail(newUser);
     }

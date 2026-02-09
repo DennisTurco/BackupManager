@@ -41,7 +41,7 @@ public class BackgroundService {
 
         this.trayIcon = trayIcon;
 
-        scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
+        scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Backup-Background-Service"));
 
         long interval = jsonConfig.readCheckForBackupTimeInterval();
 

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Subscription;
+import backupmanager.Enums.SubscriptionCreationType;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.database.Database;
 
@@ -26,7 +27,8 @@ public class SubscriptionRepository {
                 SubscriptionId,
                 InsertDate,
                 StartDate,
-                EndDate
+                EndDate,
+                CreationType
             FROM
                 Subscriptions
             WHERE
@@ -49,12 +51,14 @@ public class SubscriptionRepository {
                     long insertDateLong = rs.getLong("InsertDate");
                     long startDateLong = rs.getLong("StartDate");
                     long endDateLong = rs.getLong("EndDate");
+                    String creationTypeStr = rs.getString("CreationType");
 
                     LocalDateTime insertDate = SqlHelper.toLocalDateTime(insertDateLong);
                     LocalDate startDate = SqlHelper.toLocalDate(startDateLong);
                     LocalDate endDate = SqlHelper.toLocalDate(endDateLong);
+                    SubscriptionCreationType creationType = SubscriptionCreationType.valueOf(creationTypeStr);
 
-                    return new Subscription(id, insertDate, startDate, endDate);
+                    return new Subscription(id, insertDate, startDate, endDate, creationType);
                 }
             }
 
