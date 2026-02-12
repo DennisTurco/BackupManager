@@ -56,6 +56,27 @@ $\rightarrow$ [Code tecnical documentation](./docs/code_documentation.md)
 | German | ✅ |
 | French | ✅ |
 
+## Code Quality
+
+This project enforces automatic code quality checks during the Maven verify phase.
+Running the following command will execute formatting checks, static analysis, and tests:
+
+`mvn clean verify`
+
+If any rule is violated, the build will fail.
+
+### Tools Used
+
+* **Spotless**: Automatically enforces consistent code formatting using Google Java Format.
+
+  * Format code locally: `mvn spotless:apply`
+  * Check formatting without modifying files: `mvn spotless:check`
+
+* **Checkstyle**: Ensures adherence to Java coding standards and detects style violations: `mvn checkstyle:check`
+* **SpotBugs**: Performs static analysis on compiled bytecode to detect potential bugs such as null pointer risks, resource leaks, and concurrency issues: `mvn spotbugs:check`
+
+Before committing, run: `mvn spotless:apply; mvn clean verify`
+
 ## Licence
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
