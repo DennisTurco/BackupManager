@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,16 +49,28 @@ public class EmailSender {
         }
 
         int rows = 300;
-        String emailMessage = String.format(
-            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \nInstalled Version: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
-            subject,
-            user.getUserCompleteName(),
-            user.email(),
-            user.language(),
-            ConfigKey.VERSION.getValue(),
-            body,
-            rows,
-            getTextFromLogFile(rows)
+        String emailMessage = String.format("""
+                Subject: %s
+
+                User: %s
+                Email: %s
+                Language: %s
+                Installed Version: %s
+
+                Has encountered the following error:
+                %s
+
+                Last %d rows of the application.log file:
+                %s
+                """,
+                subject,
+                user.getUserCompleteName(),
+                user.email(),
+                user.language(),
+                ConfigKey.VERSION.getValue(),
+                body,
+                rows,
+                getTextFromLogFile(rows)
         );
 
         emailErrorLogger.error(emailMessage); // Log the message as ERROR, triggering the SMTPAppender
@@ -121,7 +134,7 @@ public class EmailSender {
 
         List<String> lastLines = new LinkedList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
             String line;
 
             while ((line = reader.readLine()) != null) {

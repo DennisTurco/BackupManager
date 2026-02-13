@@ -6,8 +6,6 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
     </properties>
     <dependencies>
         <!-- Dependency for json -->
@@ -133,6 +131,14 @@
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <release>21</release>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.3.0</version>
             <configuration>
@@ -158,14 +164,18 @@
         <plugin>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>4.7.3.0</version>
+            <version>4.8.3.0</version>
             <executions>
                 <execution>
+                    <phase>verify</phase>
                     <goals>
-                        <goal>spotbugs</goal>
+                        <goal>check</goal>
                     </goals>
                 </execution>
             </executions>
+            <configuration>
+                <failOnError>false</failOnError>
+            </configuration>
         </plugin>
     </plugins>
 </build>

@@ -117,7 +117,7 @@ public class BackgroundService {
                 try {
                     for (ConfigurationBackup backup : backups) {
                         ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null);
-                        BackupOperations.SingleBackup(context, BackupTriggeredEnum.SCHEDULER);
+                        BackupOperations.singleBackup(context, BackupTriggeredEnum.SCHEDULER);
                     }
                 } finally {
                     logger.info("All backups completed. Resetting isBackingUp flag.");

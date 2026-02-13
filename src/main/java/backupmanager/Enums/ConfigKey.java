@@ -2,6 +2,7 @@ package backupmanager.Enums;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public enum ConfigKey {
     private static final Logger logger = LoggerFactory.getLogger(ConfigKey.class);
 
     public static void loadFromJson(String filePath) {
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader(filePath, StandardCharsets.UTF_8)) {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             for (ConfigKey key : ConfigKey.values()) {
                 if (jsonObject.has(key.name())) {

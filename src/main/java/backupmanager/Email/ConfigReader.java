@@ -1,5 +1,6 @@
 package backupmanager.Email;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
@@ -15,14 +16,14 @@ public class ConfigReader {
         byte[] encryptedBytes = Files.readAllBytes(Paths.get("config.enc"));
         byte[] decoded = Base64.getDecoder().decode(encryptedBytes);
 
-        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
+        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
 
         byte[] decrypted = cipher.doFinal(decoded);
-        String config = new String(decrypted);
+        String config = new String(decrypted, StandardCharsets.UTF_8);
 
-        for (String line : config.split("\n")) {
+        for (String line : config.lines().toList()) {
             if (line.startsWith("SMTP_PASSWORD=")) {
                 return line.substring("SMTP_PASSWORD=".length());
             }

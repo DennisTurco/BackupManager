@@ -3,6 +3,7 @@ package backupmanager.Managers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -150,7 +151,7 @@ public class ExportManager {
             }
         }
 
-        try (FileWriter writer = new FileWriter(fullPath)) {
+        try (FileWriter writer = new FileWriter(fullPath, StandardCharsets.UTF_8)) {
             // Prepare header row
             if (header != null && !header.isEmpty()) {
                 writer.append(header).append("\n");

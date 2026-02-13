@@ -1,5 +1,3 @@
 package test;
 
-public class BackupTest {
-    
-}
+public class BackupTest {}

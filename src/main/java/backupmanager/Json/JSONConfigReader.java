@@ -2,6 +2,7 @@ package backupmanager.Json;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,36 +40,47 @@ public class JSONConfigReader {
     }
 
     public int readCheckForBackupTimeInterval() throws IOException {
-        try {
-            JsonObject backupService = getConfig("BackupService");
-            JsonElement interval = backupService.get("value");
+        JsonObject backupService = getConfig("BackupService");
 
-            // if the interval is null, set to default of 5 minutes
-            int timeInterval = (interval != null) ? interval.getAsInt() : 5;
-
-            logger.info("Time interval set to " + timeInterval + " minutes");
-            return timeInterval;
-        } catch (NullPointerException e) {
-            logger.error("Error retrieving backup time interval, defaulting to 5 minutes: " + e.getMessage(), e);
-            return 5; // Default to 5 minutes
+        if (backupService == null) {
+            logger.warn("BackupService config missing, defaulting to 5 minutes");
+            return 5;
         }
+
+        JsonElement interval = backupService.get("value");
+
+        int timeInterval = (interval != null && !interval.isJsonNull()) ? interval.getAsInt() : 5;
+
+        logger.info("Time interval set to " + timeInterval + " minutes");
+        return timeInterval;
     }
 
     public int getConfigValue(String key, int defaultValue) {
         try {
             JsonObject logService = getConfig(key);
+
+            if (logService == null) {
+                logger.warn("Missing config for {}, using default {}", key, defaultValue);
+                return defaultValue;
+            }
+
             JsonElement value = logService.get(key);
 
-            return (value != null && value.isJsonPrimitive()) ? value.getAsInt() : defaultValue;
-        } catch (IOException | NullPointerException e) {
-            logger.error("Error retrieving config value for " + key + ": " + e.getMessage(), e);
+            if (value == null || value.isJsonNull() || !value.isJsonPrimitive()) {
+                return defaultValue;
+            }
+
+            return value.getAsInt();
+
+        } catch (IOException e) {
+            logger.error("Error retrieving config value for {}", key, e);
             return defaultValue;
         }
     }
 
     private void loadConfig() {
         String filePath = directoryPath + filename;
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader(filePath, StandardCharsets.UTF_8)) {
             Gson gson = new Gson();
             config = gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {

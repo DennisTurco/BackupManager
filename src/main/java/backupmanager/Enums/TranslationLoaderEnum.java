@@ -2,6 +2,7 @@ package backupmanager.Enums;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -309,7 +310,7 @@ public class TranslationLoaderEnum {
     public static void loadTranslations(String filePath) throws IOException {
         Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader(filePath, StandardCharsets.UTF_8)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
             for (TranslationCategory category : TranslationCategory.values()) {
