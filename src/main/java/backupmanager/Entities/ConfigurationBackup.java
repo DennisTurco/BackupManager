@@ -72,11 +72,11 @@ public class ConfigurationBackup {
     }
 
     public ConfigurationBackup(ConfigurationBackup backup) {
-        UpdateBackup(backup);
+        updateBackup(backup);
     }
 
     // make it final to avoid the warning (now this method cannot be overrided by the subclasses)
-    public final void UpdateBackup(ConfigurationBackup backupUpdated) {
+    public final void updateBackup(ConfigurationBackup backupUpdated) {
         this.id = backupUpdated.getId();
         this.name = backupUpdated.getName();
         this.targetPath = backupUpdated.getTargetPath();

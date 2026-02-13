@@ -17,7 +17,7 @@ class TestBackupOperations {
         String path2 = "/wrong/path/dir";
 
         assertFalse(
-            BackupOperations.CheckInputCorrect("backup", path1, path2, null)
+            BackupOperations.checkInputCorrect("backup", path1, path2, null)
         );
     }
 
@@ -26,7 +26,7 @@ class TestBackupOperations {
         File file = File.createTempFile("file", ".txt");
 
         assertFalse(
-            BackupOperations.CheckInputCorrect("backup", file.getPath(), file.getPath(), null)
+            BackupOperations.checkInputCorrect("backup", file.getPath(), file.getPath(), null)
         );
     }
 
@@ -36,7 +36,7 @@ class TestBackupOperations {
         File tempFile2 = File.createTempFile("file2", ".txt");
 
         assertTrue(
-            BackupOperations.CheckInputCorrect("backup", tempFile1.getPath(), tempFile2.getPath(), null)
+            BackupOperations.checkInputCorrect("backup", tempFile1.getPath(), tempFile2.getPath(), null)
         );
     }
 }

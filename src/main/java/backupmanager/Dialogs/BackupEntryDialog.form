@@ -49,7 +49,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="SingleBackup" min="-2" pref="188" max="-2" attributes="0"/>
+                                          <Component id="singleBackup" min="-2" pref="188" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="toggleAutoBackup" min="-2" pref="188" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -103,7 +103,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="SingleBackup" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="singleBackup" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="toggleAutoBackup" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
@@ -226,7 +226,7 @@
         <Property name="text" type="java.lang.String" value="last backup: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="SingleBackup">
+    <Component class="javax.swing.JButton" name="singleBackup">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="33" type="rgb"/>

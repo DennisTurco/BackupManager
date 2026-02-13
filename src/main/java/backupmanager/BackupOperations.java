@@ -39,7 +39,7 @@ import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    public static void SingleBackup(ZippingContext context, BackupTriggeredEnum triggeredBy) {
+    public static void singleBackup(ZippingContext context, BackupTriggeredEnum triggeredBy) {
         if (context.backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
 
         logger.info("Event --> manual backup started");
@@ -48,7 +48,7 @@ public class BackupOperations {
             String path1 = context.backup().getTargetPath();
             String path2 = context.backup().getDestinationPath();
 
-            if(!CheckInputCorrect(context.backup().getName(), path1, path2, context.trayIcon()))
+            if(!checkInputCorrect(context.backup().getName(), path1, path2, context.trayIcon()))
                 return;
 
             if (context.progressBar() != null)
@@ -117,7 +117,7 @@ public class BackupOperations {
 
             for (ConfigurationBackup b : backups) {
                 if (b.getName().equals(context.backup().getName())) {
-                    b.UpdateBackup(context.backup());
+                    b.updateBackup(context.backup());
                     break;
                 }
             }
@@ -159,7 +159,7 @@ public class BackupOperations {
         return null;
     }
 
-    public static boolean CheckInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
+    public static boolean checkInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
         //check if inputs are null
         if(path1.length() == 0 || path2.length() == 0) {
             setError(ErrorTypes.InputMissing, trayIcon, backupName);

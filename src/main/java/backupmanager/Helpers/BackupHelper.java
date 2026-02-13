@@ -179,7 +179,7 @@ public class BackupHelper {
             return backup;
         }
 
-        if(!BackupOperations.CheckInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null)) return null;
+        if(!BackupOperations.checkInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null)) return null;
 
         // if the file has not been saved you need to save it before setting the auto backup
         if(!backup.isAutomatic() || backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {

@@ -70,7 +70,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         setTranslations();
     }
 
-    private void SetLastBackupLabel(LocalDateTime date) {
+    private void setLastBackupLabel(LocalDateTime date) {
         if (date != null) {
             String dateStr = date.format(BackupHelper.formatter);
             dateStr = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.LAST_BACKUP) + ": " + dateStr;
@@ -80,9 +80,9 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }
 
     private void updateCurrentFiedsByBackup(ConfigurationBackup backup) {
-        SetStartPathField(backup.getTargetPath());
-        SetDestinationPathField(backup.getDestinationPath());
-        SetLastBackupLabel(backup.getLastUpdateDate());
+        setStartPathField(backup.getTargetPath());
+        setDestinationPathField(backup.getDestinationPath());
+        setLastBackupLabel(backup.getLastUpdateDate());
         setAutoBackupPreference(backup.isAutomatic());
         setCurrentBackupNotes(backup.getNotes());
         setCurrentBackupMaxBackupsToKeep(backup.getMaxToKeep());
@@ -150,10 +150,10 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         }
     }
 
-    public void SetStartPathField(String text) {
+    public void setStartPathField(String text) {
         startPathField.setText(text);
     }
-    public void SetDestinationPathField(String text) {
+    public void setDestinationPathField(String text) {
         destinationPathField.setText(text);
     }
     private void setCurrentBackupNotes(String notes) {
@@ -163,7 +163,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         maxBackupCountSpinner.setValue(maxBackupsCount);
     }
 
-    public void SingleBackup(String path1, String path2, BackupTable backupTable) {
+    public void singleBackup(String path1, String path2, BackupTable backupTable) {
         logger.info("Event --> single backup");
 
         currentBackup.setTargetPath(path2);
@@ -171,7 +171,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         String temp = "\\";
 
         //------------------------------INPUT CONTROL ERRORS------------------------------
-        if (!BackupOperations.CheckInputCorrect(currentBackup.getName(), path1, path2, null)) return;
+        if (!BackupOperations.checkInputCorrect(currentBackup.getName(), path1, path2, null)) return;
 
         //------------------------------TO GET THE CURRENT DATE------------------------------
         LocalDateTime dateNow = LocalDateTime.now();
@@ -312,8 +312,8 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         startPathField.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.INITIAL_PATH_TOOLTIP));
         destinationPathField.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.DESTINATION_PATH_TOOLTIP));
         backupNoteTextArea.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.NOTES_TOOLTIP));
-        SingleBackup.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_BUTTON));
-        SingleBackup.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_TOOLTIP));
+        singleBackup.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_BUTTON));
+        singleBackup.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_TOOLTIP));
         toggleAutoBackup.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_OFF));
         toggleAutoBackup.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_TOOLTIP));
         jLabel2.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.NOTES) + ":");
@@ -346,7 +346,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         backupNoteTextArea = new javax.swing.JTextArea();
         lastBackupLabel = new javax.swing.JLabel();
-        SingleBackup = new javax.swing.JButton();
+        singleBackup = new javax.swing.JButton();
         toggleAutoBackup = new javax.swing.JToggleButton();
         btnTimePicker = new backupmanager.svg.SVGButton();
         maxBackupCountSpinner = new javax.swing.JSpinner();
@@ -406,12 +406,12 @@ public class BackupEntryDialog extends javax.swing.JDialog {
 
         lastBackupLabel.setText("last backup: ");
 
-        SingleBackup.setBackground(new java.awt.Color(51, 153, 255));
-        SingleBackup.setForeground(new java.awt.Color(255, 255, 255));
-        SingleBackup.setText("Single Backup");
-        SingleBackup.setToolTipText("Perform the backup");
-        SingleBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        SingleBackup.addActionListener(new java.awt.event.ActionListener() {
+        singleBackup.setBackground(new java.awt.Color(51, 153, 255));
+        singleBackup.setForeground(new java.awt.Color(255, 255, 255));
+        singleBackup.setText("Single Backup");
+        singleBackup.setToolTipText("Perform the backup");
+        singleBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        singleBackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SingleBackupActionPerformed(evt);
             }
@@ -502,7 +502,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(131, 131, 131)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(SingleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(singleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(toggleAutoBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -541,7 +541,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(SingleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(singleBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(toggleAutoBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnTimePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -587,7 +587,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
             currentBackup = getBackup();
         }
 
-        SingleBackup(startPathField.getText(), destinationPathField.getText(), backupTable);
+        singleBackup(startPathField.getText(), destinationPathField.getText(), backupTable);
     }//GEN-LAST:event_SingleBackupActionPerformed
 
     private void toggleAutoBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleAutoBackupActionPerformed
@@ -647,7 +647,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_okButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton SingleBackup;
+    private javax.swing.JButton singleBackup;
     private backupmanager.customwidgets.ModernTextField backupNameField;
     private javax.swing.JTextArea backupNoteTextArea;
     private backupmanager.svg.SVGButton btnPathSearch1;

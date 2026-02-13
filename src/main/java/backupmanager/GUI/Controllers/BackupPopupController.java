@@ -110,7 +110,7 @@ public class BackupPopupController {
             BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
 
             ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
-            BackupOperations.SingleBackup(context, BackupTriggeredEnum.USER);
+            BackupOperations.singleBackup(context, BackupTriggeredEnum.USER);
         }
     }
 
