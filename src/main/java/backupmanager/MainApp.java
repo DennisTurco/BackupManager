@@ -13,8 +13,8 @@ import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
-import backupmanager.database.DatabaseInitializer;
 import backupmanager.database.DatabasePaths;
+import backupmanager.database.ProductionDatabaseInitializer;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -42,8 +42,8 @@ public class MainApp {
 
     private static void databaseInitialization() {
         try {
-            Database.init(DatabasePaths.getDatabasePath());
-            DatabaseInitializer.init();
+            Database.init(DatabasePaths.getProductionDatabasePath());
+            ProductionDatabaseInitializer.init();
         } catch (Exception ex) {
             logger.error("Unable to init the database");
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
