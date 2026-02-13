@@ -1,7 +1,7 @@
 UPDATE Configurations SET Value = 'True' WHERE Code = 'SubscriptionNedded';
 
 -- One month of free subscription
-INSERT INTO Subscriptions (InsertDate, StartDate, EndDate, CreatedBy)
+INSERT INTO Subscriptions (InsertDate, StartDate, EndDate, CreationType)
 SELECT
     unixepoch() * 1000,
     unixepoch() * 1000,

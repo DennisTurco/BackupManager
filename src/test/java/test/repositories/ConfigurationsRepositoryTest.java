@@ -1,4 +1,4 @@
-package test;
+package test.repositories;
 
 import java.io.IOException;
 
