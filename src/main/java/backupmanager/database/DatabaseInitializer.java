@@ -1,6 +1,7 @@
 package backupmanager.database;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +15,7 @@ public class DatabaseInitializer {
         try (InputStream is = DatabaseInitializer.class.getResourceAsStream(resource)) {
             if (is == null) return;
 
-            String sql = new String(is.readAllBytes());
+            String sql = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             String[] statements = sql.split(";"); // split for every command
 
             try (Statement st = conn.createStatement()) {

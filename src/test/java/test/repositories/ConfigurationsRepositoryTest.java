@@ -15,7 +15,6 @@ import backupmanager.database.DatabasePaths;
 import backupmanager.database.TestDatabaseInitializer;
 
 public class ConfigurationsRepositoryTest {
-
     @BeforeEach
     protected void setup() throws Exception {
         Database.init(DatabasePaths.getTestDatabasePath());
