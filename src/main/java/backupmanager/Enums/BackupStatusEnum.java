@@ -1,6 +1,9 @@
 package backupmanager.Enums;
 
-public enum BackupStatusEnum {
+import backupmanager.Enums.utils.CodeEnum;
+import backupmanager.Enums.utils.EnumUtil;
+
+public enum BackupStatusEnum implements CodeEnum {
     IN_PROGRESS(1),
     QUEUE(2),
     FINISHED(3),
@@ -12,16 +15,12 @@ public enum BackupStatusEnum {
         this.code = code;
     }
 
+    @Override
     public int getCode() {
         return code;
     }
 
     public static BackupStatusEnum fromCode(int code) {
-        for (BackupStatusEnum status : values()) {
-            if (status.code == code) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Invalid BackupStatusEnum code: " + code);
+        return EnumUtil.fromCode(BackupStatusEnum.class, code);
     }
 }

@@ -1,6 +1,9 @@
 package backupmanager.Enums;
 
-public enum EmailType {
+import backupmanager.Enums.utils.CodeEnum;
+import backupmanager.Enums.utils.EnumUtil;
+
+public enum EmailType implements CodeEnum {
     WELCOME(1),
     CRITICAL_ERROR(2);
 
@@ -10,16 +13,12 @@ public enum EmailType {
         this.code = code;
     }
 
+    @Override
     public int getCode() {
         return code;
     }
 
     public static EmailType fromCode(int code) {
-        for (EmailType status : values()) {
-            if (status.code == code) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Invalid EmailType code: " + code);
+        return EnumUtil.fromCode(EmailType.class, code);
     }
 }

@@ -1,6 +1,9 @@
 package backupmanager.Enums;
 
-public enum BackupTriggeredEnum {
+import backupmanager.Enums.utils.CodeEnum;
+import backupmanager.Enums.utils.EnumUtil;
+
+public enum BackupTriggeredEnum implements CodeEnum {
     USER(1),
     SCHEDULER(2);
 
@@ -10,16 +13,12 @@ public enum BackupTriggeredEnum {
         this.code = code;
     }
 
+    @Override
     public int getCode() {
         return code;
     }
 
     public static BackupTriggeredEnum fromCode(int code) {
-        for (BackupTriggeredEnum status : values()) {
-            if (status.code == code) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Invalid BackupTriggeredEnum code: " + code);
+        return EnumUtil.fromCode(BackupTriggeredEnum.class, code);
     }
 }
