@@ -25,6 +25,8 @@ public class BackupConfigurationRepositoryTest {
     protected void setup() throws Exception {
         Database.init(DatabasePaths.getTestDatabasePath());
         TestDatabaseInitializer.init();
+
+        setupTheBackupList();
     }
 
     @AfterEach
@@ -34,14 +36,12 @@ public class BackupConfigurationRepositoryTest {
 
     @Test
     protected void insertBackup_shuldBeEquals_fetchFromBackupName() {
-        setupTheBackupList();
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backups.get(1).getName());
         assertEquals(backup.getName(), backups.get(1).getName());
     }
 
     @Test
     protected void deleteBackup_shuldBeTrue_afterDelete() {
-        setupTheBackupList();
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backups.get(1).getName());
         BackupConfigurationRepository.deleteBackup(backup.getId());
         ConfigurationBackup backupDeleted = BackupConfigurationRepository.getBackupById(backup.getId());
@@ -50,7 +50,6 @@ public class BackupConfigurationRepositoryTest {
 
     @Test
     protected void getBackupList_shuldBeTrue_SameSizeForSameBackupList() {
-        setupTheBackupList();
         List<ConfigurationBackup> backupList = BackupConfigurationRepository.getBackupList();
         assertTrue(backups.size() == backupList.size());
     }

@@ -114,6 +114,66 @@ public class BackupRequestRepository {
         return backups;
     }
 
+    public static List<BackupRequest> getRequestBackups() {
+        String sql = """
+        SELECT
+            BackupRequestId,
+            BackupConfigurationId,
+            StartedDate,
+            CompletionDate,
+            Status,
+            Progress,
+            TriggeredBy,
+            DurationMs,
+            OutputPath,
+            UnzippedTargetSize,
+            ZippedTargetSize,
+            FilesCount,
+            ErrorMessage
+        FROM
+            BackupRequests
+        ORDER BY 1
+            """;
+
+        List<BackupRequest> backups = new ArrayList<>();
+
+        try (
+            Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int backupRequestId = rs.getInt("BackupRequestId");
+                    int backupConfigurationId = rs.getInt("BackupConfigurationId");
+                    Long startedDateMills = rs.getLong("StartedDate");
+                    Long completionDateStr = rs.getLong("CompletionDate");
+                    int statusInt = rs.getInt("Status");
+                    int progress = rs.getInt("Progress");
+                    int triggeredByInt = rs.getInt("TriggeredBy");
+                    Long durationMs = rs.getLong("DurationMs");
+                    String outputPath = rs.getString("OutputPath");
+                    long unzippedTargetSize = rs.getLong("UnzippedTargetSize");
+                    long zippedTargetSize = rs.getLong("ZippedTargetSize");
+                    int filesCount = rs.getInt("FilesCount");
+                    String errorMessage = rs.getString("ErrorMessage");
+
+                    LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
+                    LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
+                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
+
+                    backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
+                    logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
+                }
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error fetching backup requests list: " + e.getMessage(), e);
+        }
+
+        return backups;
+    }
+
     public static boolean isAnyBackupRunning() {
         String sql = """
             SELECT 1
