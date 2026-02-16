@@ -2,12 +2,15 @@ package backupmanager.database.Repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Email;
+import backupmanager.Enums.EmailType;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.database.Database;
 
@@ -20,7 +23,7 @@ public class EmailRepository {
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, email.type());
+            stmt.setInt(1, email.type().getCode());
             stmt.setLong(2, SqlHelper.toMilliseconds(email.insertDate()));
             stmt.setString(3, email.appVersion());
             stmt.setString(4, email.payload());
@@ -31,5 +34,44 @@ public class EmailRepository {
         } catch (SQLException e) {
             logger.error("Email inserting error: " + e.getMessage());
         }
+    }
+
+    public static Email getLastEmail() {
+        String sql = """
+        SELECT
+            EmailId,
+            Type,
+            InsertDate,
+            AppVersion,
+            Payload
+        FROM
+            Emails
+        ORDER BY InsertDate DESC
+            """;
+
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()) {
+                    int emailId = rs.getInt("EmailId");
+                    int typeInt = rs.getInt("Type");
+                    long insertDateLong = rs.getLong("InsertDate");
+                    String appVersion = rs.getString("AppVersion");
+                    String payload = rs.getString("Payload");
+
+                    LocalDateTime startedDate = SqlHelper.toLocalDateTime(insertDateLong);
+                    EmailType type = EmailType.fromCode(typeInt);
+
+                    return new Email(emailId, type, startedDate, appVersion, payload);
+                } else {
+                    logger.debug("No email to obtain");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to fetch last email", e);
+        }
+
+        return null;
     }
 }

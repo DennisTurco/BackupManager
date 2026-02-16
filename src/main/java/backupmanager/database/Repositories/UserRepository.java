@@ -57,22 +57,4 @@ public class UserRepository {
 
         return null;
     }
-
-    public static void updateUser(User user) {
-        String sql = "UPDATE Users SET Name = ?, Surname = ?, Email = ? WHERE UserId = ?";
-        try (Connection conn = Database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, user.name());
-            stmt.setString(2, user.surname());
-            stmt.setString(3, user.email());
-            stmt.setInt(4, user.id());
-            stmt.executeUpdate();
-
-            logger.info("User updated succesfully");
-
-        } catch (SQLException e) {
-            logger.error("User updating error: " + e.getMessage());
-        }
-    }
 }

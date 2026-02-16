@@ -2,9 +2,11 @@ package backupmanager.Entities;
 
 import java.time.LocalDateTime;
 
+import backupmanager.Enums.EmailType;
+
 public record Email (
     int emailId,
-    int type,
+    EmailType type,
     LocalDateTime insertDate,
     String appVersion,
     String payload

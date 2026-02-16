@@ -34,8 +34,8 @@ public class ConfigurationBackup {
         nextBackupDate = null;
         timeIntervalBackup = null;
         notes = "";
-        creationDate = null;
-        lastUpdateDate = null;
+        creationDate = LocalDateTime.now();
+        lastUpdateDate = LocalDateTime.now();
         count = 0;
         maxToKeep = configReader.getConfigValue("MaxCountForSameBackup", 1);
     }
