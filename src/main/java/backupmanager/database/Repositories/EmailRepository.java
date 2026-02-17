@@ -71,7 +71,51 @@ public class EmailRepository {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Failed to fetch last email", e);
+            logger.error("Failed to fetch last email by type", e);
+        }
+
+        return null;
+    }
+
+    public static Email getLastErrorEmailByPayloadAndVersion(String payload, String version) {
+        String sql = """
+        SELECT
+            EmailId,
+            Type,
+            InsertDate,
+            AppVersion,
+            Payload
+        FROM
+            Emails
+        WHERE
+            Type = 2 -- critical error
+            AND Payload = ?
+            AND AppVersion = ?
+        ORDER BY InsertDate DESC
+            """;
+
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, payload);
+            stmt.setString(2, version);
+
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()) {
+                    int emailId = rs.getInt("EmailId");
+                    int typeInt = rs.getInt("Type");
+                    long insertDateLong = rs.getLong("InsertDate");
+
+                    LocalDateTime startedDate = SqlHelper.toLocalDateTime(insertDateLong);
+                    EmailType type = EmailType.fromCode(typeInt);
+
+                    return new Email(emailId, type, startedDate, version, payload);
+                } else {
+                    logger.debug("No email to obtain");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to fetch last email by version and payload", e);
         }
 
         return null;

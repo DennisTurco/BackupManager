@@ -47,7 +47,7 @@ public class EmailSender {
      * @param subject The email subject.
      * @param body The email body.
     */
-    public static void sendErrorEmail(String subject, String body) {
+    public static void sendErrorEmail(String subject, String body, String errorMessage) {
         User user = getCurrentUser();
 
         if (user == null) {
@@ -55,8 +55,7 @@ public class EmailSender {
             return;
         }
 
-        if (!canSend()) {
-            logger.info("A critical error occurred, but the email cannot be sent because insufficient time has passed since the last one.");
+        if (!canSend(errorMessage)) {
             return;
         }
 
@@ -89,7 +88,7 @@ public class EmailSender {
 
         logger.info("Error email sent with subject: " + subject);
 
-        insertEmailInternally(EmailType.CRITICAL_ERROR, null);
+        insertEmailInternally(EmailType.CRITICAL_ERROR, errorMessage);
     }
 
     /**
@@ -135,15 +134,36 @@ public class EmailSender {
         EmailRepository.insertEmail(email);
     }
 
-    private static boolean canSend() {
-        int minWait = configReader.getConfigValue("CriticalEmailMinWaitDays", 7);
+    private static boolean canSend(String payload) {
+        int minWaitDays = configReader.getConfigValue("CriticalEmailMinWaitDays", 7);
         LocalDateTime now = LocalDateTime.now();
 
-        Email email = EmailRepository.getLastEmailByType(EmailType.CRITICAL_ERROR);
-        if (email == null) return true;
-        LocalDateTime lastSent = email.insertDate();
+        if (isDuplicateError(payload)) {
+            logger.info("A critical error occurred, but the email was not sent because this error has already been reported for the current version.");
+            return false;
+        }
 
-        return (lastSent.plusDays(minWait).isBefore(now));
+        if (!hasWaitedSufficientTime(minWaitDays, now)) {
+            logger.info("A critical error occurred, but the email was not sent because the minimum wait time since the last critical error email has not elapsed.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean isDuplicateError(String payload) {
+        if (payload == null) return false;
+
+        Email lastError = EmailRepository.getLastErrorEmailByPayloadAndVersion(payload, ConfigKey.VERSION.getValue());
+        return lastError != null;
+    }
+
+    private static boolean hasWaitedSufficientTime(int minWaitDays, LocalDateTime now) {
+        Email lastEmail = EmailRepository.getLastEmailByType(EmailType.CRITICAL_ERROR);
+        if (lastEmail == null) return true;
+
+        LocalDateTime lastSent = lastEmail.insertDate();
+        return lastSent.plusDays(minWaitDays).isBefore(now);
     }
 
     private static String getTextFromLogFile(int rows) {

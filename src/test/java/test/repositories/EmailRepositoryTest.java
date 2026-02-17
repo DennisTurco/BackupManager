@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,9 +35,15 @@ public class EmailRepositoryTest {
     }
 
     @Test
-    protected void getLastEmail_shouldBeTrue_forLastEmailRegistered() {
-        Email lastSent = EmailRepository.getLastEmailByType(EmailType.CRITICAL_ERROR);
-        assertEquals("a strange error", lastSent.payload());
+    protected void getLastEmailByType_shouldBeEquals_forLastWelcomeEmailRegistered() {
+        Email lastSent = EmailRepository.getLastEmailByType(EmailType.WELCOME);
+        assertEquals(EmailType.WELCOME, lastSent.type());
+    }
+
+    @Test
+    protected void getLastErrorEmailByPayloadAndVersion_shouldBeTrue_forLastErrorEmailRegisteredByData() {
+        Email lastSent = EmailRepository.getLastErrorEmailByPayloadAndVersion("thread1 error", "2.1.0");
+        assertTrue(lastSent != null);
     }
 
     private void createEmails() {
