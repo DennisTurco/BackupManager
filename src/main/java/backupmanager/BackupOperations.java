@@ -21,9 +21,9 @@ import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupStatusEnum;
-import backupmanager.Enums.BackupTriggeredEnum;
-import backupmanager.Enums.ErrorTypes;
+import backupmanager.Enums.BackupStatus;
+import backupmanager.Enums.BackupTriggerType;
+import backupmanager.Enums.ErrorType;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
@@ -39,7 +39,7 @@ import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    public static void singleBackup(ZippingContext context, BackupTriggeredEnum triggeredBy) {
+    public static void singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
         if (context.backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
 
         logger.info("Event --> manual backup started");
@@ -70,7 +70,7 @@ public class BackupOperations {
         }
     }
 
-    public static void executeBackup(ZippingContext context, BackupTriggeredEnum triggeredBy, String path1, String path2) {
+    public static void executeBackup(ZippingContext context, BackupTriggerType triggeredBy, String path1, String path2) {
         File sourceFile = new File(path1.trim());
         File outputFile = new File((path2+".zip").trim());
 
@@ -81,7 +81,7 @@ public class BackupOperations {
         ZippingThread.zipDirectory(sourceFile, outputFile, context, totalFilesCount);
     }
 
-    private static void createBackupRequest(ZippingContext context, BackupTriggeredEnum triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
+    private static void createBackupRequest(ZippingContext context, BackupTriggerType triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
         long targetSize = FolderUtils.calculateFileOrFolderSize(sourceFile.getAbsolutePath());
         BackupRequestRepository.insertBackupRequest(BackupRequest.createNewBackupRequest(context.backup().getId(), triggeredBy, outputFile.getAbsolutePath(), targetSize, totalFilesCount));
     }
@@ -162,17 +162,17 @@ public class BackupOperations {
     public static boolean checkInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
         //check if inputs are null
         if(path1.length() == 0 || path2.length() == 0) {
-            setError(ErrorTypes.InputMissing, trayIcon, backupName);
+            setError(ErrorType.InputMissing, trayIcon, backupName);
             return false;
         }
 
         if (!Files.exists(Path.of(path1)) || !Files.exists(Path.of(path2))) {
-            setError(ErrorTypes.InputError, trayIcon, backupName);
+            setError(ErrorType.InputError, trayIcon, backupName);
             return false;
         }
 
         if (path1.equals(path2)) {
-            setError(ErrorTypes.SamePaths, trayIcon, backupName);
+            setError(ErrorType.SamePaths, trayIcon, backupName);
             return false;
         }
 
@@ -283,7 +283,7 @@ public class BackupOperations {
             for (BackupRequest request : requests) {
                 boolean deleted = deletePartialBackup(request.outputPath());
                 if (deleted) {
-                    BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatusEnum.TERMINATED);
+                    BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
                 }
             }
         }
@@ -326,7 +326,7 @@ public class BackupOperations {
         return false;
 }
 
-    public static void setError(ErrorTypes error, TrayIcon trayIcon, String backupName) {
+    public static void setError(ErrorType error, TrayIcon trayIcon, String backupName) {
         switch (error) {
             case InputMissing -> {
                 logger.warn("Input Missing!");

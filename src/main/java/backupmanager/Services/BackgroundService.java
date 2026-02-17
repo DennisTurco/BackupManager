@@ -18,7 +18,7 @@ import backupmanager.Controllers.TrayController;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -98,7 +98,7 @@ public class BackgroundService {
             for (ConfigurationBackup backup : backupMap.values()) {
                 boolean alreadyRunning = running.stream()
                         .anyMatch(r -> r.backupConfigurationId() == backup.getId() &&
-                                       r.status() == backupmanager.Enums.BackupStatusEnum.IN_PROGRESS);
+                                       r.status() == backupmanager.Enums.BackupStatus.IN_PROGRESS);
 
                 if (!alreadyRunning
                         && maxBackupsToAdd > 0
@@ -117,7 +117,7 @@ public class BackgroundService {
                 try {
                     for (ConfigurationBackup backup : backups) {
                         ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null);
-                        BackupOperations.singleBackup(context, BackupTriggeredEnum.SCHEDULER);
+                        BackupOperations.singleBackup(context, BackupTriggerType.SCHEDULER);
                     }
                 } finally {
                     logger.info("All backups completed. Resetting isBackingUp flag.");

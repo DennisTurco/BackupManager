@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.BackupStatusEnum;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupStatus;
+import backupmanager.Enums.BackupTriggerType;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -59,7 +59,7 @@ public class BackupRequestRepositoryTest {
 
     @Test
     protected void updateRequestStatusByRequestId_shouldBeTrue_forDifferentStatusAfterUpdate() {
-        BackupRequestRepository.updateRequestStatusByRequestId(requests.get(2).backupRequestId(), BackupStatusEnum.FINISHED);
+        BackupRequestRepository.updateRequestStatusByRequestId(requests.get(2).backupRequestId(), BackupStatus.FINISHED);
         BackupRequest runningRequest = BackupRequestRepository.getBackupRequestById(requests.get(2).backupRequestId());
         assertTrue(requests.get(2).status() != runningRequest.status());
     }
@@ -75,7 +75,7 @@ public class BackupRequestRepositoryTest {
 
         BackupRequest request1 = createFinishedRequest(backups.get(0).getId());
         BackupRequest request2 = createFinishedRequest(backups.get(1).getId());
-        BackupRequest request3 = BackupRequest.createNewBackupRequest(backups.get(1).getId(), BackupTriggeredEnum.USER, "outputPath", 123412, 2);
+        BackupRequest request3 = BackupRequest.createNewBackupRequest(backups.get(1).getId(), BackupTriggerType.USER, "outputPath", 123412, 2);
         BackupRequest request4 = createFinishedRequest(backups.get(1).getId());
 
         requests = new ArrayList<>();
@@ -113,6 +113,6 @@ public class BackupRequestRepositoryTest {
     }
 
     private BackupRequest createFinishedRequest(int configurationId) {
-        return new BackupRequest(0, configurationId, LocalDateTime.now(), LocalDateTime.now(), BackupStatusEnum.FINISHED, 100, BackupTriggeredEnum.SCHEDULER, Long.valueOf(10), "OutputPath", 1000, Long.valueOf(100), 2, "");
+        return new BackupRequest(0, configurationId, LocalDateTime.now(), LocalDateTime.now(), BackupStatus.FINISHED, 100, BackupTriggerType.SCHEDULER, Long.valueOf(10), "OutputPath", 1000, Long.valueOf(100), 2, "");
     }
 }

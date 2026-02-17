@@ -15,7 +15,7 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -199,7 +199,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
 
         ZippingContext context = ZippingContext.create(currentBackup, null, backupTable, BackupManagerGUI.progressBar, null, null);
 
-        BackupOperations.executeBackup(context, BackupTriggeredEnum.USER, path1, path2);
+        BackupOperations.executeBackup(context, BackupTriggerType.USER, path1, path2);
 
         //if current_file_opened is null it means they are not in a backup but it is a backup with no associated json file
         if (currentBackup.getName() != null && !currentBackup.getName().isEmpty()) {

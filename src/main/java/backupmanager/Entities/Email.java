@@ -10,4 +10,9 @@ public record Email (
     LocalDateTime insertDate,
     String appVersion,
     String payload
-){ }
+)
+{
+    public static Email createNewEmail(EmailType type, String appVersion, String payload) {
+        return new Email(0, type, LocalDateTime.now(), appVersion, payload);
+    }
+}

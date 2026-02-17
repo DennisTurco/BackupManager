@@ -1,6 +1,6 @@
 package backupmanager.Enums;
 
-public enum ErrorTypes {
+public enum ErrorType {
     InputMissing,
     InputError,
     SamePaths,

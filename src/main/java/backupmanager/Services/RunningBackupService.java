@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.BackupStatusEnum;
+import backupmanager.Enums.BackupStatus;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -20,7 +20,7 @@ public class RunningBackupService {
         List<BackupRequest> running = BackupRequestRepository.getRunningBackups();
         return running.stream()
                 .filter(r -> r.backupConfigurationId() == config.getId()
-                          && r.status() == BackupStatusEnum.IN_PROGRESS)
+                          && r.status() == BackupStatus.IN_PROGRESS)
                 .findFirst();
     }
 
@@ -31,7 +31,7 @@ public class RunningBackupService {
 
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
-        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatusEnum.TERMINATED);
+        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {
@@ -40,7 +40,7 @@ public class RunningBackupService {
         LocalDateTime completionDate = LocalDateTime.now();
         long duration = SqlHelper.toMilliseconds(completionDate) - SqlHelper.toMilliseconds(request.startedDate());
 
-        BackupRequest newRequest = new BackupRequest(request.backupRequestId(), request.backupConfigurationId(), request.startedDate(), completionDate, BackupStatusEnum.FINISHED, 100, request.triggeredBy(), duration, request.outputPath(), request.unzippedTargetSize(), request.zippedTargetSize(), request.filesCount(), request.errorMessage());
+        BackupRequest newRequest = new BackupRequest(request.backupRequestId(), request.backupConfigurationId(), request.startedDate(), completionDate, BackupStatus.FINISHED, 100, request.triggeredBy(), duration, request.outputPath(), request.unzippedTargetSize(), request.zippedTargetSize(), request.filesCount(), request.errorMessage());
 
         BackupRequestRepository.updateBackupRequestByRequestId(request.backupRequestId(), newRequest);
     }

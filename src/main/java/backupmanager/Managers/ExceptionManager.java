@@ -28,7 +28,7 @@ public class ExceptionManager {
 
         stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
 
-        EmailSender.sendErrorEmail("Critical Error Report", stackTrace);
+        EmailSender.sendErrorEmail("Critical Error Report", stackTrace, errorMessage);
 
         String stackTraceMessage = TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
 

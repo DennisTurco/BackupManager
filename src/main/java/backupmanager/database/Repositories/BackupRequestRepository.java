@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.BackupRequest;
-import backupmanager.Enums.BackupStatusEnum;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupStatus;
+import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.database.Database;
 
@@ -80,7 +80,7 @@ public class BackupRequestRepository {
             Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            BackupStatusEnum status = BackupStatusEnum.IN_PROGRESS;
+            BackupStatus status = BackupStatus.IN_PROGRESS;
             stmt.setInt(1, status.getCode());
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -100,7 +100,7 @@ public class BackupRequestRepository {
 
                     LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
                     LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
-                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+                    BackupTriggerType triggeredBy = BackupTriggerType.fromCode(triggeredByInt);
 
                     backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
                     logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
@@ -159,8 +159,8 @@ public class BackupRequestRepository {
 
                     LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
                     LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
-                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
-                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
+                    BackupTriggerType triggeredBy = BackupTriggerType.fromCode(triggeredByInt);
+                    BackupStatus status = BackupStatus.fromCode(statusInt);
 
                     backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
                     logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
@@ -194,7 +194,7 @@ public class BackupRequestRepository {
         }
     }
 
-    public static void updateRequestStatusByRequestId(int backupRequestId, BackupStatusEnum status) {
+    public static void updateRequestStatusByRequestId(int backupRequestId, BackupStatus status) {
         String sql = """
         UPDATE
             BackupRequests
@@ -355,8 +355,8 @@ public class BackupRequestRepository {
 
                     LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
                     LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
-                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
-                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+                    BackupStatus status = BackupStatus.fromCode(statusInt);
+                    BackupTriggerType triggeredBy = BackupTriggerType.fromCode(triggeredByInt);
 
                     return new BackupRequest(backupRequestId, configurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
                 } else {
@@ -414,8 +414,8 @@ public class BackupRequestRepository {
 
                     LocalDateTime startedDate = SqlHelper.toLocalDateTime(startedDateMills);
                     LocalDateTime completionDate = SqlHelper.toLocalDateTime(completionDateStr);
-                    BackupStatusEnum status = BackupStatusEnum.fromCode(statusInt);
-                    BackupTriggeredEnum triggeredBy = BackupTriggeredEnum.fromCode(triggeredByInt);
+                    BackupStatus status = BackupStatus.fromCode(statusInt);
+                    BackupTriggerType triggeredBy = BackupTriggerType.fromCode(triggeredByInt);
 
                     return new BackupRequest(requestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
                 } else {

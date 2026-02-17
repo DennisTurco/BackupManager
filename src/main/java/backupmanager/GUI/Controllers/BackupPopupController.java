@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
@@ -110,7 +110,7 @@ public class BackupPopupController {
             BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
 
             ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
-            BackupOperations.singleBackup(context, BackupTriggeredEnum.USER);
+            BackupOperations.singleBackup(context, BackupTriggerType.USER);
         }
     }
 
