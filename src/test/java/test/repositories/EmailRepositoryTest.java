@@ -35,7 +35,7 @@ public class EmailRepositoryTest {
 
     @Test
     protected void getLastEmail_shouldBeTrue_forLastEmailRegistered() {
-        Email lastSent = EmailRepository.getLastEmail();
+        Email lastSent = EmailRepository.getLastEmailByType(EmailType.CRITICAL_ERROR);
         assertEquals("a strange error", lastSent.payload());
     }
 

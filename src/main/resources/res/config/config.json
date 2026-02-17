@@ -38,16 +38,21 @@
   "BackupService": {
     "value": 1,
     "type": "int",
-    "description": "Interval in minutes to check for auto backup"
+    "description": "Interval in minutes to check for auto backup."
   },
   "MaxCountForSameBackup": {
     "value": 1,
     "type": "int",
-    "description": "Max count for the same backup in the same directory"
+    "description": "Max count for the same backup in the same directory."
   },
   "SubscriptionWarningDays": {
     "value": 7,
     "type": "int",
-    "description": "Number of days before subscription expiration to show a warning"
+    "description": "Number of days before subscription expiration to show a warning."
+  },
+  "CriticalEmailMinWaitDays": {
+    "value": 7,
+    "type": "int",
+    "description": "Minimum number of days that must elapse before the same user can trigger another critical error email."
   }
 }

@@ -36,7 +36,7 @@ public class EmailRepository {
         }
     }
 
-    public static Email getLastEmail() {
+    public static Email getLastEmailByType(EmailType type) {
         String sql = """
         SELECT
             EmailId,
@@ -46,22 +46,24 @@ public class EmailRepository {
             Payload
         FROM
             Emails
+        WHERE
+            Type = ?
         ORDER BY InsertDate DESC
             """;
 
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
+            stmt.setInt(1, type.getCode());
+
             try (ResultSet rs = stmt.executeQuery()){
                 if (rs.next()) {
                     int emailId = rs.getInt("EmailId");
-                    int typeInt = rs.getInt("Type");
                     long insertDateLong = rs.getLong("InsertDate");
                     String appVersion = rs.getString("AppVersion");
                     String payload = rs.getString("Payload");
 
                     LocalDateTime startedDate = SqlHelper.toLocalDateTime(insertDateLong);
-                    EmailType type = EmailType.fromCode(typeInt);
 
                     return new Email(emailId, type, startedDate, appVersion, payload);
                 } else {

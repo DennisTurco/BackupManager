@@ -3,13 +3,13 @@ package backupmanager.Enums;
 import backupmanager.Enums.utils.CodeEnum;
 import backupmanager.Enums.utils.EnumUtil;
 
-public enum BackupTriggeredEnum implements CodeEnum {
+public enum BackupTriggerType implements CodeEnum {
     USER(1),
     SCHEDULER(2);
 
     private final int code;
 
-    BackupTriggeredEnum(int code) {
+    BackupTriggerType(int code) {
         this.code = code;
     }
 
@@ -18,7 +18,7 @@ public enum BackupTriggeredEnum implements CodeEnum {
         return code;
     }
 
-    public static BackupTriggeredEnum fromCode(int code) {
-        return EnumUtil.fromCode(BackupTriggeredEnum.class, code);
+    public static BackupTriggerType fromCode(int code) {
+        return EnumUtil.fromCode(BackupTriggerType.class, code);
     }
 }

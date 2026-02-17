@@ -2,17 +2,17 @@ package backupmanager.Entities;
 
 import java.time.LocalDateTime;
 
-import backupmanager.Enums.BackupStatusEnum;
-import backupmanager.Enums.BackupTriggeredEnum;
+import backupmanager.Enums.BackupStatus;
+import backupmanager.Enums.BackupTriggerType;
 
 public record BackupRequest (
     int backupRequestId,
     int backupConfigurationId,
     LocalDateTime startedDate,
     LocalDateTime completionDate,
-    BackupStatusEnum status,
+    BackupStatus status,
     int progress,
-    BackupTriggeredEnum triggeredBy,
+    BackupTriggerType triggeredBy,
     Long durationMs,
     String outputPath,
     long unzippedTargetSize,
@@ -21,7 +21,7 @@ public record BackupRequest (
     String errorMessage
 )
 {
-    public static BackupRequest createNewBackupRequest(int backupConfigurationId, BackupTriggeredEnum type, String outputPath, long targetSize, int filesCount) {
-        return new BackupRequest(0, backupConfigurationId, LocalDateTime.now(), null, BackupStatusEnum.IN_PROGRESS, 0, type, null, outputPath, targetSize, null, filesCount, null);
+    public static BackupRequest createNewBackupRequest(int backupConfigurationId, BackupTriggerType type, String outputPath, long targetSize, int filesCount) {
+        return new BackupRequest(0, backupConfigurationId, LocalDateTime.now(), null, BackupStatus.IN_PROGRESS, 0, type, null, outputPath, targetSize, null, filesCount, null);
     }
 }

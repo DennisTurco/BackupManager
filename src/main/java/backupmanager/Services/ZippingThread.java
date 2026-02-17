@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.ErrorTypes;
+import backupmanager.Enums.ErrorType;
 import backupmanager.ZipFileVisitor;
 
 public class ZippingThread {
@@ -34,7 +34,7 @@ public class ZippingThread {
         String outupZipPath = outputFile.getAbsolutePath();
 
         if (!sourceFile.exists()) {
-            handleError("Source directory does not exist: " + sourceDirectoryPath, ErrorTypes.ZippingIOError, context);
+            handleError("Source directory does not exist: " + sourceDirectoryPath, ErrorType.ZippingIOError, context);
             return;
         }
 
@@ -57,14 +57,14 @@ public class ZippingThread {
 
             } catch (IOException e) {
                 logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);
-                handleError("I/O error occurred", ErrorTypes.ZippingIOError, context);
+                handleError("I/O error occurred", ErrorType.ZippingIOError, context);
             } finally {
                 finalizeProcess(context);
             }
         });
     }
 
-    private static void handleError(String message, ErrorTypes errorType, ZippingContext context) {
+    private static void handleError(String message, ErrorType errorType, ZippingContext context) {
         logger.error(message);
         BackupOperations.setError(errorType, context.trayIcon(), null);
         BackupOperations.reEnableButtonsAndTable(context);
