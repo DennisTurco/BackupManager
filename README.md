@@ -1,4 +1,4 @@
-![logo](./src/main/resources/res/img/banner_resized.png)
+![logo](./src/main/resources/res/img/banner.png)
 
 # Backup Manager
 
