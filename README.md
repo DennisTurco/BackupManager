@@ -31,7 +31,7 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 
 ## Code Ducumentation
 
-$\rightarrow$ [Code tecnical documentation](./docs/code_documentation.md)
+$\rightarrow$ [Code tecnical documentation](./code_documentation.md)
 
 ## Important Notes
 

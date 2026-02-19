@@ -1,7 +1,6 @@
 package backupmanager.GUI;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -13,7 +12,6 @@ import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -41,6 +39,7 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.Controllers.BackupMenuController;
 import backupmanager.GUI.Controllers.BackupPopupController;
+import backupmanager.GUI.Controllers.GuiController;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import static backupmanager.Helpers.BackupHelper.formatter;
@@ -72,20 +71,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public static BackupTableModel tableModel;
     public static BackupProgressGUI progressBar;
     private Integer selectedRow;
-    private final String currentVersion;
     private final SideMenuPanel sp;
 
     public BackupManagerGUI() {
         ThemeManager.updateThemeFrame(this);
 
         initComponents();
-        currentVersion = ConfigKey.VERSION.getValue();
 
         sp = new SideMenuPanel(this);
 
-        // logo application
-        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon);
+        this.setIconImage(GuiController.getIcon(this.getClass()));
 
         initializeMenuItems();
         setScreenSize();
@@ -1161,7 +1156,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             displayBackupList();
 
         // general
-        jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + currentVersion);
+        jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + ConfigKey.VERSION.getValue());
 
         // menu
         jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));

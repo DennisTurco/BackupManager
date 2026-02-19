@@ -2,22 +2,23 @@ package backupmanager.GUI;
 
 import javax.swing.JOptionPane;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
-import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.Controllers.BackupProgressController;
+import backupmanager.GUI.Controllers.GuiController;
 import backupmanager.Services.ZippingThread;
 
 
 public class BackupProgressGUI extends javax.swing.JDialog {
+
+    private BackupProgressController progressController;
+
     public BackupProgressGUI(String initialPath, String destinationPath) {
         initComponents();
 
-        // logo application
-        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon);
+        progressController = new BackupProgressController();
+
+        this.setIconImage(GuiController.getIcon(this.getClass()));
 
         initialPathLabel.setText(initialPath);
         destinationPathLabel.setText(destinationPath);
@@ -155,7 +156,7 @@ public class BackupProgressGUI extends javax.swing.JDialog {
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.INTERRUPT_BACKUP_PROCESS_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
-            ZippingThread.stopExecutorService(1);
+            progressController.cancelBackup();
             this.dispose();
         }
     }//GEN-LAST:event_CancelButtonActionPerformed
