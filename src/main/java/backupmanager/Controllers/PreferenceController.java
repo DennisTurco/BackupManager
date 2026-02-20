@@ -1,4 +1,4 @@
-package backupmanager.GUI.Controllers;
+package backupmanager.Controllers;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import backupmanager.Controllers.GuiController;
 import backupmanager.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
@@ -39,7 +40,6 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.Controllers.BackupMenuController;
 import backupmanager.GUI.Controllers.BackupPopupController;
-import backupmanager.GUI.Controllers.GuiController;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import static backupmanager.Helpers.BackupHelper.formatter;

@@ -2,7 +2,7 @@ package backupmanager.Dialogs;
 
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.GUI.Controllers.GuiController;
+import backupmanager.Controllers.GuiController;
 import backupmanager.Entities.TimeInterval;
 
 import javax.swing.JOptionPane;

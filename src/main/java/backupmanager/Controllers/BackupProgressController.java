@@ -1,4 +1,4 @@
-package backupmanager.GUI.Controllers;
+package backupmanager.Controllers;
 
 import backupmanager.Services.ZippingThread;
 

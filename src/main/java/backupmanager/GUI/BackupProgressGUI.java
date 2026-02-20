@@ -2,16 +2,15 @@ package backupmanager.GUI;
 
 import javax.swing.JOptionPane;
 
+import backupmanager.Controllers.BackupProgressController;
+import backupmanager.Controllers.GuiController;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.GUI.Controllers.BackupProgressController;
-import backupmanager.GUI.Controllers.GuiController;
-import backupmanager.Services.ZippingThread;
 
 
 public class BackupProgressGUI extends javax.swing.JDialog {
 
-    private BackupProgressController progressController;
+    private final BackupProgressController progressController;
 
     public BackupProgressGUI(String initialPath, String destinationPath) {
         initComponents();

@@ -7,6 +7,7 @@ import java.util.Optional;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.BackupStatus;
+import backupmanager.Helpers.BackupHelper;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -31,7 +32,7 @@ public class RunningBackupService {
 
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
-        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
+        BackupHelper.forceBackupTermination(request.backupRequestId());
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {

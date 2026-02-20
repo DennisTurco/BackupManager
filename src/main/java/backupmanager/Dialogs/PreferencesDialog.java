@@ -1,5 +1,7 @@
 package backupmanager.Dialogs;
 
+import backupmanager.Controllers.GuiController;
+import backupmanager.Controllers.PreferenceController;
 import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
@@ -8,8 +10,6 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.PreferenceService;
 import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.GUI.Controllers.GuiController;
-import backupmanager.GUI.Controllers.PreferenceController;
 
 
 public class PreferencesDialog extends javax.swing.JDialog {
