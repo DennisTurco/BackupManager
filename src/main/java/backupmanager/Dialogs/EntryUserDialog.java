@@ -150,7 +150,6 @@ public class EntryUserDialog extends javax.swing.JDialog {
             return;
         }
 
-        // save user to the file
         user = new User(name, surname, email);
 
         this.dispose();

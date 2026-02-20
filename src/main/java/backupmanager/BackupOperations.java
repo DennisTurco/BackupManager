@@ -21,7 +21,6 @@ import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ErrorType;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
@@ -283,7 +282,7 @@ public class BackupOperations {
             for (BackupRequest request : requests) {
                 boolean deleted = deletePartialBackup(request.outputPath());
                 if (deleted) {
-                    BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
+                    BackupHelper.forceBackupTermination(request.backupRequestId());
                 }
             }
         }

@@ -2,7 +2,6 @@ package backupmanager.Helpers;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,14 +14,15 @@ import backupmanager.Dialogs.BackupEntryDialog;
 import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.GUI.BackupProgressGUI;
-import backupmanager.Managers.ExceptionManager;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupHelper {
 
@@ -71,16 +71,11 @@ public class BackupHelper {
             throw new IllegalArgumentException("Backup is null!");
         }
 
-        if (updatedBackup.getId() == 0) {
-            String errorMsg = "Cannot update backup: ID is 0.";
-            logger.error(errorMsg);
-            ExceptionManager.openExceptionMessage(errorMsg, Arrays.toString(Thread.currentThread().getStackTrace()));
-            return;
+        if (updatedBackup.getId() != 0) {
+            logger.info("Updating backup: " + updatedBackup.getName());
+            BackupConfigurationRepository.updateBackup(updatedBackup);
         }
 
-        logger.info("Updating backup: " + updatedBackup.getName());
-
-        BackupConfigurationRepository.updateBackup(updatedBackup);
         updateBackupTable();
     }
 
@@ -142,6 +137,11 @@ public class BackupHelper {
         }
     }
 
+    public static void forceBackupTermination(int requestId) {
+        BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
+        updateBackupTable();
+    }
+
     public static void removeBackup(String backupName) {
         ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
         removeBackup(backup);
@@ -158,7 +158,6 @@ public class BackupHelper {
             TableDataManager.updateTableWithNewBackupList(getBackupList(), formatter);
     }
 
-    // returns the new time inteval
     public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
         logger.info("Event --> automatic backup");
 
@@ -176,10 +175,12 @@ public class BackupHelper {
             logger.info("Automatic backup turned off");
 
             updateBackup(backup);
+
             return backup;
         }
 
-        if(!BackupOperations.checkInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null)) return null;
+        if(!BackupOperations.checkInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null))
+            return null;
 
         // if the file has not been saved you need to save it before setting the auto backup
         if(!backup.isAutomatic() || backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {
@@ -200,6 +201,8 @@ public class BackupHelper {
             logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
 
             showMessageActivationAutoBackup(timeInterval, backup.getTargetPath(), backup.getDestinationPath());
+
+            updateBackup(backup);
 
             return backup;
         }

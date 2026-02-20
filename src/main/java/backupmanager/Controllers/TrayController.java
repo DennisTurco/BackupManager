@@ -27,7 +27,6 @@ public class TrayController {
     private final Runnable onOpen;
     private final Runnable onExit;
 
-
     public TrayController(Runnable onOpen, Runnable onExit) {
         this.onOpen = onOpen;
         this.onExit = onExit;

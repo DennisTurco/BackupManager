@@ -1,12 +1,10 @@
 package backupmanager.Dialogs;
 
-import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Controllers.GuiController;
 import backupmanager.Entities.TimeInterval;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TimePicker extends javax.swing.JDialog {
@@ -28,9 +26,7 @@ public class TimePicker extends javax.swing.JDialog {
             minutesSpinner.setValue(timeInterval.minutes());
         }
 
-        // logo application
-        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon);
+        this.setIconImage(GuiController.getIcon(this.getClass()));
 
         setTranslations();
     }
