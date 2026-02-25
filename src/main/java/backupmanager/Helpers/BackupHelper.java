@@ -30,19 +30,19 @@ public class BackupHelper {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void openBackupById(int id, BackupManagerGUI main) {
+    public static void openBackupById(int id, java.awt.Frame frame) {
         logger.info("Event --> opening backup");
 
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
 
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
+        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
         dialog.setVisible(true);
     }
 
-    public static void newBackup(BackupProgressGUI progressBar, BackupManagerGUI main) {
+    public static void newBackup(BackupProgressGUI progressBar, java.awt.Frame frame) {
         logger.info("Event --> new backup");
 
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false);
+        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
         dialog.setVisible(true);
     }
 
@@ -104,17 +104,17 @@ public class BackupHelper {
                 "AutoBackup", 1);
     }
 
-    public static void openBackupByName(String backupName, BackupManagerGUI main) {
+    public static void openBackupByName(String backupName, java.awt.Frame frame) {
         logger.info("Event --> opening backup");
 
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backupName);
 
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false, backup);
+        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
         dialog.setVisible(true);
     }
 
-    public static void openBackupEntryDialog(BackupManagerGUI main) {
-        BackupEntryDialog dialog = new BackupEntryDialog(main, false);
+    public static void openBackupEntryDialog(java.awt.Frame frame) {
+        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
         dialog.setVisible(true);
     }
 

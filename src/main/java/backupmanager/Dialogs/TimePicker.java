@@ -5,21 +5,19 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Controllers.GuiController;
 import backupmanager.Entities.TimeInterval;
 
-import javax.swing.JOptionPane;
+import backupmanager.Controllers.TimePickerController;
 
 public class TimePicker extends javax.swing.JDialog {
 
-    private TimeInterval timeInterval;
-    private boolean closeOk;
+    private final TimePickerController timePickerController;
 
     public TimePicker(java.awt.Dialog parent, TimeInterval timeInterval, boolean modal) {
         super(parent, modal);
 
-        closeOk = false;
+        timePickerController = new TimePickerController(timeInterval, false);
 
         initComponents();
 
-        this.timeInterval = timeInterval;
         if (timeInterval != null) {
             daysSpinner.setValue(timeInterval.days());
             hoursSpinner.setValue(timeInterval.hours());
@@ -32,8 +30,7 @@ public class TimePicker extends javax.swing.JDialog {
     }
 
     public TimeInterval getTimeInterval() {
-        if (closeOk) return timeInterval;
-        return null;
+        return timePickerController.getTimeInterval();
     }
 
     private void daysIntervalSpinnerChange() {
@@ -62,19 +59,6 @@ public class TimePicker extends javax.swing.JDialog {
         }  else if (minutes > 59) {
             minutesSpinner.setValue(59);
         }
-    }
-
-    private boolean checkInputCorrectness() {
-        Integer days = (Integer) daysSpinner.getValue();
-        Integer hours = (Integer) hoursSpinner.getValue();
-        Integer minutes = (Integer) minutesSpinner.getValue();
-        return (days != null && days >= 0 && hours != null && hours >= 0 && hours <= 23 && minutes != null && minutes >= 0 && minutes <= 59 && (days != 0 || hours != 0 || minutes != 0));
-    }
-
-    private boolean checkShortTimeInterval() {
-        Integer days = (Integer) daysSpinner.getValue();
-        Integer hours = (Integer) hoursSpinner.getValue();
-        return (days == 0 && hours == 0);
     }
 
     private void mouseWeel(java.awt.event.MouseWheelEvent evt) {
@@ -247,27 +231,11 @@ public class TimePicker extends javax.swing.JDialog {
     }//GEN-LAST:event_minutesSpinnerMouseWheelMoved
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        if (checkInputCorrectness()) {
-
-            if (checkShortTimeInterval()) {
-                // check for small time interval setted
-                int response = JOptionPane.showConfirmDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_SHORT_TIME_INTERVAL_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_GENERIC_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (response != JOptionPane.YES_OPTION) {
-                    return;
-                }
-            }
-
-            timeInterval = new TimeInterval((int)daysSpinner.getValue(), (int)hoursSpinner.getValue(), (int)minutesSpinner.getValue());
-            closeOk = true;
-            this.dispose();
-        }
-        else {
-            JOptionPane.showMessageDialog(this, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_WRONG_TIME_INTERVAL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-        }
+        timePickerController.handleOkButton(this, (Integer) daysSpinner.getValue(), (Integer) hoursSpinner.getValue(), (Integer) minutesSpinner.getValue());
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        closeOk = false;
+        timePickerController.setCloseOk(false);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

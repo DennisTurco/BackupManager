@@ -1,14 +1,11 @@
 package backupmanager.GUI;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -27,17 +24,14 @@ import org.slf4j.LoggerFactory;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.Controllers.GuiController;
-import backupmanager.Dialogs.EntryUserDialog;
-import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.Confingurations;
-import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.TranslationLoaderEnum;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.Controllers.BackupManagerController;
 import backupmanager.GUI.Controllers.BackupMenuController;
 import backupmanager.GUI.Controllers.BackupPopupController;
 import backupmanager.Helpers.BackupHelper;
@@ -48,22 +42,18 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.BackupObserver;
-import backupmanager.Services.RunningBackupService;
+import backupmanager.Services.BackupService;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.BackupTableModel;
 import backupmanager.Table.CheckboxCellRenderer;
 import backupmanager.Table.StripedRowRenderer;
-import backupmanager.Table.TableDataManager;
 import backupmanager.Widgets.SideMenuPanel;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
-import backupmanager.database.Repositories.UserRepository;
 
-/**
- * @author Dennis Turco
- */
 public final class BackupManagerGUI extends javax.swing.JFrame {
     private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
 
+    private final BackupManagerController backupManagerController;
     private final BackupObserver observer;
     public static List<ConfigurationBackup> backups;
     public static DefaultTableModel model;
@@ -77,6 +67,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         ThemeManager.updateThemeFrame(this);
 
         initComponents();
+
+        backupManagerController = new BackupManagerController(new BackupService());
 
         sp = new SideMenuPanel(this);
 
@@ -95,48 +87,13 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         interruptBackupPopupItem.setEnabled(false);
 
         setSvgImages();
-        checkForFirstAccess();
+        backupManagerController.checkForFirstAccess(this);
         jSeparator5.setVisible(false);
 
         // TODO: remove this
         interruptBackupPopupItem.setVisible(false);
 
         initSidebar();
-    }
-
-    private void checkForFirstAccess() {
-        logger.debug("Checking for first access");
-        User user = UserRepository.getLastUser();
-
-        if (user == null) { // first access
-            setLanguageBasedOnPcLanguage();
-            createNewUser();
-        } else {
-            logger.info("Current user: " + user.toString());
-        }
-    }
-
-    private void createNewUser() {
-        User newUser = null;
-
-        while (newUser == null) {
-            newUser = openUserDialogAndObtainTheResult();
-        }
-
-        UserRepository.insertUser(newUser);
-
-        sendRegistrationEmail(newUser);
-    }
-
-    private User openUserDialogAndObtainTheResult() {
-        EntryUserDialog userDialog = new EntryUserDialog(this, true);
-        userDialog.setVisible(true);
-        return userDialog.getUser();
-    }
-
-    private void sendRegistrationEmail(User user) {
-        EmailSender.sendUserCreationEmail(user);
-        EmailSender.sendConfirmEmailToUser(user);
     }
 
     private void initSidebar() {
@@ -148,24 +105,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         sp.setResponsiveMinWidth(1300);
     }
 
-    private void setLanguageBasedOnPcLanguage() {
-        Locale defaultLocale = Locale.getDefault();
-        String language = defaultLocale.getLanguage();
-
-        logger.info("Setting default language to: " + language);
-
-        switch (language) {
-            case "en" -> Confingurations.setLanguage(LanguagesEnum.ENG);
-            case "it" -> Confingurations.setLanguage(LanguagesEnum.ITA);
-            case "es" -> Confingurations.setLanguage(LanguagesEnum.ESP);
-            case "de" -> Confingurations.setLanguage(LanguagesEnum.DEU);
-            case "fr" -> Confingurations.setLanguage(LanguagesEnum.FRA);
-            default -> Confingurations.setLanguage(LanguagesEnum.ENG);
-        }
-
-        reloadPreferences();
-    }
-
     public void showWindow() {
         setVisible(true);
         toFront();
@@ -173,11 +112,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void setScreenSize() {
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = Math.min((int) size.getWidth(), Integer.parseInt(ConfigKey.GUI_WIDTH.getValue()));
-        int height = Math.min((int) size.getHeight(), Integer.parseInt(ConfigKey.GUI_HEIGHT.getValue()));
-
-        this.setSize(width,height);
+        int[] screenSize = backupManagerController.getScreenSize();
+        this.setSize(screenSize[0], screenSize[1]);
     }
 
     public void reloadPreferences() {
@@ -228,13 +164,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         actionMap.put("enterKey", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = backupTable.getSelectedRow();
-                if (selectedRow == -1) return;
-
-                logger.debug("Enter key pressed on row: " + selectedRow);
-                BackupHelper.openBackupByName((String) backupTable.getValueAt(selectedRow, 0), main);
-
-                BackupHelper.openBackupEntryDialog(main);
+                backupManagerController.handleEnterKeyPressOnTable(main, backupTable);
             }
         });
 
@@ -243,19 +173,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         actionMap.put("deleteKey", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int[] selectedRows = backupTable.getSelectedRows();
-                if (selectedRows.length == 0) return;
-
-                logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
-
-                int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (response != JOptionPane.YES_OPTION) {
-                    return;
-                }
-
-                for (int row : selectedRows) {
-                    BackupHelper.deleteBackup(row, backupTable, false);
-                }
+                backupManagerController.handleDeleteKeyPressOnTable(backupTable);
             }
         });
 
@@ -286,25 +204,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
         table = backupTable; // Update the reference to the new table
         scrollPane.setViewportView(table); // Replace the table in the scroll pane
-    }
-
-    private void researchInTable() {
-        List<ConfigurationBackup> tempBackups = new ArrayList<>();
-
-        String research = researchField.getText();
-
-        for (ConfigurationBackup backup : backups) {
-            if (backup.getName().contains(research) ||
-                    backup.getTargetPath().contains(research) ||
-                    backup.getDestinationPath().contains(research) ||
-                    (backup.getLastBackupDate() != null && backup.getLastBackupDate().toString().contains(research)) ||
-                    (backup.getNextBackupDate() != null && backup.getNextBackupDate().toString().contains(research)) ||
-                    (backup.getTimeIntervalBackup() != null && backup.getTimeIntervalBackup().toString().contains(research))) {
-                tempBackups.add(backup);
-            }
-        }
-
-        TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
     }
 
     /**
@@ -536,8 +435,8 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
         researchField.setToolTipText("Research bar");
         researchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                researchFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                researchFieldKeyReleased(evt);
             }
         });
 
@@ -998,10 +897,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
         BackupPopupController.popupItemDelete(selectedRow, backupTable);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
-    private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
-        researchInTable();
-    }//GEN-LAST:event_researchFieldKeyTyped
-
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         selectedRow = table.rowAtPoint(evt.getPoint()); // get index of the row
 
@@ -1009,20 +904,16 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             table.clearSelection(); // deselect any selected row
             detailsLabel.setText(""); // clear the label
         } else {
-            // get correct backup
             String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-            ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backups, backupName);
-
             logger.debug("Selected backup: " + backupName);
 
-            // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
-                logger.info("Right click on row: " + selectedRow);
-                AutoBackupMenuItem.setSelected(backup.isAutomatic());
+                logger.debug("Right click on row: " + selectedRow);
+                AutoBackupMenuItem.setSelected(backupManagerController.isAutomaticBackup(backupName));
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
-                TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
+                TablePopup.show(evt.getComponent(), evt.getX(), evt.getY());
 
-                boolean isRunning = RunningBackupService.getRunningBackupByName(backupName).isPresent();
+                boolean isRunning = backupManagerController.isBackupRunning(backupName);
 
                 DeletePopupItem.setEnabled(!isRunning);
                 interruptBackupPopupItem.setEnabled(isRunning);
@@ -1030,38 +921,12 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
-                logger.info("Double-click on row: " + selectedRow);
-                BackupHelper.openBackupByName(backupName, this);
+                backupManagerController.openBackup(backupName, this);
             }
 
-            // Handling single left mouse button click
             else if (SwingUtilities.isLeftMouseButton(evt)) {
-                String backupNameStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_DETAIL);
-                String initialPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_DETAIL);
-                String destinationPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_DETAIL);
-                String lastBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_DETAIL);
-                String nextBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_DETAIL);
-                String timeIntervalBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
-                String creationDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
-                String lastUpdateDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
-                String backupCountStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_COUNT_DETAIL);
-                String notesStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NOTES_DETAIL);
-                String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
-
-                detailsLabel.setText(
-                    "<html><b>" + backupNameStr + ":</b> " + backup.getName() + ", " +
-                    "<b>" + initialPathStr + ":</b> " + backup.getTargetPath() + ", " +
-                    "<b>" + destinationPathStr + ":</b> " + backup.getDestinationPath() + ", " +
-                    "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "") + ", " +
-                    "<b>" + nextBackupStr + ":</b> " + (backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "_") + ", " +
-                    "<b>" + timeIntervalBackupStr + ":</b> " + (backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "_") + ", " +
-                    "<b>" + creationDateStr + ":</b> " + (backup.getCreationDate() != null ? backup.getCreationDate().format(formatter) : "_") + ", " +
-                    "<b>" + lastUpdateDateStr + ":</b> " + (backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().format(formatter) : "_") + ", " +
-                    "<b>" + backupCountStr + ":</b> " + (backup.getCount()) + ", " +
-                    "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxToKeep()) + ", " +
-                    "<b>" + notesStr + ":</b> " + (backup.getNotes()) +
-                    "</html>"
-                );
+                String details = backupManagerController.getBackupDetails(backupName);
+                detailsLabel.setText(details);
             }
         }
     }//GEN-LAST:event_tableMouseClicked
@@ -1149,6 +1014,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     private void MenuBuyMeACoffeDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBuyMeACoffeDonateActionPerformed
         BackupMenuController.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuBuyMeACoffeDonateActionPerformed
+
+    private void researchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyReleased
+        String research = researchField.getText();
+        backupManagerController.researchInTable(research);
+    }//GEN-LAST:event_researchFieldKeyReleased
 
     private void setTranslations() {
         // update table translations

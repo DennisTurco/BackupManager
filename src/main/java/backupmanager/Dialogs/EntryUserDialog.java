@@ -1,9 +1,8 @@
 package backupmanager.Dialogs;
 
-import javax.swing.JOptionPane;
 
 import backupmanager.LimitDocument;
-import backupmanager.Email.EmailValidator;
+import backupmanager.Controllers.EntryUserController;
 import backupmanager.Entities.User;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
@@ -11,9 +10,13 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 public class EntryUserDialog extends javax.swing.JDialog {
 
     private User user;
+    private final EntryUserController userController;
 
     public EntryUserDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+
+        userController = new EntryUserController();
+
         initComponents();
 
         nameTextField.setDocument(new LimitDocument(20));
@@ -142,13 +145,8 @@ public class EntryUserDialog extends javax.swing.JDialog {
         String surname = surnameTextField.getText();
         String email = emailTextField.getText();
 
-        if (name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_MISSING_DATA), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+        if (!userController.isInputOkAndShowErrorIfNecessary(this, name, surname, email))
             return;
-        } else if (!EmailValidator.isValidEmail(email)) {
-            JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
         user = new User(name, surname, email);
 
