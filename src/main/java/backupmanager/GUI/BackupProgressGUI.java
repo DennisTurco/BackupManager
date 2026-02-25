@@ -1,11 +1,9 @@
 package backupmanager.GUI;
 
-import javax.swing.JOptionPane;
-
-import backupmanager.Controllers.BackupProgressController;
 import backupmanager.Controllers.GuiController;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.GUI.Controllers.BackupProgressController;
 
 
 public class BackupProgressGUI extends javax.swing.JDialog {
@@ -153,11 +151,7 @@ public class BackupProgressGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_closeButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.INTERRUPT_BACKUP_PROCESS_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            progressController.cancelBackup();
-            this.dispose();
-        }
+        progressController.handleCancelButtonRequest(this);
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void setTranslations() {

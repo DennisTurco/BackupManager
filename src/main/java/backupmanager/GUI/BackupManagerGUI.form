@@ -464,7 +464,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
               </AccessibilityProperties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="researchFieldKeyTyped"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="researchFieldKeyReleased"/>
               </Events>
             </Component>
             <Component class="backupmanager.svg.SVGButton" name="exportAsPdfBtn">
