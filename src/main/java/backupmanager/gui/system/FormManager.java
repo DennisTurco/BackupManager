@@ -6,9 +6,9 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.ColorFunctions;
 
+import backupmanager.gui.component.About;
 import backupmanager.gui.forms.FormDashboard;
 import backupmanager.gui.frames.Login;
-import backupmanager.gui.component.About;
 import backupmanager.utils.UndoRedo;
 import raven.modal.Drawer;
 import raven.modal.ModalDialog;

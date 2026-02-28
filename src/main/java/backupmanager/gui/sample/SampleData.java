@@ -18,6 +18,7 @@ import org.jfree.data.xy.TableXYDataset;
 
 import raven.extras.AvatarIcon;
 
+@Deprecated
 public class SampleData {
     public static TableXYDataset getTimeSeriesDataset() {
         TimeTableXYDataset dataset = new TimeTableXYDataset();

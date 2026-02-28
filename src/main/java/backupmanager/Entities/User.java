@@ -20,8 +20,4 @@ public record User (int id, String name, String surname, String email, String la
     public String toString() {
         return name + " " + surname + ", " + email + ", " + language;
     }
-
-    public static User getDefaultUser() {
-        return new User("Unregistered", "User", "");
-    }
 }

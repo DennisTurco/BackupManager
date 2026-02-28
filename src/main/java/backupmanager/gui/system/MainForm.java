@@ -25,7 +25,11 @@ public class MainForm extends JPanel {
     }
 
     private void init() {
-        setLayout(new MigLayout("fillx,wrap,insets 0,gap 0", "[fill]", "[][][fill,grow][]"));
+        setLayout(new MigLayout(
+            "fillx,wrap,insets 0,gap 0",
+            "[fill]",
+            "[][3!][fill,grow][2!][]"
+        ));
         add(createHeader());
         add(createRefreshLine(), "height 3!");
         add(createMain());

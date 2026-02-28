@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.gui.Dialogs.EntryUserDialog;
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.Confingurations;
@@ -23,23 +22,24 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
-import static backupmanager.gui.frames.BackupManagerGUI.backups;
-
 import backupmanager.Services.BackupService;
+import backupmanager.database.Repositories.UserRepository;
+import backupmanager.gui.Dialogs.EntryUserDialog;
 import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.TableDataManager;
-import backupmanager.database.Repositories.UserRepository;
 import backupmanager.gui.frames.BackupManagerGUI;
+import static backupmanager.gui.frames.BackupManagerGUI.backups;
 
 public class BackupManagerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
+    private static final Logger logger = LoggerFactory.getLogger(BackupManagerController.class);
     private final BackupService backupService;
 
     public BackupManagerController(BackupService backupService) {
         this.backupService = backupService;
     }
 
+    @Deprecated
     public void checkForFirstAccess(BackupManagerGUI mainGui) {
         logger.debug("Checking for first access");
         User user = UserRepository.getLastUser();
@@ -124,6 +124,7 @@ public class BackupManagerController {
             BackupHelper.deleteBackup(row, backupTable, false);
     }
 
+    @Deprecated
     private void createNewUser(BackupManagerGUI mainGui) {
         User newUser = null;
 
@@ -136,6 +137,7 @@ public class BackupManagerController {
         sendRegistrationEmail(newUser);
     }
 
+    @Deprecated
     private void setLanguageBasedOnPcLanguage(BackupManagerGUI mainGui) {
         Locale defaultLocale = Locale.getDefault();
         String language = defaultLocale.getLanguage();
@@ -154,12 +156,14 @@ public class BackupManagerController {
         mainGui.reloadPreferences();
     }
 
+    @Deprecated
     private User openUserDialogAndObtainTheResult(BackupManagerGUI mainGui) {
         EntryUserDialog userDialog = new EntryUserDialog(mainGui, true);
         userDialog.setVisible(true);
         return userDialog.getUser();
     }
 
+    @Deprecated
     private void sendRegistrationEmail(User user) {
         EmailSender.sendUserCreationEmail(user);
         EmailSender.sendConfirmEmailToUser(user);
