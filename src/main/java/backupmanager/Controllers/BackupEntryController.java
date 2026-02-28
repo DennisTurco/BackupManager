@@ -16,11 +16,11 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
-import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Table.BackupTable;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.frames.BackupManagerGUI;
+import backupmanager.frames.BackupProgressGUI;
 
 public class BackupEntryController {
     private static final Logger logger = LoggerFactory.getLogger(BackupEntryController.class);

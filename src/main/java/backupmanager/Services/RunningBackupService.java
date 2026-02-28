@@ -9,9 +9,9 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Helpers.SqlHelper;
-import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.utils.FolderUtils;
 
 public class RunningBackupService {
     public static Optional<BackupRequest> getRunningBackupByName(String backupName) {

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BackupManager",
+            "request": "launch",
+            "mainClass": "backupmanager.frames.BackupManager",
+            "projectName": "backupmanager"
+        },
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "backupmanager.MainApp",
+            "projectName": "backupmanager"
+        },
+        {
+            "type": "java",
             "name": "EncryptConfigFile",
             "request": "launch",
             "mainClass": "backupmanager.Email.EncryptConfigFile",

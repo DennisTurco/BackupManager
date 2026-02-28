@@ -17,12 +17,12 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.GUI.BackupProgressGUI;
 import backupmanager.Table.BackupTable;
 import backupmanager.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.frames.BackupManagerGUI;
+import backupmanager.frames.BackupProgressGUI;
 
 public class BackupHelper {
 

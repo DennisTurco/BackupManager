@@ -1,20 +1,28 @@
 package backupmanager;
 
+import java.awt.Font;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.swing.UIManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.util.FontUtils;
 
 import backupmanager.Controllers.AppController;
 import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
-import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
+import backupmanager.frames.BackupManager;
+import backupmanager.utils.DemoPreferences;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -80,9 +88,16 @@ public class MainApp {
     }
 
     private static void runGui() {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            BackupManagerGUI gui = new BackupManagerGUI();
-            gui.showWindow();
+        java.awt.EventQueue.invokeLater(() -> {
+
+            DemoPreferences.init();
+            FlatRobotoFont.install();
+            FlatLaf.registerCustomDefaultsSource(".themes");
+            UIManager.put("defaultFont", FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
+            DemoPreferences.setupLaf();
+
+            BackupManager frame = new BackupManager();
+            frame.setVisible(true);
         });
     }
 }

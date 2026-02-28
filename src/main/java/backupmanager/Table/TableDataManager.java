@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.frames.BackupManagerGUI;
 
 public class TableDataManager {
 

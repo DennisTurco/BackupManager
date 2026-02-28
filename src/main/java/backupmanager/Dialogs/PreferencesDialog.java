@@ -9,7 +9,7 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.PreferenceService;
-import backupmanager.GUI.BackupManagerGUI;
+import backupmanager.frames.BackupManagerGUI;
 
 
 public class PreferencesDialog extends javax.swing.JDialog {

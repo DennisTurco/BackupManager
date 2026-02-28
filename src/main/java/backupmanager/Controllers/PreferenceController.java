@@ -6,9 +6,9 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.PreferenceService;
+import backupmanager.frames.BackupManagerGUI;
 
 public record PreferenceController (PreferenceService service, BackupManagerGUI mainGui) {
     private static final Logger logger = LoggerFactory.getLogger(PreferenceController.class);

@@ -25,7 +25,6 @@ import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ErrorType;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import static backupmanager.Helpers.BackupHelper.formatter;
@@ -33,8 +32,9 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Table.TableDataManager;
-import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.frames.BackupManagerGUI;
+import backupmanager.utils.FolderUtils;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);

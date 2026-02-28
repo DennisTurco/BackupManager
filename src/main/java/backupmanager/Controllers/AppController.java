@@ -13,11 +13,11 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.Confingurations;
 import backupmanager.Entities.Subscription;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Helpers.SubscriptionNotifier;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Services.BackgroundService;
 import backupmanager.database.Repositories.SubscriptionRepository;
+import backupmanager.frames.BackupManagerGUI;
 
 public class AppController {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());

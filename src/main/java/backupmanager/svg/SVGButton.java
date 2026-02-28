@@ -12,6 +12,11 @@ public class SVGButton extends JButton {
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
+    public SVGButton(String text) {
+        super(text);
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
     public void setSvgImage(String imagePath, int width, int height) {
         if (imagePath == null) return;
 

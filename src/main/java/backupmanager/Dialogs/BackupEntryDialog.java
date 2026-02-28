@@ -1,6 +1,6 @@
 package backupmanager.Dialogs;
 
-import static backupmanager.GUI.BackupManagerGUI.backupTable;
+import static backupmanager.frames.BackupManagerGUI.backupTable;
 
 import java.time.LocalDateTime;
 
