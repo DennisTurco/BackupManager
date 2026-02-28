@@ -4,7 +4,7 @@ import java.awt.TrayIcon;
 
 import javax.swing.JOptionPane;
 
-import backupmanager.Controllers.TrayController;
+import backupmanager.gui.Controllers.TrayController;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 

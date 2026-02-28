@@ -13,7 +13,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
-import backupmanager.Controllers.AppController;
+import backupmanager.gui.Controllers.AppController;
 import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.TranslationLoaderEnum;
@@ -21,7 +21,7 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
-import backupmanager.frames.BackupManager;
+import backupmanager.gui.frames.BackupManager;
 import backupmanager.utils.DemoPreferences;
 
 public class MainApp {

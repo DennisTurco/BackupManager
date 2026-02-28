@@ -31,9 +31,9 @@ import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
-import backupmanager.Table.TableDataManager;
+import backupmanager.gui.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.frames.BackupManagerGUI;
+import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.utils.FolderUtils;
 
 public class BackupOperations {

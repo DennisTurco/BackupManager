@@ -1,0 +1,130 @@
+package backupmanager.gui.system;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JToolBar;
+
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import backupmanager.Enums.ConfigKey;
+import backupmanager.gui.component.FormSearchButton;
+import backupmanager.gui.component.RefreshLine;
+import net.miginfocom.swing.MigLayout;
+import raven.modal.Drawer;
+
+public class MainForm extends JPanel {
+
+    public MainForm() {
+        init();
+    }
+
+    private void init() {
+        setLayout(new MigLayout("fillx,wrap,insets 0,gap 0", "[fill]", "[][][fill,grow][]"));
+        add(createHeader());
+        add(createRefreshLine(), "height 3!");
+        add(createMain());
+        add(new JSeparator(), "height 2!");
+        add(createFooter());
+    }
+
+    private JPanel createHeader() {
+        JPanel panel = new JPanel(new MigLayout("insets 3", "[]push[]push", "[fill]"));
+        JToolBar toolBar = new JToolBar();
+        JButton buttonDrawer = new JButton(new FlatSVGIcon("icons/menu.svg", 0.5f));
+        buttonUndo = new JButton(new FlatSVGIcon("icons/undo.svg", 0.5f));
+        buttonRedo = new JButton(new FlatSVGIcon("icons/redo.svg", 0.5f));
+        buttonRefresh = new JButton(new FlatSVGIcon("icons/refresh.svg", 0.5f));
+
+        // style
+        buttonDrawer.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:10;");
+        buttonUndo.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:10;");
+        buttonRedo.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:10;");
+        buttonRefresh.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:10;");
+
+        buttonDrawer.addActionListener(e -> {
+            if (Drawer.isOpen()) {
+                Drawer.showDrawer();
+            } else {
+                Drawer.toggleMenuOpenMode();
+            }
+        });
+        buttonUndo.addActionListener(e -> FormManager.undo());
+        buttonRedo.addActionListener(e -> FormManager.redo());
+        buttonRefresh.addActionListener(e -> FormManager.refresh());
+
+        toolBar.add(buttonDrawer);
+        toolBar.add(buttonUndo);
+        toolBar.add(buttonRedo);
+        toolBar.add(buttonRefresh);
+        panel.add(toolBar);
+        panel.add(createSearchBox(), "gapx n 135");
+        return panel;
+    }
+
+    private JPanel createFooter() {
+        JPanel panel = new JPanel(new MigLayout("insets 1 n 1 n,al trailing center,gapx 10,height 30!", "[]push[][]", "fill"));
+        panel.putClientProperty(FlatClientProperties.STYLE, "background:$Menu.background;");
+
+        // demo version
+        JLabel lbDemoVersion = new JLabel("Backup Manager: v" + ConfigKey.VERSION.getValue());
+        lbDemoVersion.putClientProperty(FlatClientProperties.STYLE, "" +
+                "foreground:$Label.disabledForeground;");
+        panel.add(lbDemoVersion);
+
+        return panel;
+    }
+
+    private JPanel createSearchBox() {
+        JPanel panel = new JPanel(new MigLayout("fill", "[fill,center,200:250:]", "[fill]"));
+        FormSearchButton button = new FormSearchButton();
+        button.addActionListener(e -> FormSearch.getInstance().showSearch());
+        panel.add(button);
+        return panel;
+    }
+
+    private JPanel createRefreshLine() {
+        refreshLine = new RefreshLine();
+        return refreshLine;
+    }
+
+    private Component createMain() {
+        mainPanel = new JPanel(new BorderLayout());
+        return mainPanel;
+    }
+
+    public void setForm(Form form) {
+        mainPanel.removeAll();
+        mainPanel.add(form);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+
+        // check button
+        buttonUndo.setEnabled(FormManager.FORMS.isUndoAble());
+        buttonRedo.setEnabled(FormManager.FORMS.isRedoAble());
+        // check component orientation and update
+        if (mainPanel.getComponentOrientation().isLeftToRight() != form.getComponentOrientation().isLeftToRight()) {
+            applyComponentOrientation(mainPanel.getComponentOrientation());
+        }
+    }
+
+    public void refresh() {
+        refreshLine.refresh();
+    }
+
+    private JPanel mainPanel;
+    private RefreshLine refreshLine;
+
+    private JButton buttonUndo;
+    private JButton buttonRedo;
+    private JButton buttonRefresh;
+}

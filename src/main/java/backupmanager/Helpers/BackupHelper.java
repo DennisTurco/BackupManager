@@ -10,19 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Dialogs.BackupEntryDialog;
-import backupmanager.Dialogs.TimePicker;
+import backupmanager.gui.Dialogs.BackupEntryDialog;
+import backupmanager.gui.Dialogs.TimePicker;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Table.BackupTable;
-import backupmanager.Table.TableDataManager;
+import backupmanager.gui.Table.BackupTable;
+import backupmanager.gui.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.frames.BackupManagerGUI;
-import backupmanager.frames.BackupProgressGUI;
+import backupmanager.gui.frames.BackupManagerGUI;
+import backupmanager.gui.frames.BackupProgressGUI;
 
 public class BackupHelper {
 

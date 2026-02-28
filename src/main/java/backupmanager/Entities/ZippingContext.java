@@ -4,8 +4,8 @@ import java.awt.TrayIcon;
 
 import javax.swing.JMenuItem;
 
-import backupmanager.Table.BackupTable;
-import backupmanager.frames.BackupProgressGUI;
+import backupmanager.gui.Table.BackupTable;
+import backupmanager.gui.frames.BackupProgressGUI;
 import backupmanager.utils.FolderUtils;
 
 public record ZippingContext (

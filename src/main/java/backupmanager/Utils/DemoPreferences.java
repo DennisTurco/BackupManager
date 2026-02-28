@@ -13,7 +13,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.util.LoggingFacade;
 
-import backupmanager.themes.PanelThemes;
+import backupmanager.gui.themes.PanelThemes;
 
 public class DemoPreferences {
 
