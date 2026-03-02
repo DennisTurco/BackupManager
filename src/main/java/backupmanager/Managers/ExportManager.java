@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -28,6 +29,7 @@ public class ExportManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ExportManager.class);
 
+    @Deprecated
     public static void exportAsPDF(ArrayList<ConfigurationBackup> backups, String headers) {
         logger.info("Exporting backups to PDF");
 
@@ -115,7 +117,7 @@ public class ExportManager {
         }
     }
 
-    public static void exportAsCSV(ArrayList<ConfigurationBackup> backups, String header) {
+    public static void exportAsCSV(List<ConfigurationBackup> backups, String header) {
         logger.info("Exporting backups to CSV");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);

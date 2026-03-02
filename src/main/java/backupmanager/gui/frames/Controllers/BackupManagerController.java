@@ -1,5 +1,6 @@
 package backupmanager.gui.frames.Controllers;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.TableDataManager;
 import backupmanager.gui.frames.BackupManagerGUI;
 import static backupmanager.gui.frames.BackupManagerGUI.backups;
+import backupmanager.gui.simple.BackupEntry;
+import raven.modal.ModalDialog;
+import raven.modal.component.SimpleModalBorder;
+import raven.modal.option.Location;
+import raven.modal.option.Option;
 
 public class BackupManagerController {
 
@@ -75,6 +81,23 @@ public class BackupManagerController {
         }
 
         TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
+    }
+
+    public void showCreateModal(Component parent) {
+        Option option = ModalDialog.createOption();
+        option.getLayoutOption()
+                .setSize(-1, 1f)
+                .setLocation(Location.TRAILING, Location.TOP)
+                .setAnimateDistance(0.7f, 0);
+
+        ModalDialog.showModal(parent,
+                new SimpleModalBorder(
+                        new BackupEntry(),
+                        "Create",
+                        SimpleModalBorder.YES_NO_OPTION,
+                        (controller, action) -> {}
+                ),
+                option);
     }
 
     public String getBackupDetails(String backupName) {

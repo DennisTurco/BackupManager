@@ -74,6 +74,7 @@ public class FormSetting extends Form {
         panel.add(createWindowsLayout());
         panel.add(createDrawerLayout());
         panel.add(createModalDefaultOption());
+        panel.add(createLanguageOption());
         return panel;
     }
 
@@ -192,6 +193,25 @@ public class FormSetting extends Form {
         panel.add(chCloseOnPressedEscape);
 
         return panel;
+    }
+
+    private Component createLanguageOption() {
+        JPanel panel = new JPanel(new MigLayout());
+        panel.setBorder(new TitledBorder("Language"));
+        JComboBox languageCombo = new JComboBox();
+        initComboItem(languageCombo);
+
+        panel.add(languageCombo);
+
+        return panel;
+    }
+
+    private void initComboItem(JComboBox combo) {
+        combo.addItem("English");
+        combo.addItem("Italiano");
+        combo.addItem("Español");
+        combo.addItem("Deutsch");
+        combo.addItem("Français");
     }
 
     private JPanel createStyleOption() {

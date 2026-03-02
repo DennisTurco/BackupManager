@@ -17,8 +17,8 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
-import backupmanager.gui.Table.BackupTable;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.gui.frames.BackupProgressGUI;
 
@@ -83,7 +83,7 @@ public class BackupEntryController {
             if (ConfigurationBackup.getBackupByName(currentBackup.getName()) != null) {
                 int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_BACKUP_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
-                    BackupHelper.removeBackup(currentBackup.getName());
+                    BackupHelper.deleteBackup(currentBackup.getName());
                 } else {
                     return false;
                 }

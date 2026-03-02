@@ -2,7 +2,6 @@ package backupmanager.gui.Controllers;
 
 import java.awt.Frame;
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javax.swing.JFrame;
 
@@ -10,13 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Entities.Confingurations;
-import backupmanager.Entities.Subscription;
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.SubscriptionStatus;
+import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Helpers.SubscriptionNotifier;
 import backupmanager.Json.JSONConfigReader;
 import backupmanager.Services.BackgroundService;
-import backupmanager.database.Repositories.SubscriptionRepository;
 import backupmanager.gui.frames.BackupManagerGUI;
 
 public class AppController {
@@ -53,26 +51,23 @@ public class AppController {
     }
 
     private boolean canBackgroundServiceStartsBasedOnSubscription() {
-        if (!Confingurations.isSubscriptionNedded()) return true;
+        SubscriptionStatus status = SubscriptionHelper.getSubscriptionStatus();
+        showSubscriptionNotificationIfNeeded(status);
+        return status != SubscriptionStatus.EXPIRED;
+    }
 
-        Subscription subscription = SubscriptionRepository.getAnySubscriptionValid();
-
-        if (subscription == null) {
-            logger.info("Subscription expired alert");
-            SubscriptionNotifier.showExpiredAlert(trayController);
-            return false;
+    private void showSubscriptionNotificationIfNeeded(SubscriptionStatus status) {
+        switch (status) {
+            case SubscriptionStatus.EXPIRATION -> {
+                logger.info("Subscription is expiring alert");
+                SubscriptionNotifier.showExpiringWarning(trayController);
+            }
+            case SubscriptionStatus.EXPIRED -> {
+                logger.info("Subscription expired alert");
+                SubscriptionNotifier.showExpiredAlert(trayController);
+            }
+            case ACTIVE, NONE -> { }
         }
-
-        int days = configReader.getConfigValue("SubscriptionWarningDays", 7);
-        LocalDate now = LocalDate.now();
-        LocalDate endMinusDays = subscription.endDate().minusDays(days);
-
-        if (now.isAfter(endMinusDays)) {
-            logger.info("Subscription is expiring alert");
-            SubscriptionNotifier.showExpiringWarning(trayController);
-        }
-
-        return true;
     }
 
     private void openGui() {

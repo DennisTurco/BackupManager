@@ -274,7 +274,10 @@ public class TranslationLoaderEnum {
         SUBSCRIPTION_EXPIRING_TITLE("ExpiringTitle", "Backup Manager subscription expiring soon"),
         SUBSCRIPTION_EXPIRING_MESSAGE("ExpiringMessage", "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it."),
         SUBSCRIPTION_EXPIRED_TITLE("ExpiredTitle", "Backup Manager subscription expired"),
-        SUBSCRIPTION_EXPIRED_MESSAGE("ExpiredMessage", "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it.");
+        SUBSCRIPTION_EXPIRED_MESSAGE("ExpiredMessage", "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it."),
+        SUBSCRIPTION_ACTIVE("ActiveLabel", "Active"),
+        SUBSCRIPTION_EXPIRING("ExpiringLabel", "Expiring"),
+        SUBSCRIPTION_EXPIRED("ExpiredLabel", "Expired");
 
         private final String keyName;
         private final String defaultValue;

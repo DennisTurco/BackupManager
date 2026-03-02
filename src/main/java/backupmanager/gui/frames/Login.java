@@ -101,7 +101,7 @@ public class Login extends Form {
             }
 
             User user = new User(name, surname, email);
-            loginService.createNewUser(user);
+            loginService.createUserAndSendEmail(user);
 
             javax.swing.SwingUtilities.invokeLater(this::showMainForm);
         });

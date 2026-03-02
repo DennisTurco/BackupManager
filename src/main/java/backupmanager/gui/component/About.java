@@ -1,11 +1,5 @@
 package backupmanager.gui.component;
 
-import java.awt.Desktop;
-import java.awt.Graphics;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -15,9 +9,9 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.text.DefaultCaret;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.util.LoggingFacade;
 
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Managers.WebsiteManager;
 import net.miginfocom.swing.MigLayout;
 
 public class About extends JPanel {
@@ -27,82 +21,81 @@ public class About extends JPanel {
     }
 
     private void init() {
-        setLayout(new MigLayout("fillx,wrap,insets 5 30 5 30,width 400", "[fill,330::]", ""));
 
-        JTextPane title = createText("Modal Dialog Demo Project");
-        title.putClientProperty(FlatClientProperties.STYLE, "" +
-                "font:bold +5");
+        setLayout(new MigLayout("fillx,wrap,insets 20,width 520"));
+
+        JTextPane title = createText("Backup Manager");
+        title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JTextPane description = createText("");
         description.setContentType("text/html");
         description.setText(getDescriptionText());
+
         description.addHyperlinkListener(e -> {
-            if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                showUrl(e.getURL());
-            }
+            if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
+                WebsiteManager.openWebSite(e.getURL().toString());
         });
 
         add(title);
-        add(description);
-        add(createSystemInformation());
+        add(description, "gapy 10");
+        add(createSystemInformation(), "gapy 15");
     }
 
     private JTextPane createText(String text) {
-        JTextPane textPane = new JTextPane();
-        textPane.setBorder(BorderFactory.createEmptyBorder());
-        textPane.setText(text);
-        textPane.setEditable(false);
-        textPane.setCaret(new DefaultCaret() {
-            @Override
-            public void paint(Graphics g) {
-            }
+        JTextPane pane = new JTextPane();
+        pane.setBorder(BorderFactory.createEmptyBorder());
+        pane.setText(text);
+        pane.setEditable(false);
+        pane.setOpaque(false);
+
+        pane.setCaret(new DefaultCaret() {
+            public void paint(java.awt.Graphics g) {}
         });
-        return textPane;
+
+        return pane;
     }
 
     private String getDescriptionText() {
-        String text = "This is a demo project for the Modal Dialog library, " +
-                "built using FlatLaf Look and Feel and MigLayout library.<br>" +
-                "For source code, visit the <a href=\"https://github.com/DJ-Raven/swing-modal-dialog/\">GitHub Project.</a>";
+        return """
+        <html>
+        <b>Backup Manager</b> is a simple and powerful application designed to automate
+        folder and subfolder backups.
 
-        return text;
-    }
+        <br><br>
+        Users can schedule automatic backups or execute manual backups anytime.
 
-    private String getSystemInformationText() {
-        String text = "<b>Demo Version: </b>%s<br/>" +
-                "<b>Java: </b>%s<br/>" +
-                "<b>System: </b>%s<br/>";
+        <br><br>
+        Backup history is stored securely, allowing full control over saved data.
 
-        return text;
+        <br><br>
+        Visit <a href="%s">project website</a> for more information.
+        </html>
+        """.formatted(ConfigKey.INFO_PAGE_LINK.getValue());
     }
 
     private JComponent createSystemInformation() {
-        JPanel panel = new JPanel(new MigLayout("wrap"));
-        panel.setBorder(new TitledBorder("System Information"));
-        JTextPane textPane = createText("");
-        textPane.setContentType("text/html");
-        String version = ConfigKey.VERSION.getValue();
-        String java = System.getProperty("java.vendor") + " - v" + System.getProperty("java.version");
-        String system = System.getProperty("os.name") + " " + System.getProperty("os.arch") + " - v" + System.getProperty("os.version");
-        String text = String.format(getSystemInformationText(),
-                version,
-                java,
-                system);
-        textPane.setText(text);
-        panel.add(textPane);
-        return panel;
-    }
 
-    private void showUrl(URL url) {
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-            if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                try {
-                    desktop.browse(url.toURI());
-                } catch (IOException | URISyntaxException e) {
-                    LoggingFacade.INSTANCE.logSevere("Error browse url", e);
-                }
-            }
-        }
+        JPanel panel = new JPanel(new MigLayout("wrap,insets 10"));
+        panel.setBorder(new TitledBorder("System Information"));
+
+        JTextPane text = createText("");
+        text.setContentType("text/html");
+
+        String info = """
+        <html>
+        Version: %s<br>
+        Java: %s<br>
+        OS: %s<br>
+        </html>
+        """.formatted(
+                ConfigKey.VERSION.getValue(),
+                System.getProperty("java.vendor") + " - v" + System.getProperty("java.version"),
+                System.getProperty("os.name") + " " + System.getProperty("os.arch")
+        );
+
+        text.setText(info);
+        panel.add(text);
+
+        return panel;
     }
 }

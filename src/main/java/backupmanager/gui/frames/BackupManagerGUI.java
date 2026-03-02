@@ -985,7 +985,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_interruptBackupPopupItemActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        ExportManager.exportAsCSV(new ArrayList<>(backups), ConfigurationBackup.getCSVHeader());
+        ExportManager.exportAsCSV(backups, ConfigurationBackup.getCSVHeader());
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed

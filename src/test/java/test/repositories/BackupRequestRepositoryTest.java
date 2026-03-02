@@ -88,7 +88,7 @@ public class BackupRequestRepositoryTest {
             BackupRequestRepository.insertBackupRequest(request);
         }
 
-        requests = BackupRequestRepository.getRequestBackups();
+        
     }
 
     private void createBackupConfigurations() {

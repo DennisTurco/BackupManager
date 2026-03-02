@@ -1,5 +1,6 @@
 package backupmanager.Services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import backupmanager.Entities.ConfigurationBackup;
@@ -31,7 +32,7 @@ public class BackupService {
         return buildDetails(backup);
     }
 
-    private String buildDetails(ConfigurationBackup backup) {
+    public String buildDetails(ConfigurationBackup backup) {
         String backupNameStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_DETAIL);
         String initialPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_DETAIL);
         String destinationPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_DETAIL);
@@ -44,19 +45,44 @@ public class BackupService {
         String notesStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NOTES_DETAIL);
         String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
-        return (
-            "<html><b>" + backupNameStr + ":</b> " + backup.getName() + ", " +
-            "<b>" + initialPathStr + ":</b> " + backup.getTargetPath() + ", " +
-            "<b>" + destinationPathStr + ":</b> " + backup.getDestinationPath() + ", " +
-            "<b>" + lastBackupStr + ":</b> " + (backup.getLastBackupDate() != null ? backup.getLastBackupDate().format(formatter) : "") + ", " +
-            "<b>" + nextBackupStr + ":</b> " + (backup.getNextBackupDate() != null ? backup.getNextBackupDate().format(formatter) : "_") + ", " +
-            "<b>" + timeIntervalBackupStr + ":</b> " + (backup.getTimeIntervalBackup() != null ? backup.getTimeIntervalBackup().toString() : "_") + ", " +
-            "<b>" + creationDateStr + ":</b> " + (backup.getCreationDate() != null ? backup.getCreationDate().format(formatter) : "_") + ", " +
-            "<b>" + lastUpdateDateStr + ":</b> " + (backup.getLastUpdateDate() != null ? backup.getLastUpdateDate().format(formatter) : "_") + ", " +
-            "<b>" + backupCountStr + ":</b> " + (backup.getCount()) + ", " +
-            "<b>" + maxBackupsToKeepStr + ":</b> " + (backup.getMaxToKeep()) + ", " +
-            "<b>" + notesStr + ":</b> " + (backup.getNotes()) +
-            "</html>"
-        );
+        return """
+            <html>
+            <div style='font-family:sans-serif; font-size:10px; padding:2px'>
+
+            <b>%s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+            <b> %s:</b> %s.
+
+            </div>
+            </html>
+            """.formatted(
+                backupNameStr, backup.getName(),
+                initialPathStr, backup.getTargetPath(),
+                destinationPathStr, backup.getDestinationPath(),
+                lastBackupStr, formatDate(backup.getLastBackupDate()),
+                nextBackupStr, formatDate(backup.getNextBackupDate()),
+                timeIntervalBackupStr, optionalString(backup.getTimeIntervalBackup()),
+                creationDateStr, formatDate(backup.getCreationDate()),
+                lastUpdateDateStr, formatDate(backup.getLastUpdateDate()),
+                backupCountStr, backup.getCount(),
+                maxBackupsToKeepStr, backup.getMaxToKeep(),
+                notesStr, backup.getNotes()
+            );
     }
+
+    private String formatDate(LocalDateTime date) {
+        return date != null ? date.format(formatter) : "_";
+    }
+
+    private String optionalString(Object value) {
+        return value != null ? value.toString() : "_";
+    }
+
 }

@@ -20,11 +20,11 @@ import net.miginfocom.swing.MigLayout;
 import raven.modal.component.ModalBorderAction;
 import raven.modal.component.SimpleModalBorder;
 
-public class SimpleInputForms extends JPanel {
+public class BackupEntry extends JPanel {
 
     public static int NEW_COUNTRY = 30;
 
-    public SimpleInputForms() {
+    public BackupEntry() {
         init();
     }
 
@@ -81,7 +81,7 @@ public class SimpleInputForms extends JPanel {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyChar() == 10) {
-                    ModalBorderAction modalBorderAction = ModalBorderAction.getModalBorderAction(SimpleInputForms.this);
+                    ModalBorderAction modalBorderAction = ModalBorderAction.getModalBorderAction(BackupEntry.this);
                     if (modalBorderAction != null) {
                         modalBorderAction.doAction(SimpleModalBorder.YES_OPTION);
                     }

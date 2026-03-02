@@ -19,7 +19,6 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYDataset;
 
 import backupmanager.gui.component.chart.renderer.ChartXYCurveRenderer;
@@ -124,7 +123,7 @@ public class TimeSeriesChart extends DefaultChartPanel {
                     return;
                 }
                 double x = plot.getDomainAxis().java2DToValue(event.getTrigger().getX(), dataArea, plot.getDomainAxisEdge());
-                TableXYDataset dataset = (TableXYDataset) plot.getDataset();
+                XYDataset dataset = plot.getDataset();
                 int seriesCount = plot.getSeriesCount();
 
                 double minDistance = Double.MAX_VALUE;

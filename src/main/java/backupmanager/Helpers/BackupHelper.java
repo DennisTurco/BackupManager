@@ -10,17 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.gui.Dialogs.BackupEntryDialog;
-import backupmanager.gui.Dialogs.TimePicker;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.Dialogs.BackupEntryDialog;
+import backupmanager.gui.Dialogs.TimePicker;
+import backupmanager.gui.Table.BackupTable;
+import backupmanager.gui.Table.TableDataManager;
 import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.gui.frames.BackupProgressGUI;
 
@@ -63,7 +63,41 @@ public class BackupHelper {
         }
 
         String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-        removeBackup(backupName);
+        deleteBackup(backupName);
+    }
+
+    @Deprecated
+    public static void deleteBackup(int selectedRow, BackupTable backupTable) {
+        logger.info("Event --> deleting backup");
+
+        if (selectedRow != -1) {
+            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                String backupName = (String) backupTable.getValueAt(selectedRow, 0);
+                BackupHelper.deleteBackup(backupName);
+            }
+        }
+    }
+
+    public static void deleteBackup(String backupName) {
+        logger.info("Event --> deleting backup");
+        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
+        deleteBackup(backup);
+    }
+
+    public static void deleteBackup(ConfigurationBackup backup) {
+        logger.info("Event --> deleting backup" + backup.getName());
+        BackupConfigurationRepository.deleteBackup(backup.getId());
+        updateBackupTable();
+    }
+
+    public static void deleteBackupWithConfirmition(ConfigurationBackup backup) {
+        logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
+
+        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            BackupHelper.deleteBackup(backup);
+        }
     }
 
     public static void updateBackup(ConfigurationBackup updatedBackup) {
@@ -125,31 +159,8 @@ public class BackupHelper {
             .plusMinutes(timeInterval.minutes());
     }
 
-    public static void deleteBackup(int selectedRow, BackupTable backupTable) {
-        logger.info("Event --> deleting backup");
-
-        if (selectedRow != -1) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (response == JOptionPane.YES_OPTION) {
-                String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-                BackupHelper.removeBackup(backupName);
-            }
-        }
-    }
-
     public static void forceBackupTermination(int requestId) {
         BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
-        updateBackupTable();
-    }
-
-    public static void removeBackup(String backupName) {
-        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
-        removeBackup(backup);
-    }
-
-    private static void removeBackup(ConfigurationBackup backup) {
-        logger.info("Event --> removing backup" + backup.getName());
-        BackupConfigurationRepository.deleteBackup(backup.getId());
         updateBackupTable();
     }
 

@@ -30,9 +30,11 @@ public class LoginService {
 
     public void createNewUser(User user) {
         if (user == null) throw new IllegalArgumentException("User cannot be null");
-
         UserRepository.insertUser(user);
+    }
 
+    public void createUserAndSendEmail(User user) {
+        createNewUser(user);
         sendRegistrationEmail(user);
     }
 

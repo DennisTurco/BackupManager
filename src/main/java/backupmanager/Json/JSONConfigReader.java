@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import backupmanager.Enums.ConfigKey;
+
 
 public class JSONConfigReader {
     private static final Logger logger = LoggerFactory.getLogger(JSONConfigReader.class);
@@ -23,6 +25,10 @@ public class JSONConfigReader {
         this.filename = filename;
         this.directoryPath = directoryPath;
         loadConfig(); // Load configuration at instantiation
+    }
+
+    public JSONConfigReader() {
+        this(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     }
 
     public boolean isMenuItemEnabled(String menuItem) {

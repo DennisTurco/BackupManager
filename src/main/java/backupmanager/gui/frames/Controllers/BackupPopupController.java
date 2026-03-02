@@ -14,6 +14,7 @@ import java.util.Optional;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,9 @@ import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
 import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.TableDataManager;
-import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.gui.frames.BackupProgressGUI;
 
@@ -36,6 +37,7 @@ public class BackupPopupController {
 
     private static final Logger logger = LoggerFactory.getLogger(BackupPopupController.class);
 
+    @Deprecated
     public static void popupItemInterrupt(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -45,6 +47,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemInterrupt() {
+
+    }
+
+    @Deprecated
     public static void popupItemRenameBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -52,6 +59,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemRenameBackup(List<ConfigurationBackup> backups, ConfigurationBackup backup) {
+        renameBackup(backups, backup);
+    }
+
+    @Deprecated
     public static void popupItemOpenDestinationPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -59,6 +71,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemOpenDestinationPath(ConfigurationBackup backup) {
+        openFolder(backup.getDestinationPath());
+    }
+
+    @Deprecated
     public static void popupItemOpenInitialPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -67,6 +84,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemOpenInitialPath(ConfigurationBackup backup) {
+        openFolder(backup.getTargetPath());
+    }
+
+    @Deprecated
     public static void popupItemAutoBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JCheckBoxMenuItem autoBackupMenuItem) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -76,6 +98,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemAutoBackup(ConfigurationBackup backup) {
+        BackupHelper.toggleAutomaticBackup(backup);
+    }
+
+    @Deprecated
     public static void popupItemCopyDestinationPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -85,6 +112,12 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemCopyDestinationPath(ConfigurationBackup backup) {
+        StringSelection selection = new StringSelection(backup.getDestinationPath());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+    }
+
+    @Deprecated
     public static void popupItemCopyInitialPath(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -94,6 +127,12 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemCopyInitialPath(ConfigurationBackup backup) {
+        StringSelection selection = new StringSelection(backup.getTargetPath());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+    }
+
+    @Deprecated
     public static void popupItemCopyBackupName(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -103,6 +142,13 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemCopyBackupName(ConfigurationBackup backup) {
+        StringSelection selection = new StringSelection(backup.getName());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+    }
+
+
+    @Deprecated
     public static void popupItemRunBackup(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
         if (selectedRow != -1) {
             ConfigurationBackup backup = getBackupByName(backups, selectedRow, backupTable);
@@ -114,6 +160,13 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemRunBackup(ConfigurationBackup backup, JTable backupTable, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+        BackupManagerGUI.progressBar = new BackupProgressGUI(backup.getTargetPath(), backup.getDestinationPath());
+        ZippingContext context = ZippingContext.create(backup, null, backupTable, BackupManagerGUI.progressBar, interruptBackupPopupItem, RunBackupPopupItem);
+        BackupOperations.singleBackup(context, BackupTriggerType.USER);
+    }
+
+    @Deprecated
     public static void popupItemEditBackupName(int selectedRow, BackupTable backupTable, List<ConfigurationBackup> backups, BackupManagerGUI main) {
         if (selectedRow != -1) {
             // get correct backup
@@ -125,6 +178,11 @@ public class BackupPopupController {
         }
     }
 
+    public static void popupItemEditBackupName(ConfigurationBackup backup) {
+        // BackupHelper.openBackupById(backup.getId(), main);
+    }
+
+    @Deprecated
     public static void popupItemDuplicateBackup(int selectedRow, BackupTable backupTable) {
         logger.info("Event --> duplicating backup");
 
@@ -156,15 +214,45 @@ public class BackupPopupController {
             }
     }
 
+    public static void popupItemDuplicateBackup(ConfigurationBackup backup) {
+        logger.info("Event --> duplicating backup");
+
+        LocalDateTime dateNow = LocalDateTime.now();
+        ConfigurationBackup newBackup = new ConfigurationBackup(
+                backup.getName() + "_copy",
+                backup.getTargetPath(),
+                backup.getDestinationPath(),
+                null,
+                backup.isAutomatic(),
+                backup.getNextBackupDate(),
+                backup.getTimeIntervalBackup(),
+                backup.getNotes(),
+                dateNow,
+                dateNow,
+                0,
+                backup.getMaxToKeep()
+        );
+
+        BackupConfigurationRepository.insertBackup(newBackup);
+
+        // List<ConfigurationBackup> backups = BackupHelper.getBackupList();
+
+        // if (BackupManagerGUI.model != null)
+        //     TableDataManager.updateTableWithNewBackupList(backups, BackupHelper.formatter);
+    }
+
+    @Deprecated
     public static void popupItemDelete(int selectedRow, BackupTable backupTable) {
         BackupHelper.deleteBackup(selectedRow, backupTable);
     }
 
+    @Deprecated
     private static ConfigurationBackup getBackupByName(int selectedRow, BackupTable backupTable) {
         String backupName = (String) backupTable.getValueAt(selectedRow, 0);
         return BackupConfigurationRepository.getBackupByName(backupName);
     }
 
+    @Deprecated
     private static ConfigurationBackup getBackupByName(List<ConfigurationBackup> backups, int selectedRow, BackupTable backupTable) {
         String backupName = (String) backupTable.getValueAt(selectedRow, 0);
         return ConfigurationBackup.getBackupByName(backups, backupName);

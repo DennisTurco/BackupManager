@@ -7,7 +7,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.ColorFunctions;
 
 import backupmanager.gui.component.About;
-import backupmanager.gui.forms.FormDashboard;
+import backupmanager.gui.component.Subscription;
+import backupmanager.gui.forms.FormTable;
 import backupmanager.gui.frames.Login;
 import backupmanager.utils.UndoRedo;
 import raven.modal.Drawer;
@@ -80,7 +81,7 @@ public class FormManager {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(getMainForm());
 
-        Drawer.setSelectedItemClass(FormDashboard.class);
+        Drawer.setSelectedItemClass(FormTable.class);
         frame.repaint();
         frame.revalidate();
     }
@@ -116,6 +117,12 @@ public class FormManager {
 
     public static void showAbout() {
         ModalDialog.showModal(frame, new SimpleModalBorder(new About(), "About"),
+                ModalDialog.createOption().setAnimationEnabled(false)
+        );
+    }
+
+    public static void showSubscription() {
+        ModalDialog.showModal(frame, new SimpleModalBorder(new Subscription(), "Subscription"),
                 ModalDialog.createOption().setAnimationEnabled(false)
         );
     }

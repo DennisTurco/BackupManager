@@ -107,6 +107,7 @@ public class ConfigurationBackup {
         );
     }
 
+    @Deprecated
     public String toCsvString() {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%d",
             name,
@@ -118,6 +119,32 @@ public class ConfigurationBackup {
             timeIntervalBackup != null ? timeIntervalBackup.toString() : "",
             maxToKeep
         );
+    }
+
+    public String[] toCsvStrings() {
+        return new String[] {
+            name,
+            targetPath,
+            destinationPath,
+            lastBackupDate != null ? lastBackupDate.toString() : "",
+            Boolean.toString(automatic),
+            nextBackupDate != null ? nextBackupDate.toString() : "",
+            timeIntervalBackup != null ? timeIntervalBackup.toString() : "",
+            Integer.toString(maxToKeep)
+        };
+    }
+
+    public Object[] toTableRow() {
+        return new Object[] {
+            name,
+            targetPath,
+            destinationPath,
+            lastBackupDate,
+            automatic,
+            nextBackupDate,
+            timeIntervalBackup,
+            maxToKeep
+        };
     }
 
     public static ConfigurationBackup getBackupByName(List<ConfigurationBackup> backups, String name) {
@@ -135,6 +162,19 @@ public class ConfigurationBackup {
 
     public static String getCSVHeader() {
         return "BackupName,targetPath,DestinationPath,lastBackupDate,IsAutoBackup,NextDate,Interval (gg.HH:mm),MaxBackupsToKeep";
+    }
+
+    public static String[] getCSVHeaderArray() {
+        return new String[] {
+            "BackupName",
+            "targetPath",
+            "DestinationPath",
+            "lastBackupDate",
+            "IsAutoBackup",
+            "NextDate",
+            "Interval (gg.HH:mm)",
+            "MaxBackupsToKeep"
+        };
     }
 
     public int getId() {

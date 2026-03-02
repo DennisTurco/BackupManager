@@ -1,20 +1,34 @@
 package backupmanager.gui.menu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Entities.Confingurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.gui.forms.FormDashboard;
+import backupmanager.Enums.MenuItems;
+import backupmanager.Json.JSONConfigReader;
+import backupmanager.Managers.ExportManager;
+import backupmanager.Managers.WebsiteManager;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
+import backupmanager.gui.forms.FormBackupDashboard;
+import backupmanager.gui.forms.FormHistory;
 import backupmanager.gui.forms.FormSetting;
 import backupmanager.gui.forms.FormTable;
 import backupmanager.gui.system.AllForms;
-import backupmanager.gui.system.Form;
 import backupmanager.gui.system.FormManager;
 import raven.extras.AvatarIcon;
 import raven.modal.drawer.DrawerPanel;
@@ -32,7 +46,10 @@ import raven.modal.option.Option;
 import raven.modal.utils.FlatLafStyleUtils;
 
 public class MyDrawerBuilder extends SimpleDrawerBuilder {
+    private static final Logger logger = LoggerFactory.getLogger(MyDrawerBuilder.class);
 
+    private static final Map<MenuItems, Runnable> menuActionMap = new HashMap<>();
+    private static final Map<String, MenuItems> menuBindingMap = new HashMap<>();
     private static MyDrawerBuilder instance;
 
     public static MyDrawerBuilder getInstance() {
@@ -50,7 +67,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
         icon.setIcon(new FlatSVGIcon("drawer/logo.svg", 100, 100));
         data.setTitle("Backup Manager");
-        data.setDescription("assistenza@shardpc.it");
+        data.setDescription(ConfigKey.EMAIL.getValue());
         header.setSimpleHeaderData(data);
 
         rebuildMenu();
@@ -58,6 +75,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private MyDrawerBuilder() {
         super(createSimpleMenuOption());
+        initMenuActions();
         LightDarkButtonFooter lightDarkButtonFooter = (LightDarkButtonFooter) getFooter();
         lightDarkButtonFooter.addModeChangeListener(isDarkMode -> {
             // event for light dark mode changed
@@ -80,8 +98,46 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
         return new SimpleHeaderData()
                 .setIcon(icon)
-                .setTitle("Ra Ven")
-                .setDescription("raven@gmail.com");
+                .setTitle("Backup Manager")
+                .setDescription(ConfigKey.EMAIL.getValue());
+    }
+
+    private static void initMenuActions() {
+        menuActionMap.put(MenuItems.BackupList, () ->
+                FormManager.showForm(AllForms.getForm(FormTable.class)));
+
+        menuActionMap.put(MenuItems.Dashboard, () ->
+                FormManager.showForm(AllForms.getForm(FormBackupDashboard.class)));
+
+        menuActionMap.put(MenuItems.Export, () ->
+                ExportManager.exportAsCSV(BackupConfigurationRepository.getBackupList(), ConfigurationBackup.getCSVHeader()));
+
+        menuActionMap.put(MenuItems.Settings, () ->
+                FormManager.showForm(AllForms.getForm(FormSetting.class)));
+
+        menuActionMap.put(MenuItems.History, () ->
+                FormManager.showForm(AllForms.getForm(FormHistory.class)));
+
+        menuActionMap.put(MenuItems.InfoPage, () ->
+                WebsiteManager.openWebSite(ConfigKey.INFO_PAGE_LINK.getValue()));
+
+        menuActionMap.put(MenuItems.BugReport, () ->
+                WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue()));
+
+        menuActionMap.put(MenuItems.ContactUs, () ->
+                WebsiteManager.openWebSite(ConfigKey.EMAIL.getValue()));
+
+        menuActionMap.put(MenuItems.PaypalDonate, () ->
+                WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue()));
+
+        menuActionMap.put(MenuItems.BuymeacoffeeDonate, () ->
+                WebsiteManager.openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue()));
+
+        menuActionMap.put(MenuItems.Subscription, () ->
+                FormManager.showSubscription());
+
+        menuActionMap.put(MenuItems.About, () ->
+                FormManager.showAbout());
     }
 
     private void changeAvatarIconBorderColor(AvatarIcon icon) {
@@ -103,28 +159,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     }
 
     public static MenuOption createSimpleMenuOption() {
-        // create simple menu option
         MenuOption simpleMenuOption = new MenuOption();
-
-        MenuItem[] items = new MenuItem[]{
-                new Item.Label("MAIN"),
-                new Item("Backup List", "forms.svg", FormTable.class)
-                    .subMenu("Create new backup")
-                    .subMenu("Import backups from Csv")
-                    .subMenu("Export backups to Csv"),
-                new Item("Dashboard", "dashboard.svg", FormDashboard.class),
-                new Item.Label("OTHER"),
-                new Item("Setting", "setting.svg", FormSetting.class),
-                new Item("History", "history.svg"),
-                new Item("Information", "info.svg"),
-                new Item("Support the Project", "donate.svg")
-                    .subMenu("Paypal")
-                    .subMenu("Buy me a coffee"),
-                new Item("Help", "help.svg")
-                    .subMenu("Report a bug")
-                    .subMenu("Support"),
-                new Item("About", "about.svg"),
-        };
+        MenuItem[] items = buildMenuItems().toArray(MenuItem[]::new);
 
         simpleMenuOption.setMenuStyle(new MenuStyle() {
 
@@ -145,7 +181,8 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
             @Override
             public void styleMenu(JComponent component) {
-                component.putClientProperty(FlatClientProperties.STYLE, getDrawerBackgroundStyle());
+                component.putClientProperty(FlatClientProperties.STYLE,
+                        getDrawerBackgroundStyle());
             }
         });
 
@@ -153,25 +190,34 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         simpleMenuOption.setMenuValidation(new MyMenuValidation());
 
         simpleMenuOption.addMenuEvent((action, index) -> {
-            System.out.println("Drawer menu selected " + Arrays.toString(index));
-            Class<?> itemClass = action.getItem().getItemClass();
-            int i = index[0];
-            if (i == 7) {
+            logger.debug("Drawer menu selected " + Arrays.toString(index));
+            MenuItems menuItem = resolveMenuItem(action);
+
+            if (menuItem != null && menuActionMap.containsKey(menuItem)) {
+                menuActionMap.get(menuItem).run();
                 action.consume();
-                FormManager.showAbout();
-                return;
             }
-            if (itemClass == null || !Form.class.isAssignableFrom(itemClass)) {
-                action.consume();
-                return;
-            }
-            Class<? extends Form> formClass = (Class<? extends Form>) itemClass;
-            FormManager.showForm(AllForms.getForm(formClass));
         });
 
         simpleMenuOption.setMenus(items).setBaseIconPath("drawer/icon/");
 
         return simpleMenuOption;
+    }
+
+    private static Item createMenuItem(String label, String icon, MenuItems menuEnum, Class<?> formClass) {
+        Item item = new Item(label, icon, formClass);
+        menuBindingMap.put(label.replace(" ", "").toLowerCase(), menuEnum);
+        return item;
+    }
+
+    private static MenuItems resolveMenuItem(raven.modal.drawer.menu.MenuAction action) {
+        String name = action.getItem().getName();
+
+        if (name == null)
+            return null;
+
+        String key = name.replace(" ", "").toLowerCase();
+        return menuBindingMap.get(key);
     }
 
     @Override
@@ -192,5 +238,89 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private static String getDrawerBackgroundStyle() {
         return "background:$Menu.background;";
+    }
+
+    private static List<MenuItem> buildMenuItems() {
+        JSONConfigReader config = new JSONConfigReader();
+        List<MenuItem> itemList = new ArrayList<>();
+
+        itemList.add(new Item.Label("MAIN"));
+
+        // Backup menu
+        Item backupItem = createMenuItem("Backup List", "forms.svg", MenuItems.BackupList, FormTable.class)
+                .subMenu("Create new backup");
+
+        if (config.isMenuItemEnabled(MenuItems.Import.name()))
+            backupItem.subMenu("Import backups from Csv");
+
+        if (config.isMenuItemEnabled(MenuItems.Export.name()))
+            backupItem.subMenu("Export backups to Csv");
+
+        itemList.add(backupItem);
+
+        // Dashboard
+        itemList.add(createMenuItem("Dashboard", "dashboard.svg", MenuItems.Dashboard, FormBackupDashboard.class));
+
+        itemList.add(new Item.Label("OTHER"));
+
+        // Settings
+        itemList.add(createMenuItem("Settings", "setting.svg", MenuItems.Settings, FormSetting.class));
+
+        // History (configurable)
+        if (config.isMenuItemEnabled(MenuItems.History.name())) {
+            itemList.add(createMenuItem("History", "history.svg", MenuItems.History, FormHistory.class));
+        }
+
+        // External link (no form class)
+        itemList.add(createMenuItem("Github page", "github.svg", MenuItems.InfoPage, null));
+
+        // Donate section
+        if (config.isMenuItemEnabled(MenuItems.Donate.name())) {
+
+            Item donateItem = createMenuItem("Support the Project", "donate.svg", MenuItems.Donate, null);
+
+            if (config.isMenuItemEnabled(MenuItems.PaypalDonate.name())) {
+                donateItem.subMenu("Paypal");
+                bindSubMenu("Paypal", MenuItems.PaypalDonate);
+            }
+
+            if (config.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name())) {
+                donateItem.subMenu("Buy me a coffee");
+                bindSubMenu("Buy me a coffee", MenuItems.BuymeacoffeeDonate);
+            }
+
+            itemList.add(donateItem);
+        }
+
+        // Support section
+        if (config.isMenuItemEnabled(MenuItems.Support.name())) {
+
+            Item helpItem = createMenuItem("Help", "help.svg", MenuItems.Support, null);
+
+            if (config.isMenuItemEnabled(MenuItems.BugReport.name())) {
+                helpItem.subMenu("Report a bug");
+                bindSubMenu("Report a bug", MenuItems.BugReport);
+            }
+
+            if (config.isMenuItemEnabled(MenuItems.ContactUs.name())) {
+                helpItem.subMenu("Contact us");
+                bindSubMenu("Contact us", MenuItems.ContactUs);
+            }
+
+            itemList.add(helpItem);
+        }
+
+        if (Confingurations.isSubscriptionNedded()) {
+            itemList.add(createMenuItem("Subscription", "subscription.svg", MenuItems.Subscription, null));
+        }
+
+        // About (LAST ITEM)
+        itemList.add(createMenuItem("About", "about.svg", MenuItems.About, null));
+
+        return itemList;
+    }
+
+    private static void bindSubMenu(String label, MenuItems menuEnum) {
+        menuBindingMap.put(label.replace(" ", "").toLowerCase(), menuEnum);
     }
 }

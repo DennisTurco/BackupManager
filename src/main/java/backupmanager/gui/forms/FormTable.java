@@ -1,8 +1,9 @@
 package backupmanager.gui.forms;
 
 import java.awt.Component;
-import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -15,32 +16,47 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
-import backupmanager.gui.sample.csv.CSVDataReader;
-import backupmanager.gui.sample.csv.ResponseCSV;
-import backupmanager.gui.simple.SimpleInputForms;
+import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Entities.TimeInterval;
+import backupmanager.Helpers.BackupHelper;
+import static backupmanager.Helpers.BackupHelper.formatter;
+import backupmanager.Services.BackupService;
+import backupmanager.gui.frames.Controllers.BackupManagerController;
+import backupmanager.gui.frames.Controllers.BackupPopupController;
+import backupmanager.gui.sample.csv.ConfigurationBackupDataTable;
 import backupmanager.gui.svg.SVGButton;
 import backupmanager.gui.system.Form;
 import backupmanager.utils.SystemForm;
 import backupmanager.utils.table.TableHeaderAlignment;
 import net.miginfocom.swing.MigLayout;
-import raven.modal.ModalDialog;
-import raven.modal.component.SimpleModalBorder;
-import raven.modal.option.Location;
-import raven.modal.option.Option;
 import raven.swingpack.JPagination;
 
 @SystemForm(name = "Table", description = "table is a user interface component", tags = {"list"})
 public class FormTable extends Form {
+
+    private static final Logger logger = LoggerFactory.getLogger(FormTable.class);
+
+    private BackupManagerController managerController;
+    private final int COL_AUTOMATIC = 4;
+    private final int COL_NEXT_RUN = 5;
+    private final int COL_LAST_RUN = 3;
+
+    private BackupService backupService;
+    private List<ConfigurationBackup> backups;
+    private int autoColumnIndex;
 
     public FormTable() {
         init();
@@ -55,40 +71,39 @@ public class FormTable extends Form {
         add(createInfo("Backup List", "A table is a user interface component that displays a collection of records in a structured, tabular format. It allows users to view, sort, and manage data or other resources.", 1));
         add(createBorder(createBasicTable()), "gapx 7 7, grow");
         add(createBorder(createDetails()), "gapx 7 7, hmin 150");
+
+        backupService = new BackupService();
+        managerController = new BackupManagerController(backupService);
     }
 
     @Override
     public void formInit() {
-        try {
-            data = CSVDataReader.load(getClass().getResourceAsStream("/data/customers-1000.csv"));
-            DefaultTableModel model = (DefaultTableModel) basicTable.getModel();
-            model.setColumnIdentifiers(data.getColumns());
-            basicTable.setModel(model);
+        DefaultTableModel model = (DefaultTableModel) backupTable.getModel();
+        model.setColumnIdentifiers(ConfigurationBackup.getCSVHeaderArray());
 
-            // table column size
-            basicTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        autoColumnIndex = COL_AUTOMATIC;
 
-            formRefresh();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        backupTable.createDefaultColumnsFromModel();
+
+        formRefresh();
     }
 
     @Override
     public void formRefresh() {
+        backups = backupService.getAllBackups();
         showData(pagination.getSelectedPage());
     }
 
     private void showData(int page) {
-        if (data != null) {
-            ResponseCSV res = data.getData(page, limit);
+        if (backups != null) {
+            ConfigurationBackupDataTable res = ConfigurationBackupDataTable.create(backups, page, limit);
             lbTotalPage.setText(DecimalFormat.getInstance().format(res.getTotal()));
             pagination.getModel().setPageRange(res.getPage(), res.getPageSize());
 
-            DefaultTableModel model = (DefaultTableModel) basicTable.getModel();
+            DefaultTableModel model = (DefaultTableModel) backupTable.getModel();
             model.setRowCount(0);
-            for (String[] row : res.getData()) {
-                model.addRow(row);
+            for (ConfigurationBackup backup : res.getData()) {
+                model.addRow(backup.toTableRow());
             }
         }
     }
@@ -114,13 +129,38 @@ public class FormTable extends Form {
     }
 
     private Component createBasicTable() {
-        JPanel panelTable = new JPanel(new MigLayout("fill,wrap,insets 10 0 10 0",
-              "[fill]",
-              "[][][grow,fill][pref!]"));
+        JPanel panelTable = new JPanel(new MigLayout(
+            "fill,wrap,insets 10 0 10 0",
+            "[fill]",
+            "[][grow,fill][]"
+        ));
 
         // create table model
         JTable table = new JTable();
         table.setModel(new DefaultTableModel() {
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+
+                if (columnIndex == COL_AUTOMATIC) {
+                    return Boolean.class;
+                }
+
+                if (columnIndex == COL_LAST_RUN || columnIndex == COL_NEXT_RUN) {
+                    return LocalDateTime.class;
+                }
+
+                if (columnIndex == 6) {
+                    return TimeInterval.class;
+                }
+
+                if (columnIndex == 7) {
+                    return Integer.class;
+                }
+
+                return String.class;
+            }
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -133,14 +173,8 @@ public class FormTable extends Form {
             if (!e.getValueIsAdjusting()) {
                 int row = table.getSelectedRow();
                 if (row != -1) {
-                    StringBuilder details = new StringBuilder();
-                    for (int i = 0; i < table.getColumnCount(); i++) {
-                        details.append(table.getColumnName(i))
-                            .append(": ")
-                            .append(table.getValueAt(row, i))
-                            .append("\n");
-                    }
-                    txtDetails.setText(details.toString());
+                    String details = backupService.buildDetails(backups.get(row));
+                    txtDetails.setText(details);
                 }
             }
         });
@@ -150,8 +184,8 @@ public class FormTable extends Form {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     int row = table.getSelectedRow();
-                    //showRowDetail(table, row);
-                    System.out.println("Double clicked row: " + row);
+                    logger.debug("Double clicked row: " + row);
+                    showCreateModal();
                 }
             }
         });
@@ -166,7 +200,7 @@ public class FormTable extends Form {
                 int row = table.getSelectedRow();
                 if (row != -1) {
                     ((DefaultTableModel) table.getModel()).removeRow(row);
-                    System.out.println("Deleted row: " + row);
+                    logger.debug("Deleted row: " + row);
                 }
             }
         });
@@ -176,13 +210,12 @@ public class FormTable extends Form {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         // alignment table header
-        table.getTableHeader().setDefaultRenderer(new TableHeaderAlignment(table) {
+        table.getTableHeader().setDefaultRenderer(
+                new TableHeaderAlignment(table) {
+
             @Override
             protected int getAlignment(int column) {
-                if (column == 0) {
-                    return SwingConstants.CENTER;
-                }
-                return SwingConstants.LEADING;
+                return SwingConstants.LEFT;
             }
         });
 
@@ -211,7 +244,7 @@ public class FormTable extends Form {
 
         // create title
         panelTable.add(createHeaderAction());
-        panelTable.add(scrollPane, "grow, push");
+        panelTable.add(scrollPane, "grow, pushy");
 
         // create pagination
         pagination = new JPagination(11, 1, 1);
@@ -229,11 +262,67 @@ public class FormTable extends Form {
         panelPage.add(lbTotalPage);
         panelPage.add(pagination);
 
-        panelTable.add(panelPage);
+        panelTable.add(panelPage, "growx");
 
-        basicTable = table;
+        backupTable = table;
 
+        setRenderer();
 
+        buildTablePopupMenu();
+
+        return panelTable;
+    }
+
+    private void setRenderer() {
+        DefaultTableCellRenderer dateRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof LocalDateTime date) {
+                    setText(date.format(formatter));
+                } else {
+                    super.setValue(value);
+                }
+            }
+        };
+
+        backupTable.setDefaultRenderer(LocalDateTime.class, dateRenderer);
+
+        DefaultTableCellRenderer baseRenderer = new DefaultTableCellRenderer() {
+
+            @Override
+            public void setHorizontalAlignment(int alignment) {
+                super.setHorizontalAlignment(SwingConstants.LEFT);
+            }
+
+            @Override
+            protected void setValue(Object value) {
+
+                if (value instanceof Boolean bool) {
+                    setHorizontalAlignment(SwingConstants.CENTER);
+                    setText(bool ? "✓" : "");
+                    return;
+                }
+
+                if (value instanceof Integer || value instanceof Long) {
+                    setHorizontalAlignment(SwingConstants.LEFT);
+                    setText(String.valueOf(value));
+                    return;
+                }
+
+                if (value instanceof LocalDateTime date) {
+                    setHorizontalAlignment(SwingConstants.LEFT);
+                    setText(date.format(formatter));
+                    return;
+                }
+
+                super.setValue(value);
+            }
+        };
+
+        backupTable.setDefaultRenderer(Object.class, baseRenderer);
+    }
+
+    private void buildTablePopupMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem itemEdit = new JMenuItem("Edit");
@@ -246,6 +335,7 @@ public class FormTable extends Form {
         JMenu itemBackup = new JMenu("Backup");
         JMenuItem itemRunSingleBackup = new JMenuItem("Run single backup");
         JCheckBoxMenuItem itemAutoBackup = new JCheckBoxMenuItem("Auto backup");
+        JMenuItem itemInterruptBackup = new JMenuItem("Interrupt backup process");
 
         JMenu itemCopyText = new JMenu("Copy text");
         JMenuItem itemCopyBackupName = new JMenuItem("Copy backup name");
@@ -263,13 +353,29 @@ public class FormTable extends Form {
         popupMenu.add(itemBackup);
         itemBackup.add(itemRunSingleBackup);
         itemBackup.add(itemAutoBackup);
+        itemBackup.add(itemInterruptBackup);
         popupMenu.addSeparator();
         popupMenu.add(itemCopyText);
         itemCopyText.add(itemCopyBackupName);
         itemCopyText.add(itemCopyTargetPath);
         itemCopyText.add(itemCopyDestinationPath);
 
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
+        itemEdit.addActionListener(e -> handleAction("EDIT", itemInterruptBackup, itemRunSingleBackup));
+        itemDelete.addActionListener(e -> handleAction("DELETE", itemInterruptBackup, itemRunSingleBackup));
+        itemDuplicate.addActionListener(e -> handleAction("DUPLICATE", itemInterruptBackup, itemRunSingleBackup));
+        itemRename.addActionListener(e -> handleAction("RENAME", itemInterruptBackup, itemRunSingleBackup));
+        itemOpenTargetPath.addActionListener(e -> handleAction("OPEN_TARGET", itemInterruptBackup, itemRunSingleBackup));
+        itemOpenDestinationPath.addActionListener(e -> handleAction("OPEN_DEST", itemInterruptBackup, itemRunSingleBackup));
+        itemRunSingleBackup.addActionListener(e -> handleAction("RUN_SINGLE", itemInterruptBackup, itemRunSingleBackup));
+        itemAutoBackup.addActionListener(e -> handleToggle());
+        itemInterruptBackup.addActionListener(e -> handleAction("INTERRUPT_BACKUP", itemInterruptBackup, itemRunSingleBackup));
+        itemCopyBackupName.addActionListener(e -> handleAction("COPY_NAME", itemInterruptBackup, itemRunSingleBackup));
+        itemCopyTargetPath.addActionListener(e -> handleAction("COPY_TARGET", itemInterruptBackup, itemRunSingleBackup));
+        itemCopyDestinationPath.addActionListener(e -> handleAction("COPY_DEST", itemInterruptBackup, itemRunSingleBackup));
+
+        itemInterruptBackup.setEnabled(false); // Disable interrupt option by default
+
+        backupTable.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mousePressed(java.awt.event.MouseEvent e) {
             if (e.isPopupTrigger()) {
@@ -285,16 +391,51 @@ public class FormTable extends Form {
         }
 
         private void showPopup(java.awt.event.MouseEvent e) {
-            int row = table.rowAtPoint(e.getPoint());
+            int row = backupTable.rowAtPoint(e.getPoint());
             if (row >= 0) {
-                table.setRowSelectionInterval(row, row);
+                backupTable.setRowSelectionInterval(row, row);
             }
             popupMenu.show(e.getComponent(), e.getX(), e.getY());
+            ConfigurationBackup backup = getBackupFromTableRow(row);
+            itemAutoBackup.setSelected(backup.isAutomatic());
         }
         });
+    }
 
+    private void handleAction(String action, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
+        int selectedRow = backupTable.getSelectedRow();
+        if (selectedRow < 0)
+            return;
 
-        return panelTable;
+        ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
+        switch (action) {
+            case "EDIT" -> BackupPopupController.popupItemEditBackupName(backup);
+            case "DELETE" -> BackupHelper.deleteBackup(backup);
+            case "DUPLICATE" -> BackupPopupController.popupItemDuplicateBackup(backup);
+            case "RENAME" -> BackupPopupController.popupItemRenameBackup(backups, backup);
+            case "OPEN_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
+            case "OPEN_DEST" -> BackupPopupController.popupItemOpenDestinationPath(backup);
+            case "RUN_SINGLE" -> BackupPopupController.popupItemRunBackup(backup, backupTable, interruptBackupPopupItem, RunBackupPopupItem);
+            case "COPY_NAME" -> BackupPopupController.popupItemCopyBackupName(backup);
+            case "COPY_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
+            case "COPY_DEST" -> BackupPopupController.popupItemCopyDestinationPath(backup);
+        }
+
+        formRefresh();
+    }
+
+    private void handleToggle() {
+        int selectedRow = backupTable.getSelectedRow();
+        if (selectedRow < 0)
+            return;
+
+        ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
+        BackupPopupController.popupItemAutoBackup(backup);
+    }
+
+    private ConfigurationBackup getBackupFromTableRow(int row) {
+        row = backupTable.convertRowIndexToModel(row);
+        return backups.get(row);
     }
 
     private Component createDetails() {
@@ -302,10 +443,9 @@ public class FormTable extends Form {
             new MigLayout("fill,insets 5 0 5 0", "[fill]", "[grow]")
         );
 
-        txtDetails = new JTextArea();
+        txtDetails = new JTextPane();
         txtDetails.setEditable(false);
-        txtDetails.setLineWrap(true);
-        txtDetails.setWrapStyleWord(true);
+        txtDetails.setContentType("text/html");
 
         JScrollPane detailScroll = new JScrollPane(txtDetails);
         detailScroll.putClientProperty(FlatClientProperties.STYLE,
@@ -332,7 +472,9 @@ public class FormTable extends Form {
         cmdCreate.putClientProperty(FlatClientProperties.STYLE, "background:$Component.accentColor;");
         cmdDelete.putClientProperty(FlatClientProperties.STYLE, "background:$Component.error.background;");
 
-        cmdCreate.addActionListener(e -> showModal());
+        cmdCreate.addActionListener(e -> showCreateModal());
+        cmdEdit.addActionListener(e -> showEditModal());
+        cmdDelete.addActionListener(e -> showDeleteConfirmation());
         panel.add(txtSearch);
         panel.add(cmdCreate);
         panel.add(cmdEdit);
@@ -343,21 +485,26 @@ public class FormTable extends Form {
         return panel;
     }
 
-    private void showModal() {
-        Option option = ModalDialog.createOption();
-        option.getLayoutOption().setSize(-1, 1f)
-                .setLocation(Location.TRAILING, Location.TOP)
-                .setAnimateDistance(0.7f, 0);
-        ModalDialog.showModal(this, new SimpleModalBorder(
-                new SimpleInputForms(), "Create", SimpleModalBorder.YES_NO_OPTION,
-                (controller, action) -> {
-                }), option);
+    public void showCreateModal() {
+        managerController.showCreateModal(this);
     }
 
-    private CSVDataReader data;
+    private void showEditModal() {
+        managerController.showCreateModal(this);
+    }
+
+    private void showDeleteConfirmation() {
+        int selectedRow = backupTable.getSelectedRow();
+        if (selectedRow < 0)
+            return;
+
+        ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
+        BackupHelper.deleteBackupWithConfirmition(backup);
+    }
+
     private final int limit = 50;
     private JPagination pagination;
-    private JTable basicTable;
+    private JTable backupTable;
     private JLabel lbTotalPage;
-    private JTextArea txtDetails;
+    private JTextPane txtDetails;
 }
