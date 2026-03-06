@@ -24,16 +24,16 @@ import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.gui.Controllers.GuiController;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
-import backupmanager.Enums.TranslationLoaderEnum;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import static backupmanager.Helpers.BackupHelper.formatter;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Json.JsonConfig;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.ThemeManager;
@@ -104,11 +104,11 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     public void reloadPreferences() {
         logger.info("Reloading preferences");
 
-        Confingurations.updateAllConfigurations();
+        Configurations.updateAllConfigurations();
 
         // load language
         try {
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
+            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Configurations.getLanguage().getFileName());
             setTranslations();
         } catch (IOException ex) {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
@@ -894,7 +894,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
             if (SwingUtilities.isRightMouseButton(evt)) {
                 logger.debug("Right click on row: " + selectedRow);
-                AutoBackupMenuItem.setSelected(backupManagerController.isAutomaticBackup(backupName));
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY());
 
@@ -1002,7 +1001,6 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
 
     private void researchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyReleased
         String research = researchField.getText();
-        backupManagerController.researchInTable(research);
     }//GEN-LAST:event_researchFieldKeyReleased
 
     private void setTranslations() {
@@ -1011,65 +1009,65 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
             displayBackupList();
 
         // general
-        jLabel3.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + ConfigKey.VERSION.getValue());
+        jLabel3.setText(TCategory.GENERAL.getTranslation(TKey.VERSION) + " " + ConfigKey.VERSION.getValue());
 
         // menu
-        jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
-        jMenu2.setText(TranslationCategory.MENU.getTranslation(TranslationKey.OPTIONS));
-        jMenu3.setText(TranslationCategory.MENU.getTranslation(TranslationKey.ABOUT));
-        jMenu5.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HELP));
+        jMenu1.setText(TCategory.MENU.getTranslation(TKey.FILE));
+        jMenu2.setText(TCategory.MENU.getTranslation(TKey.OPTIONS));
+        jMenu3.setText(TCategory.MENU.getTranslation(TKey.ABOUT));
+        jMenu5.setText(TCategory.MENU.getTranslation(TKey.HELP));
 
         // menu items
-        MenuBugReport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.BUG_REPORT));
-        MenuClear.setText(TranslationCategory.MENU.getTranslation(TranslationKey.CLEAR));
-        MenuDonate.setText(TranslationCategory.MENU.getTranslation(TranslationKey.DONATE));
-        MenuHistory.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HISTORY));
-        MenuInfoPage.setText(TranslationCategory.MENU.getTranslation(TranslationKey.INFO_PAGE));
-        MenuNew.setText(TranslationCategory.MENU.getTranslation(TranslationKey.NEW));
-        MenuQuit.setText(TranslationCategory.MENU.getTranslation(TranslationKey.QUIT));
-        MenuSave.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SAVE));
-        MenuSaveWithName.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SAVE_WITH_NAME));
-        MenuPreferences.setText(TranslationCategory.MENU.getTranslation(TranslationKey.PREFERENCES));
-        MenuImport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.IMPORT));
-        MenuExport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.EXPORT));
-        MenuShare.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SHARE));
-        MenuSupport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SUPPORT));
-        MenuWebsite.setText(TranslationCategory.MENU.getTranslation(TranslationKey.WEBSITE));
+        MenuBugReport.setText(TCategory.MENU.getTranslation(TKey.BUG_REPORT));
+        MenuClear.setText(TCategory.MENU.getTranslation(TKey.CLEAR));
+        MenuDonate.setText(TCategory.MENU.getTranslation(TKey.DONATE));
+        MenuHistory.setText(TCategory.MENU.getTranslation(TKey.HISTORY));
+        MenuInfoPage.setText(TCategory.MENU.getTranslation(TKey.INFO_PAGE));
+        MenuNew.setText(TCategory.MENU.getTranslation(TKey.NEW));
+        MenuQuit.setText(TCategory.MENU.getTranslation(TKey.QUIT));
+        MenuSave.setText(TCategory.MENU.getTranslation(TKey.SAVE));
+        MenuSaveWithName.setText(TCategory.MENU.getTranslation(TKey.SAVE_WITH_NAME));
+        MenuPreferences.setText(TCategory.MENU.getTranslation(TKey.PREFERENCES));
+        MenuImport.setText(TCategory.MENU.getTranslation(TKey.IMPORT));
+        MenuExport.setText(TCategory.MENU.getTranslation(TKey.EXPORT));
+        MenuShare.setText(TCategory.MENU.getTranslation(TKey.SHARE));
+        MenuSupport.setText(TCategory.MENU.getTranslation(TKey.SUPPORT));
+        MenuWebsite.setText(TCategory.MENU.getTranslation(TKey.WEBSITE));
 
         // backup list
-        ExportLabel.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS));
-        addBackupEntryButton.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.ADD_BACKUP_TOOLTIP));
-        exportAsPdfBtn.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS_PDF_TOOLTIP));
-        exportAsCsvBtn.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EXPORT_AS_CSV_TOOLTIP));
-        researchField.setToolTipText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.RESEARCH_BAR_TOOLTIP));
-        researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.RESEARCH_BAR_PLACEHOLDER));
+        ExportLabel.setText(TCategory.BACKUP_LIST.getTranslation(TKey.EXPORT_AS));
+        addBackupEntryButton.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.ADD_BACKUP_TOOLTIP));
+        exportAsPdfBtn.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.EXPORT_AS_PDF_TOOLTIP));
+        exportAsCsvBtn.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.EXPORT_AS_CSV_TOOLTIP));
+        researchField.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_TOOLTIP));
+        researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_PLACEHOLDER));
 
         // popup
-        CopyBackupNamePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_BACKUP_NAME_POPUP));
-        CopyDestinationPathPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_DESTINATION_PATH_BACKUP));
-        RunBackupPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.SINGLE_BACKUP_POPUP));
-        CopyInitialPathPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_INITIAL_PATH_POPUP));
-        DeletePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DELETE_POPUP));
-        interruptBackupPopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INTERRUPT_POPUP));
-        DuplicatePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
-        EditPoputItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.EDIT_POPUP));
-        OpenInitialDestinationItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.OPEN_DESTINATION_FOLDER_POPUP));
-        OpenInitialFolderItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.OPEN_INITIAL_FOLDER_POPUP));
-        renamePopupItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.RENAME_BACKUP_POPUP));
-        jMenu4.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.COPY_TEXT_POPUP));
-        AutoBackupMenuItem.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTO_BACKUP_POPUP));
-        Backup.setText(TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_POPUP));
+        CopyBackupNamePopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_BACKUP_NAME_POPUP));
+        CopyDestinationPathPopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_DESTINATION_PATH_BACKUP));
+        RunBackupPopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.SINGLE_BACKUP_POPUP));
+        CopyInitialPathPopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_INITIAL_PATH_POPUP));
+        DeletePopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DELETE_POPUP));
+        interruptBackupPopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.INTERRUPT_POPUP));
+        DuplicatePopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DUPLICATE_POPUP));
+        EditPoputItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.EDIT_POPUP));
+        OpenInitialDestinationItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_DESTINATION_FOLDER_POPUP));
+        OpenInitialFolderItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_INITIAL_FOLDER_POPUP));
+        renamePopupItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.RENAME_BACKUP_POPUP));
+        jMenu4.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_TEXT_POPUP));
+        AutoBackupMenuItem.setText(TCategory.BACKUP_LIST.getTranslation(TKey.AUTO_BACKUP_POPUP));
+        Backup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_POPUP));
     }
 
     private String[] getColumnTranslations() {
         String[] columnNames = {
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.AUTOMATIC_BACKUP_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_COLUMN),
-            TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
+            TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_NAME_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.INITIAL_PATH_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.DESTINATION_PATH_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.LAST_BACKUP_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.AUTOMATIC_BACKUP_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.NEXT_BACKUP_DATE_COLUMN),
+            TCategory.BACKUP_LIST.getTranslation(TKey.TIME_INTERVAL_COLUMN)
         };
         return columnNames;
     }
@@ -1103,7 +1101,7 @@ public final class BackupManagerGUI extends javax.swing.JFrame {
     }
 
     private void initializeMenuItems() {
-        JSONConfigReader config = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+        JsonConfig config = JsonConfig.getInstance();
         MenuBugReport.setVisible(config.isMenuItemEnabled(MenuItems.BugReport.name()));
         MenuPreferences.setVisible(config.isMenuItemEnabled(MenuItems.Preferences.name()));
         MenuClear.setVisible(config.isMenuItemEnabled(MenuItems.Clear.name()));

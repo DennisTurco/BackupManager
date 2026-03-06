@@ -61,9 +61,9 @@
         },
         {
             "type": "java",
-            "name": "TranslationLoaderEnum",
+            "name": "Translations",
             "request": "launch",
-            "mainClass": "backupmanager.Enums.TranslationLoaderEnum",
+            "mainClass": "backupmanager.Enums.Translations",
             "projectName": "BackupManager"
         },
         {

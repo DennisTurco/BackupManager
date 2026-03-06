@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +33,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Services.BackupService;
@@ -38,50 +42,47 @@ import backupmanager.gui.frames.Controllers.BackupManagerController;
 import backupmanager.gui.frames.Controllers.BackupPopupController;
 import backupmanager.gui.sample.csv.ConfigurationBackupDataTable;
 import backupmanager.gui.svg.SVGButton;
-import backupmanager.gui.system.Form;
 import backupmanager.utils.SystemForm;
 import backupmanager.utils.table.TableHeaderAlignment;
 import net.miginfocom.swing.MigLayout;
 import raven.swingpack.JPagination;
 
 @SystemForm(name = "Table", description = "table is a user interface component", tags = {"list"})
-public class FormTable extends Form {
+public class FormBackupTable extends CustomForm {
 
-    private static final Logger logger = LoggerFactory.getLogger(FormTable.class);
+    private static final Logger logger = LoggerFactory.getLogger(FormBackupTable.class);
 
-    private BackupManagerController managerController;
+    private final BackupManagerController managerController;
+    private final int COL_LAST_RUN = 3;
     private final int COL_AUTOMATIC = 4;
     private final int COL_NEXT_RUN = 5;
-    private final int COL_LAST_RUN = 3;
 
-    private BackupService backupService;
+    private final BackupService backupService;
     private List<ConfigurationBackup> backups;
-    private int autoColumnIndex;
 
-    public FormTable() {
-        init();
+    public FormBackupTable() {
+        backupService = new BackupService();
+        managerController = new BackupManagerController(backupService);
+
+        build();
     }
 
-    private void init() {
+    @Override
+    protected void init() {
         setLayout(new MigLayout(
         "fill,wrap",
         "[fill]",
         "[][grow 100,fill][grow 0]"
         ));
-        add(createInfo("Backup List", "A table is a user interface component that displays a collection of records in a structured, tabular format. It allows users to view, sort, and manage data or other resources.", 1));
+        add(createInfo("Title", "Description", 1));
         add(createBorder(createBasicTable()), "gapx 7 7, grow");
         add(createBorder(createDetails()), "gapx 7 7, hmin 150");
-
-        backupService = new BackupService();
-        managerController = new BackupManagerController(backupService);
     }
 
     @Override
     public void formInit() {
         DefaultTableModel model = (DefaultTableModel) backupTable.getModel();
         model.setColumnIdentifiers(ConfigurationBackup.getCSVHeaderArray());
-
-        autoColumnIndex = COL_AUTOMATIC;
 
         backupTable.createDefaultColumnsFromModel();
 
@@ -91,10 +92,15 @@ public class FormTable extends Form {
     @Override
     public void formRefresh() {
         backups = backupService.getAllBackups();
-        showData(pagination.getSelectedPage());
+        loadData();
     }
 
-    private void showData(int page) {
+    @Override
+    protected void loadData() {
+        loadTable(pagination.getSelectedPage());
+    }
+
+    private void loadTable(int page) {
         if (backups != null) {
             ConfigurationBackupDataTable res = ConfigurationBackupDataTable.create(backups, page, limit);
             lbTotalPage.setText(DecimalFormat.getInstance().format(res.getTotal()));
@@ -106,20 +112,6 @@ public class FormTable extends Form {
                 model.addRow(backup.toTableRow());
             }
         }
-    }
-
-    private JPanel createInfo(String title, String description, int level) {
-        JPanel panel = new JPanel(new MigLayout("fillx,wrap", "[fill]"));
-        JLabel lbTitle = new JLabel(title);
-        JTextPane text = new JTextPane();
-        text.setText(description);
-        text.setEditable(false);
-        text.setBorder(BorderFactory.createEmptyBorder());
-        lbTitle.putClientProperty(FlatClientProperties.STYLE, "" +
-                "font:bold +" + (4 - level));
-        panel.add(lbTitle);
-        panel.add(text, "width 500");
-        return panel;
     }
 
     private Component createBorder(Component component) {
@@ -185,7 +177,7 @@ public class FormTable extends Form {
                 if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     int row = table.getSelectedRow();
                     logger.debug("Double clicked row: " + row);
-                    showCreateModal();
+                    showEditModal(backups.get(row));
                 }
             }
         });
@@ -199,8 +191,8 @@ public class FormTable extends Form {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int row = table.getSelectedRow();
                 if (row != -1) {
-                    ((DefaultTableModel) table.getModel()).removeRow(row);
                     logger.debug("Deleted row: " + row);
+                    showDeleteConfirmation();
                 }
             }
         });
@@ -249,9 +241,7 @@ public class FormTable extends Form {
         // create pagination
         pagination = new JPagination(11, 1, 1);
         pagination.setMinimumSize(pagination.getPreferredSize());
-        pagination.addChangeListener(e -> {
-            showData(pagination.getSelectedPage());
-        });
+        pagination.addChangeListener(e -> loadData());
         JPanel panelPage = new JPanel(new MigLayout("insets 5 15 5 15", "[][]push[pref!]"));
         lbTotalPage = new JLabel("0");
         pagination.putClientProperty(FlatClientProperties.STYLE, "" +
@@ -325,22 +315,22 @@ public class FormTable extends Form {
     private void buildTablePopupMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
 
-        JMenuItem itemEdit = new JMenuItem("Edit");
-        JMenuItem itemDelete = new JMenuItem("Delete");
-        JMenuItem itemDuplicate = new JMenuItem("Duplicate");
-        JMenuItem itemRename = new JMenuItem("Rename");
-        JMenuItem itemOpenTargetPath = new JMenuItem("Open target path");
-        JMenuItem itemOpenDestinationPath = new JMenuItem("Open destination path");
+        itemEdit = new JMenuItem("Edit");
+        itemDelete = new JMenuItem("Delete");
+        itemDuplicate = new JMenuItem("Duplicate");
+        itemRename = new JMenuItem("Rename");
+        itemOpenTargetPath = new JMenuItem("Open target path");
+        itemOpenDestinationPath = new JMenuItem("Open destination path");
 
-        JMenu itemBackup = new JMenu("Backup");
-        JMenuItem itemRunSingleBackup = new JMenuItem("Run single backup");
-        JCheckBoxMenuItem itemAutoBackup = new JCheckBoxMenuItem("Auto backup");
-        JMenuItem itemInterruptBackup = new JMenuItem("Interrupt backup process");
+        itemBackup = new JMenu("Backup");
+        itemRunSingleBackup = new JMenuItem("Run single backup");
+        itemAutoBackup = new JCheckBoxMenuItem("Auto backup");
+        itemInterruptBackup = new JMenuItem("Interrupt backup process");
 
-        JMenu itemCopyText = new JMenu("Copy text");
-        JMenuItem itemCopyBackupName = new JMenuItem("Copy backup name");
-        JMenuItem itemCopyTargetPath = new JMenuItem("Copy target path");
-        JMenuItem itemCopyDestinationPath = new JMenuItem("Copy destination path");
+        itemCopyText = new JMenu("Copy text");
+        itemCopyBackupName = new JMenuItem("Copy backup name");
+        itemCopyTargetPath = new JMenuItem("Copy target path");
+        itemCopyDestinationPath = new JMenuItem("Copy destination path");
 
         popupMenu.add(itemEdit);
         popupMenu.add(itemDelete);
@@ -431,6 +421,8 @@ public class FormTable extends Form {
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
         BackupPopupController.popupItemAutoBackup(backup);
+
+        formRefresh();
     }
 
     private ConfigurationBackup getBackupFromTableRow(int row) {
@@ -458,12 +450,12 @@ public class FormTable extends Form {
     private Component createHeaderAction() {
         JPanel panel = new JPanel(new MigLayout("insets 5 20 5 20", "[fill,300]push[][]"));
 
-        JTextField txtSearch = new JTextField();
+        txtSearch = new JTextField();
         txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
         txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("icons/search.svg", 0.4f));
-        SVGButton cmdCreate = new SVGButton("Create");
-        SVGButton cmdEdit = new SVGButton("Edit");
-        SVGButton cmdDelete = new SVGButton("Delete");
+        cmdCreate = new SVGButton("Create");
+        cmdEdit = new SVGButton("Edit");
+        cmdDelete = new SVGButton("Delete");
 
         cmdCreate.setSvgImage("icons/add.svg", 16, 16);
         cmdEdit.setSvgImage("icons/edit.svg", 16, 16);
@@ -480,6 +472,25 @@ public class FormTable extends Form {
         panel.add(cmdEdit);
         panel.add(cmdDelete);
 
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                if (backups == null)
+                    return;
+
+                String research = txtSearch.getText();
+                backups = backupService.getAllBackups();
+                backups = managerController.researchInTableAndGet(backups, research);
+                loadData();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) { update(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { update(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { update(); }
+        });
+
         panel.putClientProperty(FlatClientProperties.STYLE, "" +
                 "background:null;");
         return panel;
@@ -487,10 +498,22 @@ public class FormTable extends Form {
 
     public void showCreateModal() {
         managerController.showCreateModal(this);
+        loadData();
+    }
+
+    private void showEditModal(ConfigurationBackup backup) {
+        managerController.showEditModal(this, backup);
+        loadData();
     }
 
     private void showEditModal() {
-        managerController.showCreateModal(this);
+        int selectedRow = backupTable.getSelectedRow();
+        if (selectedRow < 0)
+            return;
+
+        ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
+        managerController.showEditModal(this, backup);
+        loadData();
     }
 
     private void showDeleteConfirmation() {
@@ -500,6 +523,35 @@ public class FormTable extends Form {
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
         BackupHelper.deleteBackupWithConfirmition(backup);
+        formRefresh();
+    }
+
+    @Override
+    protected void setTranslations() {
+        editTitle(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_LIST_TITLE));
+        editDescription(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_LIST_DESCRIPTION));
+
+        txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_PLACEHOLDER));
+        txtSearch.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_TOOLTIP));
+
+        cmdCreate.setText(TCategory.GENERAL.getTranslation(TKey.CREATE_BUTTON));
+        cmdEdit.setText(TCategory.GENERAL.getTranslation(TKey.EDIT_BUTTON));
+        cmdDelete.setText(TCategory.GENERAL.getTranslation(TKey.DELETE_BUTTON));
+
+        itemEdit.setText(TCategory.BACKUP_LIST.getTranslation(TKey.EDIT_POPUP));
+        itemDelete.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DELETE_POPUP));
+        itemDuplicate.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DUPLICATE_POPUP));
+        itemRename.setText(TCategory.BACKUP_LIST.getTranslation(TKey.RENAME_BACKUP_POPUP));
+        itemOpenTargetPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_INITIAL_FOLDER_POPUP));
+        itemOpenDestinationPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_DESTINATION_FOLDER_POPUP));
+        itemBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_POPUP));
+        itemRunSingleBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.SINGLE_BACKUP_POPUP));
+        itemAutoBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.AUTO_BACKUP_POPUP));
+        itemInterruptBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.INTERRUPT_POPUP));
+        itemCopyText.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_TEXT_POPUP));
+        itemCopyBackupName.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_BACKUP_NAME_POPUP));
+        itemCopyTargetPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_INITIAL_PATH_POPUP));
+        itemCopyDestinationPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_DESTINATION_PATH_BACKUP));
     }
 
     private final int limit = 50;
@@ -507,4 +559,23 @@ public class FormTable extends Form {
     private JTable backupTable;
     private JLabel lbTotalPage;
     private JTextPane txtDetails;
+    private JTextField txtSearch;
+    private SVGButton cmdCreate;
+    private SVGButton cmdEdit;
+    private SVGButton cmdDelete;
+
+    private JMenuItem itemEdit;
+    private JMenuItem itemDelete;
+    private JMenuItem itemDuplicate;
+    private JMenuItem itemRename;
+    private JMenuItem itemOpenTargetPath;
+    private JMenuItem itemOpenDestinationPath;
+    private JMenu itemBackup;
+    private JMenuItem itemRunSingleBackup;
+    private JCheckBoxMenuItem itemAutoBackup;
+    private JMenuItem itemInterruptBackup;
+    private JMenu itemCopyText;
+    private JMenuItem itemCopyBackupName;
+    private JMenuItem itemCopyTargetPath;
+    private JMenuItem itemCopyDestinationPath;
 }

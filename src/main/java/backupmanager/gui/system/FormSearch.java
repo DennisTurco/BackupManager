@@ -1,23 +1,26 @@
 package backupmanager.gui.system;
 
-import raven.modal.ModalDialog;
-import backupmanager.gui.component.EmptyModalBorder;
-import backupmanager.gui.component.FormSearchPanel;
-import backupmanager.gui.menu.MyDrawerBuilder;
-import backupmanager.utils.SystemForm;
-import raven.modal.drawer.item.Item;
-import raven.modal.drawer.item.MenuItem;
-import raven.modal.option.Location;
-import raven.modal.option.Option;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.ComponentOrientation;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
+import backupmanager.gui.component.EmptyModalBorder;
+import backupmanager.gui.component.FormSearchPanel;
+import backupmanager.gui.menu.MyDrawerBuilder;
+import backupmanager.utils.SystemForm;
+import raven.modal.ModalDialog;
+import raven.modal.drawer.item.Item;
+import raven.modal.drawer.item.MenuItem;
+import raven.modal.option.Location;
+import raven.modal.option.Option;
 
 public class FormSearch {
 

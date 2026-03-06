@@ -23,8 +23,8 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -271,7 +271,7 @@ public class BackupPopupController {
 
     private static String getBackupNameFromInputDialog(List<ConfigurationBackup> backups, String oldName, boolean canOverwrite) {
         while (true) {
-            String backupName = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_INPUT), oldName);
+            String backupName = JOptionPane.showInputDialog(null, TCategory.DIALOGS.getTranslation(TKey.BACKUP_NAME_INPUT), oldName);
 
             // If the user cancels the operation
             if (backupName == null || backupName.trim().isEmpty()) {
@@ -284,7 +284,7 @@ public class BackupPopupController {
 
             if (existingBackup.isPresent()) {
                 if (canOverwrite) {
-                    int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_BACKUP_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.DUPLICATED_BACKUP_NAME_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if (response == JOptionPane.YES_OPTION) {
                     backups.remove(existingBackup.get());
@@ -292,7 +292,7 @@ public class BackupPopupController {
                 }
                 } else {
                     logger.warn("Backup name '{}' is already in use", backupName);
-                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.BACKUP_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.BACKUP_NAME_ALREADY_USED_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 return backupName;  // Return valid name
@@ -324,7 +324,7 @@ public class BackupPopupController {
             }
         } else {
             logger.warn("The folder does not exist or is invalid");
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_FOLDER_NOT_EXISTING), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_FOR_FOLDER_NOT_EXISTING), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

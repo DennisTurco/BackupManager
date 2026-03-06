@@ -13,22 +13,38 @@ import com.google.gson.JsonObject;
 
 import backupmanager.Enums.ConfigKey;
 
+// Singleton class
+public class JsonConfig {
+    private static final Logger logger = LoggerFactory.getLogger(JsonConfig.class);
 
-public class JSONConfigReader {
-    private static final Logger logger = LoggerFactory.getLogger(JSONConfigReader.class);
+    // The field must be declared volatile so that double check lock would work correctly.
+    private static volatile JsonConfig instance;
 
     private final String filename;
     private final String directoryPath;
     private JsonObject config;
 
-    public JSONConfigReader(String filename, String directoryPath) {
-        this.filename = filename;
-        this.directoryPath = directoryPath;
-        loadConfig(); // Load configuration at instantiation
+    // The approach taken here is called double-checked locking (DCL). It
+    // exists to prevent race condition between multiple threads that may
+    // attempt to get singleton instance at the same time, creating separate
+    // instances as a result.
+    public static JsonConfig getInstance() {
+        JsonConfig result = instance;
+
+        if (result != null)
+            return result;
+
+        synchronized (JsonConfig.class) {
+            if (instance == null)
+                instance = new JsonConfig();
+            return instance;
+        }
     }
 
-    public JSONConfigReader() {
-        this(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private JsonConfig() {
+        filename = ConfigKey.CONFIG_FILE_STRING.getValue();
+        directoryPath = ConfigKey.CONFIG_DIRECTORY_STRING.getValue();
+        loadConfig(); // Load configuration at instantiation
     }
 
     public boolean isMenuItemEnabled(String menuItem) {

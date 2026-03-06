@@ -1,8 +1,8 @@
 package backupmanager.gui.frames;
 
 import backupmanager.gui.Controllers.GuiController;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.gui.frames.Controllers.BackupProgressController;
 
 
@@ -34,10 +34,10 @@ public class BackupProgressGUI extends javax.swing.JDialog {
         fileZippedLabel.setText(fileProcessed);
 
         // edit the title with counts
-        setTitle(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.PROGRESS_BACKUP_TITLE) + " - " + filesCopiedSoFar + "/" + totalFilesCount);
+        setTitle(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.PROGRESS_BACKUP_TITLE) + " - " + filesCopiedSoFar + "/" + totalFilesCount);
 
         if (value == 100) {
-            loadingMessageLabel.setText(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.STATUS_COMPLETED));
+            loadingMessageLabel.setText(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.STATUS_COMPLETED));
             closeButton.setEnabled(true);
             CancelButton.setEnabled(false);
             fileZippedLabel.setText("");
@@ -155,10 +155,10 @@ public class BackupProgressGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void setTranslations() {
-        setTitle(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.PROGRESS_BACKUP_TITLE));
-        CancelButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CANCEL_BUTTON));
-        closeButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON));
-        loadingMessageLabel.setText(TranslationCategory.PROGRESS_BACKUP_FRAME.getTranslation(TranslationKey.STATUS_LOADING));
+        setTitle(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.PROGRESS_BACKUP_TITLE));
+        CancelButton.setText(TCategory.GENERAL.getTranslation(TKey.CANCEL_BUTTON));
+        closeButton.setText(TCategory.GENERAL.getTranslation(TKey.CLOSE_BUTTON));
+        loadingMessageLabel.setText(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.STATUS_LOADING));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

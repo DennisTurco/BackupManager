@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
 import backupmanager.database.Database;
@@ -20,7 +20,7 @@ public class ConfigurationsRepositoryTest {
         Database.init(DatabasePaths.getTestDatabasePath());
         TestDatabaseInitializer.init();
 
-        Confingurations.loadAllConfigurations();
+        Configurations.loadAllConfigurations();
 
         buildAndReloadConfigurations();
     }
@@ -32,12 +32,12 @@ public class ConfigurationsRepositoryTest {
 
     @Test
     protected void equals_shouldReturnTrue_forSameLanguage() throws IOException {
-        assertEquals(LanguagesEnum.DEU, Confingurations.getLanguage());
+        assertEquals(LanguagesEnum.DEU, Configurations.getLanguage());
     }
 
     @Test
     protected void equals_shouldReturnTrue_forSameTheme() throws IOException {
-        assertEquals(ThemesEnum.CARBON, Confingurations.getTheme());
+        assertEquals(ThemesEnum.CARBON, Configurations.getTheme());
     }
 
     private void buildAndReloadConfigurations() throws IOException {
@@ -46,12 +46,12 @@ public class ConfigurationsRepositoryTest {
     }
 
     private void buildValidConfigurationsObject() {
-        Confingurations.setLanguage(LanguagesEnum.DEU);
-        Confingurations.setTheme(ThemesEnum.CARBON.getThemeName());
+        Configurations.setLanguage(LanguagesEnum.DEU);
+        Configurations.setTheme(ThemesEnum.CARBON.getThemeName());
     }
 
     private void realodConfigurations() {
-        Confingurations.updateAllConfigurations();
-        Confingurations.loadAllConfigurations();
+        Configurations.updateAllConfigurations();
+        Configurations.loadAllConfigurations();
     }
 }

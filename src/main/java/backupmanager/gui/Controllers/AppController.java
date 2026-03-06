@@ -9,16 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.SubscriptionStatus;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Helpers.SubscriptionNotifier;
-import backupmanager.Json.JSONConfigReader;
 import backupmanager.Services.BackgroundService;
 import backupmanager.gui.frames.BackupManagerGUI;
 
 public class AppController {
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
     private BackupManagerGUI guiInstance;

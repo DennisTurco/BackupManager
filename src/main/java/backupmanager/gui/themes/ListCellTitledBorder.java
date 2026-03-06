@@ -14,12 +14,12 @@ import javax.swing.border.Border;
 import com.formdev.flatlaf.ui.FlatUIUtils;
 import com.formdev.flatlaf.util.UIScale;
 
-public class ListCellTitledBorder implements Border {
+public class ListCellTitledBorder<T> implements Border {
 
-    private final JList list;
+    private final JList<T> list;
     private final String title;
 
-    ListCellTitledBorder(JList list, String title) {
+    ListCellTitledBorder(JList<T> list, String title) {
         this.list = list;
         this.title = title;
     }

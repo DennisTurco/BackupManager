@@ -1,7 +1,7 @@
 package backupmanager.gui.Dialogs;
 
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.gui.Controllers.GuiController;
 import backupmanager.Entities.TimeInterval;
 
@@ -252,16 +252,16 @@ public class TimePicker extends javax.swing.JDialog {
     }//GEN-LAST:event_minutesSpinnerStateChanged
 
     private void setTranslations() {
-        setTitle(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.TIME_INTERVAL_TITLE));
-        jTextArea1.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.DESCRIPTION));
-        daysSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
-        hoursSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
-        minutesSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
-        btnOk.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.OK_BUTTON));
-        jButton2.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CANCEL_BUTTON));
-        jLabel1.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.DAYS));
-        jLabel2.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.HOURS));
-        jLabel3.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.MINUTES));
+        setTitle(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.TIME_INTERVAL_TITLE));
+        jTextArea1.setText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.DESCRIPTION));
+        daysSpinner.setToolTipText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.SPINNER_TOOLTIP));
+        hoursSpinner.setToolTipText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.SPINNER_TOOLTIP));
+        minutesSpinner.setToolTipText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.SPINNER_TOOLTIP));
+        btnOk.setText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.OK_BUTTON));
+        jButton2.setText(TCategory.GENERAL.getTranslation(TKey.CANCEL_BUTTON));
+        jLabel1.setText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.DAYS));
+        jLabel2.setText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.HOURS));
+        jLabel3.setText(TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.MINUTES));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

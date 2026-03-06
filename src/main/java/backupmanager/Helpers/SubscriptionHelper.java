@@ -2,20 +2,19 @@ package backupmanager.Helpers;
 
 import java.time.LocalDate;
 
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Entities.Subscription;
-import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.SubscriptionStatus;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.SubscriptionRepository;
 
 public class SubscriptionHelper {
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private static final JsonConfig configReader = JsonConfig.getInstance();
 
     public static SubscriptionStatus getSubscriptionStatus() {
-        if (!Confingurations.isSubscriptionNedded())
+        if (!Configurations.isSubscriptionNedded())
             return SubscriptionStatus.NONE;
 
         Subscription subscription = SubscriptionRepository.getAnySubscriptionValid();
@@ -30,9 +29,9 @@ public class SubscriptionHelper {
     public static String getSubscriptionStatusTranslated(SubscriptionStatus status) {
         String statusTranslation;
         switch (status) {
-            case EXPIRED -> statusTranslation = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRED);
-            case ACTIVE -> statusTranslation = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_ACTIVE);
-            case EXPIRATION -> statusTranslation = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRING);
+            case EXPIRED -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRED);
+            case ACTIVE -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_ACTIVE);
+            case EXPIRATION -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRING);
             default -> statusTranslation = "";
         }
         return statusTranslation;

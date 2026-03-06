@@ -49,6 +49,7 @@ public class About extends JPanel {
         pane.setOpaque(false);
 
         pane.setCaret(new DefaultCaret() {
+            @Override
             public void paint(java.awt.Graphics g) {}
         });
 

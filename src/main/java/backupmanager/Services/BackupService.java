@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 
@@ -18,9 +18,13 @@ public class BackupService {
         return RunningBackupService.getRunningBackupByName(name).isPresent();
     }
 
+    public void deleteBackup(int id) {
+        BackupConfigurationRepository.deleteBackup(id);
+    }
+
     public void deleteBackups(List<String> names) {
         names.forEach(name -> {
-            ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(name);
+            ConfigurationBackup backup = getBackupByName(name);
             if (backup != null) {
                 BackupConfigurationRepository.deleteBackup(backup.getId());
             }
@@ -28,22 +32,26 @@ public class BackupService {
     }
 
     public String getBackupDetails(String name) {
-        ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(name);
+        ConfigurationBackup backup = getBackupByName(name);
         return buildDetails(backup);
     }
 
+    public ConfigurationBackup getBackupByName(String name) {
+        return BackupConfigurationRepository.getBackupByName(name);
+    }
+
     public String buildDetails(ConfigurationBackup backup) {
-        String backupNameStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_NAME_DETAIL);
-        String initialPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.INITIAL_PATH_DETAIL);
-        String destinationPathStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.DESTINATION_PATH_DETAIL);
-        String lastBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_BACKUP_DETAIL);
-        String nextBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NEXT_BACKUP_DATE_DETAIL);
-        String timeIntervalBackupStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
-        String creationDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
-        String lastUpdateDateStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
-        String backupCountStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.BACKUP_COUNT_DETAIL);
-        String notesStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.NOTES_DETAIL);
-        String maxBackupsToKeepStr = TranslationCategory.BACKUP_LIST.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_DETAIL);
+        String backupNameStr = TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_NAME_DETAIL);
+        String initialPathStr = TCategory.BACKUP_LIST.getTranslation(TKey.INITIAL_PATH_DETAIL);
+        String destinationPathStr = TCategory.BACKUP_LIST.getTranslation(TKey.DESTINATION_PATH_DETAIL);
+        String lastBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.LAST_BACKUP_DETAIL);
+        String nextBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.NEXT_BACKUP_DATE_DETAIL);
+        String timeIntervalBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.TIME_INTERVAL_DETAIL);
+        String creationDateStr = TCategory.BACKUP_LIST.getTranslation(TKey.CREATION_DATE_DETAIL);
+        String lastUpdateDateStr = TCategory.BACKUP_LIST.getTranslation(TKey.LAST_UPDATE_DATE_DETAIL);
+        String backupCountStr = TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_COUNT_DETAIL);
+        String notesStr = TCategory.BACKUP_LIST.getTranslation(TKey.NOTES_DETAIL);
+        String maxBackupsToKeepStr = TCategory.BACKUP_LIST.getTranslation(TKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
         return """
             <html>
@@ -84,5 +92,4 @@ public class BackupService {
     private String optionalString(Object value) {
         return value != null ? value.toString() : "_";
     }
-
 }

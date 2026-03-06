@@ -33,18 +33,18 @@ import backupmanager.gui.component.chart.TimeSeriesChart;
 import backupmanager.gui.component.chart.themes.ColorThemes;
 import backupmanager.gui.component.chart.themes.DefaultChartTheme;
 import backupmanager.gui.component.dashboard.CardBox;
-import backupmanager.gui.system.Form;
 import backupmanager.utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 
 @SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard")
-public class FormBackupDashboard extends Form {
+public class FormBackupDashboard extends CustomForm {
 
     public FormBackupDashboard() {
-        init();
+        build();
     }
 
-    private void init() {
+    @Override
+    protected void init() {
         setLayout(new MigLayout("wrap,fill", "[fill]", "[grow 0][fill]"));
         createTitle();
         createPanelLayout();
@@ -55,16 +55,7 @@ public class FormBackupDashboard extends Form {
     }
 
     @Override
-    public void formInit() {
-        loadData();
-    }
-
-    @Override
-    public void formRefresh() {
-        loadData();
-    }
-
-    private void loadData() {
+    protected void loadData() {
         List<ConfigurationBackup> configurations = BackupConfigurationRepository.getBackupList();
         List<BackupRequest> requests = BackupRequestRepository.getRequestBackups();
         BackupAnalyticsSnapshot snapshot = BackupAnalyticsService.buildSnapshot(requests);
@@ -102,7 +93,7 @@ public class FormBackupDashboard extends Form {
         timeSeriesChart.setDataset(BackupAnalyticsService.buildDurationTrendDataset(snapshot.durationTrend()));
     }
 
-    private void createTitle() {
+    protected void createTitle() {
 
         JPanel panel = new JPanel(new MigLayout("fillx", "[]push[][]"));
 
@@ -231,6 +222,11 @@ public class FormBackupDashboard extends Form {
 
     private Icon createIcon(String icon, Color color) {
         return new FlatSVGIcon(icon, 20, 20).setColorFilter(new FlatSVGIcon.ColorFilter(color1 -> color));
+    }
+
+    @Override
+    protected void setTranslations() {
+
     }
 
     private JPanel panelLayout;

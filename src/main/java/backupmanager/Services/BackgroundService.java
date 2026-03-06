@@ -14,15 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.gui.Controllers.TrayController;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
-import backupmanager.Enums.ConfigKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.Controllers.TrayController;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
@@ -30,7 +29,7 @@ public class BackgroundService {
     private ScheduledExecutorService scheduler;
 
     private TrayController trayIcon;
-    private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private final JsonConfig jsonConfig = JsonConfig.getInstance();
     private final AtomicBoolean isBackingUp = new AtomicBoolean(false);
 
     public void start(TrayController trayIcon) throws IOException {

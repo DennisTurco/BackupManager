@@ -13,8 +13,8 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.Dialogs.BackupEntryDialog;
@@ -56,7 +56,7 @@ public class BackupHelper {
         logger.info("Event --> deleting backup");
 
         if (isConfermationRequired) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -71,7 +71,7 @@ public class BackupHelper {
         logger.info("Event --> deleting backup");
 
         if (selectedRow != -1) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
                 String backupName = (String) backupTable.getValueAt(selectedRow, 0);
                 BackupHelper.deleteBackup(backupName);
@@ -94,7 +94,7 @@ public class BackupHelper {
     public static void deleteBackupWithConfirmition(ConfigurationBackup backup) {
         logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
 
-        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             BackupHelper.deleteBackup(backup);
         }
@@ -126,11 +126,11 @@ public class BackupHelper {
     }
 
     public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
-        String from = TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM);
-        String to = TranslationCategory.GENERAL.getTranslation(TranslationKey.TO);
-        String activated = TranslationCategory.DIALOGS.getTranslation(TranslationKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
-        String setted = TranslationCategory.DIALOGS.getTranslation(TranslationKey.SETTED_EVERY_MESSAGE);
-        String days = TranslationCategory.DIALOGS.getTranslation(TranslationKey.DAYS_MESSAGE);
+        String from = TCategory.GENERAL.getTranslation(TKey.FROM);
+        String to = TCategory.GENERAL.getTranslation(TKey.TO);
+        String activated = TCategory.DIALOGS.getTranslation(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
+        String setted = TCategory.DIALOGS.getTranslation(TKey.SETTED_EVERY_MESSAGE);
+        String days = TCategory.DIALOGS.getTranslation(TKey.DAYS_MESSAGE);
 
         JOptionPane.showMessageDialog(null,
                 activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
@@ -173,7 +173,7 @@ public class BackupHelper {
         logger.info("Event --> automatic backup");
 
         if (backup.isAutomatic()) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 return null;
             }

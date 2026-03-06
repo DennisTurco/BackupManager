@@ -88,6 +88,6 @@ public class CSVDataReader {
         }
         // add the last field
         result.add(currentField.toString());
-        return result.toArray(new String[0]);
+        return result.toArray(String[]::new);
     }
 }

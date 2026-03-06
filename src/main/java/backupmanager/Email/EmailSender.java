@@ -16,9 +16,9 @@ import backupmanager.Entities.Email;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.EmailType;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.EmailRepository;
 import backupmanager.database.Repositories.UserRepository;
 import ch.qos.logback.classic.LoggerContext;
@@ -29,7 +29,7 @@ import ch.qos.logback.classic.net.SMTPAppender;
  */
 public class EmailSender {
 
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private static final JsonConfig configReader = JsonConfig.getInstance();
 
     private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
@@ -113,8 +113,8 @@ public class EmailSender {
     public static void sendConfirmEmailToUser(User user) {
         if (user == null) throw new IllegalArgumentException("User object cannot be null");
 
-        String subject = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_SUBJECT);
-        String body = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_BODY);
+        String subject = TCategory.USER_DIALOG.getTranslation(TKey.EMAIL_CONFIRMATION_SUBJECT);
+        String body = TCategory.USER_DIALOG.getTranslation(TKey.EMAIL_CONFIRMATION_BODY);
 
         body = body.replace("[UserName]", user.getUserCompleteName());
         body = body.replace("[SupportEmail]", ConfigKey.EMAIL.getValue());

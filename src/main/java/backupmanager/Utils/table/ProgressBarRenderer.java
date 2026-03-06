@@ -1,6 +1,5 @@
 package backupmanager.utils.table;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JProgressBar;

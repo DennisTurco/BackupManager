@@ -1,4 +1,4 @@
-package backupmanager.gui.frames;
+package backupmanager.gui.forms;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -8,21 +8,24 @@ import javax.swing.JTextField;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.Entities.User;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.LimitDocument;
 import backupmanager.Services.LoginService;
 import backupmanager.gui.menu.MyDrawerBuilder;
-import backupmanager.gui.system.Form;
 import backupmanager.gui.system.FormManager;
 import net.miginfocom.swing.MigLayout;
 
-public class Login extends Form {
+public class FormLogin extends CustomForm {
 
     private final LoginService loginService = new LoginService();
 
-    public Login() {
-        init();
+    public FormLogin() {
+        build();
     }
 
-    private void init() {
+    @Override
+    protected void init() {
         setLayout(new MigLayout("al center center"));
 
         if (!loginService.isFirstAccess()) {
@@ -30,36 +33,35 @@ public class Login extends Form {
             return;
         }
 
-        createLogin();
+        loadData();
     }
 
-    private void createLogin() {
+
+    @Override
+    protected void loadData() {
 
         JPanel panelLogin = new JPanel(new MigLayout());
         JPanel loginContent = new JPanel(
                 new MigLayout("fillx,wrap,insets 35 35 25 35", "[fill,300]")
         );
 
-        JLabel lbTitle = new JLabel("Login");
-        JLabel lbDescription = new JLabel("Please enter your data to access the system");
+        lbTitle = new JLabel("Login");
+        lbDescription = new JLabel("Please enter your data to access the system");
 
         lbTitle.putClientProperty(FlatClientProperties.STYLE, "font:bold +12;");
 
         loginContent.add(lbTitle);
         loginContent.add(lbDescription);
 
-        JTextField txtName = new JTextField();
-        JTextField txtSurname = new JTextField();
-        JTextField txtEmail = new JTextField();
+        txtName = new JTextField();
+        txtSurname = new JTextField();
+        txtEmail = new JTextField();
+        labelName = new JLabel("Name");
+        labelSurname = new JLabel("Surname");
+        labelEmail = new JLabel("Email");
 
         JButton cmdLogin = new JButton("Login");
 
-        // Placeholder
-        txtName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter your name");
-        txtSurname.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter your surname");
-        txtEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter your email");
-
-        // Style
         panelLogin.putClientProperty(FlatClientProperties.STYLE,
                 "[light]border:5,5,5,5,shade($Panel.background,10%),,20;" +
                 "[dark]border:5,5,5,5,tint($Panel.background,5%),,20;" +
@@ -76,13 +78,17 @@ public class Login extends Form {
         txtEmail.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
         cmdLogin.putClientProperty(FlatClientProperties.STYLE, fieldStyle);
 
-        loginContent.add(new JLabel("Name"), "gapy 25");
+        txtName.setDocument(new LimitDocument(20));
+        txtSurname.setDocument(new LimitDocument(20));
+        txtEmail.setDocument(new LimitDocument(32));
+
+        loginContent.add(labelName, "gapy 25");
         loginContent.add(txtName);
 
-        loginContent.add(new JLabel("Surname"), "gapy 10");
+        loginContent.add(labelSurname, "gapy 10");
         loginContent.add(txtSurname);
 
-        loginContent.add(new JLabel("Email"), "gapy 10");
+        loginContent.add(labelEmail, "gapy 10");
         loginContent.add(txtEmail);
 
         loginContent.add(cmdLogin, "gapy 20");
@@ -96,9 +102,8 @@ public class Login extends Form {
             String surname = txtSurname.getText().trim();
             String email = txtEmail.getText().trim();
 
-            if (name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
+            if (name.isEmpty() || surname.isEmpty() || email.isEmpty())
                 return;
-            }
 
             User user = new User(name, surname, email);
             loginService.createUserAndSendEmail(user);
@@ -111,4 +116,29 @@ public class Login extends Form {
         MyDrawerBuilder.getInstance().initHeader();
         FormManager.login();
     }
+
+    @Override
+    protected void setTranslations() {
+        if (lbTitle == null) {
+            return;
+        }
+
+        lbTitle.setText(Translations.get(TKey.USER_TITLE));
+        lbDescription.setText(Translations.get(TKey.USER_DESCRIPTION));
+        txtName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, Translations.get(TKey.USER_NAME_PLACEHOLDER));
+        txtSurname.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, Translations.get(TKey.USER_SURNAME_PLACEHOLDER));
+        txtEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, Translations.get(TKey.USER_EMAIL_PLACEHOLDER));
+        labelName.setText(Translations.get(TKey.USER_NAME));
+        labelSurname.setText(Translations.get(TKey.USER_SURNAME));
+        labelEmail.setText(Translations.get(TKey.USER_EMAIL));
+    }
+
+    private JTextField txtName;
+    private JTextField txtSurname;
+    private JTextField txtEmail;
+    private JLabel labelName;
+    private JLabel labelSurname;
+    private JLabel labelEmail;
+    private JLabel lbTitle;
+    private JLabel lbDescription;
 }

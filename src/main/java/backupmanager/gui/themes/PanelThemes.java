@@ -50,7 +50,7 @@ public class PanelThemes extends JPanel {
                 JComponent com = (JComponent) super.getListCellRendererComponent(list, name, index, isSelected, cellHasFocus);
                 com.setToolTipText(buildToolTip((ThemesInfo) value));
                 if (title != null) {
-                    Border titBorder = new ListCellTitledBorder(themesList, title);
+                    Border titBorder = new ListCellTitledBorder<>(themesList, title);
                     com.setBorder(new CompoundBorder(titBorder, com.getBorder()));
                     this.titleHeight = titBorder.getBorderInsets(com).top;
                 }

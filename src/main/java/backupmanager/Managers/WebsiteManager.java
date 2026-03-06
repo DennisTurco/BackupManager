@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 
 public class WebsiteManager {
     private static final Logger logger = LoggerFactory.getLogger(WebsiteManager.class);
@@ -27,7 +27,7 @@ public class WebsiteManager {
             }
         } catch (IOException | URISyntaxException e) {
             logger.error("Failed to open the web page: " + e.getMessage(), e);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPENING_WEBSITE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_OPENING_WEBSITE), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -44,15 +44,15 @@ public class WebsiteManager {
                     desktop.mail(uri);
                 } catch (IOException | URISyntaxException ex) {
                     logger.error("Failed to send email: " + ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_UNABLE_TO_SEND_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_UNABLE_TO_SEND_EMAIL), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 logger.warn("Mail action is unsupported in your system's desktop environment.");
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
         } else {
             logger.warn("Desktop integration is unsupported on this system.");
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL_GENERIC), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 

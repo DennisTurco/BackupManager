@@ -3,14 +3,14 @@ package backupmanager.Services;
 
 import java.io.IOException;
 
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum;
+import backupmanager.Enums.Translations;
 
 public class PreferenceService {
     public void updatePreferences(String language, String theme) throws IOException {
-        Confingurations.setLanguageByLanguageName(language);
-        Confingurations.setTheme(theme);
-        TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
+        Configurations.setLanguageByLanguageName(language);
+        Configurations.setTheme(theme);
+        Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Configurations.getLanguage().getFileName());
     }
 }

@@ -15,22 +15,20 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Email.EmailSender;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
-import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Services.BackupService;
 import backupmanager.database.Repositories.UserRepository;
 import backupmanager.gui.Dialogs.EntryUserDialog;
 import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.Table.TableDataManager;
+import backupmanager.gui.forms.CustomForm;
 import backupmanager.gui.frames.BackupManagerGUI;
-import static backupmanager.gui.frames.BackupManagerGUI.backups;
-import backupmanager.gui.simple.BackupEntry;
+import backupmanager.gui.simple.BackupEntryDialog;
 import raven.modal.ModalDialog;
 import raven.modal.component.SimpleModalBorder;
 import raven.modal.option.Location;
@@ -65,7 +63,7 @@ public class BackupManagerController {
         return new int[]{width, height};
     }
 
-    public void researchInTable(String research) {
+    public List<ConfigurationBackup> researchInTableAndGet(List<ConfigurationBackup> backups, String research) {
         List<ConfigurationBackup> tempBackups = new ArrayList<>();
         research = research.toLowerCase();
 
@@ -80,7 +78,7 @@ public class BackupManagerController {
             }
         }
 
-        TableDataManager.updateTableWithNewBackupList(tempBackups, formatter);
+        return tempBackups;
     }
 
     public void showCreateModal(Component parent) {
@@ -92,12 +90,39 @@ public class BackupManagerController {
 
         ModalDialog.showModal(parent,
                 new SimpleModalBorder(
-                        new BackupEntry(),
-                        "Create",
-                        SimpleModalBorder.YES_NO_OPTION,
+                        new BackupEntryDialog(),
+                        TCategory.BACKUP_ENTRY.getTranslation(TKey.PAGE_SUBTITLE_CREATE),
+                        SimpleModalBorder.OK_CANCEL_OPTION,
                         (controller, action) -> {}
                 ),
                 option);
+    }
+
+    public void showEditModal(CustomForm form, ConfigurationBackup backup) {
+        BackupEntryDialog dialog = new BackupEntryDialog(backup);
+
+        Option option = ModalDialog.createOption();
+        option.getLayoutOption()
+                .setSize(-1, 1f)
+                .setLocation(Location.TRAILING, Location.TOP)
+                .setAnimateDistance(0.7f, 0);
+
+        ModalDialog.showModal(
+                form,
+                new SimpleModalBorder(
+                        dialog,
+                        TCategory.BACKUP_ENTRY.getTranslation(TKey.PAGE_SUBTITLE_EDIT),
+                        SimpleModalBorder.OK_CANCEL_OPTION,
+                        (controller, action) -> {
+                            if (action == SimpleModalBorder.OK_OPTION) {
+                                ConfigurationBackup editedBackup = dialog.getResult();
+                                form.formRefresh();
+                            }
+                        }
+                ),
+                option
+        );
+
     }
 
     public String getBackupDetails(String backupName) {
@@ -108,11 +133,15 @@ public class BackupManagerController {
         backupService.deleteBackups(names);
     }
 
+    public void deleteBackup(ConfigurationBackup backup) {
+        backupService.deleteBackup(backup.getId());
+    }
+
     public boolean isBackupRunning(String name) {
         return backupService.isRunning(name);
     }
 
-    public boolean isAutomaticBackup(String backupName) {
+    public boolean isAutomaticBackup(List<ConfigurationBackup> backups, String backupName) {
         ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backups, backupName);
         return backup != null && backup.isAutomatic();
     }
@@ -139,7 +168,7 @@ public class BackupManagerController {
 
         logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
 
-        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_DELETION_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response != JOptionPane.YES_OPTION)
             return;
 
@@ -168,12 +197,12 @@ public class BackupManagerController {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en" -> Confingurations.setLanguage(LanguagesEnum.ENG);
-            case "it" -> Confingurations.setLanguage(LanguagesEnum.ITA);
-            case "es" -> Confingurations.setLanguage(LanguagesEnum.ESP);
-            case "de" -> Confingurations.setLanguage(LanguagesEnum.DEU);
-            case "fr" -> Confingurations.setLanguage(LanguagesEnum.FRA);
-            default -> Confingurations.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Configurations.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Configurations.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Configurations.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Configurations.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Configurations.setLanguage(LanguagesEnum.FRA);
+            default -> Configurations.setLanguage(LanguagesEnum.ENG);
         }
 
         mainGui.reloadPreferences();

@@ -15,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 
 public class TrayController {
 
@@ -71,9 +71,8 @@ public class TrayController {
     private PopupMenu setupAndGetPopupMenu() {
         PopupMenu popup = new PopupMenu();
 
-        MenuItem openItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.OPEN_ACTION));
-        MenuItem exitItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.EXIT_ACTION));
-
+        MenuItem openItem = new MenuItem(TCategory.TRAY_ICON.getTranslation(TKey.OPEN_ACTION));
+        MenuItem exitItem = new MenuItem(TCategory.TRAY_ICON.getTranslation(TKey.EXIT_ACTION));
 
         popup.add(openItem);
         popup.addSeparator();

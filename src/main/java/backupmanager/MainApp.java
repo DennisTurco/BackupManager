@@ -14,9 +14,9 @@ import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
 import backupmanager.gui.Controllers.AppController;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum;
+import backupmanager.Enums.Translations;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
@@ -60,8 +60,8 @@ public class MainApp {
 
     private static void loadPreferredLanguage() {
         try {
-            Confingurations.loadAllConfigurations();
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
+            Configurations.loadAllConfigurations();
+            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Configurations.getLanguage().getFileName());
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }

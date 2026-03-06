@@ -17,17 +17,19 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.MenuItems;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Json.JsonConfig;
 import backupmanager.Managers.ExportManager;
 import backupmanager.Managers.WebsiteManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.gui.forms.FormBackupDashboard;
+import backupmanager.gui.forms.FormBackupTable;
 import backupmanager.gui.forms.FormHistory;
 import backupmanager.gui.forms.FormSetting;
-import backupmanager.gui.forms.FormTable;
 import backupmanager.gui.system.AllForms;
 import backupmanager.gui.system.FormManager;
 import raven.extras.AvatarIcon;
@@ -104,7 +106,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private static void initMenuActions() {
         menuActionMap.put(MenuItems.BackupList, () ->
-                FormManager.showForm(AllForms.getForm(FormTable.class)));
+                FormManager.showForm(AllForms.getForm(FormBackupTable.class)));
 
         menuActionMap.put(MenuItems.Dashboard, () ->
                 FormManager.showForm(AllForms.getForm(FormBackupDashboard.class)));
@@ -241,52 +243,52 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     }
 
     private static List<MenuItem> buildMenuItems() {
-        JSONConfigReader config = new JSONConfigReader();
+        JsonConfig config = JsonConfig.getInstance();
         List<MenuItem> itemList = new ArrayList<>();
 
-        itemList.add(new Item.Label("MAIN"));
+        itemList.add(new Item.Label(Translations.get(TKey.SUBMENU_MAIN)));
 
         // Backup menu
-        Item backupItem = createMenuItem("Backup List", "forms.svg", MenuItems.BackupList, FormTable.class)
-                .subMenu("Create new backup");
+        Item backupItem = createMenuItem(Translations.get(TKey.BACKUP_TABLE), "forms.svg", MenuItems.BackupList, FormBackupTable.class)
+                .subMenu(Translations.get(TKey.CREATE_BACKUP));
 
         if (config.isMenuItemEnabled(MenuItems.Import.name()))
-            backupItem.subMenu("Import backups from Csv");
+            backupItem.subMenu(Translations.get(TKey.IMPORT_BACKUP));
 
         if (config.isMenuItemEnabled(MenuItems.Export.name()))
-            backupItem.subMenu("Export backups to Csv");
+            backupItem.subMenu(Translations.get(TKey.EXPORT_BACKUP));
 
         itemList.add(backupItem);
 
         // Dashboard
-        itemList.add(createMenuItem("Dashboard", "dashboard.svg", MenuItems.Dashboard, FormBackupDashboard.class));
+        itemList.add(createMenuItem(Translations.get(TKey.DASHBOARD), "dashboard.svg", MenuItems.Dashboard, FormBackupDashboard.class));
 
-        itemList.add(new Item.Label("OTHER"));
+        itemList.add(new Item.Label(Translations.get(TKey.SUBMENU_OTHER)));
 
         // Settings
-        itemList.add(createMenuItem("Settings", "setting.svg", MenuItems.Settings, FormSetting.class));
+        itemList.add(createMenuItem(Translations.get(TKey.OPTIONS), "setting.svg", MenuItems.Settings, FormSetting.class));
 
         // History (configurable)
         if (config.isMenuItemEnabled(MenuItems.History.name())) {
-            itemList.add(createMenuItem("History", "history.svg", MenuItems.History, FormHistory.class));
+            itemList.add(createMenuItem(Translations.get(TKey.HISTORY), "history.svg", MenuItems.History, FormHistory.class));
         }
 
         // External link (no form class)
-        itemList.add(createMenuItem("Github page", "github.svg", MenuItems.InfoPage, null));
+        itemList.add(createMenuItem(Translations.get(TKey.GITHUB_PAGE), "github.svg", MenuItems.InfoPage, null));
 
         // Donate section
         if (config.isMenuItemEnabled(MenuItems.Donate.name())) {
 
-            Item donateItem = createMenuItem("Support the Project", "donate.svg", MenuItems.Donate, null);
+            Item donateItem = createMenuItem(Translations.get(TKey.DONATE), "donate.svg", MenuItems.Donate, null);
 
             if (config.isMenuItemEnabled(MenuItems.PaypalDonate.name())) {
-                donateItem.subMenu("Paypal");
-                bindSubMenu("Paypal", MenuItems.PaypalDonate);
+                donateItem.subMenu(Translations.get(TKey.PAYPAL));
+                bindSubMenu(Translations.get(TKey.PAYPAL), MenuItems.PaypalDonate);
             }
 
             if (config.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name())) {
-                donateItem.subMenu("Buy me a coffee");
-                bindSubMenu("Buy me a coffee", MenuItems.BuymeacoffeeDonate);
+                donateItem.subMenu(Translations.get(TKey.BUYMEACOFFE));
+                bindSubMenu(Translations.get(TKey.BUYMEACOFFE), MenuItems.BuymeacoffeeDonate);
             }
 
             itemList.add(donateItem);
@@ -295,27 +297,27 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         // Support section
         if (config.isMenuItemEnabled(MenuItems.Support.name())) {
 
-            Item helpItem = createMenuItem("Help", "help.svg", MenuItems.Support, null);
+            Item helpItem = createMenuItem(Translations.get(TKey.HELP), "help.svg", MenuItems.Support, null);
 
             if (config.isMenuItemEnabled(MenuItems.BugReport.name())) {
-                helpItem.subMenu("Report a bug");
-                bindSubMenu("Report a bug", MenuItems.BugReport);
+                helpItem.subMenu(Translations.get(TKey.BUG_REPORT));
+                bindSubMenu(Translations.get(TKey.BUG_REPORT), MenuItems.BugReport);
             }
 
             if (config.isMenuItemEnabled(MenuItems.ContactUs.name())) {
-                helpItem.subMenu("Contact us");
-                bindSubMenu("Contact us", MenuItems.ContactUs);
+                helpItem.subMenu(Translations.get(TKey.CONTACT_US));
+                bindSubMenu(Translations.get(TKey.CONTACT_US), MenuItems.ContactUs);
             }
 
             itemList.add(helpItem);
         }
 
-        if (Confingurations.isSubscriptionNedded()) {
-            itemList.add(createMenuItem("Subscription", "subscription.svg", MenuItems.Subscription, null));
+        if (Configurations.isSubscriptionNedded()) {
+            itemList.add(createMenuItem(Translations.get(TKey.SUBSCRIPTION), "subscription.svg", MenuItems.Subscription, null));
         }
 
         // About (LAST ITEM)
-        itemList.add(createMenuItem("About", "about.svg", MenuItems.About, null));
+        itemList.add(createMenuItem(Translations.get(TKey.ABOUT), "about.svg", MenuItems.About, null));
 
         return itemList;
     }

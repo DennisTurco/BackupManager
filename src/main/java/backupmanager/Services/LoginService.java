@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Email.EmailSender;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Entities.User;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.database.Repositories.UserRepository;
@@ -45,12 +45,12 @@ public class LoginService {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en" -> Confingurations.setLanguage(LanguagesEnum.ENG);
-            case "it" -> Confingurations.setLanguage(LanguagesEnum.ITA);
-            case "es" -> Confingurations.setLanguage(LanguagesEnum.ESP);
-            case "de" -> Confingurations.setLanguage(LanguagesEnum.DEU);
-            case "fr" -> Confingurations.setLanguage(LanguagesEnum.FRA);
-            default -> Confingurations.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Configurations.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Configurations.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Configurations.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Configurations.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Configurations.setLanguage(LanguagesEnum.FRA);
+            default -> Configurations.setLanguage(LanguagesEnum.ENG);
         }
     }
 

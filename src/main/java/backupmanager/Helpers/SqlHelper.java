@@ -13,6 +13,13 @@ public class SqlHelper {
         return date != null ? date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() : 0;
     }
 
+    public static long toMilliseconds(LocalDate date) {
+        return date == null ? 0L :
+                date.atStartOfDay(ZoneId.systemDefault())
+                    .toInstant()
+                    .toEpochMilli();
+    }
+
     public static long toMilliseconds(LocalDateTime date, LocalDateTime fallbackValue) {
         if (fallbackValue == null) throw new IllegalArgumentException("Cannot pass the fallback value as null");
         return date != null ? date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() : fallbackValue.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();

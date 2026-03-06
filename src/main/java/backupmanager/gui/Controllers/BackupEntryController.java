@@ -3,6 +3,7 @@ package backupmanager.gui.Controllers;
 import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,8 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
@@ -59,6 +60,7 @@ public class BackupEntryController {
         }
     }
 
+    @Deprecated
     public TimeInterval handleTimePickerAction(javax.swing.JDialog dialog, String target, String destination) throws InvalidTimeInterval {
         TimeInterval time = BackupHelper.openTimePicker(dialog, currentBackup.getTimeIntervalBackup());
         if (time == null) throw new InvalidTimeInterval();
@@ -81,7 +83,7 @@ public class BackupEntryController {
 
         if (create) {
             if (ConfigurationBackup.getBackupByName(currentBackup.getName()) != null) {
-                int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_BACKUP_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.DUPLICATED_BACKUP_NAME_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
                     BackupHelper.deleteBackup(currentBackup.getName());
                 } else {
@@ -94,6 +96,13 @@ public class BackupEntryController {
         }
 
         return true;
+    }
+
+    public void openFileChooser(JTextField filed, boolean allowFiles) {
+        String text = BackupOperations.pathSearchWithFileChooser(allowFiles);
+        if (text != null) {
+            filed.setText(text);
+        }
     }
 
     public boolean toggleAutomaticBackup(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {
@@ -118,7 +127,7 @@ public class BackupEntryController {
 
     public void handleSingleBackupRequest(BackupTable backupTable, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) throws BackupAlreadyRunningException {
         if (BackupRequestRepository.isAnyBackupRunning()) {
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
             throw new BackupAlreadyRunningException();
         }
 

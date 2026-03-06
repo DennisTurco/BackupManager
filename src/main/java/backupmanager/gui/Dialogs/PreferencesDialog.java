@@ -2,11 +2,11 @@ package backupmanager.gui.Dialogs;
 
 import backupmanager.gui.Controllers.GuiController;
 import backupmanager.gui.Controllers.PreferenceController;
-import backupmanager.Entities.Confingurations;
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.ThemesEnum;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Managers.ThemeManager;
 import backupmanager.Services.PreferenceService;
 import backupmanager.gui.frames.BackupManagerGUI;
@@ -145,7 +145,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         languagesComboBox.addItem(LanguagesEnum.DEU.getLanguageName());
         languagesComboBox.addItem(LanguagesEnum.FRA.getLanguageName());
 
-        languagesComboBox.setSelectedItem(Confingurations.getLanguage().getLanguageName());
+        languagesComboBox.setSelectedItem(Configurations.getLanguage().getLanguageName());
     }
 
     private void setThemes() {
@@ -160,15 +160,15 @@ public class PreferencesDialog extends javax.swing.JDialog {
         themesComboBox.addItem(ThemesEnum.SOLARIZED_DARK.getThemeName());
         themesComboBox.addItem(ThemesEnum.SOLARIZED_LIGHT.getThemeName());
 
-        themesComboBox.setSelectedItem(Confingurations.getTheme().getThemeName());
+        themesComboBox.setSelectedItem(Configurations.getTheme().getThemeName());
     }
 
     private void setTranslations() {
-        setTitle(TranslationCategory.PREFERENCES_DIALOG.getTranslation(TranslationKey.PREFERENCES_TITLE));
-        applyBtn.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.APPLY_BUTTON));
-        closeBtn.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON));
-        jLabel1.setText(TranslationCategory.PREFERENCES_DIALOG.getTranslation(TranslationKey.LANGUAGE));
-        jLabel2.setText(TranslationCategory.PREFERENCES_DIALOG.getTranslation(TranslationKey.THEME));
+        setTitle(TCategory.PREFERENCES_DIALOG.getTranslation(TKey.PREFERENCES_TITLE));
+        applyBtn.setText(TCategory.GENERAL.getTranslation(TKey.APPLY_BUTTON));
+        closeBtn.setText(TCategory.GENERAL.getTranslation(TKey.CLOSE_BUTTON));
+        jLabel1.setText(TCategory.PREFERENCES_DIALOG.getTranslation(TKey.LANGUAGE));
+        jLabel2.setText(TCategory.PREFERENCES_DIALOG.getTranslation(TKey.THEME));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

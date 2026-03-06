@@ -4,8 +4,8 @@ package backupmanager.gui.Dialogs;
 import backupmanager.LimitDocument;
 import backupmanager.gui.Controllers.EntryUserController;
 import backupmanager.Entities.User;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 
 public class EntryUserDialog extends javax.swing.JDialog {
 
@@ -29,10 +29,10 @@ public class EntryUserDialog extends javax.swing.JDialog {
     }
 
     private void setTranslactions() {
-        setTitle(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_TITLE));
-        nameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_NAME));
-        surnameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_SURNAME));
-        emailLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_EMAIL));
+        setTitle(TCategory.USER_DIALOG.getTranslation(TKey.USER_TITLE));
+        nameLabel.setText(TCategory.USER_DIALOG.getTranslation(TKey.USER_NAME));
+        surnameLabel.setText(TCategory.USER_DIALOG.getTranslation(TKey.USER_SURNAME));
+        emailLabel.setText(TCategory.USER_DIALOG.getTranslation(TKey.USER_EMAIL));
     }
 
     public User getUser() {

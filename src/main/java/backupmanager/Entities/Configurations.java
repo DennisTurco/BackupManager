@@ -10,8 +10,8 @@ import backupmanager.Enums.ThemesEnum;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Repositories.ConfigurationRepository;
 
-public class Confingurations {
-    private static final Logger logger = LoggerFactory.getLogger(Confingurations.class);
+public class Configurations {
+    private static final Logger logger = LoggerFactory.getLogger(Configurations.class);
     private static LanguagesEnum language;
     private static ThemesEnum theme;
     private static boolean subscriptionNedded; // if true the subscription is needed to use the backuground service
@@ -29,7 +29,7 @@ public class Confingurations {
     }
 
     public static void setLanguage(LanguagesEnum language) {
-        Confingurations.language = language;
+        Configurations.language = language;
     }
 
     public static void setLanguageByLanguageName(String selectedLanguage) {
@@ -65,7 +65,7 @@ public class Confingurations {
     }
 
     public static void setTheme(ThemesEnum theme) {
-        Confingurations.theme = theme;
+        Configurations.theme = theme;
     }
     public static void setTheme(String selectedTheme) {
         try {
@@ -81,6 +81,10 @@ public class Confingurations {
             logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
+    }
+
+    public static void setSubscriptionNedded(boolean isNedded) {
+        subscriptionNedded = isNedded;
     }
 
     private static void setSubscriptionNedded(String subscriptionValue) {

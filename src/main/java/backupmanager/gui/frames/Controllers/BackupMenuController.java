@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.gui.Dialogs.PreferencesDialog;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.WebsiteManager;
 import backupmanager.Services.BackupObserver;
@@ -59,7 +59,7 @@ public class BackupMenuController {
         logger.info("Event --> share");
 
         // pop-up message
-        JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SHARE_LINK_COPIED_MESSAGE));
+        JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.SHARE_LINK_COPIED_MESSAGE));
 
         // copy link to the clipboard
         StringSelection stringSelectionObj = new StringSelection(ConfigKey.SHARE_LINK.getValue());
@@ -83,7 +83,7 @@ public class BackupMenuController {
             new ProcessBuilder("notepad.exe", ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
         } catch (IOException e) {
             logger.error("Error opening history file: " + e.getMessage(), e);
-            JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 

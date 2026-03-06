@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -18,6 +19,9 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -27,11 +31,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import com.formdev.flatlaf.util.LoggingFacade;
 import com.formdev.flatlaf.util.ScaledEmptyBorder;
 
 import backupmanager.gui.component.AccentColorIcon;
-import backupmanager.gui.system.Form;
+import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.gui.system.FormManager;
 import backupmanager.gui.themes.PanelThemes;
 import backupmanager.utils.DemoPreferences;
@@ -51,13 +54,16 @@ import raven.modal.option.Location;
 import raven.modal.option.Option;
 
 @SystemForm(name = "Setting", description = "application setting and configuration", tags = {"themes", "options"})
-public class FormSetting extends Form {
+public class FormSetting extends CustomForm {
+
+    private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
 
     public FormSetting() {
-        init();
+        build();
     }
 
-    private void init() {
+    @Override
+    protected void init() {
         setLayout(new MigLayout("fill", "[fill][fill,grow 0,250:250]", "[fill]"));
         tabbedPane = new JTabbedPane();
         tabbedPane.putClientProperty(FlatClientProperties.STYLE, "" +
@@ -68,6 +74,9 @@ public class FormSetting extends Form {
         add(tabbedPane, "gapy 1 0");
         add(createThemes());
     }
+
+    @Override
+    protected void loadData() {}
 
     private JPanel createLayoutOption() {
         JPanel panel = new JPanel(new MigLayout("wrap,fillx", "[fill]"));
@@ -198,7 +207,7 @@ public class FormSetting extends Form {
     private Component createLanguageOption() {
         JPanel panel = new JPanel(new MigLayout());
         panel.setBorder(new TitledBorder("Language"));
-        JComboBox languageCombo = new JComboBox();
+        JComboBox<Object> languageCombo = new JComboBox<>();
         initComboItem(languageCombo);
 
         panel.add(languageCombo);
@@ -206,7 +215,7 @@ public class FormSetting extends Form {
         return panel;
     }
 
-    private void initComboItem(JComboBox combo) {
+    private void initComboItem(JComboBox<Object> combo) {
         combo.addItem("English");
         combo.addItem("Italiano");
         combo.addItem("Español");
@@ -221,11 +230,11 @@ public class FormSetting extends Form {
         return panel;
     }
 
-    private static String[] accentColorKeys = {
+    private static final String[] accentColorKeys = {
             "Demo.accent.default", "Demo.accent.blue", "Demo.accent.purple", "Demo.accent.red",
             "Demo.accent.orange", "Demo.accent.yellow", "Demo.accent.green",
     };
-    private static String[] accentColorNames = {
+    private static final String[] accentColorNames = {
             "Default", "Blue", "Purple", "Red", "Orange", "Yellow", "Green",
     };
     private final JToggleButton[] accentColorButtons = new JToggleButton[accentColorKeys.length];
@@ -404,7 +413,7 @@ public class FormSetting extends Form {
                 break;
             }
         }
-        DemoPreferences.accentColor = (accentColorKey != null && accentColorKey != accentColorKeys[0])
+        DemoPreferences.accentColor = (accentColorKey != null && !accentColorKey.equals(accentColorKeys[0]))
                 ? UIManager.getColor(accentColorKey)
                 : null;
         applyAccentColor();
@@ -412,13 +421,14 @@ public class FormSetting extends Form {
 
     private void applyAccentColor() {
         Class<? extends LookAndFeel> lafClass = UIManager.getLookAndFeel().getClass();
+        DemoPreferences.updateAccentColor(DemoPreferences.accentColor);
         try {
-            DemoPreferences.updateAccentColor(DemoPreferences.accentColor);
             FlatLaf.setup(lafClass.getDeclaredConstructor().newInstance());
-            FlatLaf.updateUI();
-        } catch (Exception ex) {
-            LoggingFacade.INSTANCE.logSevere(null, ex);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            logger.warn("Error while trying to apply the accent color: {}", e);
         }
+        FlatLaf.updateUI();
     }
 
     private void updateAccentColorButtons() {
@@ -430,8 +440,8 @@ public class FormSetting extends Form {
                         lafClass == FlatDarculaLaf.class ||
                         lafClass == FlatMacLightLaf.class ||
                         lafClass == FlatMacDarkLaf.class;
-        for (int i = 0; i < accentColorButtons.length; i++) {
-            accentColorButtons[i].setEnabled(isAccentColorSupported);
+        for (JToggleButton btn : accentColorButtons) {
+            btn.setEnabled(isAccentColorSupported);
         }
         if (accentColorCustomButton != null) {
             accentColorCustomButton.setEnabled(isAccentColorSupported);
@@ -443,7 +453,7 @@ public class FormSetting extends Form {
         final PanelThemes panelThemes = new PanelThemes();
         JPanel panelHeader = new JPanel(new MigLayout("fillx,insets 3", "[grow 0]push[]"));
         panelHeader.add(new JLabel("Themes"));
-        JComboBox combo = new JComboBox(new Object[]{"All", "Light", "Dark"});
+        JComboBox<Object> combo = new JComboBox<>(new Object[]{"All", "Light", "Dark"});
         combo.addActionListener(e -> {
             panelThemes.updateThemesList(combo.getSelectedIndex());
         });
@@ -451,6 +461,11 @@ public class FormSetting extends Form {
         panel.add(panelHeader);
         panel.add(panelThemes);
         return panel;
+    }
+
+    @Override
+    protected void setTranslations() {
+        
     }
 
     private JTabbedPane tabbedPane;

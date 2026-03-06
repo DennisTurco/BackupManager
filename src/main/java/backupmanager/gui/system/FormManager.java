@@ -6,10 +6,12 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.ColorFunctions;
 
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.gui.component.About;
 import backupmanager.gui.component.Subscription;
-import backupmanager.gui.forms.FormTable;
-import backupmanager.gui.frames.Login;
+import backupmanager.gui.forms.FormBackupTable;
+import backupmanager.gui.forms.FormLogin;
 import backupmanager.utils.UndoRedo;
 import raven.modal.Drawer;
 import raven.modal.ModalDialog;
@@ -20,7 +22,7 @@ public class FormManager {
     protected static final UndoRedo<Form> FORMS = new UndoRedo<>();
     private static JFrame frame;
     private static MainForm mainForm;
-    private static Login login;
+    private static FormLogin login;
 
     public static void install(JFrame f) {
         frame = f;
@@ -81,7 +83,7 @@ public class FormManager {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(getMainForm());
 
-        Drawer.setSelectedItemClass(FormTable.class);
+        Drawer.setSelectedItemClass(FormBackupTable.class);
         frame.repaint();
         frame.revalidate();
     }
@@ -108,21 +110,21 @@ public class FormManager {
         return mainForm;
     }
 
-    private static Login getLogin() {
+    private static FormLogin getLogin() {
         if (login == null) {
-            login = new Login();
+            login = new FormLogin();
         }
         return login;
     }
 
     public static void showAbout() {
-        ModalDialog.showModal(frame, new SimpleModalBorder(new About(), "About"),
+        ModalDialog.showModal(frame, new SimpleModalBorder(new About(), Translations.get(TKey.FILE)),
                 ModalDialog.createOption().setAnimationEnabled(false)
         );
     }
 
     public static void showSubscription() {
-        ModalDialog.showModal(frame, new SimpleModalBorder(new Subscription(), "Subscription"),
+        ModalDialog.showModal(frame, new SimpleModalBorder(new Subscription(), Translations.get(TKey.SUBSCRIPTION)),
                 ModalDialog.createOption().setAnimationEnabled(false)
         );
     }

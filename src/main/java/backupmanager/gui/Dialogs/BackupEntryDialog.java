@@ -13,18 +13,17 @@ import backupmanager.BackupOperations;
 import backupmanager.gui.Controllers.BackupEntryController;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
-import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Json.JsonConfig;
 
 public class BackupEntryDialog extends javax.swing.JDialog {
 
     private static final Logger logger = LoggerFactory.getLogger(BackupEntryDialog.class);
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private static final JsonConfig configReader = JsonConfig.getInstance();
 
     private final boolean create;
     private String backupOnText;
@@ -40,7 +39,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         initializeDialog();
         setAutoBackupOff();
         this.create = true;
-        okButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CREATE_BUTTON));
+        okButton.setText(TCategory.GENERAL.getTranslation(TKey.CREATE_BUTTON));
     }
 
     public BackupEntryDialog(java.awt.Frame parent, boolean modal, ConfigurationBackup currentBackup) {
@@ -54,7 +53,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
         backupNameField.setEditable(false);
         backupNameField.setFocusable(false);
         this.create = false;
-        okButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON));
+        okButton.setText(TCategory.GENERAL.getTranslation(TKey.SAVE_BUTTON));
     }
 
     private void setAutoBackupPreference(boolean option) {
@@ -93,7 +92,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     private void setLastBackupLabel(LocalDateTime date) {
         if (date != null) {
             String dateStr = date.format(BackupHelper.formatter);
-            dateStr = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.LAST_BACKUP) + ": " + dateStr;
+            dateStr = TCategory.BACKUP_ENTRY.getTranslation(TKey.LAST_BACKUP) + ": " + dateStr;
             lastBackupLabel.setText(dateStr);
         }
         else lastBackupLabel.setText("");
@@ -147,7 +146,7 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }
 
     private void disableTimePickerButton() {
-        btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
+        btnTimePicker.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.TIME_PICKER_TOOLTIP));
         btnTimePicker.setEnabled(false);
     }
 
@@ -197,28 +196,28 @@ public class BackupEntryDialog extends javax.swing.JDialog {
     }
 
     private void setTranslations() {
-        backupOnText = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_ON);
-        backupOffText = TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_OFF);
-        btnPathSearch1.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.INITIAL_FILE_CHOOSER_TOOLTIP));
-        btnPathSearch2.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.DESTINATION_FILE_CHOOSER_TOOLTIP));
-        startPathField.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.INITIAL_PATH_TOOLTIP));
-        destinationPathField.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.DESTINATION_PATH_TOOLTIP));
-        backupNoteTextArea.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.NOTES_TOOLTIP));
-        singleBackup.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_BUTTON));
-        singleBackup.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.SINGLE_BACKUP_TOOLTIP));
-        toggleAutoBackup.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_BUTTON_OFF));
-        toggleAutoBackup.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.AUTO_BACKUP_TOOLTIP));
-        jLabel2.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.NOTES) + ":");
-        lastBackupLabel.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.LAST_BACKUP) + ": ");
-        setTitle(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.PAGE_TITLE));
-        startPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.INITIAL_PATH_PLACEHOLDER));
-        destinationPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.DESTINATION_PATH_PLACEHOLDER));
-        btnTimePicker.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.TIME_PICKER_TOOLTIP));
-        maxBackupCountSpinner.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP_TOOLTIP) + "\n" + TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
-        jLabel4.setText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.MAX_BACKUPS_TO_KEEP));
-        closeButton.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON));
-        backupNameField.setToolTipText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.BACKUP_NAME_TOOLTIP));
-        backupNameField.setHintText(TranslationCategory.BACKUP_ENTRY.getTranslation(TranslationKey.BACKUP_NAME));
+        backupOnText = TCategory.BACKUP_ENTRY.getTranslation(TKey.AUTO_BACKUP_BUTTON_ON);
+        backupOffText = TCategory.BACKUP_ENTRY.getTranslation(TKey.AUTO_BACKUP_BUTTON_OFF);
+        btnPathSearch1.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.INITIAL_FILE_CHOOSER_TOOLTIP));
+        btnPathSearch2.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.DESTINATION_FILE_CHOOSER_TOOLTIP));
+        startPathField.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.INITIAL_PATH_TOOLTIP));
+        destinationPathField.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.DESTINATION_PATH_TOOLTIP));
+        backupNoteTextArea.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.NOTES_TOOLTIP));
+        singleBackup.setText(TCategory.BACKUP_ENTRY.getTranslation(TKey.SINGLE_BACKUP_BUTTON));
+        singleBackup.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.SINGLE_BACKUP_TOOLTIP));
+        toggleAutoBackup.setText(TCategory.BACKUP_ENTRY.getTranslation(TKey.AUTO_BACKUP_BUTTON_OFF));
+        toggleAutoBackup.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.AUTO_BACKUP_TOOLTIP));
+        jLabel2.setText(TCategory.BACKUP_ENTRY.getTranslation(TKey.NOTES) + ":");
+        lastBackupLabel.setText(TCategory.BACKUP_ENTRY.getTranslation(TKey.LAST_BACKUP) + ": ");
+        setTitle(TCategory.BACKUP_ENTRY.getTranslation(TKey.PAGE_TITLE));
+        startPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TCategory.BACKUP_ENTRY.getTranslation(TKey.INITIAL_PATH_PLACEHOLDER));
+        destinationPathField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TCategory.BACKUP_ENTRY.getTranslation(TKey.DESTINATION_PATH_PLACEHOLDER));
+        btnTimePicker.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.TIME_PICKER_TOOLTIP));
+        maxBackupCountSpinner.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.MAX_BACKUPS_TO_KEEP_TOOLTIP) + "\n" + TCategory.TIME_PICKER_DIALOG.getTranslation(TKey.SPINNER_TOOLTIP));
+        jLabel4.setText(TCategory.BACKUP_ENTRY.getTranslation(TKey.MAX_BACKUPS_TO_KEEP));
+        closeButton.setText(TCategory.GENERAL.getTranslation(TKey.CLOSE_BUTTON));
+        backupNameField.setToolTipText(TCategory.BACKUP_ENTRY.getTranslation(TKey.BACKUP_NAME_TOOLTIP));
+        backupNameField.setHintText(TCategory.BACKUP_ENTRY.getTranslation(TKey.BACKUP_NAME));
     }
 
     /**

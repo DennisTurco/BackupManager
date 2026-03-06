@@ -5,20 +5,20 @@ import java.awt.TrayIcon;
 import javax.swing.JOptionPane;
 
 import backupmanager.gui.Controllers.TrayController;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 
 public class SubscriptionNotifier {
     public static void showExpiringWarning(TrayController trayController) {
-        String title = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRING_TITLE);
-        String message = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRING_MESSAGE);
+        String title = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRING_TITLE);
+        String message = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRING_MESSAGE);
 
         showMessage(trayController, title, message, TrayIcon.MessageType.WARNING);
     }
 
     public static void showExpiredAlert(TrayController trayController) {
-        String title = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRED_TITLE);
-        String message = TranslationCategory.SUBSCRIPTION.getTranslation(TranslationKey.SUBSCRIPTION_EXPIRED_MESSAGE);
+        String title = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRED_TITLE);
+        String message = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRED_MESSAGE);
 
         showMessage(trayController, title, message, TrayIcon.MessageType.ERROR);
     }

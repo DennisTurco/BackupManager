@@ -11,6 +11,8 @@ import javax.swing.text.DefaultCaret;
 
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.SubscriptionStatus;
+import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Managers.WebsiteManager;
 import net.miginfocom.swing.MigLayout;
@@ -34,9 +36,7 @@ public class Subscription extends JPanel {
         String from = formatDate(subscription != null ? subscription.startDate() : null);
         String to   = formatDate(subscription != null ? subscription.endDate() : null);
 
-        JTextPane description = createHtmlPane(
-                buildHtml(status, statusString, from, to)
-        );
+        JTextPane description = createHtmlPane(buildHtml(status, statusString, from, to));
 
         add(description, "growx");
     }
@@ -80,25 +80,30 @@ public class Subscription extends JPanel {
         return """
                 <html>
                 <div>
-                    <b>Subscription status:</b>
+                    <b>%s:</b>
                     <span style="color:%s;"><b>%s</b></span>
                     <br><br>
 
-                    <b>Valid from:</b> %s<br>
-                    <b>Valid to:</b> %s<br>
+                    <b>%s:</b> %s<br>
+                    <b>%s:</b> %s<br>
 
                     <br>
-                    <a href="mailto:%s?subject=%s">Contact us</a>
-                    to extend the subscription period.
+                    <a href="mailto:%s?subject=%s">%s</a>
+                    %s
                 </div>
                 </html>
                 """.formatted(
+                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_STATUS),
                 statusColor,
                 statusText,
+                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_VALID_FROM),
                 validFrom,
+                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_VALID_TO),
                 validTo,
                 ConfigKey.EMAIL.getValue(),
-                subject
+                subject,
+                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_CONTACT_US),
+                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_TO_EXTEND)
         );
     }
 
