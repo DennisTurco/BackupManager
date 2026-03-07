@@ -26,6 +26,7 @@ import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.gui.Controllers.BackupEntryController;
+import backupmanager.gui.Table.BackupTableDataService;
 import net.miginfocom.swing.MigLayout;
 import raven.modal.ModalDialog;
 import raven.modal.component.ModalBorderAction;
@@ -37,13 +38,15 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
 
     private static final Logger logger = LoggerFactory.getLogger(BackupHelper.class);
     private final BackupEntryController entryController;
+    private final BackupTableDataService backupTable;
 
     private final boolean create;
     private String backupOnText;
     private String backupOffText;
 
-    public BackupEntryDialog() {
+    public BackupEntryDialog(BackupTableDataService backupTable) {
         entryController = new BackupEntryController(null);
+        this.backupTable = backupTable;
         create = true;
 
         build();
@@ -51,8 +54,9 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
         setAutoBackupOff();
     }
 
-    public BackupEntryDialog(ConfigurationBackup currentBackup) {
+    public BackupEntryDialog(BackupTableDataService backupTable, ConfigurationBackup currentBackup) {
         entryController = new BackupEntryController(currentBackup);
+        this.backupTable = backupTable;
         create = false;
 
         build();
@@ -189,7 +193,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
     private void executeBackup() {
         try {
             entryController.handleSingleBackupRequest(
-                null,
+                backupTable,
                 txtBackupName.getText(),
                 txtTargetPath.getText(),
                 txtDestinationPath.getText(),

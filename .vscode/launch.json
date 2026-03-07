@@ -6,79 +6,17 @@
     "configurations": [
         {
             "type": "java",
-            "name": "BackupManager",
-            "request": "launch",
-            "mainClass": "backupmanager.frames.BackupManager",
-            "projectName": "backupmanager"
-        },
-        {
-            "type": "java",
-            "name": "MainApp",
+            "name": "Backup Manager",
             "request": "launch",
             "mainClass": "backupmanager.MainApp",
             "projectName": "backupmanager"
-        },
-        {
-            "type": "java",
-            "name": "EncryptConfigFile",
-            "request": "launch",
-            "mainClass": "backupmanager.Email.EncryptConfigFile",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "ConfigReader",
-            "request": "launch",
-            "mainClass": "backupmanager.Email.ConfigReader",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "SidebarTest",
-            "request": "launch",
-            "mainClass": "test.SidebarTest",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "DecryptPassword",
-            "request": "launch",
-            "mainClass": "backupmanager.Email.DecryptPassword",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "EncryptPassword",
-            "request": "launch",
-            "mainClass": "backupmanager.Email.EncryptPassword",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Translations",
-            "request": "launch",
-            "mainClass": "backupmanager.Enums.Translations",
-            "projectName": "BackupManager"
-        },
-        {
-            "type": "java",
-            "name": "MainApp",
-            "request": "launch",
-            "mainClass": "backupmanager.MainApp",
-            "projectName": "BackupManager"
         },
         {
             "type": "java",
             "name": "Background service",
             "request": "launch",
             "mainClass": "backupmanager.MainApp",
-            "projectName": "BackupManager",
+            "projectName": "backupmanager",
             "args": "--background"
         }
     ]

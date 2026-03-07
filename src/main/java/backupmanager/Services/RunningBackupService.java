@@ -14,6 +14,7 @@ import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.utils.FolderUtils;
 
 public class RunningBackupService {
+
     public static Optional<BackupRequest> getRunningBackupByName(String backupName) {
         ConfigurationBackup config = BackupConfigurationRepository.getBackupByName(backupName);
         if (config == null) return Optional.empty();

@@ -3,8 +3,6 @@ package backupmanager.gui.Controllers;
 import java.awt.Frame;
 import java.io.IOException;
 
-import javax.swing.JFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +11,10 @@ import backupmanager.Enums.SubscriptionStatus;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Helpers.SubscriptionNotifier;
 import backupmanager.Services.BackgroundService;
-import backupmanager.gui.frames.BackupManagerGUI;
+import backupmanager.gui.frames.BackupManager;
 
 public class AppController {
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
-
-    private BackupManagerGUI guiInstance;
 
     private final BackgroundService backgroundService;
     private final TrayController trayController;
@@ -69,18 +65,14 @@ public class AppController {
 
     private void openGui() {
         logger.info("Opening main GUI");
+        BackupManager frame = BackupManager.getInstance();
 
-        if (guiInstance == null) {
-            guiInstance = new BackupManagerGUI();
-            guiInstance.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
+        frame.setVisible(true);
+        frame.toFront();
+        frame.requestFocus();
 
-        guiInstance.setVisible(true);
-        guiInstance.toFront();
-        guiInstance.requestFocus();
-
-        if (guiInstance.getState() == Frame.ICONIFIED) {
-            guiInstance.setState(Frame.NORMAL);
+        if (frame.getState() == Frame.ICONIFIED) {
+            frame.setState(Frame.NORMAL);
         }
     }
 

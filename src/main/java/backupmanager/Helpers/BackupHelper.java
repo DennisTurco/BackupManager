@@ -17,12 +17,11 @@ import backupmanager.Enums.Translations.TCategory;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.Dialogs.BackupEntryDialog;
-import backupmanager.gui.Dialogs.TimePicker;
 import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.Table.TableDataManager;
-import backupmanager.gui.frames.BackupManagerGUI;
+import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
+import backupmanager.gui.simple.BackupEntryDialog;
+import backupmanager.gui.simple.TimePickerDialog;
 
 public class BackupHelper {
 
@@ -30,20 +29,15 @@ public class BackupHelper {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void openBackupById(int id, java.awt.Frame frame) {
+    public static void openBackupById(BackupTableDataService backupTable, int id) {
         logger.info("Event --> opening backup");
 
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
-        dialog.setVisible(true);
+        openBackupEntryDialog(backupTable, backup);
     }
 
-    public static void newBackup(BackupProgressGUI progressBar, java.awt.Frame frame) {
+    public static void newBackup(BackupProgressGUI progressBar) {
         logger.info("Event --> new backup");
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
-        dialog.setVisible(true);
     }
 
     public static void newBackup(ConfigurationBackup backup) {
@@ -115,14 +109,14 @@ public class BackupHelper {
 
     public static List<ConfigurationBackup> getBackupList() {
         List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
-        BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
+        // BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
         return backups;
     }
 
-    public static TimeInterval openTimePicker(java.awt.Dialog parent, TimeInterval time) {
-        TimePicker picker = new TimePicker(parent, time, true);
+    public static TimeInterval openTimePicker(TimeInterval time) {
+        TimePickerDialog picker = new TimePickerDialog(time);
         picker.setVisible(true);
-        return picker.getTimeInterval();
+        return picker.getResult();
     }
 
     public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
@@ -138,17 +132,8 @@ public class BackupHelper {
                 "AutoBackup", 1);
     }
 
-    public static void openBackupByName(String backupName, java.awt.Frame frame) {
-        logger.info("Event --> opening backup");
-
-        ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backupName);
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
-        dialog.setVisible(true);
-    }
-
-    public static void openBackupEntryDialog(java.awt.Frame frame) {
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
+    public static void openBackupEntryDialog(BackupTableDataService backupTable, ConfigurationBackup backup) {
+        BackupEntryDialog dialog = new BackupEntryDialog(backupTable, backup);
         dialog.setVisible(true);
     }
 
@@ -165,8 +150,8 @@ public class BackupHelper {
     }
 
     private static void updateBackupTable() {
-        if (BackupManagerGUI.model != null)
-            TableDataManager.updateTableWithNewBackupList(getBackupList(), formatter);
+        // if (BackupManagerGUI.model != null)
+        //     TableDataManager.updateTableWithNewBackupList(getBackupList());
     }
 
     public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
@@ -198,7 +183,7 @@ public class BackupHelper {
             if (backup.getName() == null || backup.getName().isEmpty()) return null;
 
             // message
-            TimeInterval timeInterval = openTimePicker(null, null);
+            TimeInterval timeInterval = openTimePicker(null);
             if (timeInterval == null) return null;
 
             //set date for next backup

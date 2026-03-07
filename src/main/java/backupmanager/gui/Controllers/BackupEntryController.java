@@ -1,5 +1,6 @@
 package backupmanager.gui.Controllers;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
+import backupmanager.Entities.BackupExecutionContext;
+import backupmanager.Entities.BackupUIContext;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
@@ -19,8 +22,7 @@ import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.frames.BackupManagerGUI;
+import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
 
 public class BackupEntryController {
@@ -60,9 +62,8 @@ public class BackupEntryController {
         }
     }
 
-    @Deprecated
-    public TimeInterval handleTimePickerAction(javax.swing.JDialog dialog, String target, String destination) throws InvalidTimeInterval {
-        TimeInterval time = BackupHelper.openTimePicker(dialog, currentBackup.getTimeIntervalBackup());
+    public TimeInterval handleTimePickerAction(String target, String destination) throws InvalidTimeInterval {
+        TimeInterval time = BackupHelper.openTimePicker(currentBackup.getTimeIntervalBackup());
         if (time == null) throw new InvalidTimeInterval();
 
         LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
@@ -125,7 +126,7 @@ public class BackupEntryController {
         return false;
     }
 
-    public void handleSingleBackupRequest(BackupTable backupTable, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) throws BackupAlreadyRunningException {
+    public void handleSingleBackupRequest(BackupTableDataService backupTable, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) throws BackupAlreadyRunningException {
         if (BackupRequestRepository.isAnyBackupRunning()) {
             JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
             throw new BackupAlreadyRunningException();
@@ -139,7 +140,7 @@ public class BackupEntryController {
         singleBackup(initialPath, destinationPath, backupTable);
     }
 
-    private void singleBackup(String target, String destination, BackupTable backupTable) {
+    private void singleBackup(String target, String destination, BackupTableDataService backupTable) {
         logger.info("Event --> single backup");
 
         String path1 = target;
@@ -147,22 +148,14 @@ public class BackupEntryController {
 
         currentBackup.setTargetPath(path2);
 
-        String temp = "\\";
-
         if (!BackupOperations.checkInputCorrect(currentBackup.getName(), path1, path2, null)) return;
 
         LocalDateTime dateNow = LocalDateTime.now();
 
-        String name1; // folder name/initial file
         String date = dateNow.format(BackupHelper.dateForfolderNameFormatter);
 
         //------------------------------SET ALL THE STRINGS------------------------------
-        name1 = path1.substring(path1.length()-1, path1.length()-1);
-
-        for(int i=path1.length()-1; i>=0; i--) {
-            if(path1.charAt(i) != temp.charAt(0)) name1 = path1.charAt(i) + name1;
-            else break;
-        }
+        String name1 = new File(path1).getName();
 
         name1 = BackupOperations.removeExtension(name1);
         path2 = path2 + "\\" + name1 + " (Backup " + date + ")";
@@ -170,10 +163,13 @@ public class BackupEntryController {
         //------------------------------COPY THE FILE OR DIRECTORY------------------------------
         logger.info("date backup: " + date);
 
-        BackupManagerGUI.progressBar = new BackupProgressGUI(path1, path2);
-        BackupManagerGUI.progressBar.setVisible(true);
+        BackupProgressGUI progressBar = new BackupProgressGUI(path1, path2);
+        progressBar.setVisible(true);
 
-        ZippingContext context = ZippingContext.create(currentBackup, null, backupTable, BackupManagerGUI.progressBar, null, null);
+        ZippingContext context = new ZippingContext(
+            BackupExecutionContext.create(currentBackup),
+            new BackupUIContext(null, backupTable, progressBar, null, null)
+        );
 
         BackupOperations.executeBackup(context, BackupTriggerType.USER, path1, path2);
 

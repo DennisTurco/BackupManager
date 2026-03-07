@@ -34,7 +34,6 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.ScaledEmptyBorder;
 
 import backupmanager.gui.component.AccentColorIcon;
-import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.gui.system.FormManager;
 import backupmanager.gui.themes.PanelThemes;
 import backupmanager.utils.DemoPreferences;
@@ -56,7 +55,7 @@ import raven.modal.option.Option;
 @SystemForm(name = "Setting", description = "application setting and configuration", tags = {"themes", "options"})
 public class FormSetting extends CustomForm {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackupManagerGUI.class);
+    private static final Logger logger = LoggerFactory.getLogger(FormSetting.class);
 
     public FormSetting() {
         build();

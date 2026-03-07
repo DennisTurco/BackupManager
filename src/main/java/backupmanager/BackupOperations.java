@@ -27,31 +27,41 @@ import backupmanager.Enums.Translations.TCategory;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
-import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.Table.TableDataManager;
-import backupmanager.gui.frames.BackupManagerGUI;
 import backupmanager.utils.FolderUtils;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
-    public static void singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
-        if (context.backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
+
+    public static void requestSingleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
+        switch (triggeredBy) {
+            case USER -> {
+                if (!BackupRequestRepository.isAnyBackupRunning())
+                    singleBackup(context, triggeredBy);
+                else
+                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
+            }
+            case SCHEDULER -> singleBackup(context, triggeredBy);
+        }
+    }
+
+    private static void singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
+        if (context.execution().backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
 
         logger.info("Event --> manual backup started");
 
         try {
-            String path1 = context.backup().getTargetPath();
-            String path2 = context.backup().getDestinationPath();
+            String path1 = context.execution().backup().getTargetPath();
+            String path2 = context.execution().backup().getDestinationPath();
 
-            if(!checkInputCorrect(context.backup().getName(), path1, path2, context.trayIcon()))
+            if(!checkInputCorrect(context.execution().backup().getName(), path1, path2, context.ui().trayIcon()))
                 return;
 
-            if (context.progressBar() != null)
-                context.progressBar().setVisible(true);
+            if (context.ui().progressBar() != null)
+                context.ui().progressBar().setVisible(true);
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
@@ -82,7 +92,7 @@ public class BackupOperations {
 
     private static void createBackupRequest(ZippingContext context, BackupTriggerType triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
         long targetSize = FolderUtils.calculateFileOrFolderSize(sourceFile.getAbsolutePath());
-        BackupRequestRepository.insertBackupRequest(BackupRequest.createNewBackupRequest(context.backup().getId(), triggeredBy, outputFile.getAbsolutePath(), targetSize, totalFilesCount));
+        BackupRequestRepository.insertBackupRequest(BackupRequest.createNewBackupRequest(context.execution().backup().getId(), triggeredBy, outputFile.getAbsolutePath(), targetSize, totalFilesCount));
     }
 
     public static String removeExtension(String fileName) {
@@ -93,7 +103,7 @@ public class BackupOperations {
     }
 
     private static void updateAfterBackup(String path1, String path2, ZippingContext context) {
-        if (context.backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
+        if (context.execution().backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
         if (path1 == null) throw new IllegalArgumentException("Initial path cannot be null!");
         if (path2 == null) throw new IllegalArgumentException("Destination path cannot be null!");
 
@@ -102,31 +112,31 @@ public class BackupOperations {
         reEnableButtonsAndTable(context);
 
         // next day backup update
-        if (context.backup().isAutomatic() == true) {
-            TimeInterval time = context.backup().getTimeIntervalBackup();
+        if (context.execution().backup().isAutomatic()) {
+            TimeInterval time = context.execution().backup().getTimeIntervalBackup();
             LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
-            context.backup().setNextBackupDate(nextDateBackup);
+            context.execution().backup().setNextBackupDate(nextDateBackup);
             logger.info("Next date backup setted to: " + nextDateBackup);
         }
-        context.backup().setLastBackupDate(LocalDateTime.now());
-        context.backup().setCount(context.backup().getCount()+1);
+        context.execution().backup().setLastBackupDate(LocalDateTime.now());
+        context.execution().backup().setCount(context.execution().backup().getCount()+1);
 
         try {
             List<ConfigurationBackup> backups = BackupHelper.getBackupList();
 
             for (ConfigurationBackup b : backups) {
-                if (b.getName().equals(context.backup().getName())) {
-                    b.updateBackup(context.backup());
+                if (b.getName().equals(context.execution().backup().getName())) {
+                    b.updateBackup(context.execution().backup());
                     break;
                 }
             }
 
-            BackupHelper.updateBackup(context.backup());
+            BackupHelper.updateBackup(context.execution().backup());
 
-            logger.info("Backup :\"" + context.backup().getName() + "\" updated after the backup");
+            logger.info("Backup :\"" + context.execution().backup().getName() + "\" updated after the backup");
 
-            if (context.trayIcon() != null)
-                context.trayIcon().displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + context.backup().getName() + TCategory.TRAY_ICON.getTranslation(TKey.SUCCESS_MESSAGE) + "\n" + TCategory.GENERAL.getTranslation(TKey.FROM) + ": " + path1 + "\n" + TCategory.GENERAL.getTranslation(TKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
+            if (context.ui().trayIcon() != null)
+                context.ui().trayIcon().displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + context.execution().backup().getName() + TCategory.TRAY_ICON.getTranslation(TKey.SUCCESS_MESSAGE) + "\n" + TCategory.GENERAL.getTranslation(TKey.FROM) + ": " + path1 + "\n" + TCategory.GENERAL.getTranslation(TKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
@@ -185,31 +195,31 @@ public class BackupOperations {
         if (ZippingThread.isInterrupted())
             reEnableButtonsAndTable(context);
 
-        if (context.progressBar() != null)
-            context.progressBar().dispose();
+        if (context.ui().progressBar() != null)
+            context.ui().progressBar().dispose();
     }
 
     public static void reEnableButtonsAndTable(ZippingContext context) {
-        if (context.interruptBackupPopupItem() != null) context.interruptBackupPopupItem().setEnabled(false);
-        if (context.deleteBackupPopupItem() != null) context.deleteBackupPopupItem().setEnabled(true);
+        if (context.ui().interruptBackupPopupItem() != null) context.ui().interruptBackupPopupItem().setEnabled(false);
+        if (context.ui().deleteBackupPopupItem() != null) context.ui().deleteBackupPopupItem().setEnabled(true);
 
-        RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.backup().getId());
+        RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.execution().backup().getId());
 
-        if (BackupManagerGUI.backupTable != null)
-            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(context.backup(), formatter);
+        if (context.ui().backupTableService() != null)
+            context.ui().backupTableService().removeProgress(context.execution().backup());
     }
 
     public static void updateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             logger.info("Zipping progress: " + value + "%");
 
-        if (context.progressBar() != null)
-            context.progressBar().updateProgressBar(value, fileProcessed, filesCopiedSoFar, totalFilesCount);
+        if (context.ui().progressBar() != null)
+            context.ui().progressBar().updateProgressBar(value, fileProcessed, filesCopiedSoFar, totalFilesCount);
 
-        if (BackupManagerGUI.backupTable != null)
-            TableDataManager.updateProgressBarPercentage(context.backup(), value, formatter);
+        if (context.ui().backupTableService() != null)
+            context.ui().backupTableService().updateProgress(context.execution().backup(), value);
 
-        BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.backup().getId());
+        BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.execution().backup().getId());
         if (request != null) {
 
             if (value < 100)
@@ -218,7 +228,7 @@ public class BackupOperations {
                 RunningBackupService.updateBackupZippedFolderSizeById(request.backupRequestId(), path2);
 
                 updateAfterBackup(path1, path2, context);
-                deleteOldBackupsIfNecessary(context.backup().getMaxToKeep(), path2);
+                deleteOldBackupsIfNecessary(context.execution().backup().getMaxToKeep(), path2);
             }
         }
     }
@@ -280,10 +290,8 @@ public class BackupOperations {
         List<BackupRequest> requests = BackupRequestRepository.getRunningBackups();
         if (requests != null) {
             for (BackupRequest request : requests) {
-                boolean deleted = deletePartialBackup(request.outputPath());
-                if (deleted) {
-                    BackupHelper.forceBackupTermination(request.backupRequestId());
-                }
+                deletePartialBackup(request.outputPath());
+                BackupHelper.forceBackupTermination(request.backupRequestId());
             }
         }
     }

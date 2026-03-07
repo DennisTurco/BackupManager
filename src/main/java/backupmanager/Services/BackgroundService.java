@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
+import backupmanager.Entities.BackupExecutionContext;
 import backupmanager.Entities.BackupRequest;
+import backupmanager.Entities.BackupUIContext;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
@@ -115,8 +117,11 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 try {
                     for (ConfigurationBackup backup : backups) {
-                        ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null);
-                        BackupOperations.singleBackup(context, BackupTriggerType.SCHEDULER);
+                        ZippingContext context = new ZippingContext(
+                            BackupExecutionContext.create(backup),
+                            new BackupUIContext(trayIcon.getTrayIcon(), null, null, null, null)
+                        );
+                        BackupOperations.requestSingleBackup(context, BackupTriggerType.SCHEDULER);
                     }
                 } finally {
                     logger.info("All backups completed. Resetting isBackingUp flag.");

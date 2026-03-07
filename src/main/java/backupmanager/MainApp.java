@@ -13,7 +13,6 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
-import backupmanager.gui.Controllers.AppController;
 import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
@@ -21,6 +20,7 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
+import backupmanager.gui.Controllers.AppController;
 import backupmanager.gui.frames.BackupManager;
 import backupmanager.utils.DemoPreferences;
 
@@ -96,7 +96,7 @@ public class MainApp {
             UIManager.put("defaultFont", FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
             DemoPreferences.setupLaf();
 
-            BackupManager frame = new BackupManager();
+            BackupManager frame = BackupManager.getInstance();
             frame.setVisible(true);
         });
     }

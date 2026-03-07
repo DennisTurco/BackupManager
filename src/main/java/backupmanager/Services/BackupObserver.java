@@ -1,6 +1,5 @@
 package backupmanager.Services;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -14,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.gui.Table.TableDataManager;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.Table.BackupTableDataService;
 
 /*
  * I need a task that constantly checks if there are something running and i can't use a simple method calls instead because
@@ -27,12 +26,12 @@ public class BackupObserver {
     private static final Logger logger = LoggerFactory.getLogger(BackupObserver.class);
 
     private final ScheduledExecutorService scheduler;
-    private final DateTimeFormatter formatter;
+    private final BackupTableDataService tableService;
     private final long millisecondsToWait;
 
-    public BackupObserver(DateTimeFormatter formatter, int millisecondsToWait) {
+    public BackupObserver(BackupTableDataService tableService, int millisecondsToWait) {
+        this.tableService = tableService;
         this.millisecondsToWait = millisecondsToWait;
-        this.formatter = formatter;
         this.scheduler = Executors.newSingleThreadScheduledExecutor(); // create single thread
     }
 
@@ -57,9 +56,9 @@ public class BackupObserver {
                         BackupRequest updatedRequest = BackupRequestRepository.getBackupRequestById(request.backupRequestId());
 
                         if (updatedRequest != null && updatedRequest.progress() < 99) {
-                            TableDataManager.updateProgressBarPercentage(config, updatedRequest.progress(), formatter);
+                            tableService.updateProgress(config, updatedRequest.progress());
                         } else {
-                            TableDataManager.removeProgressInTheTableAndRestoreAsDefault(config, formatter);
+                            tableService.removeProgress(config);
                         }
                     });
                 }

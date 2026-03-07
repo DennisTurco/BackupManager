@@ -15,13 +15,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,6 +37,8 @@ import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Services.BackupService;
+import backupmanager.gui.Table.BackupTable;
+import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.Controllers.BackupManagerController;
 import backupmanager.gui.frames.Controllers.BackupPopupController;
 import backupmanager.gui.sample.csv.ConfigurationBackupDataTable;
@@ -52,18 +53,15 @@ public class FormBackupTable extends CustomForm {
 
     private static final Logger logger = LoggerFactory.getLogger(FormBackupTable.class);
 
-    private final BackupManagerController managerController;
+    private BackupManagerController managerController;
+    private BackupTableDataService tableService;
     private final int COL_LAST_RUN = 3;
     private final int COL_AUTOMATIC = 4;
     private final int COL_NEXT_RUN = 5;
 
-    private final BackupService backupService;
     private List<ConfigurationBackup> backups;
 
     public FormBackupTable() {
-        backupService = new BackupService();
-        managerController = new BackupManagerController(backupService);
-
         build();
     }
 
@@ -86,12 +84,15 @@ public class FormBackupTable extends CustomForm {
 
         backupTable.createDefaultColumnsFromModel();
 
+        tableService = new BackupTableDataService(backupTable, formatter);
+        managerController = new BackupManagerController(new BackupService(), tableService);
+
         formRefresh();
     }
 
     @Override
     public void formRefresh() {
-        backups = backupService.getAllBackups();
+        backups = managerController.getAllBackups();
         loadData();
     }
 
@@ -128,36 +129,27 @@ public class FormBackupTable extends CustomForm {
         ));
 
         // create table model
-        JTable table = new JTable();
-        table.setModel(new DefaultTableModel() {
+        BackupTable table = new BackupTable(
+            new DefaultTableModel() {
 
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-
-                if (columnIndex == COL_AUTOMATIC) {
-                    return Boolean.class;
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    if (columnIndex == COL_AUTOMATIC)
+                        return Boolean.class;
+                    if (columnIndex == COL_LAST_RUN || columnIndex == COL_NEXT_RUN)
+                        return LocalDateTime.class;
+                    if (columnIndex == 6)
+                        return TimeInterval.class;
+                    if (columnIndex == 7)
+                        return Integer.class;
+                    return String.class;
                 }
 
-                if (columnIndex == COL_LAST_RUN || columnIndex == COL_NEXT_RUN) {
-                    return LocalDateTime.class;
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
                 }
-
-                if (columnIndex == 6) {
-                    return TimeInterval.class;
-                }
-
-                if (columnIndex == 7) {
-                    return Integer.class;
-                }
-
-                return String.class;
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
+            });
 
         table.putClientProperty(FlatClientProperties.STYLE, "rowHeight:34; showHorizontalLines:false;");
 
@@ -165,7 +157,7 @@ public class FormBackupTable extends CustomForm {
             if (!e.getValueIsAdjusting()) {
                 int row = table.getSelectedRow();
                 if (row != -1) {
-                    String details = backupService.buildDetails(backups.get(row));
+                    String details = managerController.buildDetails(backups.get(row));
                     txtDetails.setText(details);
                 }
             }
@@ -399,13 +391,13 @@ public class FormBackupTable extends CustomForm {
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
         switch (action) {
-            case "EDIT" -> BackupPopupController.popupItemEditBackupName(backup);
+            case "EDIT" -> BackupPopupController.popupItemEditBackupName(tableService, backup);
             case "DELETE" -> BackupHelper.deleteBackup(backup);
             case "DUPLICATE" -> BackupPopupController.popupItemDuplicateBackup(backup);
             case "RENAME" -> BackupPopupController.popupItemRenameBackup(backups, backup);
             case "OPEN_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
             case "OPEN_DEST" -> BackupPopupController.popupItemOpenDestinationPath(backup);
-            case "RUN_SINGLE" -> BackupPopupController.popupItemRunBackup(backup, backupTable, interruptBackupPopupItem, RunBackupPopupItem);
+            case "RUN_SINGLE" -> BackupPopupController.popupItemRunBackup(backup, tableService, interruptBackupPopupItem, RunBackupPopupItem);
             case "COPY_NAME" -> BackupPopupController.popupItemCopyBackupName(backup);
             case "COPY_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
             case "COPY_DEST" -> BackupPopupController.popupItemCopyDestinationPath(backup);
@@ -478,7 +470,7 @@ public class FormBackupTable extends CustomForm {
                     return;
 
                 String research = txtSearch.getText();
-                backups = backupService.getAllBackups();
+                backups = managerController.getAllBackups();
                 backups = managerController.researchInTableAndGet(backups, research);
                 loadData();
             }
@@ -556,7 +548,7 @@ public class FormBackupTable extends CustomForm {
 
     private final int limit = 50;
     private JPagination pagination;
-    private JTable backupTable;
+    private BackupTable backupTable;
     private JLabel lbTotalPage;
     private JTextPane txtDetails;
     private JTextField txtSearch;

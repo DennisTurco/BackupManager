@@ -12,8 +12,18 @@ import backupmanager.gui.system.FormManager;
 import raven.modal.Drawer;
 
 public class BackupManager extends JFrame{
-    public BackupManager() {
+
+    private static BackupManager instance;
+
+    private BackupManager() {
         init();
+    }
+
+    public static synchronized BackupManager getInstance() {
+        if (instance == null) {
+            instance = new BackupManager();
+        }
+        return instance;
     }
 
     private void init() {
