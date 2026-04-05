@@ -6,12 +6,14 @@ import javax.swing.JLabel;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import net.miginfocom.swing.MigLayout;
 
 public class FormSearchButton extends JButton {
 
     public FormSearchButton() {
-        super("Quick Search...", new FlatSVGIcon("icons/search.svg", 0.4f));
+        super(Translations.get(TKey.QUICK_SEARCH), new FlatSVGIcon("icons/search.svg", 0.4f));
         init();
     }
 

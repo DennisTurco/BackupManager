@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -80,16 +82,14 @@ public class BackupPopupController {
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
     }
 
-    public static void popupItemEditBackupName(BackupTableDataService backupTable, ConfigurationBackup backup) {
-        BackupHelper.openBackupById(backupTable, backup.getId());
-    }
-
     public static void popupItemDuplicateBackup(ConfigurationBackup backup) {
         logger.info("Event --> duplicating backup");
 
+        int value = getIncrementalBackupNameValue(backup.getName());
+
         LocalDateTime dateNow = LocalDateTime.now();
         ConfigurationBackup newBackup = new ConfigurationBackup(
-                backup.getName() + "_copy",
+                backup.getName() + "(" + value + ")",
                 backup.getTargetPath(),
                 backup.getDestinationPath(),
                 null,
@@ -104,6 +104,25 @@ public class BackupPopupController {
         );
 
         BackupConfigurationRepository.insertBackup(newBackup);
+    }
+
+    private static int getIncrementalBackupNameValue(String backupName) {
+        var backups = BackupConfigurationRepository.getBackupList();
+        int max = 0;
+
+        Pattern pattern = Pattern.compile(
+                Pattern.quote(backupName) + "\\((\\d+)\\)$"
+        );
+
+        for (var backup : backups) {
+            Matcher matcher = pattern.matcher(backup.getName());
+            if (matcher.find()) {
+                int value = Integer.parseInt(matcher.group(1));
+                max = Math.max(max, value);
+            }
+        }
+
+        return max + 1;
     }
 
     private static void renameBackup(List<ConfigurationBackup> backups, ConfigurationBackup backup) {

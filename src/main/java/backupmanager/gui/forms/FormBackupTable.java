@@ -1,7 +1,6 @@
 package backupmanager.gui.forms;
 
 import java.awt.Component;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -41,12 +39,10 @@ import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.Controllers.BackupManagerController;
 import backupmanager.gui.frames.Controllers.BackupPopupController;
-import backupmanager.gui.sample.csv.ConfigurationBackupDataTable;
 import backupmanager.gui.svg.SVGButton;
 import backupmanager.utils.SystemForm;
 import backupmanager.utils.table.TableHeaderAlignment;
 import net.miginfocom.swing.MigLayout;
-import raven.swingpack.JPagination;
 
 @SystemForm(name = "Table", description = "table is a user interface component", tags = {"list"})
 public class FormBackupTable extends CustomForm {
@@ -98,20 +94,14 @@ public class FormBackupTable extends CustomForm {
 
     @Override
     protected void loadData() {
-        loadTable(pagination.getSelectedPage());
-    }
+        if (backups == null)
+            return;
 
-    private void loadTable(int page) {
-        if (backups != null) {
-            ConfigurationBackupDataTable res = ConfigurationBackupDataTable.create(backups, page, limit);
-            lbTotalPage.setText(DecimalFormat.getInstance().format(res.getTotal()));
-            pagination.getModel().setPageRange(res.getPage(), res.getPageSize());
+        DefaultTableModel model = (DefaultTableModel) backupTable.getModel();
+        model.setRowCount(0);
 
-            DefaultTableModel model = (DefaultTableModel) backupTable.getModel();
-            model.setRowCount(0);
-            for (ConfigurationBackup backup : res.getData()) {
-                model.addRow(backup.toTableRow());
-            }
+        for (ConfigurationBackup backup : backups) {
+            model.addRow(backup.toTableRow());
         }
     }
 
@@ -123,9 +113,9 @@ public class FormBackupTable extends CustomForm {
 
     private Component createBasicTable() {
         JPanel panelTable = new JPanel(new MigLayout(
-            "fill,wrap,insets 10 0 10 0",
+            "fill,wrap,insets 10 10 10 10",
             "[fill]",
-            "[][grow,fill][]"
+            "[][grow,fill]"
         ));
 
         // create table model
@@ -229,22 +219,6 @@ public class FormBackupTable extends CustomForm {
         // create title
         panelTable.add(createHeaderAction());
         panelTable.add(scrollPane, "grow, pushy");
-
-        // create pagination
-        pagination = new JPagination(11, 1, 1);
-        pagination.setMinimumSize(pagination.getPreferredSize());
-        pagination.addChangeListener(e -> loadData());
-        JPanel panelPage = new JPanel(new MigLayout("insets 5 15 5 15", "[][]push[pref!]"));
-        lbTotalPage = new JLabel("0");
-        pagination.putClientProperty(FlatClientProperties.STYLE, "" +
-                "background:null;");
-        panelPage.putClientProperty(FlatClientProperties.STYLE, "" +
-                "background:null;");
-        panelPage.add(new JLabel("Total:"));
-        panelPage.add(lbTotalPage);
-        panelPage.add(pagination);
-
-        panelTable.add(panelPage, "growx");
 
         backupTable = table;
 
@@ -391,11 +365,11 @@ public class FormBackupTable extends CustomForm {
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
         switch (action) {
-            case "EDIT" -> BackupPopupController.popupItemEditBackupName(tableService, backup);
+            case "EDIT" -> showEditModal(backup);
             case "DELETE" -> BackupHelper.deleteBackup(backup);
             case "DUPLICATE" -> BackupPopupController.popupItemDuplicateBackup(backup);
             case "RENAME" -> BackupPopupController.popupItemRenameBackup(backups, backup);
-            case "OPEN_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
+            case "OPEN_TARGET" -> BackupPopupController.popupItemOpenInitialPath(backup);
             case "OPEN_DEST" -> BackupPopupController.popupItemOpenDestinationPath(backup);
             case "RUN_SINGLE" -> BackupPopupController.popupItemRunBackup(backup, tableService, interruptBackupPopupItem, RunBackupPopupItem);
             case "COPY_NAME" -> BackupPopupController.popupItemCopyBackupName(backup);
@@ -546,10 +520,7 @@ public class FormBackupTable extends CustomForm {
         itemCopyDestinationPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_DESTINATION_PATH_BACKUP));
     }
 
-    private final int limit = 50;
-    private JPagination pagination;
     private BackupTable backupTable;
-    private JLabel lbTotalPage;
     private JTextPane txtDetails;
     private JTextField txtSearch;
     private SVGButton cmdCreate;

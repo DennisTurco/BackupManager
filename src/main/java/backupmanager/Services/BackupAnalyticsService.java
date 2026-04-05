@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -59,36 +60,41 @@ public class BackupAnalyticsService {
                         .collect(Collectors.groupingBy(
                                 r -> r.startedDate().toLocalDate(),
                                 Collectors.averagingDouble(
-                                        BackupRequest::durationMs
+                                        r -> r.durationMs() / 60000.0
                                 )));
 
         return new BackupAnalyticsSnapshot(total, successCount, failedCount, successRate, avgDuration, avgCompressionRate, diskUsage, durationTrend);
     }
 
-    public static XYDataset buildRequestTrendDataset(List<BackupRequest> requests) {
+    public static CategoryDataset buildRequestsPerMonthDataset(List<BackupRequest> requests, String title) {
 
-        TimeSeries series = new TimeSeries("Backup Requests Trend");
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        if (requests == null || requests.isEmpty())
-            return new TimeSeriesCollection(series);
+        LocalDate now = LocalDate.now();
+        LocalDate oneYearAgo = now.minusMonths(11).withDayOfMonth(1);
 
-        Map<LocalDate, Long> aggregation = requests.stream()
+        Map<String, Long> map = requests.stream()
+                .filter(r -> !r.startedDate().toLocalDate().isBefore(oneYearAgo))
                 .collect(Collectors.groupingBy(
-                        r -> r.startedDate().toLocalDate(),
+                        r -> {
+                            var d = r.startedDate();
+                            return d.getYear() + "-" + String.format("%02d", d.getMonthValue());
+                        },
                         Collectors.counting()
                 ));
 
-        aggregation.forEach((date, count) ->
-                series.add(
-                        new Day(
-                                date.getDayOfMonth(),
-                                date.getMonthValue(),
-                                date.getYear()
-                        ),
-                        count
-                ));
+        List<String> last12Months = IntStream.rangeClosed(0, 11)
+                .mapToObj(i -> {
+                    LocalDate month = oneYearAgo.plusMonths(i);
+                    return month.getYear() + "-" + String.format("%02d", month.getMonthValue());
+                })
+                .toList();
 
-        return new TimeSeriesCollection(series);
+        for (String month : last12Months) {
+            dataset.addValue(map.getOrDefault(month, 0L), title, month);
+        }
+
+        return dataset;
     }
 
     public static CategoryDataset buildStatusCategoryDataset(List<BackupRequest> requests) {
@@ -182,19 +188,25 @@ public class BackupAnalyticsService {
         return bytes / (1024L * 1024 * 1024) + " GB";
     }
 
-    public static XYDataset buildDurationTrendDataset(Map<LocalDate, Double> trendMap) {
+    public static XYDataset buildDurationTrendDataset(Map<LocalDate, Double> trendMap, String title) {
 
-        TimeSeries series = new TimeSeries("Average Backup Duration");
+        TimeSeries series = new TimeSeries(title);
 
-        trendMap.forEach((date, value) ->
+        LocalDate today = LocalDate.now();
+        LocalDate thirtyDaysAgo = today.minusDays(29);
+
+        trendMap.entrySet().stream()
+            .filter(entry -> !entry.getKey().isBefore(thirtyDaysAgo))
+            .sorted(Map.Entry.comparingByKey())
+            .forEach(entry -> {
+                LocalDate date = entry.getKey();
+                Double value = entry.getValue();
+
                 series.add(
-                        new Day(
-                                date.getDayOfMonth(),
-                                date.getMonthValue(),
-                                date.getYear()
-                        ),
-                        value
-                ));
+                    new Day(date.getDayOfMonth(), date.getMonthValue(), date.getYear()),
+                    value
+                );
+            });
 
         return new TimeSeriesCollection(series);
     }

@@ -15,21 +15,17 @@ import com.formdev.flatlaf.util.LoggingFacade;
 
 import backupmanager.gui.themes.PanelThemes;
 
-public class DemoPreferences {
+public class AppPreferences {
 
-    public static final String PREFERENCES_ROOT_PATH = "/raven-flatlaf-demo";
+    public static final String PREFERENCES_ROOT_PATH = "/BackupManager";
     public static final String KEY_LAF = "laf";
     public static final String KEY_LAF_THEME = "lafTheme";
     public static final String KEY_ACCENT_COLOR = "accent";
     public static final String KEY_RECENT_SEARCH = "recentSearch";
     public static final String KEY_RECENT_SEARCH_FAVORITE = "recentSearchFavorite";
-
     public static final String RESOURCE_PREFIX = "res:";
-
     public static final String THEME_UI_KEY = "__RaVen.flatlaf.demo.theme";
-
     public static Color accentColor;
-
     private static Preferences state;
 
     public static Preferences getState() {

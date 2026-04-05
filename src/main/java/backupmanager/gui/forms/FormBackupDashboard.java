@@ -22,6 +22,8 @@ import com.formdev.flatlaf.util.UIScale;
 import backupmanager.Entities.BackupAnalyticsSnapshot;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Services.BackupAnalyticsService;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
@@ -39,6 +41,12 @@ import net.miginfocom.swing.MigLayout;
 @SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard")
 public class FormBackupDashboard extends CustomForm {
 
+    private static final int CARD_TOTAL_CONFIG = 0;
+    private static final int CARD_SUCCESS_RATE = 1;
+    private static final int CARD_DURATION = 2;
+    private static final int CARD_COMPRESSION = 3;
+    private static final int CARD_DISK_USAGE = 4;
+
     public FormBackupDashboard() {
         build();
     }
@@ -49,7 +57,7 @@ public class FormBackupDashboard extends CustomForm {
         createTitle();
         createPanelLayout();
         createCard();
-        createDiskUsageChart();
+        // createDiskUsageChart();
         createExecutionsByMonthChart();
         createAvgDurationChart();
     }
@@ -60,44 +68,39 @@ public class FormBackupDashboard extends CustomForm {
         List<BackupRequest> requests = BackupRequestRepository.getRequestBackups();
         BackupAnalyticsSnapshot snapshot = BackupAnalyticsService.buildSnapshot(requests);
 
-        cardBox.setValueAt(0,
+        cardBox.setValueAt(CARD_TOTAL_CONFIG,
                 String.valueOf(configurations.size()),
-                "Total Backup Configurations",
+                "",
                 "",
                 true);
 
-        cardBox.setValueAt(1,
+        cardBox.setValueAt(CARD_SUCCESS_RATE,
                 String.valueOf(snapshot.totalRequests()),
-                "Total Backup Executions",
-                snapshot.successRate() + "%",
+                Translations.get(TKey.DASHBOARD_CARD_SUCCESS_RATE),
+                String.format("%.2f%%", snapshot.successRate()),
                 true);
 
-        cardBox.setValueAt(2,
-                BackupAnalyticsService.formatBytes(snapshot.totalDiskUsageBytes()),
-                "Disk Usage",
-                "",
-                true);
-
-        cardBox.setValueAt(3,
+        cardBox.setValueAt(CARD_DURATION,
                 String.format("%.2f min", BackupAnalyticsService.convertAvgDurationinMinutes(snapshot)),
-                "Avg Backup Duration",
+                "",
                 "",
                 true);
 
-        cardBox.setValueAt(4,
+        cardBox.setValueAt(CARD_COMPRESSION,
                 String.format("%.1f%%", snapshot.avgCompressionRate() * 100),
-                "Compression Rate",
+                "",
                 "",
                 true);
 
-        timeSeriesChart.setDataset(BackupAnalyticsService.buildDurationTrendDataset(snapshot.durationTrend()));
+        durationChart.setDataset(BackupAnalyticsService.buildDurationTrendDataset(snapshot.durationTrend(), Translations.get(TKey.DASHBOARD_CHART_AVG_DURATION)));
+        executionsChart.setDataset(BackupAnalyticsService.buildRequestsPerMonthDataset(requests, Translations.get(TKey.DASHBOARD_CHART_EXECUTIONS)));
     }
 
     protected void createTitle() {
 
         JPanel panel = new JPanel(new MigLayout("fillx", "[]push[][]"));
 
-        JLabel title = new JLabel("Backup Analytics Dashboard");
+        JLabel title = new JLabel(Translations.get(TKey.DASHBOARD_TITLE));
         title.putClientProperty(FlatClientProperties.STYLE,
                 "font:bold +3");
 
@@ -106,16 +109,13 @@ public class FormBackupDashboard extends CustomForm {
 
                     if (DefaultChartTheme.setChartColors(colorThemes)) {
 
-                        DefaultChartTheme.applyTheme(timeSeriesChart.getFreeChart());
-                        DefaultChartTheme.applyTheme(barChart.getFreeChart());
-                        DefaultChartTheme.applyTheme(pieChart.getFreeChart());
-                        DefaultChartTheme.applyTheme(spiderChart.getFreeChart());
+                        DefaultChartTheme.applyTheme(durationChart.getFreeChart());
+                        DefaultChartTheme.applyTheme(executionsChart.getFreeChart());
 
                         cardBox.setCardIconColor(0, DefaultChartTheme.getColor(0));
                         cardBox.setCardIconColor(1, DefaultChartTheme.getColor(1));
                         cardBox.setCardIconColor(2, DefaultChartTheme.getColor(2));
                         cardBox.setCardIconColor(3, DefaultChartTheme.getColor(3));
-                        cardBox.setCardIconColor(4, DefaultChartTheme.getColor(4));
                     }
                 });
 
@@ -154,47 +154,39 @@ public class FormBackupDashboard extends CustomForm {
         cardBox = new CardBox();
 
         cardBox.addCardItem(
-                createIcon("icons/dashboard/database.svg", DefaultChartTheme.getColor(0)),
-                "Total Backup Configurations");
+                createIcon("icons/dashboard/database.svg", DefaultChartTheme.getColor(CARD_TOTAL_CONFIG)),
+                Translations.get(TKey.DASHBOARD_CARD_TOTAL_CONFIGURATIONS));
 
         cardBox.addCardItem(
-                createIcon("icons/dashboard/run.svg", DefaultChartTheme.getColor(1)),
-                "Total Backup Executions");
+                createIcon("icons/dashboard/run.svg", DefaultChartTheme.getColor(CARD_SUCCESS_RATE)),
+                Translations.get(TKey.DASHBOARD_CARD_TOTAL_EXECUTIONS));
 
         cardBox.addCardItem(
-                createIcon("icons/dashboard/usage.svg", DefaultChartTheme.getColor(2)),
-                "Disk Usage");
+                createIcon("icons/dashboard/duration.svg", DefaultChartTheme.getColor(CARD_DURATION)),
+                Translations.get(TKey.DASHBOARD_CARD_AVG_DURATION));
 
         cardBox.addCardItem(
-                createIcon("icons/dashboard/duration.svg", DefaultChartTheme.getColor(3)),
-                "Avg Backup Duration");
-
-        cardBox.addCardItem(
-                createIcon("icons/dashboard/rate.svg", DefaultChartTheme.getColor(4)),
-                "Compression Rate");
+                createIcon("icons/dashboard/rate.svg", DefaultChartTheme.getColor(CARD_COMPRESSION)),
+                Translations.get(TKey.DASHBOARD_CARD_COMPRESSION_RATE));
 
         panel.add(cardBox);
         panelLayout.add(panel);
     }
 
+    private JPanel createChartPanel(int height) {
+        return new JPanel(new MigLayout("gap 14,wrap,fillx", "[fill]", "[" + height + "]"));
+    }
+
     private void createAvgDurationChart() {
-
-        JPanel panel = new JPanel(
-                new MigLayout("gap 14,wrap,fillx", "[fill]", "[350]"));
-
-        timeSeriesChart = new TimeSeriesChart();
-        barChart = new BarChart();
-
-        panel.add(timeSeriesChart);
-        panel.add(barChart);
-
+        JPanel panel = createChartPanel(350);
+        durationChart = new TimeSeriesChart();
+        panel.add(durationChart);
         panelLayout.add(panel);
     }
 
     private void createDiskUsageChart() {
 
-        JPanel panel = new JPanel(
-                new MigLayout("gap 14,wrap,fillx", "[fill]", "[350]"));
+        JPanel panel = createChartPanel(350);
 
         spiderChart = new SpiderChart();
         pieChart = new PieChart();
@@ -206,16 +198,9 @@ public class FormBackupDashboard extends CustomForm {
     }
 
     private void createExecutionsByMonthChart() {
-
-        JPanel panel = new JPanel(
-                new MigLayout("fillx,gap 14", "[fill,300::]", "[300]"));
-
-        timeSeriesChart = new TimeSeriesChart();
-        barChart = new BarChart();
-
-        panel.add(timeSeriesChart);
-        panel.add(barChart);
-
+        JPanel panel = createChartPanel(350);
+        executionsChart = new BarChart();
+        panel.add(executionsChart);
         panelLayout.add(panel);
     }
 
@@ -232,8 +217,8 @@ public class FormBackupDashboard extends CustomForm {
     private JPanel panelLayout;
     private CardBox cardBox;
 
-    private TimeSeriesChart timeSeriesChart;
-    private BarChart barChart;
+    private TimeSeriesChart durationChart;
+    private BarChart  executionsChart;
     private SpiderChart spiderChart;
     private PieChart pieChart;
 

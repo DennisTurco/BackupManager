@@ -92,7 +92,6 @@ public class ConfigurationBackup {
         this.maxToKeep = backupUpdated.getMaxToKeep();
     }
 
-    @Override
     public String toString() {
         return String.format("[Id: %d, Name: %s, targetPath: %s, DestinationPath: %s, lastBackupDate: %s, IsAutoBackup: %s, NextDate: %s, Interval: %s, MaxBackupsToKeep: %d]",
             id,
@@ -107,7 +106,6 @@ public class ConfigurationBackup {
         );
     }
 
-    @Deprecated
     public String toCsvString() {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%d",
             name,
@@ -119,19 +117,6 @@ public class ConfigurationBackup {
             timeIntervalBackup != null ? timeIntervalBackup.toString() : "",
             maxToKeep
         );
-    }
-
-    public String[] toCsvStrings() {
-        return new String[] {
-            name,
-            targetPath,
-            destinationPath,
-            lastBackupDate != null ? lastBackupDate.toString() : "",
-            Boolean.toString(automatic),
-            nextBackupDate != null ? nextBackupDate.toString() : "",
-            timeIntervalBackup != null ? timeIntervalBackup.toString() : "",
-            Integer.toString(maxToKeep)
-        };
     }
 
     public Object[] toTableRow() {

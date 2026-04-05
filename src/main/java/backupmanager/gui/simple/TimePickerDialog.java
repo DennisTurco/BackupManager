@@ -20,7 +20,7 @@ public class TimePickerDialog extends CustomDialog<TimeInterval> {
     public TimePickerDialog(TimeInterval timeInterval) {
         build();
 
-        timePickerController = new TimePickerController(timeInterval, false);
+        timePickerController = new TimePickerController();
 
         if (timeInterval != null) {
             daysSpinner.setValue(timeInterval.days());

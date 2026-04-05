@@ -331,7 +331,7 @@ public class BackupOperations {
         }
 
         return false;
-}
+    }
 
     public static void setError(ErrorType error, TrayIcon trayIcon, String backupName) {
         switch (error) {

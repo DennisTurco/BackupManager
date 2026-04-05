@@ -36,7 +36,7 @@ import com.formdev.flatlaf.util.ScaledEmptyBorder;
 import backupmanager.gui.component.AccentColorIcon;
 import backupmanager.gui.system.FormManager;
 import backupmanager.gui.themes.PanelThemes;
-import backupmanager.utils.DemoPreferences;
+import backupmanager.utils.AppPreferences;
 import backupmanager.utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 import raven.color.ColorPicker;
@@ -206,8 +206,16 @@ public class FormSetting extends CustomForm {
     private Component createLanguageOption() {
         JPanel panel = new JPanel(new MigLayout());
         panel.setBorder(new TitledBorder("Language"));
-        JComboBox<Object> languageCombo = new JComboBox<>();
+        languageCombo = new JComboBox<>();
         initComboItem(languageCombo);
+
+        languageCombo.addActionListener(e -> {
+            Object selected = languageCombo.getSelectedItem();
+
+            logger.info("Language setted to: {}", selected.toString());
+
+            // onLanguageChanged(selected);
+        });
 
         panel.add(languageCombo);
 
@@ -230,8 +238,8 @@ public class FormSetting extends CustomForm {
     }
 
     private static final String[] accentColorKeys = {
-            "Demo.accent.default", "Demo.accent.blue", "Demo.accent.purple", "Demo.accent.red",
-            "Demo.accent.orange", "Demo.accent.yellow", "Demo.accent.green",
+            "App.accent.default", "App.accent.blue", "App.accent.purple", "App.accent.red",
+            "App.accent.orange", "App.accent.yellow", "App.accent.green",
     };
     private static final String[] accentColorNames = {
             "Default", "Blue", "Purple", "Red", "Orange", "Yellow", "Green",
@@ -256,7 +264,7 @@ public class FormSetting extends CustomForm {
             toolBar.add(accentColorButtons[i]);
             group.add(accentColorButtons[i]);
             if (!selected) {
-                if (DemoPreferences.accentColor == null) {
+                if (AppPreferences.accentColor == null) {
                     if (i == 0) {
                         accentColorButtons[i].setSelected(true);
                         oldSelected = accentColorButtons[i];
@@ -264,7 +272,7 @@ public class FormSetting extends CustomForm {
                     }
                 } else {
                     Color color = UIManager.getColor(accentColorKeys[i]);
-                    if (DemoPreferences.accentColor.equals(color)) {
+                    if (AppPreferences.accentColor.equals(color)) {
                         accentColorButtons[i].setSelected(true);
                         oldSelected = accentColorButtons[i];
                         selected = true;
@@ -279,7 +287,7 @@ public class FormSetting extends CustomForm {
             accentColorCustomButton.setSelected(true);
         }
 
-        FlatLaf.setSystemColorGetter(name -> name.equals("accent") ? DemoPreferences.accentColor : null);
+        FlatLaf.setSystemColorGetter(name -> name.equals("accent") ? AppPreferences.accentColor : null);
         UIManager.addPropertyChangeListener(e -> {
             if ("lookAndFeel".equals(e.getPropertyName())) {
                 updateAccentColorButtons();
@@ -293,13 +301,13 @@ public class FormSetting extends CustomForm {
     private JToggleButton createCustomAccentColor() {
         JToggleButton button = new JToggleButton(new FlatSVGIcon("icons/color.svg", 16, 16));
         button.addActionListener(e -> {
-            ColorPicker colorPicker = new ColorPicker(DemoPreferences.accentColor);
+            ColorPicker colorPicker = new ColorPicker(AppPreferences.accentColor);
             colorPicker.setBorder(new ScaledEmptyBorder(0, 20, 0, 20));
             Option option = ModalDialog.createOption();
             option.setAnimationEnabled(false);
             ModalDialog.showModal(this, new SimpleModalBorder(colorPicker, "Select Color", SimpleModalBorder.YES_NO_OPTION, (controller, action) -> {
                 if (action == SimpleModalBorder.YES_OPTION) {
-                    DemoPreferences.accentColor = colorPicker.getSelectedColor();
+                    AppPreferences.accentColor = colorPicker.getSelectedColor();
                     oldSelected = null;
                     applyAccentColor();
                 } else if (action == SimpleModalBorder.CLOSE_OPTION) {
@@ -412,7 +420,7 @@ public class FormSetting extends CustomForm {
                 break;
             }
         }
-        DemoPreferences.accentColor = (accentColorKey != null && !accentColorKey.equals(accentColorKeys[0]))
+        AppPreferences.accentColor = (accentColorKey != null && !accentColorKey.equals(accentColorKeys[0]))
                 ? UIManager.getColor(accentColorKey)
                 : null;
         applyAccentColor();
@@ -420,7 +428,7 @@ public class FormSetting extends CustomForm {
 
     private void applyAccentColor() {
         Class<? extends LookAndFeel> lafClass = UIManager.getLookAndFeel().getClass();
-        DemoPreferences.updateAccentColor(DemoPreferences.accentColor);
+        AppPreferences.updateAccentColor(AppPreferences.accentColor);
         try {
             FlatLaf.setup(lafClass.getDeclaredConstructor().newInstance());
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -468,4 +476,5 @@ public class FormSetting extends CustomForm {
     }
 
     private JTabbedPane tabbedPane;
+    private JComboBox<Object> languageCombo;
 }

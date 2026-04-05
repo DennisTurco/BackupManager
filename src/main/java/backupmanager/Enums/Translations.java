@@ -33,8 +33,10 @@ public class Translations {
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs"),
-        SUBSCRIPTION("Subscription"),
-        HISTORY_LOGS("HistoryLogs"); // TODO: add to json
+        SUBSCRIPTION("Subscription"), // TODO: add to json
+        HISTORY_LOGS("HistoryLogs"), // TODO: add to json
+        ABOUT("About"), // TODO: add to json
+        DASHBOARD("Dashboard"); // TODO: add to json
 
         private final String categoryName;
         private final Map<TKey, String> translations = new HashMap<>();
@@ -72,6 +74,7 @@ public class Translations {
         CREATE_BUTTON(TCategory.GENERAL, "CreateButton", "Create"), // TODO: add to json
         EDIT_BUTTON(TCategory.GENERAL, "EditButton", "Edit"), // TODO: add to json
         DELETE_BUTTON(TCategory.GENERAL, "DeleteButton", "Delete"), // TODO: add to json
+        QUICK_SEARCH(TCategory.GENERAL, "QuickSearch", "Quick Search..."), // TODO: add to json
 
         // Menu
         SUBMENU_MAIN(TCategory.MENU, "SubmenuMain", "MAIN"), //TODO: add to json
@@ -103,7 +106,7 @@ public class Translations {
         GITHUB_PAGE(TCategory.MENU, "Github", "Github page"), // TODO: add to json
         PAYPAL(TCategory.MENU, "Paypal", "Paypal"), // TODO: add to json
         BUYMEACOFFE(TCategory.MENU, "BuyMeACoffe", "Buy me a coffe"), // TODO: add to json
-        CONTACT_US(TCategory.MENU, "ContactUs", "ContactUs"), // TODO: add to json
+        CONTACT_US(TCategory.MENU, "ContactUs", "Contact us"), // TODO: add to json
         SUBSCRIPTION(TCategory.MENU, "Subscription", "Subscription"), // TODO: add to json
 
 
@@ -307,9 +310,23 @@ public class Translations {
         SUBSCRIPTION_CONTACT_US(TCategory.SUBSCRIPTION, "ContactUs", "Contact us"), // TODO: add to json
         SUBSCRIPTION_TO_EXTEND(TCategory.SUBSCRIPTION, "ToExtend", "to extend the subscription period."), // TODO: add to json
 
+        // DASHBOARD
+        DASHBOARD_TITLE(TCategory.DASHBOARD, "DashboardTitle", "Backup Analytics Dashboard"), // TODO: add to json
+        DASHBOARD_CARD_TOTAL_CONFIGURATIONS(TCategory.DASHBOARD, "DashboardCardTotalConfigurations", "Total Backup Configurations"), // TODO: add to json
+        DASHBOARD_CARD_TOTAL_EXECUTIONS(TCategory.DASHBOARD, "DashboardCardTotalExecutions", "Total Backup Executions"), // TODO: add to json
+        DASHBOARD_CARD_SUCCESS_RATE(TCategory.DASHBOARD, "DashboardCardSuccessRate", "Success rate"), // TODO: add to json
+        DASHBOARD_CARD_AVG_DURATION(TCategory.DASHBOARD, "DashboardCardAvgDuration", "Avg Backup Duration"), // TODO: add to json
+        DASHBOARD_CARD_COMPRESSION_RATE(TCategory.DASHBOARD, "DashboardCardCompressionRate", "Compression Rate"), // TODO: add to json
+        DASHBOARD_CHART_EXECUTIONS(TCategory.DASHBOARD, "DashboardChartExecutions", "Backup Executions"), // TODO: add to json
+        DASHBOARD_CHART_AVG_DURATION(TCategory.DASHBOARD, "DashboardChartAvgDuration", "Average Backup Duration (min)"), // TODO: add to json
+
         // HISTORY_LOGS
         HISTORY_LOGS_TITLE(TCategory.HISTORY_LOGS, "HistoryLogsTitle", "History logs"), // TODO: add to json
-        HISTORY_LOGS_DESCRIPTION(TCategory.HISTORY_LOGS, "HistoryLogsDescription", "Here you can find the application logs, useful for troubleshooting and understanding the application's behavior over time."); // TODO: add to json
+        HISTORY_LOGS_DESCRIPTION(TCategory.HISTORY_LOGS, "HistoryLogsDescription", "Here you can find the application logs, useful for troubleshooting and understanding the application's behavior over time."), // TODO: add to json
+
+        // ABOUT
+        ABOUT_SYSTEM_INFORMATION(TCategory.ABOUT, "AboutSystemInformation", "System Information"), // TODO: add to json
+        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><br>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</html>"); // TODO: add to json
 
         private final TCategory category;
         private final String keyName;

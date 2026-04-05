@@ -36,6 +36,10 @@ public class BackupService {
         return buildDetails(backup);
     }
 
+    public void updateBackup(ConfigurationBackup backup) {
+        BackupConfigurationRepository.updateBackup(backup);
+    }
+
     public ConfigurationBackup getBackupByName(String name) {
         return BackupConfigurationRepository.getBackupByName(name);
     }

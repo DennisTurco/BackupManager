@@ -249,8 +249,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         itemList.add(new Item.Label(Translations.get(TKey.SUBMENU_MAIN)));
 
         // Backup menu
-        Item backupItem = createMenuItem(Translations.get(TKey.BACKUP_TABLE), "forms.svg", MenuItems.BackupList, FormBackupTable.class)
-                .subMenu(Translations.get(TKey.CREATE_BACKUP));
+        Item backupItem = createMenuItem(Translations.get(TKey.BACKUP_TABLE), "forms.svg", MenuItems.BackupList, FormBackupTable.class);
 
         if (config.isMenuItemEnabled(MenuItems.Import.name()))
             backupItem.subMenu(Translations.get(TKey.IMPORT_BACKUP));

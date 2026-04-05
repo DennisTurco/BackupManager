@@ -9,27 +9,7 @@ import backupmanager.gui.simple.TimePickerDialog;
 
 public class TimePickerController {
 
-    private TimeInterval timeInterval;
-    private boolean closeOk;
-
-    public TimePickerController(TimeInterval timeInterval, boolean closeOk) {
-        this.timeInterval = timeInterval;
-        this.closeOk = closeOk;
-    }
-
-    @Deprecated
-    public void handleOkButton(javax.swing.JDialog dialog, int days, int hours, int minutes) {
-        if (isLongTimeCorrect(days, hours, minutes)) {
-            if (isShortTimeCorrect(days, hours) && !showWarningMessageForShortTimeAndGetIfItOkayResponse(dialog))
-                return;
-
-            timeInterval = new TimeInterval(days, hours, minutes);
-            closeOk = true;
-            dialog.dispose();
-        }
-        else
-            showErrorMessageForLongTime(dialog);
-    }
+    public TimePickerController() { }
 
     public TimeInterval getTimeIntervalIfPossible(TimePickerDialog dialog, int days, int hours, int minutes) {
         if (isLongTimeCorrect(days, hours, minutes)) {
@@ -42,15 +22,6 @@ public class TimePickerController {
             showErrorMessageForLongTime(null);
         return null;
     }
-
-    @Deprecated
-    public TimeInterval getTimeInterval() {
-        if (closeOk) return timeInterval;
-        return null;
-    }
-
-    @Deprecated
-    public void setCloseOk(boolean closeOk) { this.closeOk = closeOk; }
 
     private boolean isLongTimeCorrect(int days, int hours, int minutes) {
         return days >= 0 && hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59 &&

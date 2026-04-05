@@ -118,7 +118,7 @@ public class FormManager {
     }
 
     public static void showAbout() {
-        ModalDialog.showModal(frame, new SimpleModalBorder(new About(), Translations.get(TKey.FILE)),
+        ModalDialog.showModal(frame, new SimpleModalBorder(new About(), Translations.get(TKey.ABOUT)),
                 ModalDialog.createOption().setAnimationEnabled(false)
         );
     }

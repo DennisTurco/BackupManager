@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 
@@ -55,7 +56,7 @@ public class TimeSeriesChart extends DefaultChartPanel {
         NumberAxis range = (NumberAxis) plot.getRangeAxis();
         DateAxis domain = (DateAxis) plot.getDomainAxis();
 
-        range.setNumberFormatOverride(NumberFormat.getCurrencyInstance());
+        range.setNumberFormatOverride(new DecimalFormat("#0.00"));
         range.setAxisLineVisible(false);
         range.setTickMarksVisible(false);
         range.setUpperMargin(0.2);
@@ -105,7 +106,7 @@ public class TimeSeriesChart extends DefaultChartPanel {
         MultiXYTextAnnotation annotation = new MultiXYTextAnnotation();
 
         DateFormat titleFormat = DateFormat.getDateInstance();
-        NumberFormat valueFormat = NumberFormat.getCurrencyInstance();
+        NumberFormat valueFormat = new DecimalFormat("#0.00");
         annotation.setTitleGenerator(xValue -> titleFormat.format(new Date((long) xValue)));
         annotation.setNumberFormat(valueFormat);
 

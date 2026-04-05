@@ -22,7 +22,7 @@ import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
 import backupmanager.gui.Controllers.AppController;
 import backupmanager.gui.frames.BackupManager;
-import backupmanager.utils.DemoPreferences;
+import backupmanager.utils.AppPreferences;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -90,11 +90,11 @@ public class MainApp {
     private static void runGui() {
         java.awt.EventQueue.invokeLater(() -> {
 
-            DemoPreferences.init();
+            AppPreferences.init();
             FlatRobotoFont.install();
             FlatLaf.registerCustomDefaultsSource(".themes");
             UIManager.put("defaultFont", FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
-            DemoPreferences.setupLaf();
+            AppPreferences.setupLaf();
 
             BackupManager frame = BackupManager.getInstance();
             frame.setVisible(true);

@@ -18,9 +18,7 @@ import backupmanager.Enums.Translations.TKey;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
-import backupmanager.gui.simple.BackupEntryDialog;
 import backupmanager.gui.simple.TimePickerDialog;
 
 public class BackupHelper {
@@ -29,18 +27,12 @@ public class BackupHelper {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void openBackupById(BackupTableDataService backupTable, int id) {
-        logger.info("Event --> opening backup");
-
-        ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
-        openBackupEntryDialog(backupTable, backup);
-    }
-
     public static void newBackup(BackupProgressGUI progressBar) {
         logger.info("Event --> new backup");
     }
 
     public static void newBackup(ConfigurationBackup backup) {
+        logger.info("Event --> new backup");
         BackupConfigurationRepository.insertBackup(backup);
 
         updateBackupTable();
@@ -58,19 +50,6 @@ public class BackupHelper {
 
         String backupName = (String) backupTable.getValueAt(selectedRow, 0);
         deleteBackup(backupName);
-    }
-
-    @Deprecated
-    public static void deleteBackup(int selectedRow, BackupTable backupTable) {
-        logger.info("Event --> deleting backup");
-
-        if (selectedRow != -1) {
-            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (response == JOptionPane.YES_OPTION) {
-                String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-                BackupHelper.deleteBackup(backupName);
-            }
-        }
     }
 
     public static void deleteBackup(String backupName) {
@@ -130,11 +109,6 @@ public class BackupHelper {
                 activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
                 + destinationPath + setted + " " + timeInterval.toString() + days,
                 "AutoBackup", 1);
-    }
-
-    public static void openBackupEntryDialog(BackupTableDataService backupTable, ConfigurationBackup backup) {
-        BackupEntryDialog dialog = new BackupEntryDialog(backupTable, backup);
-        dialog.setVisible(true);
     }
 
     public static LocalDateTime getNexDateBackup(TimeInterval timeInterval) {

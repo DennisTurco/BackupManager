@@ -118,6 +118,12 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
         destinationPathBtn.addActionListener(e -> entryController.openFileChooser(txtDestinationPath, false));
         timeIntervalBtn.addActionListener(e -> openTimeInterval());
 
+        executeBackupBtn.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+        automaticBackupBtn.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+        targetPathBtn.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+        destinationPathBtn.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+        timeIntervalBtn.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+
         styleSpinner(maxToKeeSpinner);
         configureSpinner(maxToKeeSpinner, 1, 100);
 

@@ -39,7 +39,7 @@ import backupmanager.gui.menu.MyMenuValidation;
 import backupmanager.gui.svg.SVGIconUIColor;
 import backupmanager.gui.system.Form;
 import backupmanager.gui.system.FormSearch;
-import backupmanager.utils.DemoPreferences;
+import backupmanager.utils.AppPreferences;
 import backupmanager.utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 import raven.modal.Drawer;
@@ -262,7 +262,7 @@ public class FormSearchPanel extends JPanel {
     }
 
     private List<Item> getRecentSearch(boolean favorite) {
-        String[] recentSearch = DemoPreferences.getRecentSearch(favorite);
+        String[] recentSearch = AppPreferences.getRecentSearch(favorite);
         if (recentSearch == null) {
             return null;
         }
@@ -412,7 +412,7 @@ public class FormSearchPanel extends JPanel {
             ModalDialog.closeModal(FormSearch.ID);
             Drawer.setSelectedItemClass(form);
             if (!isFavorite) {
-                DemoPreferences.addRecentSearch(data.name(), false);
+                AppPreferences.addRecentSearch(data.name(), false);
             }
         }
 
@@ -462,7 +462,7 @@ public class FormSearchPanel extends JPanel {
         }
 
         protected void removeRecent() {
-            DemoPreferences.removeRecentSearch(data.name(), isFavorite);
+            AppPreferences.removeRecentSearch(data.name(), isFavorite);
             panelResult.remove(this);
             listItems.remove(this);
             if (listItems.isEmpty()) {
@@ -481,7 +481,7 @@ public class FormSearchPanel extends JPanel {
         }
 
         protected void addFavorite() {
-            DemoPreferences.addRecentSearch(data.name(), true);
+            AppPreferences.addRecentSearch(data.name(), true);
             int[] index = getFirstFavoriteIndex();
             panelResult.remove(this);
             listItems.remove(this);

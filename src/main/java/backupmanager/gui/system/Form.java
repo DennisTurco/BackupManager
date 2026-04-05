@@ -5,7 +5,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-public class Form extends JPanel {
+public abstract class Form extends JPanel {
 
     private LookAndFeel oldTheme = UIManager.getLookAndFeel();
 
@@ -13,17 +13,13 @@ public class Form extends JPanel {
         init();
     }
 
-    private void init() {
-    }
+    private void init() { }
 
-    public void formInit() {
-    }
+    public abstract void formInit();
 
-    public void formOpen() {
-    }
+    public void formOpen() { }
 
-    public void formRefresh() {
-    }
+    public abstract void formRefresh();
 
     protected boolean formCheck() {
         if (oldTheme != UIManager.getLookAndFeel()) {

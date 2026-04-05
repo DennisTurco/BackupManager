@@ -6,9 +6,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations.TCategory;
@@ -24,7 +21,6 @@ import raven.modal.option.Option;
 
 public class BackupManagerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackupManagerController.class);
     private final BackupService backupService;
     private final BackupTableDataService backupTable;
 
@@ -93,6 +89,7 @@ public class BackupManagerController {
                         (controller, action) -> {
                             if (action == SimpleModalBorder.OK_OPTION) {
                                 ConfigurationBackup editedBackup = dialog.getResult();
+                                backupService.updateBackup(editedBackup);
                                 form.formRefresh();
                             }
                         }

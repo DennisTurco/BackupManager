@@ -80,10 +80,10 @@ public class MainForm extends JPanel {
         panel.putClientProperty(FlatClientProperties.STYLE, "background:$Menu.background;");
 
         // demo version
-        JLabel lbDemoVersion = new JLabel("Backup Manager: v" + ConfigKey.VERSION.getValue());
-        lbDemoVersion.putClientProperty(FlatClientProperties.STYLE, "" +
+        JLabel version = new JLabel("Backup Manager: v" + ConfigKey.VERSION.getValue());
+        version.putClientProperty(FlatClientProperties.STYLE, "" +
                 "foreground:$Label.disabledForeground;");
-        panel.add(lbDemoVersion);
+        panel.add(version);
 
         return panel;
     }

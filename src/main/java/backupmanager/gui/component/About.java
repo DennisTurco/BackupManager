@@ -11,6 +11,8 @@ import javax.swing.text.DefaultCaret;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.Managers.WebsiteManager;
 import net.miginfocom.swing.MigLayout;
 
@@ -24,7 +26,7 @@ public class About extends JPanel {
 
         setLayout(new MigLayout("fillx,wrap,insets 20,width 520"));
 
-        JTextPane title = createText("Backup Manager");
+        JTextPane title = createText(Translations.get(TKey.APP_NAME));
         title.putClientProperty(FlatClientProperties.STYLE, "font:bold +6");
 
         JTextPane description = createText("");
@@ -57,38 +59,27 @@ public class About extends JPanel {
     }
 
     private String getDescriptionText() {
-        return """
-        <html>
-        <b>Backup Manager</b> is a simple and powerful application designed to automate
-        folder and subfolder backups.
-
-        <br><br>
-        Users can schedule automatic backups or execute manual backups anytime.
-
-        <br><br>
-        Backup history is stored securely, allowing full control over saved data.
-
-        <br><br>
-        Visit <a href="%s">project website</a> for more information.
-        </html>
-        """.formatted(ConfigKey.INFO_PAGE_LINK.getValue());
+        String message = Translations.get(TKey.ABOUT_MESSAGE_BODY);
+        message = message.replace("[PROJECT_WEBSITE]", ConfigKey.INFO_PAGE_LINK.getValue()) ;
+        return message;
     }
 
     private JComponent createSystemInformation() {
 
         JPanel panel = new JPanel(new MigLayout("wrap,insets 10"));
-        panel.setBorder(new TitledBorder("System Information"));
+        panel.setBorder(new TitledBorder(Translations.get(TKey.ABOUT_SYSTEM_INFORMATION)));
 
         JTextPane text = createText("");
         text.setContentType("text/html");
 
         String info = """
         <html>
-        Version: %s<br>
+        %s: %s<br>
         Java: %s<br>
         OS: %s<br>
         </html>
         """.formatted(
+                Translations.get(TKey.VERSION),
                 ConfigKey.VERSION.getValue(),
                 System.getProperty("java.vendor") + " - v" + System.getProperty("java.version"),
                 System.getProperty("os.name") + " " + System.getProperty("os.arch")

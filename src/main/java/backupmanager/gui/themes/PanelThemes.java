@@ -4,7 +4,7 @@ import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.util.LoggingFacade;
 import net.miginfocom.swing.MigLayout;
-import backupmanager.utils.DemoPreferences;
+import backupmanager.utils.AppPreferences;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -144,7 +144,7 @@ public class PanelThemes extends JPanel {
 
     private void selectedCurrentLookAndFeel() {
         LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
-        String theme = UIManager.getLookAndFeelDefaults().getString(DemoPreferences.THEME_UI_KEY);
+        String theme = UIManager.getLookAndFeelDefaults().getString(AppPreferences.THEME_UI_KEY);
         String lafClassName = lookAndFeel.getClass().getName();
         for (int i = 0; i < themes.size(); i++) {
             ThemesInfo ti = themes.get(i);
@@ -152,7 +152,7 @@ public class PanelThemes extends JPanel {
                 themesList.setSelectedIndex(i);
                 break;
             }
-            if (theme != null && ti.resourceName != null && theme.substring(DemoPreferences.RESOURCE_PREFIX.length()).equals(ti.resourceName)) {
+            if (theme != null && ti.resourceName != null && theme.substring(AppPreferences.RESOURCE_PREFIX.length()).equals(ti.resourceName)) {
                 themesList.setSelectedIndex(i);
                 break;
             }
@@ -186,13 +186,13 @@ public class PanelThemes extends JPanel {
                 showInformationDialog("Failed to create '" + themesInfo.lafClassName + "'.", e);
             }
         } else {
-            String theme = UIManager.getLookAndFeelDefaults().getString(DemoPreferences.THEME_UI_KEY);
-            if (theme != null && themesInfo.resourceName.equals(theme.substring(DemoPreferences.RESOURCE_PREFIX.length()))) {
+            String theme = UIManager.getLookAndFeelDefaults().getString(AppPreferences.THEME_UI_KEY);
+            if (theme != null && themesInfo.resourceName.equals(theme.substring(AppPreferences.RESOURCE_PREFIX.length()))) {
                 return;
             }
             FlatAnimatedLafChange.showSnapshot();
             IntelliJTheme.setup(getClass().getResourceAsStream(THEMES_PACKAGE + themesInfo.resourceName));
-            DemoPreferences.getState().put(DemoPreferences.KEY_LAF_THEME, DemoPreferences.RESOURCE_PREFIX + themesInfo.resourceName);
+            AppPreferences.getState().put(AppPreferences.KEY_LAF_THEME, AppPreferences.RESOURCE_PREFIX + themesInfo.resourceName);
         }
         FlatLaf.updateUI();
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
