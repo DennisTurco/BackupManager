@@ -17,6 +17,7 @@ import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Managers.LanguageManager;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
@@ -33,6 +34,7 @@ public class MainApp {
 
         databaseInitialization();
 
+        AppPreferences.init();
         loadPreferredLanguage();
 
         boolean isBackgroundMode = isBackgroundMode(args);
@@ -61,7 +63,7 @@ public class MainApp {
     private static void loadPreferredLanguage() {
         try {
             Configurations.loadAllConfigurations();
-            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Configurations.getLanguage().getFileName());
+            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + LanguageManager.getLanguage().getFileName());
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }
@@ -89,8 +91,6 @@ public class MainApp {
 
     private static void runGui() {
         java.awt.EventQueue.invokeLater(() -> {
-
-            AppPreferences.init();
             FlatRobotoFont.install();
             FlatLaf.registerCustomDefaultsSource(".themes");
             UIManager.put("defaultFont", FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13));

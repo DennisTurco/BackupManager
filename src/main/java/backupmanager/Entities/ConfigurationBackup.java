@@ -5,7 +5,6 @@ import java.util.List;
 
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
-import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class ConfigurationBackup {
@@ -23,22 +22,6 @@ public class ConfigurationBackup {
     private LocalDateTime lastUpdateDate;
     private int count;
     private int maxToKeep;
-
-    public ConfigurationBackup() {
-        id = 0;
-        name = "";
-        targetPath = "";
-        destinationPath = "";
-        lastBackupDate = null;
-        automatic = false;
-        nextBackupDate = null;
-        timeIntervalBackup = null;
-        notes = "";
-        creationDate = LocalDateTime.now();
-        lastUpdateDate = LocalDateTime.now();
-        count = 0;
-        maxToKeep = JsonConfig.getInstance().getConfigValue("MaxCountForSameBackup", 1);
-    }
 
     public ConfigurationBackup(String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
         this.name = name;
@@ -92,6 +75,7 @@ public class ConfigurationBackup {
         this.maxToKeep = backupUpdated.getMaxToKeep();
     }
 
+    @Override
     public String toString() {
         return String.format("[Id: %d, Name: %s, targetPath: %s, DestinationPath: %s, lastBackupDate: %s, IsAutoBackup: %s, NextDate: %s, Interval: %s, MaxBackupsToKeep: %d]",
             id,

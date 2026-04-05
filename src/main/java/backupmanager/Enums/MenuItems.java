@@ -2,24 +2,19 @@ package backupmanager.Enums;
 
 public enum MenuItems {
     BugReport,
-    Preferences, //TODO: remove
-    Clear, //TODO: remove
-    Save, //TODO: remove
-    SaveWithName, //TODO: remove
     Settings,
     Donate,
     PaypalDonate,
     BuymeacoffeeDonate,
     History,
     InfoPage,
-    New,
-    Quit, //TODO: remove
+    New, //TODO: Used??
     Import,
     Export,
-    Share,
+    Share, //TODO: Used??
     Support,
     ContactUs,
-    Website,
+    Website, //TODO: Used??
     BackupList,
     Dashboard,
     About,

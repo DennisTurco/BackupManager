@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import backupmanager.Entities.Configurations;
+import backupmanager.Managers.LanguageManager;
 
 public class Translations {
 
@@ -28,7 +28,6 @@ public class Translations {
         BACKUP_ENTRY("BackupEntry"),
         BACKUP_LIST("BackupList"),
         TIME_PICKER_DIALOG("TimePickerDialog"),
-        PREFERENCES_DIALOG("PreferencesDialog"),
         USER_DIALOG("UserDialog"),
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
@@ -36,7 +35,8 @@ public class Translations {
         SUBSCRIPTION("Subscription"), // TODO: add to json
         HISTORY_LOGS("HistoryLogs"), // TODO: add to json
         ABOUT("About"), // TODO: add to json
-        DASHBOARD("Dashboard"); // TODO: add to json
+        DASHBOARD("Dashboard"), // TODO: add to json
+        SETTINGS("Settings"); // TODO: add to json
 
         private final String categoryName;
         private final Map<TKey, String> translations = new HashMap<>();
@@ -195,11 +195,6 @@ public class Translations {
         MINUTES(TCategory.TIME_PICKER_DIALOG, "Minutes", "Minutes"),
         SPINNER_TOOLTIP(TCategory.TIME_PICKER_DIALOG, "SpinnerTooltip", "Mouse wheel to adjust the value"),
 
-        // PreferencesDialog
-        PREFERENCES_TITLE(TCategory.PREFERENCES_DIALOG, "PreferencesTitle", "Preferences"),
-        LANGUAGE(TCategory.PREFERENCES_DIALOG, "Language", "Language"),
-        THEME(TCategory.PREFERENCES_DIALOG, "Theme", "Theme"),
-
         // User dialog
         USER_TITLE(TCategory.USER_DIALOG, "UserTitle", "Insert your data"),
         USER_DESCRIPTION(TCategory.USER_DIALOG, "UserDescription", "Please enter your data to access the system"), // TODO: add to json
@@ -326,7 +321,38 @@ public class Translations {
 
         // ABOUT
         ABOUT_SYSTEM_INFORMATION(TCategory.ABOUT, "AboutSystemInformation", "System Information"), // TODO: add to json
-        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><br>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</html>"); // TODO: add to json
+        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><br>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</html>"), // TODO: add to json
+
+        // SETTINGS
+        SETTINGS_LAYOUT_TAB(TCategory.SETTINGS, "SettingsLayoutTab", "Layout"), // TODO: add to json
+        SETTINGS_STYLE_TAB(TCategory.SETTINGS, "SettingsStyleTab", "Style"), // TODO: add to json
+        SETTINGS_WINDOWS_LAYOUT(TCategory.SETTINGS, "SettingsWindowsLayout", "Windows Layout"), // TODO: add to json
+        SETTINGS_WINDOWS_RIGHT(TCategory.SETTINGS, "SettingsWindowsRight", "Right to Left"), // TODO: add to json
+        SETTINGS_WINDOWS_FULL(TCategory.SETTINGS, "SettingsWindowsFull", "Full Window Content"), // TODO: add to json
+        SETTINGS_DRAWER_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLayout", "Drawer layout"), // TODO: add to json
+        SETTINGS_DRAWER_LEFT(TCategory.SETTINGS, "SettingsDrawerLeft", "Left"), // TODO: add to json
+        SETTINGS_DRAWER_LEADING(TCategory.SETTINGS, "SettingsDrawerLeading", "Leading"), // TODO: add to json
+        SETTINGS_DRAWER_TRAILING(TCategory.SETTINGS, "SettingsDrawerTrailing", "Trailing"), // TODO: add to json
+        SETTINGS_DRAWER_RIGHT(TCategory.SETTINGS, "SettingsDrawerRight", "Right"), // TODO: add to json
+        SETTINGS_DRAWER_TOP(TCategory.SETTINGS, "SettingsDrawerTop", "Top"), // TODO: add to json
+        SETTINGS_DRAWER_BOTTOM(TCategory.SETTINGS, "SettingsDrawerBottom", "Bottom"), // TODO: add to json
+        SETTINGS_MODAL_OPTION(TCategory.SETTINGS, "SettingsModalOption", "Default modal option"), // TODO: add to json
+        SETTINGS_MODAL_ANIMATION(TCategory.SETTINGS, "SettingsModalAnimation", "Animation enable"), // TODO: add to json
+        SETTINGS_MODAL_CLOSE(TCategory.SETTINGS, "SettingsModalClose", "Close on pressed escape"), // TODO: add to json
+        SETTINGS_LANGUAGES_LAYOUT(TCategory.SETTINGS, "SettingsLanguagesLayout", "Language"), // TODO: add to json
+        SETTINGS_ACCENT_LAYOUT(TCategory.SETTINGS, "SettingsAccentLayout", "Accent color"), // TODO: add to json
+        SETTINGS_COLOR_PICKER_LAYOUT(TCategory.SETTINGS, "SettingsColorPickerLayout", "Color Picker"), // TODO: add to json
+        SETTINGS_DRAWER_LINE_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLineLayout", "Drawer line style"), // TODO: add to json
+        SETTINGS_DRAWER_LINE_CURVED(TCategory.SETTINGS, "SettingsDrawerLineCurved", "Curved line style"), // TODO: add to json
+        SETTINGS_DRAWER_DOT_LINE(TCategory.SETTINGS, "SettingsDrawerDotLine", "Straight dot line style"), // TODO: add to json
+        SETTINGS_LINE_STYLE_LAYOUT(TCategory.SETTINGS, "SettingsLineStyleLayout", "Line style option"), // TODO: add to json
+        SETTINGS_LINE_STYLE_RETTANGLE(TCategory.SETTINGS, "SettingsLineStyleRettangle", "Rettangle"), // TODO: add to json
+        SETTINGS_LINE_STYLE_ELLIPSE(TCategory.SETTINGS, "SettingsLineStyleEllipse", "Ellipse"), // TODO: add to json
+        SETTINGS_LINE_STYLE_LINE(TCategory.SETTINGS, "SettingsLineStyleLine", "Line"), // TODO: add to json
+        SETTINGS_LINE_STYLE_CURVED(TCategory.SETTINGS, "SettingsLineStyleCurved", "Curved"), // TODO: add to json
+        SETTINGS_COLOR_OPTION_LAYOUT(TCategory.SETTINGS, "SettingsColorOptionLayout", "Color option"), // TODO: add to json
+        SETTINGS_COLOR_OPTION_PAINTED(TCategory.SETTINGS, "SettingsColorOptionPainted", "Paint selected line color"); // TODO: add to json
+
 
         private final TCategory category;
         private final String keyName;
@@ -372,7 +398,7 @@ public class Translations {
                 JsonObject categoryTranslations = jsonObject.getAsJsonObject(category.getCategoryName());
 
                 if (categoryTranslations == null) {
-                    logger.warn("Missing category in {}: {}", Configurations.getLanguage().getFileName(), category.getCategoryName());
+                    logger.warn("Missing category in {}: {}", LanguageManager.getLanguage().getFileName(), category.getCategoryName());
                     continue;
                 }
 
@@ -395,7 +421,7 @@ public class Translations {
 
                 for (TKey key : TKey.values()) {
                     if (key.getCategory() == category && !loadedKeys.contains(key)) {
-                        logger.warn("Missing translation in {} -> category: {}, key: {}", Configurations.getLanguage().getFileName(), key.getCategory(), key.getKeyName());
+                        logger.warn("Missing translation in {} -> category: {}, key: {}", LanguageManager.getLanguage().getFileName(), key.getCategory(), key.getKeyName());
                     }
                 }
             }

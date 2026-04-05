@@ -13,6 +13,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.util.LoggingFacade;
 
+import backupmanager.Enums.LanguagesEnum;
 import backupmanager.gui.themes.PanelThemes;
 
 public class AppPreferences {
@@ -25,6 +26,7 @@ public class AppPreferences {
     public static final String KEY_RECENT_SEARCH_FAVORITE = "recentSearchFavorite";
     public static final String RESOURCE_PREFIX = "res:";
     public static final String THEME_UI_KEY = "__RaVen.flatlaf.demo.theme";
+    public static final String KEY_LANGUAGE = "language";
     public static Color accentColor;
     private static Preferences state;
 
@@ -128,5 +130,13 @@ public class AppPreferences {
         } else {
             state.remove(KEY_ACCENT_COLOR);
         }
+    }
+
+    public static String getLanguage() {
+        return state.get(KEY_LANGUAGE, LanguagesEnum.getDefault().getFileName());
+    }
+
+    public static void setLanguage(String lang) {
+        state.put(KEY_LANGUAGE, lang);
     }
 }

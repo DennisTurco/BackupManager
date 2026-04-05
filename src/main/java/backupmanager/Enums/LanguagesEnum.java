@@ -17,6 +17,10 @@ public enum LanguagesEnum {
         return languageName;
     }
 
+    public static LanguagesEnum getDefault() {
+        return ENG;
+    }
+
     private LanguagesEnum(String languageName, String fileName) {
         this.languageName = languageName;
         this.fileName = fileName;

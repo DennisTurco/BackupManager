@@ -109,11 +109,6 @@
     "Minutes": "Minutes",
     "SpinnerTooltip": "Roulette de la souris pour ajuster la valeur"
   },
-  "PreferencesDialog": {
-    "PreferencesTitle": "Préférences",
-    "Language": "Langue",
-    "Theme": "Thème"
-  },
   "UserDialog": {
     "UserTitle": "Entrez vos informations",
     "Name": "Prénom",

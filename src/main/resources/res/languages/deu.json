@@ -109,11 +109,6 @@
     "Minutes": "Minuten",
     "SpinnerTooltip": "Mausrad zum Anpassen des Wertes"
   },
-  "PreferencesDialog": {
-    "PreferencesTitle": "Einstellungen",
-    "Language": "Sprache",
-    "Theme": "Thema"
-  },
   "UserDialog": {
     "UserTitle": "Geben Sie Ihre Daten ein",
     "Name": "Vorname",

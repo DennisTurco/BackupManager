@@ -33,6 +33,9 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.formdev.flatlaf.util.ScaledEmptyBorder;
 
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Managers.LanguageManager;
 import backupmanager.gui.component.AccentColorIcon;
 import backupmanager.gui.system.FormManager;
 import backupmanager.gui.themes.PanelThemes;
@@ -68,8 +71,8 @@ public class FormSetting extends CustomForm {
         tabbedPane.putClientProperty(FlatClientProperties.STYLE, "" +
                 "tabType:card");
 
-        tabbedPane.addTab("Layout", createLayoutOption());
-        tabbedPane.addTab("Style", createStyleOption());
+        tabbedPane.addTab(Translations.get(TKey.SETTINGS_LAYOUT_TAB), createLayoutOption());
+        tabbedPane.addTab(Translations.get(TKey.SETTINGS_LAYOUT_TAB), createStyleOption());
         add(tabbedPane, "gapy 1 0");
         add(createThemes());
     }
@@ -88,9 +91,10 @@ public class FormSetting extends CustomForm {
 
     private Component createWindowsLayout() {
         JPanel panel = new JPanel(new MigLayout());
-        panel.setBorder(new TitledBorder("Windows layout"));
-        JCheckBox chRightToLeft = new JCheckBox("Right to Left", !getComponentOrientation().isLeftToRight());
-        JCheckBox chFullWindow = new JCheckBox("Full Window Content", FlatClientProperties.clientPropertyBoolean(FormManager.getFrame().getRootPane(), FlatClientProperties.FULL_WINDOW_CONTENT, false));
+        windowsLayout = new TitledBorder("Windows Layout");
+        panel.setBorder(windowsLayout);
+        chRightToLeft = new JCheckBox("Right to Left", !getComponentOrientation().isLeftToRight());
+        chFullWindow = new JCheckBox("Full Window Content", FlatClientProperties.clientPropertyBoolean(FormManager.getFrame().getRootPane(), FlatClientProperties.FULL_WINDOW_CONTENT, false));
         chRightToLeft.addActionListener(e -> {
             if (chRightToLeft.isSelected()) {
                 FormManager.getFrame().applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -109,14 +113,15 @@ public class FormSetting extends CustomForm {
 
     private Component createDrawerLayout() {
         JPanel panel = new JPanel(new MigLayout());
-        panel.setBorder(new TitledBorder("Drawer layout"));
+        drawerLayout = new TitledBorder("Drawer layout");
+        panel.setBorder(drawerLayout);
 
-        JRadioButton jrLeft = new JRadioButton("Left");
-        JRadioButton jrLeading = new JRadioButton("Leading");
-        JRadioButton jrTrailing = new JRadioButton("Trailing");
-        JRadioButton jrRight = new JRadioButton("Right");
-        JRadioButton jrTop = new JRadioButton("Top");
-        JRadioButton jrBottom = new JRadioButton("Bottom");
+        jrLeft = new JRadioButton("Left");
+        jrLeading = new JRadioButton("Leading");
+        jrTrailing = new JRadioButton("Trailing");
+        jrRight = new JRadioButton("Right");
+        jrTop = new JRadioButton("Top");
+        jrBottom = new JRadioButton("Bottom");
 
         ButtonGroup group = new ButtonGroup();
         group.add(jrLeft);
@@ -188,9 +193,10 @@ public class FormSetting extends CustomForm {
 
     private Component createModalDefaultOption() {
         JPanel panel = new JPanel(new MigLayout());
-        panel.setBorder(new TitledBorder("Default modal option"));
-        JCheckBox chAnimation = new JCheckBox("Animation enable");
-        JCheckBox chCloseOnPressedEscape = new JCheckBox("Close on pressed escape");
+        modalOption = new TitledBorder("Default modal option");
+        panel.setBorder(new TitledBorder(modalOption));
+        chAnimation = new JCheckBox("Animation enable");
+        chCloseOnPressedEscape = new JCheckBox("Close on pressed escape");
         chAnimation.setSelected(ModalDialog.getDefaultOption().isAnimationEnabled());
         chCloseOnPressedEscape.setSelected(ModalDialog.getDefaultOption().isCloseOnPressedEscape());
 
@@ -205,16 +211,15 @@ public class FormSetting extends CustomForm {
 
     private Component createLanguageOption() {
         JPanel panel = new JPanel(new MigLayout());
-        panel.setBorder(new TitledBorder("Language"));
+        languageTitleBorder = new TitledBorder("Language");
+        panel.setBorder(languageTitleBorder);
         languageCombo = new JComboBox<>();
         initComboItem(languageCombo);
 
         languageCombo.addActionListener(e -> {
             Object selected = languageCombo.getSelectedItem();
-
-            logger.info("Language setted to: {}", selected.toString());
-
-            // onLanguageChanged(selected);
+            String languageName = selected.toString();
+            LanguageManager.setLanguage(languageName);
         });
 
         panel.add(languageCombo);
@@ -250,7 +255,8 @@ public class FormSetting extends CustomForm {
 
     private Component createAccentColor() {
         JPanel panel = new JPanel(new MigLayout());
-        panel.setBorder(new TitledBorder("Accent color"));
+        accentLayout = new TitledBorder("Accent color");
+        panel.setBorder(accentLayout);
         ButtonGroup group = new ButtonGroup();
         JToolBar toolBar = new JToolBar();
         toolBar.putClientProperty(FlatClientProperties.STYLE, "" +
@@ -305,7 +311,7 @@ public class FormSetting extends CustomForm {
             colorPicker.setBorder(new ScaledEmptyBorder(0, 20, 0, 20));
             Option option = ModalDialog.createOption();
             option.setAnimationEnabled(false);
-            ModalDialog.showModal(this, new SimpleModalBorder(colorPicker, "Select Color", SimpleModalBorder.YES_NO_OPTION, (controller, action) -> {
+            colorPickerLayout = new SimpleModalBorder(colorPicker, Translations.get(TKey.SETTINGS_COLOR_PICKER_LAYOUT), SimpleModalBorder.YES_NO_OPTION, (controller, action) -> {
                 if (action == SimpleModalBorder.YES_OPTION) {
                     AppPreferences.accentColor = colorPicker.getSelectedColor();
                     oldSelected = null;
@@ -315,7 +321,8 @@ public class FormSetting extends CustomForm {
                         oldSelected.setSelected(true);
                     }
                 }
-            }), option);
+            });
+            ModalDialog.showModal(this, colorPickerLayout, option);
         });
         return button;
     }
@@ -326,28 +333,32 @@ public class FormSetting extends CustomForm {
         JPanel lineStyleOption = new JPanel(new MigLayout("wrap", "[200]"));
         JPanel lineColorOption = new JPanel(new MigLayout("wrap", "[200]"));
 
-        lineStyle.setBorder(new TitledBorder("Drawer line style"));
-        lineStyleOption.setBorder(new TitledBorder("Line style option"));
-        lineColorOption.setBorder(new TitledBorder("Color option"));
+        drawerLineLayout = new TitledBorder("Drawer line style");
+        lineStyleOptionLayout = new TitledBorder("Line style option");
+        colorOptionLayout = new TitledBorder("Color option");
+
+        lineStyle.setBorder(drawerLineLayout);
+        lineStyleOption.setBorder(lineStyleOptionLayout);
+        lineColorOption.setBorder(colorOptionLayout);
 
         ButtonGroup groupStyle = new ButtonGroup();
-        JRadioButton jrCurvedStyle = new JRadioButton("Curved line style");
-        JRadioButton jrStraightDotStyle = new JRadioButton("Straight dot line style", true);
+        jrCurvedStyle = new JRadioButton("Curved line style");
+        jrStraightDotStyle = new JRadioButton("Straight dot line style", true);
         groupStyle.add(jrCurvedStyle);
         groupStyle.add(jrStraightDotStyle);
 
         ButtonGroup groupStyleOption = new ButtonGroup();
-        JRadioButton jrStyleOption1 = new JRadioButton("Rectangle");
-        JRadioButton jrStyleOption2 = new JRadioButton("Ellipse", true);
+        jrStyleOption1 = new JRadioButton("Rectangle");
+        jrStyleOption2 = new JRadioButton("Ellipse", true);
         groupStyleOption.add(jrStyleOption1);
         groupStyleOption.add(jrStyleOption2);
 
-        JCheckBox chPaintLineColor = new JCheckBox("Paint selected line color");
+        chPaintLineColor = new JCheckBox("Paint selected line color");
 
         jrCurvedStyle.addActionListener(e -> {
             if (jrCurvedStyle.isSelected()) {
-                jrStyleOption1.setText("Line");
-                jrStyleOption2.setText("Curved");
+                jrStyleOption1.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_LINE));
+                jrStyleOption2.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_CURVED));
                 boolean round = jrStyleOption2.isSelected();
                 boolean paintSelectedLine = chPaintLineColor.isSelected();
                 setDrawerLineStyle(true, round, paintSelectedLine);
@@ -355,8 +366,8 @@ public class FormSetting extends CustomForm {
         });
         jrStraightDotStyle.addActionListener(e -> {
             if (jrStraightDotStyle.isSelected()) {
-                jrStyleOption1.setText("Rectangle");
-                jrStyleOption2.setText("Ellipse");
+                jrStyleOption1.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_RETTANGLE));
+                jrStyleOption2.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_ELLIPSE));
                 boolean round = jrStyleOption2.isSelected();
                 boolean paintSelectedLine = chPaintLineColor.isSelected();
                 setDrawerLineStyle(false, round, paintSelectedLine);
@@ -472,9 +483,56 @@ public class FormSetting extends CustomForm {
 
     @Override
     protected void setTranslations() {
-        
+        windowsLayout.setTitle(Translations.get(TKey.SETTINGS_WINDOWS_LAYOUT));
+        chRightToLeft.setText(Translations.get(TKey.SETTINGS_WINDOWS_RIGHT));
+        chFullWindow.setText(Translations.get(TKey.SETTINGS_WINDOWS_FULL));
+        drawerLayout.setTitle(Translations.get(TKey.SETTINGS_DRAWER_LAYOUT));
+        jrLeft.setText(Translations.get(TKey.SETTINGS_DRAWER_LEFT));
+        jrLeading.setText(Translations.get(TKey.SETTINGS_DRAWER_LEADING));
+        jrTrailing.setText(Translations.get(TKey.SETTINGS_DRAWER_TRAILING));
+        jrRight.setText(Translations.get(TKey.SETTINGS_DRAWER_RIGHT));
+        jrTop.setText(Translations.get(TKey.SETTINGS_DRAWER_TOP));
+        jrBottom.setText(Translations.get(TKey.SETTINGS_DRAWER_BOTTOM));
+        modalOption.setTitle(Translations.get(TKey.SETTINGS_MODAL_OPTION));
+        chAnimation.setText(Translations.get(TKey.SETTINGS_MODAL_ANIMATION));
+        chCloseOnPressedEscape.setText(Translations.get(TKey.SETTINGS_MODAL_CLOSE));
+        languageTitleBorder.setTitle(Translations.get(TKey.SETTINGS_LANGUAGES_LAYOUT));
+        accentLayout.setTitle(Translations.get(TKey.SETTINGS_ACCENT_LAYOUT));
+        // colorPickerLayout.setTitle(Translations.get(TKey.SETTINGS_COLOR_PICKER_LAYOUT)); // the method is not actually avaiable
+        drawerLineLayout.setTitle(Translations.get(TKey.SETTINGS_DRAWER_LINE_LAYOUT));
+        lineStyleOptionLayout.setTitle(Translations.get(TKey.SETTINGS_LINE_STYLE_LAYOUT));
+        colorOptionLayout.setTitle(Translations.get(TKey.SETTINGS_COLOR_OPTION_LAYOUT));
+        jrCurvedStyle.setText(Translations.get(TKey.SETTINGS_DRAWER_LINE_CURVED));
+        jrStraightDotStyle.setText(Translations.get(TKey.SETTINGS_DRAWER_DOT_LINE));
+        jrStyleOption1.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_RETTANGLE));
+        jrStyleOption2.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_ELLIPSE));
+        chPaintLineColor.setText(Translations.get(TKey.SETTINGS_COLOR_OPTION_PAINTED));
     }
 
     private JTabbedPane tabbedPane;
     private JComboBox<Object> languageCombo;
+    private TitledBorder windowsLayout;
+    private JCheckBox chRightToLeft;
+    private JCheckBox chFullWindow;
+    private TitledBorder drawerLayout;
+    private JRadioButton jrLeft;
+    private JRadioButton jrLeading;
+    private JRadioButton jrTrailing;
+    private JRadioButton jrRight;
+    private JRadioButton jrTop;
+    private JRadioButton jrBottom;
+    private TitledBorder modalOption;
+    private JCheckBox chAnimation;
+    private JCheckBox chCloseOnPressedEscape;
+    private TitledBorder languageTitleBorder;
+    private TitledBorder accentLayout;
+    private SimpleModalBorder colorPickerLayout;
+    private TitledBorder drawerLineLayout;
+    private TitledBorder lineStyleOptionLayout;
+    private TitledBorder colorOptionLayout;
+    private JRadioButton jrCurvedStyle;
+    private JRadioButton jrStraightDotStyle;
+    private JRadioButton jrStyleOption1;
+    private JRadioButton jrStyleOption2;
+    private JCheckBox chPaintLineColor;
 }
