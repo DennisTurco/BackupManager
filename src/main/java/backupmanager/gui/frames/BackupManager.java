@@ -7,9 +7,8 @@ import javax.swing.JFrame;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import backupmanager.gui.menu.MyDrawerBuilder;
+import backupmanager.gui.menu.DrawerManager;
 import backupmanager.gui.system.FormManager;
-import raven.modal.Drawer;
 
 public class BackupManager extends JFrame{
 
@@ -29,7 +28,7 @@ public class BackupManager extends JFrame{
     private void init() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getRootPane().putClientProperty(FlatClientProperties.FULL_WINDOW_CONTENT, true);
-        Drawer.installDrawer(this, MyDrawerBuilder.getInstance());
+        DrawerManager.getInstance().install(this);
         FormManager.install(this);
         setSize(new Dimension(1366, 768));
         setLocationRelativeTo(null);

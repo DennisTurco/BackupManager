@@ -67,7 +67,7 @@ public class FormHistory extends CustomForm {
     }
 
     @Override
-    protected void setTranslations() {
+    public void setTranslations() {
         editTitle(Translations.get(TKey.HISTORY_LOGS_TITLE));
         editDescription(Translations.get(TKey.HISTORY_LOGS_DESCRIPTION));
     }

@@ -14,7 +14,7 @@ public enum MenuItems {
     Share, //TODO: Used??
     Support,
     ContactUs,
-    Website, //TODO: Used??
+    Website,
     BackupList,
     Dashboard,
     About,

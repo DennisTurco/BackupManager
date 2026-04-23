@@ -45,4 +45,12 @@ public class CardBox extends JPanel {
     public void setCardIconColor(int index, Color color) {
         cardItems.get(index).setCardIconColor(color);
     }
+
+    public void setTitleTextAt(int index, String text) {
+        cardItems.get(index).setTitleText(text);
+    }
+
+    public void setDescriptionTextAt(int index, String text) {
+        cardItems.get(index).setDescriptionText(text);
+    }
 }

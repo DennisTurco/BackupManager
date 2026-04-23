@@ -30,7 +30,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
@@ -493,31 +493,31 @@ public class FormBackupTable extends CustomForm {
     }
 
     @Override
-    protected void setTranslations() {
-        editTitle(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_LIST_TITLE));
-        editDescription(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_LIST_DESCRIPTION));
+    public void setTranslations() {
+        editTitle(Translations.get(TKey.BACKUP_LIST_TITLE));
+        editDescription(Translations.get(TKey.BACKUP_LIST_DESCRIPTION));
 
-        txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_PLACEHOLDER));
-        txtSearch.setToolTipText(TCategory.BACKUP_LIST.getTranslation(TKey.RESEARCH_BAR_TOOLTIP));
+        txtSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, Translations.get(TKey.RESEARCH_BAR_PLACEHOLDER));
+        txtSearch.setToolTipText(Translations.get(TKey.RESEARCH_BAR_TOOLTIP));
 
-        cmdCreate.setText(TCategory.GENERAL.getTranslation(TKey.CREATE_BUTTON));
-        cmdEdit.setText(TCategory.GENERAL.getTranslation(TKey.EDIT_BUTTON));
-        cmdDelete.setText(TCategory.GENERAL.getTranslation(TKey.DELETE_BUTTON));
+        cmdCreate.setText(Translations.get(TKey.CREATE_BUTTON));
+        cmdEdit.setText(Translations.get(TKey.EDIT_BUTTON));
+        cmdDelete.setText(Translations.get(TKey.DELETE_BUTTON));
 
-        itemEdit.setText(TCategory.BACKUP_LIST.getTranslation(TKey.EDIT_POPUP));
-        itemDelete.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DELETE_POPUP));
-        itemDuplicate.setText(TCategory.BACKUP_LIST.getTranslation(TKey.DUPLICATE_POPUP));
-        itemRename.setText(TCategory.BACKUP_LIST.getTranslation(TKey.RENAME_BACKUP_POPUP));
-        itemOpenTargetPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_INITIAL_FOLDER_POPUP));
-        itemOpenDestinationPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.OPEN_DESTINATION_FOLDER_POPUP));
-        itemBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_POPUP));
-        itemRunSingleBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.SINGLE_BACKUP_POPUP));
-        itemAutoBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.AUTO_BACKUP_POPUP));
-        itemInterruptBackup.setText(TCategory.BACKUP_LIST.getTranslation(TKey.INTERRUPT_POPUP));
-        itemCopyText.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_TEXT_POPUP));
-        itemCopyBackupName.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_BACKUP_NAME_POPUP));
-        itemCopyTargetPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_INITIAL_PATH_POPUP));
-        itemCopyDestinationPath.setText(TCategory.BACKUP_LIST.getTranslation(TKey.COPY_DESTINATION_PATH_BACKUP));
+        itemEdit.setText(Translations.get(TKey.EDIT_POPUP));
+        itemDelete.setText(Translations.get(TKey.DELETE_POPUP));
+        itemDuplicate.setText(Translations.get(TKey.DUPLICATE_POPUP));
+        itemRename.setText(Translations.get(TKey.RENAME_BACKUP_POPUP));
+        itemOpenTargetPath.setText(Translations.get(TKey.OPEN_INITIAL_FOLDER_POPUP));
+        itemOpenDestinationPath.setText(Translations.get(TKey.OPEN_DESTINATION_FOLDER_POPUP));
+        itemBackup.setText(Translations.get(TKey.BACKUP_POPUP));
+        itemRunSingleBackup.setText(Translations.get(TKey.SINGLE_BACKUP_POPUP));
+        itemAutoBackup.setText(Translations.get(TKey.AUTO_BACKUP_POPUP));
+        itemInterruptBackup.setText(Translations.get(TKey.INTERRUPT_POPUP));
+        itemCopyText.setText(Translations.get(TKey.COPY_TEXT_POPUP));
+        itemCopyBackupName.setText(Translations.get(TKey.COPY_BACKUP_NAME_POPUP));
+        itemCopyTargetPath.setText(Translations.get(TKey.COPY_INITIAL_PATH_POPUP));
+        itemCopyDestinationPath.setText(Translations.get(TKey.COPY_DESTINATION_PATH_BACKUP));
     }
 
     private BackupTable backupTable;

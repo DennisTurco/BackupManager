@@ -61,6 +61,14 @@ public class CardItem extends JPanel {
         }
     }
 
+    public void setTitleText(String text) {
+        lbTitle.setText(text);
+    }
+
+    public void setDescriptionText(String text) {
+        lbDescription.setText(text);
+    }
+
     private JLabel lbTitle;
     private JLabel lbValue;
     private JLabel lbDescription;

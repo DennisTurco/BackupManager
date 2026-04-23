@@ -52,13 +52,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private static final Map<MenuItems, Runnable> menuActionMap = new HashMap<>();
     private static final Map<String, MenuItems> menuBindingMap = new HashMap<>();
-    private static MyDrawerBuilder instance;
 
-    public static MyDrawerBuilder getInstance() {
-        if (instance == null) {
-            instance = new MyDrawerBuilder();
-        }
-        return instance;
+    public MyDrawerBuilder() {
+        super(createSimpleMenuOption());
+        initMenuActions();
+        LightDarkButtonFooter lightDarkButtonFooter = (LightDarkButtonFooter) getFooter();
+        lightDarkButtonFooter.addModeChangeListener(isDarkMode -> {
+            // event for light dark mode changed
+        });
     }
 
     public void initHeader() {
@@ -73,15 +74,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         header.setSimpleHeaderData(data);
 
         rebuildMenu();
-    }
-
-    private MyDrawerBuilder() {
-        super(createSimpleMenuOption());
-        initMenuActions();
-        LightDarkButtonFooter lightDarkButtonFooter = (LightDarkButtonFooter) getFooter();
-        lightDarkButtonFooter.addModeChangeListener(isDarkMode -> {
-            // event for light dark mode changed
-        });
     }
 
     @Override
@@ -127,7 +119,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                 WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue()));
 
         menuActionMap.put(MenuItems.ContactUs, () ->
-                WebsiteManager.openWebSite(ConfigKey.EMAIL.getValue()));
+                WebsiteManager.sendEmail());
 
         menuActionMap.put(MenuItems.PaypalDonate, () ->
                 WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue()));
@@ -240,6 +232,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private static String getDrawerBackgroundStyle() {
         return "background:$Menu.background;";
+    }
+
+    public DrawerPanel createDrawer() {
+        Option option = createOption();
+        return new DrawerPanel(this, option);
     }
 
     private static List<MenuItem> buildMenuItems() {

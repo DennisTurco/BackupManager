@@ -222,6 +222,7 @@ public class FormSetting extends CustomForm {
             LanguageManager.setLanguage(languageName);
         });
 
+        languageCombo.setSelectedItem(LanguageManager.getLanguage().getLanguageName());
         panel.add(languageCombo);
 
         return panel;
@@ -482,7 +483,7 @@ public class FormSetting extends CustomForm {
     }
 
     @Override
-    protected void setTranslations() {
+    public void setTranslations() {
         windowsLayout.setTitle(Translations.get(TKey.SETTINGS_WINDOWS_LAYOUT));
         chRightToLeft.setText(Translations.get(TKey.SETTINGS_WINDOWS_RIGHT));
         chFullWindow.setText(Translations.get(TKey.SETTINGS_WINDOWS_FULL));

@@ -29,8 +29,6 @@ import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.component.ToolBarSelection;
 import backupmanager.gui.component.chart.BarChart;
-import backupmanager.gui.component.chart.PieChart;
-import backupmanager.gui.component.chart.SpiderChart;
 import backupmanager.gui.component.chart.TimeSeriesChart;
 import backupmanager.gui.component.chart.themes.ColorThemes;
 import backupmanager.gui.component.chart.themes.DefaultChartTheme;
@@ -76,7 +74,7 @@ public class FormBackupDashboard extends CustomForm {
 
         cardBox.setValueAt(CARD_SUCCESS_RATE,
                 String.valueOf(snapshot.totalRequests()),
-                Translations.get(TKey.DASHBOARD_CARD_SUCCESS_RATE),
+                "Success rate",
                 String.format("%.2f%%", snapshot.successRate()),
                 true);
 
@@ -100,7 +98,7 @@ public class FormBackupDashboard extends CustomForm {
 
         JPanel panel = new JPanel(new MigLayout("fillx", "[]push[][]"));
 
-        JLabel title = new JLabel(Translations.get(TKey.DASHBOARD_TITLE));
+        title = new JLabel("Backup Analytics Dashboard");
         title.putClientProperty(FlatClientProperties.STYLE,
                 "font:bold +3");
 
@@ -155,19 +153,19 @@ public class FormBackupDashboard extends CustomForm {
 
         cardBox.addCardItem(
                 createIcon("icons/dashboard/database.svg", DefaultChartTheme.getColor(CARD_TOTAL_CONFIG)),
-                Translations.get(TKey.DASHBOARD_CARD_TOTAL_CONFIGURATIONS));
+                "Total Backup Configurations");
 
         cardBox.addCardItem(
                 createIcon("icons/dashboard/run.svg", DefaultChartTheme.getColor(CARD_SUCCESS_RATE)),
-                Translations.get(TKey.DASHBOARD_CARD_TOTAL_EXECUTIONS));
+                "Total Backup Executions");
 
         cardBox.addCardItem(
                 createIcon("icons/dashboard/duration.svg", DefaultChartTheme.getColor(CARD_DURATION)),
-                Translations.get(TKey.DASHBOARD_CARD_AVG_DURATION));
+                "Avg Backup Duration");
 
         cardBox.addCardItem(
                 createIcon("icons/dashboard/rate.svg", DefaultChartTheme.getColor(CARD_COMPRESSION)),
-                Translations.get(TKey.DASHBOARD_CARD_COMPRESSION_RATE));
+                "Compression Rate");
 
         panel.add(cardBox);
         panelLayout.add(panel);
@@ -184,19 +182,6 @@ public class FormBackupDashboard extends CustomForm {
         panelLayout.add(panel);
     }
 
-    private void createDiskUsageChart() {
-
-        JPanel panel = createChartPanel(350);
-
-        spiderChart = new SpiderChart();
-        pieChart = new PieChart();
-
-        panel.add(spiderChart);
-        panel.add(pieChart);
-
-        panelLayout.add(panel);
-    }
-
     private void createExecutionsByMonthChart() {
         JPanel panel = createChartPanel(350);
         executionsChart = new BarChart();
@@ -210,17 +195,22 @@ public class FormBackupDashboard extends CustomForm {
     }
 
     @Override
-    protected void setTranslations() {
-
+    public void setTranslations() {
+        title.setText(Translations.get(TKey.DASHBOARD_TITLE));
+        cardBox.setTitleTextAt(CARD_TOTAL_CONFIG, Translations.get(TKey.DASHBOARD_CARD_TOTAL_CONFIGURATIONS));
+        cardBox.setTitleTextAt(CARD_SUCCESS_RATE, Translations.get(TKey.DASHBOARD_CARD_TOTAL_EXECUTIONS));
+        cardBox.setTitleTextAt(CARD_DURATION, Translations.get(TKey.DASHBOARD_CARD_AVG_DURATION));
+        cardBox.setTitleTextAt(CARD_COMPRESSION, Translations.get(TKey.DASHBOARD_CARD_COMPRESSION_RATE));
+        cardBox.setDescriptionTextAt(CARD_SUCCESS_RATE, Translations.get(TKey.DASHBOARD_CARD_SUCCESS_RATE));
     }
+
+    private JLabel title;
 
     private JPanel panelLayout;
     private CardBox cardBox;
 
     private TimeSeriesChart durationChart;
     private BarChart  executionsChart;
-    private SpiderChart spiderChart;
-    private PieChart pieChart;
 
     private class DashboardLayout implements LayoutManager {
 

@@ -12,7 +12,7 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.LimitDocument;
 import backupmanager.Services.LoginService;
-import backupmanager.gui.menu.MyDrawerBuilder;
+import backupmanager.gui.menu.DrawerManager;
 import backupmanager.gui.system.FormManager;
 import net.miginfocom.swing.MigLayout;
 
@@ -113,12 +113,12 @@ public class FormLogin extends CustomForm {
     }
 
     private void showMainForm() {
-        MyDrawerBuilder.getInstance().initHeader();
+        DrawerManager.getInstance().getDrawer();
         FormManager.login();
     }
 
     @Override
-    protected void setTranslations() {
+    public void setTranslations() {
         if (lbTitle == null) {
             return;
         }
