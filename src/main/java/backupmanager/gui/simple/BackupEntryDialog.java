@@ -305,7 +305,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
     }
 
     @Override
-    protected void setTranslations() {
+    public void setTranslations() {
         backupOnText = Translations.get(TKey.AUTO_BACKUP_BUTTON_ON);
         backupOffText = Translations.get(TKey.AUTO_BACKUP_BUTTON_OFF);
         targetPathBtn.setToolTipText(Translations.get(TKey.INITIAL_FILE_CHOOSER_TOOLTIP));

@@ -14,7 +14,7 @@ import javax.swing.KeyStroke;
 
 import backupmanager.gui.component.EmptyModalBorder;
 import backupmanager.gui.component.FormSearchPanel;
-import backupmanager.gui.menu.MyDrawerBuilder;
+import backupmanager.gui.menu.DrawerManager;
 import backupmanager.utils.SystemForm;
 import raven.modal.ModalDialog;
 import raven.modal.drawer.item.Item;
@@ -47,7 +47,7 @@ public class FormSearch {
     }
 
     private Class<? extends Form>[] getClassForms() {
-        MenuItem[] menuItems = MyDrawerBuilder.getInstance().getSimpleMenuOption().getMenus();
+        MenuItem[] menuItems = DrawerManager.getInstance().getMenuItems();
         List<Class<?>> formClass = new ArrayList<>();
         getMenuClass(menuItems, formClass);
         return formClass.toArray(new Class[0]);

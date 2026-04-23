@@ -13,9 +13,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
-import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.Translations;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
 import backupmanager.database.Database;
@@ -35,7 +33,7 @@ public class MainApp {
         databaseInitialization();
 
         AppPreferences.init();
-        loadPreferredLanguage();
+        LanguageManager.loadPreferredLanguage();
 
         boolean isBackgroundMode = isBackgroundMode(args);
 
@@ -57,15 +55,6 @@ public class MainApp {
         } catch (Exception ex) {
             logger.error("Unable to init the database");
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
-    }
-
-    private static void loadPreferredLanguage() {
-        try {
-            Configurations.loadAllConfigurations();
-            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + LanguageManager.getLanguage().getFileName());
-        } catch (IOException ex) {
-            logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }
     }
 

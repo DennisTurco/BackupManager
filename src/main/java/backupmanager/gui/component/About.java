@@ -11,8 +11,10 @@ import javax.swing.text.DefaultCaret;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.MenuItems;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Json.JsonConfig;
 import backupmanager.Managers.WebsiteManager;
 import net.miginfocom.swing.MigLayout;
 
@@ -60,7 +62,14 @@ public class About extends JPanel {
 
     private String getDescriptionText() {
         String message = Translations.get(TKey.ABOUT_MESSAGE_BODY);
-        message = message.replace("[PROJECT_WEBSITE]", ConfigKey.INFO_PAGE_LINK.getValue()) ;
+        message = message.replace("[PROJECT_WEBSITE]", ConfigKey.INFO_PAGE_LINK.getValue());
+
+        // removing all the info inside the <p> tag
+        JsonConfig config = JsonConfig.getInstance();
+        if (!config.isMenuItemEnabled(MenuItems.Website.name())) {
+            message = message.replaceAll("<p>.*?</p>", "");
+        }
+
         return message;
     }
 

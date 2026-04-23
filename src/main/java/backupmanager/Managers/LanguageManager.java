@@ -1,43 +1,65 @@
 package backupmanager.Managers;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
+import backupmanager.Enums.Translations;
+import backupmanager.interfaces.ITranslatable;
 import backupmanager.utils.AppPreferences;
 
+// Observer class -> every time the language is changed, it notify all the components registered
 public class LanguageManager {
     private static final Logger logger = LoggerFactory.getLogger(LanguageManager.class);
 
-    public static void setLanguage(LanguagesEnum language) {
-        String fileName = language.getFileName();
-        AppPreferences.setLanguage(fileName);
-        logger.info("Language setted to: {}", language.getLanguageName());
-    }
+    private static final List<WeakReference<ITranslatable>> listeners = new ArrayList<>();
 
     public static void setLanguage(String language) {
         var lang = getLanguageByLanguageName(language);
         setLanguage(lang);
     }
 
-
-    public static LanguagesEnum getLanguage() {
-        return getLanguageInPreferences();
+    public static void setLanguage(LanguagesEnum language) {
+        AppPreferences.setLanguage(language.getFileName());
+        logger.info("Language setted to: {}", language.getLanguageName());
+        loadPreferredLanguage();
+        notifyLanguageChanged();
     }
 
-    private static LanguagesEnum getLanguageInPreferences() {
-        String langPref = AppPreferences.getLanguage();
-        String filename = !langPref.isEmpty() ? langPref : LanguagesEnum.getDefault().getFileName();
-
+    public static void loadPreferredLanguage() {
         try {
-            return getLanguageByFileName(filename);
-        } catch (Exception ex) {
-            logger.error("An error occurred during fetching language: {}", ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            Translations.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + LanguageManager.getLanguage().getFileName());
+        } catch (IOException ex) {
+            logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }
-        return LanguagesEnum.getDefault();
+    }
+
+    public static LanguagesEnum getLanguage() {
+        return getLanguageByFileName(AppPreferences.getLanguage());
+    }
+
+    public static void register(ITranslatable t) {
+        listeners.add(new WeakReference<>(t));
+    }
+
+    public static void notifyLanguageChanged() {
+        SwingUtilities.invokeLater(() -> {
+            listeners.removeIf(ref -> ref.get() == null);
+            for (WeakReference<ITranslatable> ref : listeners) {
+                ITranslatable t = ref.get();
+                if (t != null) {
+                    t.setTranslations();
+                }
+            }
+        });
     }
 
     private static LanguagesEnum getLanguageByFileName(String filename) {

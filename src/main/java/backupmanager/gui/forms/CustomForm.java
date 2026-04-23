@@ -7,10 +7,12 @@ import javax.swing.JTextPane;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import backupmanager.Managers.LanguageManager;
 import backupmanager.gui.system.Form;
+import backupmanager.interfaces.ITranslatable;
 import net.miginfocom.swing.MigLayout;
 
-public abstract class CustomForm extends Form {
+public abstract class CustomForm extends Form implements ITranslatable {
 
     private JLabel lbTitle;
     private JTextPane text;
@@ -19,11 +21,14 @@ public abstract class CustomForm extends Form {
 
     protected void build() {
         init();
+        LanguageManager.register(this);
         setTranslations();
     }
 
     protected abstract void init();
-    protected abstract void setTranslations();
+
+    @Override
+    public abstract void setTranslations();
 
     @Override
     public void formInit() {

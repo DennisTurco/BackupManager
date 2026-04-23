@@ -321,7 +321,7 @@ public class Translations {
 
         // ABOUT
         ABOUT_SYSTEM_INFORMATION(TCategory.ABOUT, "AboutSystemInformation", "System Information"), // TODO: add to json
-        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><br>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</html>"), // TODO: add to json
+        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><p>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</p></html>"), // TODO: add to json
 
         // SETTINGS
         SETTINGS_LAYOUT_TAB(TCategory.SETTINGS, "SettingsLayoutTab", "Layout"), // TODO: add to json

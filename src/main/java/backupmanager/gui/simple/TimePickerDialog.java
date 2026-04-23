@@ -84,7 +84,7 @@ public class TimePickerDialog extends CustomDialog<TimeInterval> {
     }
 
     @Override
-    protected void setTranslations() {
+    public void setTranslations() {
         description.setText(Translations.get(TKey.DESCRIPTION));
         daysSpinner.setToolTipText(Translations.get(TKey.SPINNER_TOOLTIP));
         hoursSpinner.setToolTipText(Translations.get(TKey.SPINNER_TOOLTIP));
