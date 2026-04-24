@@ -35,6 +35,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.icons.FlatMenuArrowIcon;
 
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.gui.menu.MyMenuValidation;
 import backupmanager.gui.svg.SVGIconUIColor;
 import backupmanager.gui.system.Form;
@@ -62,7 +64,7 @@ public class FormSearchPanel extends JPanel {
         setLayout(new MigLayout("fillx,insets 0,wrap", "[fill,500]"));
         textSearch = new JTextField();
         panelResult = new PanelResult();
-        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
+        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, Translations.get(TKey.SEARCH_TITLE));
         textSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new FlatSVGIcon("icons/search.svg", 0.4f));
         textSearch.putClientProperty(FlatClientProperties.STYLE, "" +
                 "border:3,3,3,3;" +
@@ -228,7 +230,7 @@ public class FormSearchPanel extends JPanel {
         panelResult.removeAll();
         listItems.clear();
         if (recentSearch != null && !recentSearch.isEmpty()) {
-            panelResult.add(createLabel("Recent"));
+            panelResult.add(createLabel(Translations.get(TKey.SEARCH_RECENT)));
             for (Item item : recentSearch) {
                 checkComponentOrientation(item);
                 panelResult.add(item);
@@ -237,7 +239,7 @@ public class FormSearchPanel extends JPanel {
         }
 
         if (favoriteSearch != null && !favoriteSearch.isEmpty()) {
-            panelResult.add(createLabel("Favorite"));
+            panelResult.add(createLabel(Translations.get(TKey.SEARCH_FAVORITE)));
             for (Item item : favoriteSearch) {
                 checkComponentOrientation(item);
                 panelResult.add(item);
@@ -299,7 +301,7 @@ public class FormSearchPanel extends JPanel {
 
     private Component createNoResult(String text) {
         JPanel panel = new JPanel(new MigLayout("insets 15 5 15 5,al center,gapx 1"));
-        JLabel label = new JLabel("No result for \"");
+        JLabel label = new JLabel(Translations.get(TKey.SEARCH_NO_RECENT) + " \"");
         JLabel labelEnd = new JLabel("\"");
         label.putClientProperty(FlatClientProperties.STYLE, "" +
                 "foreground:$Label.disabledForeground;");
@@ -342,7 +344,7 @@ public class FormSearchPanel extends JPanel {
 
         private void init() {
             setLayout(new MigLayout("insets 15 5 15 5,al center"));
-            JLabel label = new JLabel("No recent searches");
+            JLabel label = new JLabel(Translations.get(TKey.SEARCH_NO_RECENT));
             label.putClientProperty(FlatClientProperties.STYLE, "" +
                     "foreground:$Label.disabledForeground;" +
                     "font:bold;");
@@ -402,8 +404,8 @@ public class FormSearchPanel extends JPanel {
 
         private void clearSelected() {
             for (Component com : getParent().getComponents()) {
-                if (com instanceof JButton) {
-                    ((JButton) com).setSelected(false);
+                if (com instanceof JButton jButton) {
+                    jButton.setSelected(false);
                 }
             }
         }
@@ -488,7 +490,7 @@ public class FormSearchPanel extends JPanel {
             Item item = new Item(data, form, isRecent, true);
             checkComponentOrientation(item);
             if (index == null) {
-                panelResult.add(createLabel("Favorite"));
+                panelResult.add(createLabel(Translations.get(TKey.SEARCH_FAVORITE)));
                 panelResult.add(item);
                 listItems.add(item);
             } else {

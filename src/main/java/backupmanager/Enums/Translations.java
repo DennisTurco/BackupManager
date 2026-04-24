@@ -32,11 +32,12 @@ public class Translations {
         PROGRESS_BACKUP_FRAME("ProgressBackupFrame"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs"),
-        SUBSCRIPTION("Subscription"), // TODO: add to json
-        HISTORY_LOGS("HistoryLogs"), // TODO: add to json
-        ABOUT("About"), // TODO: add to json
-        DASHBOARD("Dashboard"), // TODO: add to json
-        SETTINGS("Settings"); // TODO: add to json
+        SUBSCRIPTION("Subscription"),
+        HISTORY_LOGS("HistoryLogs"),
+        ABOUT("About"),
+        DASHBOARD("Dashboard"),
+        SETTINGS("Settings"),
+        SEARCH_BAR("SearchBar");
 
         private final String categoryName;
         private final Map<TKey, String> translations = new HashMap<>();
@@ -75,21 +76,21 @@ public class Translations {
         CANCEL_BUTTON(TCategory.GENERAL, "CancelButton", "Cancel"),
         APPLY_BUTTON(TCategory.GENERAL, "ApplyButton", "Apply"),
         SAVE_BUTTON(TCategory.GENERAL, "SaveButton", "Save"),
-        CREATE_BUTTON(TCategory.GENERAL, "CreateButton", "Create"), // TODO: add to json
-        EDIT_BUTTON(TCategory.GENERAL, "EditButton", "Edit"), // TODO: add to json
-        DELETE_BUTTON(TCategory.GENERAL, "DeleteButton", "Delete"), // TODO: add to json
-        QUICK_SEARCH(TCategory.GENERAL, "QuickSearch", "Quick Search..."), // TODO: add to json
+        CREATE_BUTTON(TCategory.GENERAL, "CreateButton", "Create"),
+        EDIT_BUTTON(TCategory.GENERAL, "EditButton", "Edit"),
+        DELETE_BUTTON(TCategory.GENERAL, "DeleteButton", "Delete"),
+        QUICK_SEARCH(TCategory.GENERAL, "QuickSearch", "Quick Search..."),
 
         // Menu
-        SUBMENU_MAIN(TCategory.MENU, "SubmenuMain", "MAIN"), //TODO: add to json
-        SUBMENU_OTHER(TCategory.MENU, "SubmenuOther", "OTHER"), //TODO: add to json
+        SUBMENU_MAIN(TCategory.MENU, "SubmenuMain", "MAIN"),
+        SUBMENU_OTHER(TCategory.MENU, "SubmenuOther", "OTHER"),
         FILE(TCategory.MENU, "File", "File"),
         OPTIONS(TCategory.MENU, "Options", "Options"),
         ABOUT(TCategory.MENU, "About", "About"),
         HELP(TCategory.MENU, "Help", "Help"),
         BUG_REPORT(TCategory.MENU, "BugReport", "Report a bug"),
         CLEAR(TCategory.MENU, "Clear", "Clear"),
-        DONATE(TCategory.MENU, "Donate", "Support the project"), // TODO: to update
+        DONATE(TCategory.MENU, "Donate", "Support the project"),
         HISTORY(TCategory.MENU, "History", "History"),
         INFO_PAGE(TCategory.MENU, "InfoPage", "Info"),
         NEW(TCategory.MENU, "New", "New"),
@@ -102,16 +103,16 @@ public class Translations {
         SHARE(TCategory.MENU, "Share", "Share"),
         SUPPORT(TCategory.MENU, "Support", "Support"),
         WEBSITE(TCategory.MENU, "Website", "Website"),
-        BACKUP_TABLE(TCategory.MENU, "Backups", "Backup List"), // TODO: add to json
-        CREATE_BACKUP(TCategory.MENU, "CreateBackup", "Create new backup"), // TODO: add to json
-        IMPORT_BACKUP(TCategory.MENU, "ImportBackup", "Import backups from Csv"), // TODO: add to json
-        EXPORT_BACKUP(TCategory.MENU, "ExportBackup", "Export backups to Csv"), // TODO: add to json
-        DASHBOARD(TCategory.MENU, "Dashboard", "Dashboard"), // TODO: add to json
-        GITHUB_PAGE(TCategory.MENU, "Github", "Github page"), // TODO: add to json
-        PAYPAL(TCategory.MENU, "Paypal", "Paypal"), // TODO: add to json
-        BUYMEACOFFE(TCategory.MENU, "BuyMeACoffe", "Buy me a coffe"), // TODO: add to json
-        CONTACT_US(TCategory.MENU, "ContactUs", "Contact us"), // TODO: add to json
-        SUBSCRIPTION(TCategory.MENU, "Subscription", "Subscription"), // TODO: add to json
+        BACKUP_TABLE(TCategory.MENU, "Backups", "Backup List"),
+        CREATE_BACKUP(TCategory.MENU, "CreateBackup", "Create new backup"),
+        IMPORT_BACKUP(TCategory.MENU, "ImportBackup", "Import backups from Csv"),
+        EXPORT_BACKUP(TCategory.MENU, "ExportBackup", "Export backups to Csv"),
+        DASHBOARD(TCategory.MENU, "Dashboard", "Dashboard"),
+        GITHUB_PAGE(TCategory.MENU, "Github", "Github page"),
+        PAYPAL(TCategory.MENU, "Paypal", "Paypal"),
+        BUYMEACOFFE(TCategory.MENU, "BuyMeACoffe", "Buy me a coffe"),
+        CONTACT_US(TCategory.MENU, "ContactUs", "Contact us"),
+        SUBSCRIPTION(TCategory.MENU, "Subscription", "Subscription"),
 
 
         // TabbedFrames
@@ -120,21 +121,21 @@ public class Translations {
 
         // BackupEntry
         PAGE_TITLE(TCategory.BACKUP_ENTRY, "PageTitle", "Backup Entry"),
-        PAGE_SUBTITLE_CREATE(TCategory.BACKUP_ENTRY, "PageSubtitleCreate", "Create Backup"), // TODO: add to json
-        PAGE_SUBTITLE_EDIT(TCategory.BACKUP_ENTRY, "PageSubtitleEdit", "Edit Backup"), // TODO: add to json
-        PAGE_SUBTITLE_INFO(TCategory.BACKUP_ENTRY, "PageSubtitleInfo", "Backup Information"), // TODO: add to json
-        PAGE_SUBTITLE_SETTINGS(TCategory.BACKUP_ENTRY, "PageSubtitleSettings", "Backups Settings"), // TODO: add to json
+        PAGE_SUBTITLE_CREATE(TCategory.BACKUP_ENTRY, "PageSubtitleCreate", "Create Backup"),
+        PAGE_SUBTITLE_EDIT(TCategory.BACKUP_ENTRY, "PageSubtitleEdit", "Edit Backup"),
+        PAGE_SUBTITLE_INFO(TCategory.BACKUP_ENTRY, "PageSubtitleInfo", "Backup Information"),
+        PAGE_SUBTITLE_SETTINGS(TCategory.BACKUP_ENTRY, "PageSubtitleSettings", "Backups Settings"),
         CURRENT_FILE(TCategory.BACKUP_ENTRY, "CurrentFile", "Current file"),
         NOTES(TCategory.BACKUP_ENTRY, "Notes", "Notes"),
-        PATHS(TCategory.BACKUP_ENTRY, "Paths", "Paths"), // TODO: add to json
+        PATHS(TCategory.BACKUP_ENTRY, "Paths", "Paths"),
         LAST_BACKUP(TCategory.BACKUP_ENTRY, "LastBackup", "Last backup"),
         SINGLE_BACKUP_BUTTON(TCategory.BACKUP_ENTRY, "SingleBackupButton", "Single Backup"),
         AUTO_BACKUP_BUTTON(TCategory.BACKUP_ENTRY, "AutoBackupButton", "Auto Backup"),
         AUTO_BACKUP_BUTTON_ON(TCategory.BACKUP_ENTRY, "AutoBackupButtonON", "Auto Backup (ON)"),
         AUTO_BACKUP_BUTTON_OFF(TCategory.BACKUP_ENTRY, "AutoBackupButtonOFF", "Auto Backup (OFF)"),
-        BACKUP_NAME_PLACEHOLDER(TCategory.BACKUP_ENTRY, "BackupNamePlaceholder", "Backup name (unique)"), // TODO: add to json
-        INITIAL_PATH_PLACEHOLDER(TCategory.BACKUP_ENTRY, "InitialPathPlaceholder", "Target path e.g. C:\\Users\\Admin\\Documents"), // TODO: to update
-        DESTINATION_PATH_PLACEHOLDER(TCategory.BACKUP_ENTRY, "DestinationPathPlaceholder", "Destination folder e.g. D:\\Backups"), // TODO: to update
+        BACKUP_NAME_PLACEHOLDER(TCategory.BACKUP_ENTRY, "BackupNamePlaceholder", "Backup name (unique)"),
+        INITIAL_PATH_PLACEHOLDER(TCategory.BACKUP_ENTRY, "InitialPathPlaceholder", "Target path e.g. C:\\Users\\Admin\\Documents"),
+        DESTINATION_PATH_PLACEHOLDER(TCategory.BACKUP_ENTRY, "DestinationPathPlaceholder", "Destination folder e.g. D:\\Backups"),
         BACKUP_NAME(TCategory.BACKUP_ENTRY, "BackupName", "Backup name"),
         BACKUP_NAME_TOOLTIP(TCategory.BACKUP_ENTRY, "BackupNameTooltip", "(Required) Backup name"),
         INITIAL_PATH_TOOLTIP(TCategory.BACKUP_ENTRY, "InitialPathTooltip", "(Required) Initial path"),
@@ -149,16 +150,16 @@ public class Translations {
         MAX_BACKUPS_TO_KEEP_TOOLTIP(TCategory.BACKUP_ENTRY, "MaxBackupsToKeepTooltip", "Maximum number of backups before removing the oldest."),
 
         // BackupList
-        BACKUP_LIST_TITLE(TCategory.BACKUP_LIST, "BackupListTitle", "Backup List"), // TODO: to update
-        BACKUP_LIST_DESCRIPTION(TCategory.BACKUP_LIST, "BackupListDescription", "Manage and monitor backup configurations, including creation, editing, scheduling, and execution."), // TODO: to update
+        BACKUP_LIST_TITLE(TCategory.BACKUP_LIST, "BackupListTitle", "Backup List"),
+        BACKUP_LIST_DESCRIPTION(TCategory.BACKUP_LIST, "BackupListDescription", "Manage and monitor backup configurations, including creation, editing, scheduling, and execution."),
         BACKUP_NAME_COLUMN(TCategory.BACKUP_LIST, "BackupNameColumn", "Backup Name"),
         INITIAL_PATH_COLUMN(TCategory.BACKUP_LIST, "InitialPathColumn", "Initial Path"),
         DESTINATION_PATH_COLUMN(TCategory.BACKUP_LIST, "DestinationPathColumn", "Destination Path"),
         LAST_BACKUP_COLUMN(TCategory.BACKUP_LIST, "LastBackupColumn", "Last Backup"),
         AUTOMATIC_BACKUP_COLUMN(TCategory.BACKUP_LIST, "AutomaticBackupColumn", "Automatic Backup"),
         NEXT_BACKUP_DATE_COLUMN(TCategory.BACKUP_LIST, "NextBackupDateColumn", "Next Backup Date"),
-        TIME_INTERVAL_COLUMN(TCategory.BACKUP_LIST, "TimeIntervalColumn", "Interval (gg.HH:mm)"), // TODO: to update
-        MAX_BACKUPS_COLUMN(TCategory.BACKUP_LIST, "MaxBackupsColumn", "Max Backups To Keep"), // TODO: add to json
+        TIME_INTERVAL_COLUMN(TCategory.BACKUP_LIST, "TimeIntervalColumn", "Interval (gg.HH:mm)"),
+        MAX_BACKUPS_COLUMN(TCategory.BACKUP_LIST, "MaxBackupsColumn", "Max Backups To Keep"),
         BACKUP_NAME_DETAIL(TCategory.BACKUP_LIST, "BackupNameDetail", "BackupName"),
         INITIAL_PATH_DETAIL(TCategory.BACKUP_LIST, "InitialPathDetail", "InitialPath"),
         DESTINATION_PATH_DETAIL(TCategory.BACKUP_LIST, "DestinationPathDetail", "DestinationPath"),
@@ -201,13 +202,13 @@ public class Translations {
 
         // User dialog
         USER_TITLE(TCategory.USER_DIALOG, "UserTitle", "Insert your data"),
-        USER_DESCRIPTION(TCategory.USER_DIALOG, "UserDescription", "Please enter your data to access the system"), // TODO: add to json
+        USER_DESCRIPTION(TCategory.USER_DIALOG, "UserDescription", "Please enter your data to access the system"),
         USER_NAME(TCategory.USER_DIALOG, "Name", "Name"),
         USER_SURNAME(TCategory.USER_DIALOG, "Surname", "Surname"),
         USER_EMAIL(TCategory.USER_DIALOG, "Email", "Email"),
-        USER_NAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserNamePlaceholder", "Enter your name"), // TODO: add to json
-        USER_SURNAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserSurnamePlaceholder", "Enter your surname"), // TODO: add to json
-        USER_EMAIL_PLACEHOLDER(TCategory.USER_DIALOG, "UserEmailPlaceholder", "Enter your email"), // TODO: add to json
+        USER_NAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserNamePlaceholder", "Enter your name"),
+        USER_SURNAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserSurnamePlaceholder", "Enter your surname"),
+        USER_EMAIL_PLACEHOLDER(TCategory.USER_DIALOG, "UserEmailPlaceholder", "Enter your email"),
         ERROR_MESSAGE_FOR_MISSING_DATA(TCategory.USER_DIALOG, "ErrorMessageForMissingData", "Please fill in all the required fields."),
         ERROR_MESSAGE_FOR_WRONG_EMAIL(TCategory.USER_DIALOG, "ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
         EMAIL_CONFIRMATION_SUBJECT(TCategory.USER_DIALOG, "EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
@@ -300,62 +301,70 @@ public class Translations {
         SUBSCRIPTION_EXPIRING_MESSAGE(TCategory.SUBSCRIPTION, "ExpiringMessage", "Your Backup Manager subscription is about to expire.\nAutomatic backups will continue to run until the expiration date.\nPlease contact support to renew it."),
         SUBSCRIPTION_EXPIRED_TITLE(TCategory.SUBSCRIPTION, "ExpiredTitle", "Backup Manager subscription expired"),
         SUBSCRIPTION_EXPIRED_MESSAGE(TCategory.SUBSCRIPTION, "ExpiredMessage", "Your Backup Manager subscription has expired.\nAutomatic backups will no longer run.\nPlease contact support to reactivate it."),
-        SUBSCRIPTION_ACTIVE(TCategory.SUBSCRIPTION, "ActiveLabel", "Active"), // TODO: add to json
-        SUBSCRIPTION_EXPIRING(TCategory.SUBSCRIPTION, "ExpiringLabel", "Expiring"), // TODO: add to json
-        SUBSCRIPTION_EXPIRED(TCategory.SUBSCRIPTION, "ExpiredLabel", "Expired"), // TODO: add to json
-        SUBSCRIPTION_STATUS(TCategory.SUBSCRIPTION, "Status", "Subscription status"), // TODO: add to json
-        SUBSCRIPTION_VALID_FROM(TCategory.SUBSCRIPTION, "ValidFrom", "Valid from"), // TODO: add to json
-        SUBSCRIPTION_VALID_TO(TCategory.SUBSCRIPTION, "ValidTo", "Valid to"), // TODO: add to json
-        SUBSCRIPTION_CONTACT_US(TCategory.SUBSCRIPTION, "ContactUs", "Contact us"), // TODO: add to json
-        SUBSCRIPTION_TO_EXTEND(TCategory.SUBSCRIPTION, "ToExtend", "to extend the subscription period."), // TODO: add to json
+        SUBSCRIPTION_ACTIVE(TCategory.SUBSCRIPTION, "ActiveLabel", "Active"),
+        SUBSCRIPTION_EXPIRING(TCategory.SUBSCRIPTION, "ExpiringLabel", "Expiring"),
+        SUBSCRIPTION_EXPIRED(TCategory.SUBSCRIPTION, "ExpiredLabel", "Expired"),
+        SUBSCRIPTION_STATUS(TCategory.SUBSCRIPTION, "Status", "Subscription status"),
+        SUBSCRIPTION_VALID_FROM(TCategory.SUBSCRIPTION, "ValidFrom", "Valid from"),
+        SUBSCRIPTION_VALID_TO(TCategory.SUBSCRIPTION, "ValidTo", "Valid to"),
+        SUBSCRIPTION_CONTACT_US(TCategory.SUBSCRIPTION, "ContactUs", "Contact us"),
+        SUBSCRIPTION_TO_EXTEND(TCategory.SUBSCRIPTION, "ToExtend", "to extend the subscription period."),
 
         // DASHBOARD
-        DASHBOARD_TITLE(TCategory.DASHBOARD, "DashboardTitle", "Backup Analytics Dashboard"), // TODO: add to json
-        DASHBOARD_CARD_TOTAL_CONFIGURATIONS(TCategory.DASHBOARD, "DashboardCardTotalConfigurations", "Total Backup Configurations"), // TODO: add to json
-        DASHBOARD_CARD_TOTAL_EXECUTIONS(TCategory.DASHBOARD, "DashboardCardTotalExecutions", "Total Backup Executions"), // TODO: add to json
-        DASHBOARD_CARD_SUCCESS_RATE(TCategory.DASHBOARD, "DashboardCardSuccessRate", "Success rate"), // TODO: add to json
-        DASHBOARD_CARD_AVG_DURATION(TCategory.DASHBOARD, "DashboardCardAvgDuration", "Avg Backup Duration"), // TODO: add to json
-        DASHBOARD_CARD_COMPRESSION_RATE(TCategory.DASHBOARD, "DashboardCardCompressionRate", "Compression Rate"), // TODO: add to json
-        DASHBOARD_CHART_EXECUTIONS(TCategory.DASHBOARD, "DashboardChartExecutions", "Backup Executions"), // TODO: add to json
-        DASHBOARD_CHART_AVG_DURATION(TCategory.DASHBOARD, "DashboardChartAvgDuration", "Average Backup Duration (min)"), // TODO: add to json
+        DASHBOARD_TITLE(TCategory.DASHBOARD, "DashboardTitle", "Backup Analytics Dashboard"),
+        DASHBOARD_CARD_TOTAL_CONFIGURATIONS(TCategory.DASHBOARD, "DashboardCardTotalConfigurations", "Total Backup Configurations"),
+        DASHBOARD_CARD_TOTAL_EXECUTIONS(TCategory.DASHBOARD, "DashboardCardTotalExecutions", "Total Backup Executions"),
+        DASHBOARD_CARD_SUCCESS_RATE(TCategory.DASHBOARD, "DashboardCardSuccessRate", "Success rate"),
+        DASHBOARD_CARD_AVG_DURATION(TCategory.DASHBOARD, "DashboardCardAvgDuration", "Avg Backup Duration"),
+        DASHBOARD_CARD_COMPRESSION_RATE(TCategory.DASHBOARD, "DashboardCardCompressionRate", "Compression Rate"),
+        DASHBOARD_CHART_EXECUTIONS(TCategory.DASHBOARD, "DashboardChartExecutions", "Backup Executions"),
+        DASHBOARD_CHART_AVG_DURATION(TCategory.DASHBOARD, "DashboardChartAvgDuration", "Average Backup Duration (min)"),
 
         // HISTORY_LOGS
-        HISTORY_LOGS_TITLE(TCategory.HISTORY_LOGS, "HistoryLogsTitle", "History logs"), // TODO: add to json
-        HISTORY_LOGS_DESCRIPTION(TCategory.HISTORY_LOGS, "HistoryLogsDescription", "Here you can find the application logs, useful for troubleshooting and understanding the application's behavior over time."), // TODO: add to json
+        HISTORY_LOGS_TITLE(TCategory.HISTORY_LOGS, "HistoryLogsTitle", "History logs"),
+        HISTORY_LOGS_DESCRIPTION(TCategory.HISTORY_LOGS, "HistoryLogsDescription", "Here you can find the application logs, useful for troubleshooting and understanding the application's behavior over time."),
 
         // ABOUT
-        ABOUT_SYSTEM_INFORMATION(TCategory.ABOUT, "AboutSystemInformation", "System Information"), // TODO: add to json
-        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><p>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</p></html>"), // TODO: add to json
+        ABOUT_SYSTEM_INFORMATION(TCategory.ABOUT, "AboutSystemInformation", "System Information"),
+        ABOUT_MESSAGE_BODY(TCategory.ABOUT, "AboutMessageBody", "<html><b>Backup Manager</b> is a simple and powerful application designed to automate folder and subfolder backups.<br><br> Users can schedule automatic backups or execute manual backups anytime.<br><br> Backup history is stored securely, allowing full control over saved data.<br><p>Visit <a href=[PROJECT_WEBSITE]>project website</a> for more information.</p></html>"),
 
         // SETTINGS
-        SETTINGS_LAYOUT_TAB(TCategory.SETTINGS, "SettingsLayoutTab", "Layout"), // TODO: add to json
-        SETTINGS_STYLE_TAB(TCategory.SETTINGS, "SettingsStyleTab", "Style"), // TODO: add to json
-        SETTINGS_WINDOWS_LAYOUT(TCategory.SETTINGS, "SettingsWindowsLayout", "Windows Layout"), // TODO: add to json
-        SETTINGS_WINDOWS_RIGHT(TCategory.SETTINGS, "SettingsWindowsRight", "Right to Left"), // TODO: add to json
-        SETTINGS_WINDOWS_FULL(TCategory.SETTINGS, "SettingsWindowsFull", "Full Window Content"), // TODO: add to json
-        SETTINGS_DRAWER_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLayout", "Drawer layout"), // TODO: add to json
-        SETTINGS_DRAWER_LEFT(TCategory.SETTINGS, "SettingsDrawerLeft", "Left"), // TODO: add to json
-        SETTINGS_DRAWER_LEADING(TCategory.SETTINGS, "SettingsDrawerLeading", "Leading"), // TODO: add to json
-        SETTINGS_DRAWER_TRAILING(TCategory.SETTINGS, "SettingsDrawerTrailing", "Trailing"), // TODO: add to json
-        SETTINGS_DRAWER_RIGHT(TCategory.SETTINGS, "SettingsDrawerRight", "Right"), // TODO: add to json
-        SETTINGS_DRAWER_TOP(TCategory.SETTINGS, "SettingsDrawerTop", "Top"), // TODO: add to json
-        SETTINGS_DRAWER_BOTTOM(TCategory.SETTINGS, "SettingsDrawerBottom", "Bottom"), // TODO: add to json
-        SETTINGS_MODAL_OPTION(TCategory.SETTINGS, "SettingsModalOption", "Default modal option"), // TODO: add to json
-        SETTINGS_MODAL_ANIMATION(TCategory.SETTINGS, "SettingsModalAnimation", "Animation enable"), // TODO: add to json
-        SETTINGS_MODAL_CLOSE(TCategory.SETTINGS, "SettingsModalClose", "Close on pressed escape"), // TODO: add to json
-        SETTINGS_LANGUAGES_LAYOUT(TCategory.SETTINGS, "SettingsLanguagesLayout", "Language"), // TODO: add to json
-        SETTINGS_ACCENT_LAYOUT(TCategory.SETTINGS, "SettingsAccentLayout", "Accent color"), // TODO: add to json
-        SETTINGS_COLOR_PICKER_LAYOUT(TCategory.SETTINGS, "SettingsColorPickerLayout", "Color Picker"), // TODO: add to json
-        SETTINGS_DRAWER_LINE_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLineLayout", "Drawer line style"), // TODO: add to json
-        SETTINGS_DRAWER_LINE_CURVED(TCategory.SETTINGS, "SettingsDrawerLineCurved", "Curved line style"), // TODO: add to json
-        SETTINGS_DRAWER_DOT_LINE(TCategory.SETTINGS, "SettingsDrawerDotLine", "Straight dot line style"), // TODO: add to json
-        SETTINGS_LINE_STYLE_LAYOUT(TCategory.SETTINGS, "SettingsLineStyleLayout", "Line style option"), // TODO: add to json
-        SETTINGS_LINE_STYLE_RETTANGLE(TCategory.SETTINGS, "SettingsLineStyleRettangle", "Rettangle"), // TODO: add to json
-        SETTINGS_LINE_STYLE_ELLIPSE(TCategory.SETTINGS, "SettingsLineStyleEllipse", "Ellipse"), // TODO: add to json
-        SETTINGS_LINE_STYLE_LINE(TCategory.SETTINGS, "SettingsLineStyleLine", "Line"), // TODO: add to json
-        SETTINGS_LINE_STYLE_CURVED(TCategory.SETTINGS, "SettingsLineStyleCurved", "Curved"), // TODO: add to json
-        SETTINGS_COLOR_OPTION_LAYOUT(TCategory.SETTINGS, "SettingsColorOptionLayout", "Color option"), // TODO: add to json
-        SETTINGS_COLOR_OPTION_PAINTED(TCategory.SETTINGS, "SettingsColorOptionPainted", "Paint selected line color"); // TODO: add to json
+        SETTINGS_LAYOUT_TAB(TCategory.SETTINGS, "SettingsLayoutTab", "Layout"),
+        SETTINGS_STYLE_TAB(TCategory.SETTINGS, "SettingsStyleTab", "Style"),
+        SETTINGS_WINDOWS_LAYOUT(TCategory.SETTINGS, "SettingsWindowsLayout", "Windows Layout"),
+        SETTINGS_WINDOWS_RIGHT(TCategory.SETTINGS, "SettingsWindowsRight", "Right to Left"),
+        SETTINGS_WINDOWS_FULL(TCategory.SETTINGS, "SettingsWindowsFull", "Full Window Content"),
+        SETTINGS_DRAWER_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLayout", "Drawer layout"),
+        SETTINGS_DRAWER_LEFT(TCategory.SETTINGS, "SettingsDrawerLeft", "Left"),
+        SETTINGS_DRAWER_LEADING(TCategory.SETTINGS, "SettingsDrawerLeading", "Leading"),
+        SETTINGS_DRAWER_TRAILING(TCategory.SETTINGS, "SettingsDrawerTrailing", "Trailing"),
+        SETTINGS_DRAWER_RIGHT(TCategory.SETTINGS, "SettingsDrawerRight", "Right"),
+        SETTINGS_DRAWER_TOP(TCategory.SETTINGS, "SettingsDrawerTop", "Top"),
+        SETTINGS_DRAWER_BOTTOM(TCategory.SETTINGS, "SettingsDrawerBottom", "Bottom"),
+        SETTINGS_MODAL_OPTION(TCategory.SETTINGS, "SettingsModalOption", "Default modal option"),
+        SETTINGS_MODAL_ANIMATION(TCategory.SETTINGS, "SettingsModalAnimation", "Animation enable"),
+        SETTINGS_MODAL_CLOSE(TCategory.SETTINGS, "SettingsModalClose", "Close on pressed escape"),
+        SETTINGS_LANGUAGES_LAYOUT(TCategory.SETTINGS, "SettingsLanguagesLayout", "Language"),
+        SETTINGS_ACCENT_LAYOUT(TCategory.SETTINGS, "SettingsAccentLayout", "Accent color"),
+        SETTINGS_COLOR_PICKER_LAYOUT(TCategory.SETTINGS, "SettingsColorPickerLayout", "Color Picker"),
+        SETTINGS_DRAWER_LINE_LAYOUT(TCategory.SETTINGS, "SettingsDrawerLineLayout", "Drawer line style"),
+        SETTINGS_DRAWER_LINE_CURVED(TCategory.SETTINGS, "SettingsDrawerLineCurved", "Curved line style"),
+        SETTINGS_DRAWER_DOT_LINE(TCategory.SETTINGS, "SettingsDrawerDotLine", "Straight dot line style"),
+        SETTINGS_LINE_STYLE_LAYOUT(TCategory.SETTINGS, "SettingsLineStyleLayout", "Line style option"),
+        SETTINGS_LINE_STYLE_RETTANGLE(TCategory.SETTINGS, "SettingsLineStyleRettangle", "Rettangle"),
+        SETTINGS_LINE_STYLE_ELLIPSE(TCategory.SETTINGS, "SettingsLineStyleEllipse", "Ellipse"),
+        SETTINGS_LINE_STYLE_LINE(TCategory.SETTINGS, "SettingsLineStyleLine", "Line"),
+        SETTINGS_LINE_STYLE_CURVED(TCategory.SETTINGS, "SettingsLineStyleCurved", "Curved"),
+        SETTINGS_COLOR_OPTION_LAYOUT(TCategory.SETTINGS, "SettingsColorOptionLayout", "Color option"),
+        SETTINGS_COLOR_OPTION_PAINTED(TCategory.SETTINGS, "SettingsColorOptionPainted", "Paint selected line color"),
+
+        // SEARCH BAR
+        SEARCH_TITLE(TCategory.SEARCH_BAR, "SearcTitle", "Search..."),
+        SEARCH_NO_RECENT(TCategory.SEARCH_BAR, "SearchNoRecent", "No recent searches"),
+        SEARCH_NO_RESULT(TCategory.SEARCH_BAR, "SearchNoResult", "No result for"),
+        SEARCH_FAVORITE(TCategory.SEARCH_BAR, "SearchFavorite", "Favorite"),
+        SEARCH_RECENT(TCategory.SEARCH_BAR, "SearchRecent", "Recents"),
+        ;
 
 
         private final TCategory category;

@@ -72,7 +72,7 @@ public class FormSetting extends CustomForm {
                 "tabType:card");
 
         tabbedPane.addTab(Translations.get(TKey.SETTINGS_LAYOUT_TAB), createLayoutOption());
-        tabbedPane.addTab(Translations.get(TKey.SETTINGS_LAYOUT_TAB), createStyleOption());
+        tabbedPane.addTab(Translations.get(TKey.SETTINGS_STYLE_TAB), createStyleOption());
         add(tabbedPane, "gapy 1 0");
         add(createThemes());
     }
