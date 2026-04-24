@@ -13,7 +13,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
-import backupmanager.utils.SystemForm;
+import backupmanager.Utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 
 @SystemForm(name = "History", description = "application history log")

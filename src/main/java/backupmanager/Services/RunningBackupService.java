@@ -11,7 +11,7 @@ import backupmanager.Helpers.BackupHelper;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.utils.FolderUtils;
+import backupmanager.Utils.FolderUtils;
 
 public class RunningBackupService {
 

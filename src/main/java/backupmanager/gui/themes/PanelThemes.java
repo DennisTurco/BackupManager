@@ -4,7 +4,7 @@ import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.util.LoggingFacade;
 import net.miginfocom.swing.MigLayout;
-import backupmanager.utils.AppPreferences;
+import backupmanager.Utils.AppPreferences;
 
 import javax.swing.*;
 import javax.swing.border.Border;

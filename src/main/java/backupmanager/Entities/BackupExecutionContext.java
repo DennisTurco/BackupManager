@@ -1,6 +1,6 @@
 package backupmanager.Entities;
 
-import backupmanager.utils.FolderUtils;
+import backupmanager.Utils.FolderUtils;
 
 public record  BackupExecutionContext (
     ConfigurationBackup backup,

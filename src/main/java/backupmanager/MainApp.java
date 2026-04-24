@@ -21,7 +21,7 @@ import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
 import backupmanager.gui.Controllers.AppController;
 import backupmanager.gui.frames.BackupManager;
-import backupmanager.utils.AppPreferences;
+import backupmanager.Utils.AppPreferences;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";

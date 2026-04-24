@@ -12,7 +12,7 @@ import backupmanager.gui.component.About;
 import backupmanager.gui.component.Subscription;
 import backupmanager.gui.forms.FormBackupTable;
 import backupmanager.gui.forms.FormLogin;
-import backupmanager.utils.UndoRedo;
+import backupmanager.Utils.UndoRedo;
 import raven.modal.Drawer;
 import raven.modal.ModalDialog;
 import raven.modal.component.SimpleModalBorder;
@@ -42,7 +42,11 @@ public class FormManager {
     }
 
     public static void showForm(Form form) {
-        if (form != FORMS.getCurrent()) {
+        Form current = FORMS.getCurrent();
+        if (current instanceof FormBackupTable) {
+            ((FormBackupTable) current).formClose();
+        }
+        if (form != current) {
             FORMS.add(form);
             form.formCheck();
             form.formOpen();
@@ -53,6 +57,10 @@ public class FormManager {
 
     public static void undo() {
         if (FORMS.isUndoAble()) {
+            Form current = FORMS.getCurrent();
+            if (current instanceof FormBackupTable) {
+                ((FormBackupTable) current).formClose();
+            }
             Form form = FORMS.undo();
             form.formCheck();
             form.formOpen();
@@ -63,6 +71,10 @@ public class FormManager {
 
     public static void redo() {
         if (FORMS.isRedoAble()) {
+            Form current = FORMS.getCurrent();
+            if (current instanceof FormBackupTable) {
+                ((FormBackupTable) current).formClose();
+            }
             Form form = FORMS.redo();
             form.formCheck();
             form.formOpen();
@@ -90,6 +102,10 @@ public class FormManager {
 
     public static void logout() {
         Drawer.setVisible(false);
+        Form current = FORMS.getCurrent();
+        if (current instanceof FormBackupTable) {
+            ((FormBackupTable) current).formClose();
+        }
         frame.getContentPane().removeAll();
         Form login = getLogin();
         login.formCheck();

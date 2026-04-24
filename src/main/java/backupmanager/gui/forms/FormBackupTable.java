@@ -34,13 +34,14 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
+import backupmanager.Services.BackupObserver;
 import backupmanager.Services.BackupService;
 import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.Controllers.BackupManagerController;
 import backupmanager.gui.frames.Controllers.BackupPopupController;
 import backupmanager.gui.svg.SVGButton;
-import backupmanager.utils.SystemForm;
+import backupmanager.Utils.SystemForm;
 import backupmanager.utils.table.TableHeaderAlignment;
 import net.miginfocom.swing.MigLayout;
 
@@ -51,6 +52,7 @@ public class FormBackupTable extends CustomForm {
 
     private BackupManagerController managerController;
     private BackupTableDataService tableService;
+    private BackupObserver backupObserver;
     private final int COL_LAST_RUN = 3;
     private final int COL_AUTOMATIC = 4;
     private final int COL_NEXT_RUN = 5;
@@ -82,6 +84,9 @@ public class FormBackupTable extends CustomForm {
 
         tableService = new BackupTableDataService(backupTable, formatter);
         managerController = new BackupManagerController(new BackupService(), tableService);
+
+        backupObserver = new BackupObserver(tableService, 2000);
+        backupObserver.start();
 
         formRefresh();
     }
@@ -541,4 +546,11 @@ public class FormBackupTable extends CustomForm {
     private JMenuItem itemCopyBackupName;
     private JMenuItem itemCopyTargetPath;
     private JMenuItem itemCopyDestinationPath;
+
+    public void formClose() {
+        if (backupObserver != null) {
+            backupObserver.stop();
+            backupObserver = null;
+        }
+    }
 }

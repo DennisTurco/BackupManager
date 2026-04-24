@@ -33,7 +33,7 @@ import backupmanager.gui.component.chart.TimeSeriesChart;
 import backupmanager.gui.component.chart.themes.ColorThemes;
 import backupmanager.gui.component.chart.themes.DefaultChartTheme;
 import backupmanager.gui.component.dashboard.CardBox;
-import backupmanager.utils.SystemForm;
+import backupmanager.Utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 
 @SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard")

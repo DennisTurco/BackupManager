@@ -31,7 +31,7 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.utils.FolderUtils;
+import backupmanager.Utils.FolderUtils;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);

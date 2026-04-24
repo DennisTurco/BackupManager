@@ -14,7 +14,7 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Enums.Translations;
 import backupmanager.interfaces.ITranslatable;
-import backupmanager.utils.AppPreferences;
+import backupmanager.Utils.AppPreferences;
 
 // Observer class -> every time the language is changed, it notify all the components registered
 public class LanguageManager {

@@ -1,4 +1,4 @@
-package backupmanager.utils.table;
+package backupmanager.Utils.table;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
