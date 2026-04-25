@@ -16,7 +16,7 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
 import backupmanager.Exceptions.InvalidTimeInterval;
@@ -24,6 +24,7 @@ import backupmanager.Helpers.BackupHelper;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
+import backupmanager.gui.simple.TimePickerDialog;
 
 public class BackupEntryController {
     private static final Logger logger = LoggerFactory.getLogger(BackupEntryController.class);
@@ -62,8 +63,8 @@ public class BackupEntryController {
         }
     }
 
-    public TimeInterval handleTimePickerAction(String target, String destination) throws InvalidTimeInterval {
-        TimeInterval time = BackupHelper.openTimePicker(currentBackup.getTimeIntervalBackup());
+    public TimeInterval handleTimePickerAction(TimePickerDialog picker, String target, String destination) throws InvalidTimeInterval {
+        TimeInterval time = BackupHelper.openTimePicker(picker);
         if (time == null) throw new InvalidTimeInterval();
 
         LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
@@ -80,11 +81,11 @@ public class BackupEntryController {
         if (name.isBlank() || destinationPath.isBlank() || initialPath.isBlank())
             return false;
 
-        currentBackup = getBackup(name, initialPath, destinationPath, notes, autoBackup, maxBackupsToKeep);
+        updateCurrentBackup(name, initialPath, destinationPath, notes, autoBackup, maxBackupsToKeep);
 
         if (create) {
             if (ConfigurationBackup.getBackupByName(currentBackup.getName()) != null) {
-                int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.DUPLICATED_BACKUP_NAME_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.DUPLICATED_BACKUP_NAME_MESSAGE), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
                     BackupHelper.deleteBackup(currentBackup.getName());
                 } else {
@@ -107,7 +108,8 @@ public class BackupEntryController {
     }
 
     public boolean toggleAutomaticBackup(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {
-        currentBackup = getBackup(name, initialPath, destinationPath, notes, autoBackup, maxBackupsToKeep);
+        updateCurrentBackup(name, initialPath, destinationPath,notes, autoBackup, maxBackupsToKeep);
+
         currentBackup.setAutomatic(!currentBackup.isAutomatic());
 
         ConfigurationBackup backup = BackupHelper.toggleAutomaticBackup(currentBackup);
@@ -128,13 +130,24 @@ public class BackupEntryController {
 
     public void handleSingleBackupRequest(BackupTableDataService backupTable, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) throws BackupAlreadyRunningException {
         if (BackupRequestRepository.isAnyBackupRunning()) {
-            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE),
+                Translations.get(TKey.WARNING_GENERIC_TITLE),
+                JOptionPane.WARNING_MESSAGE);
             throw new BackupAlreadyRunningException();
         }
 
-        // update currentBackup
-        if (currentBackup == null) {
-            currentBackup = getBackup(name, initialPath, destinationPath, notes, autoBackup, maxBackupsToKeep);
+        currentBackup = getBackup(
+            name,
+            initialPath,
+            destinationPath,
+            notes,
+            autoBackup,
+            maxBackupsToKeep
+        );
+
+        if (ConfigurationBackup.getBackupByName(currentBackup.getName()) == null) {
+            BackupHelper.newBackup(currentBackup);
         }
 
         singleBackup(initialPath, destinationPath, backupTable);
@@ -192,5 +205,27 @@ public class BackupEntryController {
 
     public void setCurrentBackup(ConfigurationBackup currentBackup) {
         this.currentBackup = currentBackup;
+    }
+
+    private void updateCurrentBackup(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {
+        if (currentBackup == null) {
+            currentBackup = getBackup(
+                name,
+                initialPath,
+                destinationPath,
+                notes,
+                autoBackup,
+                maxBackupsToKeep
+            );
+            return;
+        }
+
+        currentBackup.setName(name);
+        currentBackup.setTargetPath(initialPath);
+        currentBackup.setDestinationPath(destinationPath);
+        currentBackup.setNotes(notes);
+        currentBackup.setAutomatic(autoBackup);
+        currentBackup.setMaxToKeep(maxBackupsToKeep);
+        currentBackup.setLastUpdateDate(LocalDateTime.now());
     }
 }

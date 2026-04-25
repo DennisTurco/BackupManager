@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Email.EmailSender;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 
 public class ExceptionManager {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
 
     public static void openExceptionMessage(String errorMessage, String stackTrace) {
-        Object[] options = {TCategory.GENERAL.getTranslation(TKey.CLOSE_BUTTON), TCategory.DIALOGS.getTranslation(TKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), TCategory.DIALOGS.getTranslation(TKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
+        Object[] options = {Translations.get(TKey.CLOSE_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
 
         if (errorMessage == null) {
             errorMessage = "";
@@ -30,7 +30,7 @@ public class ExceptionManager {
 
         EmailSender.sendErrorEmail("Critical Error Report", stackTrace, errorMessage);
 
-        String stackTraceMessage = TCategory.DIALOGS.getTranslation(TKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
+        String stackTraceMessage = Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
 
         int choice;
 
@@ -59,7 +59,7 @@ public class ExceptionManager {
             scrollPane.setPreferredSize(new Dimension(MAX_WIDTH, 300));
 
             // Display the option dialog with the JScrollPane
-            String error = TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE);
+            String error = Translations.get(TKey.ERROR_GENERIC_TITLE);
             choice = JOptionPane.showOptionDialog(
                 null,
                 scrollPane,                           // The JScrollPane containing the error message
@@ -75,7 +75,7 @@ public class ExceptionManager {
                 StringSelection selection = new StringSelection(stackTrace);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
                 logger.info("Error text has been copied to the clipboard");
-                JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
+                JOptionPane.showMessageDialog(null, Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
             } else if (choice == 2) {
                 WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
             }

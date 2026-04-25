@@ -1,7 +1,11 @@
 package backupmanager.Services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +33,12 @@ public class BackupObserver {
     private final BackupTableDataService tableService;
     private final long millisecondsToWait;
 
+    // track last-seen timestamps for backups that were running
+    private final ConcurrentMap<Integer, Long> lastSeenRunning = new ConcurrentHashMap<>();
+
+    // grace period to wait before removing progress indicator (milliseconds)
+    private final long graceMillis = 3000L;
+
     public BackupObserver(BackupTableDataService tableService, int millisecondsToWait) {
         this.tableService = tableService;
         this.millisecondsToWait = millisecondsToWait;
@@ -44,6 +54,11 @@ public class BackupObserver {
 
                 Map<Integer, ConfigurationBackup> configs = BackupConfigurationRepository.getBackupMap();
 
+                // Collect running configuration ids
+                Set<Integer> runningConfigIds = new HashSet<>();
+                for (BackupRequest r : running) runningConfigIds.add(r.backupConfigurationId());
+
+                // Update progress for running backups
                 for (BackupRequest request : running) {
 
                     ConfigurationBackup config = configs.get(request.backupConfigurationId());
@@ -61,6 +76,34 @@ public class BackupObserver {
                             tableService.removeProgress(config);
                         }
                     });
+                }
+
+                long now = System.currentTimeMillis();
+
+                // Update last seen timestamps for running backups
+                for (BackupRequest r : running) {
+                    lastSeenRunning.put(r.backupConfigurationId(), now);
+                }
+
+                // Cleanup any progress indicators for backups that are not currently running,
+                // but only if we saw them running before and the grace period has elapsed.
+                for (ConfigurationBackup config : configs.values()) {
+                    int id = config.getId();
+                    if (!runningConfigIds.contains(id)) {
+                        Long lastSeen = lastSeenRunning.get(id);
+                        if (lastSeen != null) {
+                            if (now - lastSeen >= graceMillis) {
+                                lastSeenRunning.remove(id);
+                                SwingUtilities.invokeLater(() -> {
+                                    try {
+                                        tableService.removeProgress(config);
+                                    } catch (Exception e) {
+                                        logger.debug("Error while cleaning obsolete progress for {}: {}", config.getName(), e.getMessage());
+                                    }
+                                });
+                            }
+                        }
+                    }
                 }
 
             } catch (Exception ex) {

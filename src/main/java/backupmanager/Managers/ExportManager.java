@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 
 public class ExportManager {
@@ -31,7 +31,7 @@ public class ExportManager {
             return;
         }
 
-        String filename = JOptionPane.showInputDialog(null, TCategory.DIALOGS.getTranslation(TKey.CSV_NAME_MESSAGE_INPUT));
+        String filename = JOptionPane.showInputDialog(null, Translations.get(TKey.CSV_NAME_MESSAGE_INPUT));
         if (filename == null || filename.isEmpty()) {
             logger.info("Exporting backups to CSV cancelled");
             return;
@@ -39,7 +39,7 @@ public class ExportManager {
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
-            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_INVALID_FILENAME), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_INVALID_FILENAME), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             logger.info("Exporting backups to CSV cancelled due to invalid file name");
             return;
         }
@@ -50,7 +50,7 @@ public class ExportManager {
         // Check if the file exists
         File file = new File(fullPath);
         if (file.exists()) {
-            int overwrite = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.DUPLICATED_FILE_NAME_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
+            int overwrite = JOptionPane.showConfirmDialog(null, Translations.get(TKey.DUPLICATED_FILE_NAME_MESSAGE), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
             if (overwrite != JOptionPane.YES_OPTION) {
                 logger.info("Exporting backups to CSV cancelled by user (file exists)");
                 return;
@@ -70,10 +70,10 @@ public class ExportManager {
                 }
             }
 
-            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, Translations.get(TKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE), Translations.get(TKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             logger.error("Error exporting backups to CSV: " + ex.getMessage(), ex);
-            JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_FOR_EXPORTING_TO_CSV) + ex.getMessage(), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_FOR_EXPORTING_TO_CSV) + ex.getMessage(), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         } finally {
             logger.info("Exporting backups to CSV finished");
         }

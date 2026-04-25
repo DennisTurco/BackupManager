@@ -16,7 +16,7 @@ import backupmanager.Entities.Email;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.EmailType;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.EmailRepository;
@@ -113,8 +113,8 @@ public class EmailSender {
     public static void sendConfirmEmailToUser(User user) {
         if (user == null) throw new IllegalArgumentException("User object cannot be null");
 
-        String subject = TCategory.USER_DIALOG.getTranslation(TKey.EMAIL_CONFIRMATION_SUBJECT);
-        String body = TCategory.USER_DIALOG.getTranslation(TKey.EMAIL_CONFIRMATION_BODY);
+        String subject = Translations.get(TKey.EMAIL_CONFIRMATION_SUBJECT);
+        String body = Translations.get(TKey.EMAIL_CONFIRMATION_BODY);
 
         body = body.replace("[UserName]", user.getUserCompleteName());
         body = body.replace("[SupportEmail]", ConfigKey.EMAIL.getValue());

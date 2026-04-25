@@ -11,7 +11,7 @@ import javax.swing.text.DefaultCaret;
 
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.SubscriptionStatus;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Managers.WebsiteManager;
@@ -93,17 +93,17 @@ public class Subscription extends JPanel {
                 </div>
                 </html>
                 """.formatted(
-                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_STATUS),
+                Translations.get(TKey.SUBSCRIPTION_STATUS),
                 statusColor,
                 statusText,
-                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_VALID_FROM),
+                Translations.get(TKey.SUBSCRIPTION_VALID_FROM),
                 validFrom,
-                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_VALID_TO),
+                Translations.get(TKey.SUBSCRIPTION_VALID_TO),
                 validTo,
                 ConfigKey.EMAIL.getValue(),
                 subject,
-                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_CONTACT_US),
-                TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_TO_EXTEND)
+                Translations.get(TKey.SUBSCRIPTION_CONTACT_US),
+                Translations.get(TKey.SUBSCRIPTION_TO_EXTEND)
         );
     }
 

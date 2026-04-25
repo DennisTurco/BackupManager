@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -45,17 +45,17 @@ public class BackupService {
     }
 
     public String buildDetails(ConfigurationBackup backup) {
-        String backupNameStr = TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_NAME_DETAIL);
-        String initialPathStr = TCategory.BACKUP_LIST.getTranslation(TKey.INITIAL_PATH_DETAIL);
-        String destinationPathStr = TCategory.BACKUP_LIST.getTranslation(TKey.DESTINATION_PATH_DETAIL);
-        String lastBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.LAST_BACKUP_DETAIL);
-        String nextBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.NEXT_BACKUP_DATE_DETAIL);
-        String timeIntervalBackupStr = TCategory.BACKUP_LIST.getTranslation(TKey.TIME_INTERVAL_DETAIL);
-        String creationDateStr = TCategory.BACKUP_LIST.getTranslation(TKey.CREATION_DATE_DETAIL);
-        String lastUpdateDateStr = TCategory.BACKUP_LIST.getTranslation(TKey.LAST_UPDATE_DATE_DETAIL);
-        String backupCountStr = TCategory.BACKUP_LIST.getTranslation(TKey.BACKUP_COUNT_DETAIL);
-        String notesStr = TCategory.BACKUP_LIST.getTranslation(TKey.NOTES_DETAIL);
-        String maxBackupsToKeepStr = TCategory.BACKUP_LIST.getTranslation(TKey.MAX_BACKUPS_TO_KEEP_DETAIL);
+        String backupNameStr = Translations.get(TKey.BACKUP_NAME_DETAIL);
+        String initialPathStr = Translations.get(TKey.INITIAL_PATH_DETAIL);
+        String destinationPathStr = Translations.get(TKey.DESTINATION_PATH_DETAIL);
+        String lastBackupStr = Translations.get(TKey.LAST_BACKUP_DETAIL);
+        String nextBackupStr = Translations.get(TKey.NEXT_BACKUP_DATE_DETAIL);
+        String timeIntervalBackupStr = Translations.get(TKey.TIME_INTERVAL_DETAIL);
+        String creationDateStr = Translations.get(TKey.CREATION_DATE_DETAIL);
+        String lastUpdateDateStr = Translations.get(TKey.LAST_UPDATE_DATE_DETAIL);
+        String backupCountStr = Translations.get(TKey.BACKUP_COUNT_DETAIL);
+        String notesStr = Translations.get(TKey.NOTES_DETAIL);
+        String maxBackupsToKeepStr = Translations.get(TKey.MAX_BACKUPS_TO_KEEP_DETAIL);
 
         return """
             <html>

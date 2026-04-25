@@ -24,6 +24,7 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
+import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.gui.Controllers.BackupEntryController;
 import backupmanager.gui.Table.BackupTableDataService;
@@ -127,7 +128,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
         styleSpinner(maxToKeeSpinner);
         configureSpinner(maxToKeeSpinner, 1, 100);
 
-        txtNotes.addKeyListener(new KeyAdapter() {
+        textAreaNotes.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyChar() == 10) {
@@ -146,14 +147,6 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
     }
 
     private void openTimeInterval() {
-        // try {
-        //     TimeInterval time = entryController.handleTimePickerAction(this, txtTargetPath.getText(), txtDestinationPath.getText());
-        //     timeIntervalBtn.setToolTipText(time.toString());
-        //     openBackupActivationMessage(time);
-        // } catch (InvalidTimeInterval e) {
-        //     // no actions
-        // }
-
         TimePickerDialog timePicker = new TimePickerDialog(entryController.getCurrentBackup().getTimeIntervalBackup());
 
         Option option = ModalDialog.createOption();
@@ -167,10 +160,14 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
                 (controller, action) -> {
                     if (action == SimpleModalBorder.YES_OPTION) {
 
-                            TimeInterval time = timePicker.getResult();
+                            try {
+                                TimeInterval time = entryController.handleTimePickerAction(timePicker, txtTargetPath.getText(), txtDestinationPath.getText());
+                                timeIntervalBtn.setToolTipText(time.toString());
+                                openBackupActivationMessage(time);
 
-                            timeIntervalBtn.setToolTipText(time.toString());
-                            openBackupActivationMessage(time);
+                            } catch (InvalidTimeInterval e) {
+                                // no actions
+                            }
 
                             controller.close();
                         }
@@ -254,7 +251,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
         }
     }
 
-    private boolean canDispose() {
+    public boolean canDispose() {
         return entryController.canDisposeAfterOk(txtBackupName.getText(), txtTargetPath.getText(), txtDestinationPath.getText(), textAreaNotes.getText(), automaticBackupBtn.isSelected(), (int) maxToKeeSpinner.getValue(), create);
     }
 

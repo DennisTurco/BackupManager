@@ -25,6 +25,7 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Services.BackupAnalyticsService;
+import backupmanager.Utils.SystemForm;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.component.ToolBarSelection;
@@ -33,7 +34,6 @@ import backupmanager.gui.component.chart.TimeSeriesChart;
 import backupmanager.gui.component.chart.themes.ColorThemes;
 import backupmanager.gui.component.chart.themes.DefaultChartTheme;
 import backupmanager.gui.component.dashboard.CardBox;
-import backupmanager.Utils.SystemForm;
 import net.miginfocom.swing.MigLayout;
 
 @SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard")
@@ -43,7 +43,7 @@ public class FormBackupDashboard extends CustomForm {
     private static final int CARD_SUCCESS_RATE = 1;
     private static final int CARD_DURATION = 2;
     private static final int CARD_COMPRESSION = 3;
-    private static final int CARD_DISK_USAGE = 4;
+    // private static final int CARD_DISK_USAGE = 4;
 
     public FormBackupDashboard() {
         build();

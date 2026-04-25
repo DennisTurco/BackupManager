@@ -23,15 +23,15 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ErrorType;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
-import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.Utils.FolderUtils;
+import backupmanager.database.Repositories.BackupRequestRepository;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
@@ -42,7 +42,7 @@ public class BackupOperations {
                 if (!BackupRequestRepository.isAnyBackupRunning())
                     singleBackup(context, triggeredBy);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), TCategory.DIALOGS.getTranslation(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), Translations.get(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
             }
             case SCHEDULER -> singleBackup(context, triggeredBy);
         }
@@ -136,7 +136,7 @@ public class BackupOperations {
             logger.info("Backup :\"" + context.execution().backup().getName() + "\" updated after the backup");
 
             if (context.ui().trayIcon() != null)
-                context.ui().trayIcon().displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + context.execution().backup().getName() + TCategory.TRAY_ICON.getTranslation(TKey.SUCCESS_MESSAGE) + "\n" + TCategory.GENERAL.getTranslation(TKey.FROM) + ": " + path1 + "\n" + TCategory.GENERAL.getTranslation(TKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
+                context.ui().trayIcon().displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + context.execution().backup().getName() + Translations.get(TKey.SUCCESS_MESSAGE) + "\n" + Translations.get(TKey.FROM) + ": " + path1 + "\n" + Translations.get(TKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
@@ -338,51 +338,51 @@ public class BackupOperations {
             case InputMissing -> {
                 logger.warn("Input Missing!");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case InputError -> {
                 logger.warn("Input Error! One or both paths do not exist.");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_PATH_NOT_EXISTING), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_PATH_NOT_EXISTING), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case SamePaths -> {
                 logger.warn("The initial path and destination path cannot be the same. Please choose different paths");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ErrorCountingFiles -> {
                 logger.warn("Error during counting files in directory");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_COUNTING_FILES), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingGenericError -> {
                 logger.warn("Error during zipping directory");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingIOError -> {
                 logger.warn("I/O error occurred while zipping directory");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_IO), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingSecurityError -> {
                 logger.warn("Security exception while zipping directory");
                 if (trayIcon != null)
-                    trayIcon.displayMessage(TCategory.GENERAL.getTranslation(TKey.APP_NAME), TCategory.GENERAL.getTranslation(TKey.BACKUP) + ": " + backupName + TCategory.TRAY_ICON.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
+                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
                 else
-                    JOptionPane.showMessageDialog(null, TCategory.DIALOGS.getTranslation(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), TCategory.DIALOGS.getTranslation(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             default -> throw new IllegalArgumentException("Error type not recognized: " + error);
         }

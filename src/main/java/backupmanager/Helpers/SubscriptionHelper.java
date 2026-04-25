@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import backupmanager.Entities.Configurations;
 import backupmanager.Entities.Subscription;
 import backupmanager.Enums.SubscriptionStatus;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.SubscriptionRepository;
@@ -29,9 +29,9 @@ public class SubscriptionHelper {
     public static String getSubscriptionStatusTranslated(SubscriptionStatus status) {
         String statusTranslation;
         switch (status) {
-            case EXPIRED -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRED);
-            case ACTIVE -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_ACTIVE);
-            case EXPIRATION -> statusTranslation = TCategory.SUBSCRIPTION.getTranslation(TKey.SUBSCRIPTION_EXPIRING);
+            case EXPIRED -> statusTranslation = Translations.get(TKey.SUBSCRIPTION_EXPIRED);
+            case ACTIVE -> statusTranslation = Translations.get(TKey.SUBSCRIPTION_ACTIVE);
+            case EXPIRATION -> statusTranslation = Translations.get(TKey.SUBSCRIPTION_EXPIRING);
             default -> statusTranslation = "";
         }
         return statusTranslation;

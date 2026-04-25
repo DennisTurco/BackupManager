@@ -8,7 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import backupmanager.Entities.User;
+import backupmanager.Managers.LanguageManager;
 import backupmanager.Services.LoginService;
+import backupmanager.Utils.AppPreferences;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.TestDatabaseInitializer;
@@ -18,6 +20,9 @@ public class LoginServiceTest {
     protected void setup() throws Exception {
         Database.init(DatabasePaths.getTestDatabasePath());
         TestDatabaseInitializer.init();
+
+        AppPreferences.init();
+        LanguageManager.loadPreferredLanguage();
     }
 
     @AfterEach

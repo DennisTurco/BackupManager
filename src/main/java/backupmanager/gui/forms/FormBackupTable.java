@@ -36,13 +36,13 @@ import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Services.BackupService;
+import backupmanager.Utils.SystemForm;
+import backupmanager.Utils.table.TableHeaderAlignment;
 import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.Controllers.BackupManagerController;
 import backupmanager.gui.frames.Controllers.BackupPopupController;
 import backupmanager.gui.svg.SVGButton;
-import backupmanager.Utils.SystemForm;
-import backupmanager.utils.table.TableHeaderAlignment;
 import net.miginfocom.swing.MigLayout;
 
 @SystemForm(name = "Table", description = "table is a user interface component", tags = {"list"})
@@ -469,12 +469,10 @@ public class FormBackupTable extends CustomForm {
 
     public void showCreateModal() {
         managerController.showCreateModal(this);
-        loadData();
     }
 
     private void showEditModal(ConfigurationBackup backup) {
         managerController.showEditModal(this, backup);
-        loadData();
     }
 
     private void showEditModal() {
@@ -546,11 +544,4 @@ public class FormBackupTable extends CustomForm {
     private JMenuItem itemCopyBackupName;
     private JMenuItem itemCopyTargetPath;
     private JMenuItem itemCopyDestinationPath;
-
-    public void formClose() {
-        if (backupObserver != null) {
-            backupObserver.stop();
-            backupObserver = null;
-        }
-    }
 }

@@ -1,6 +1,5 @@
 package backupmanager.gui.frames.Controllers;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.List;
 
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Services.BackupService;
 import backupmanager.gui.Table.BackupTableDataService;
@@ -29,6 +28,8 @@ public class BackupManagerController {
         this.backupTable = backupTable;
     }
 
+
+    // TODO: enable it
     public int[] getScreenSize() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int width = Math.min((int) size.getWidth(), Integer.parseInt(ConfigKey.GUI_WIDTH.getValue()));
@@ -54,21 +55,37 @@ public class BackupManagerController {
         return tempBackups;
     }
 
-    public void showCreateModal(Component parent) {
+    public void showCreateModal(CustomForm form) {
         Option option = ModalDialog.createOption();
         option.getLayoutOption()
                 .setSize(-1, 1f)
                 .setLocation(Location.TRAILING, Location.TOP)
                 .setAnimateDistance(0.7f, 0);
 
-        ModalDialog.showModal(parent,
+        BackupEntryDialog dialog = new BackupEntryDialog(backupTable);
+
+        ModalDialog.showModal(
+                form,
                 new SimpleModalBorder(
-                        new BackupEntryDialog(backupTable),
-                        TCategory.BACKUP_ENTRY.getTranslation(TKey.PAGE_SUBTITLE_CREATE),
+                        dialog,
+                        Translations.get(TKey.PAGE_SUBTITLE_CREATE),
                         SimpleModalBorder.OK_CANCEL_OPTION,
-                        (controller, action) -> {}
+                        (controller, action) -> {
+                            if (action == SimpleModalBorder.OK_OPTION) {
+                                if (!dialog.canDispose()) {
+                                    return;
+                                }
+
+                                ConfigurationBackup backup = dialog.getResult();
+                                backupService.updateBackup(backup);
+
+                                form.formRefresh();
+                                controller.close();
+                            }
+                        }
                 ),
-                option);
+                option
+        );
     }
 
     public void showEditModal(CustomForm form, ConfigurationBackup backup) {
@@ -84,13 +101,21 @@ public class BackupManagerController {
                 form,
                 new SimpleModalBorder(
                         dialog,
-                        TCategory.BACKUP_ENTRY.getTranslation(TKey.PAGE_SUBTITLE_EDIT),
+                        Translations.get(TKey.PAGE_SUBTITLE_EDIT),
                         SimpleModalBorder.OK_CANCEL_OPTION,
                         (controller, action) -> {
+
                             if (action == SimpleModalBorder.OK_OPTION) {
+
+                                if (!dialog.canDispose()) {
+                                    return;
+                                }
+
                                 ConfigurationBackup editedBackup = dialog.getResult();
                                 backupService.updateBackup(editedBackup);
+
                                 form.formRefresh();
+                                controller.close();
                             }
                         }
                 ),

@@ -13,12 +13,10 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.Table.BackupTable;
-import backupmanager.gui.frames.BackupProgressGUI;
 import backupmanager.gui.simple.TimePickerDialog;
 
 public class BackupHelper {
@@ -27,29 +25,9 @@ public class BackupHelper {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void newBackup(BackupProgressGUI progressBar) {
-        logger.info("Event --> new backup");
-    }
-
     public static void newBackup(ConfigurationBackup backup) {
         logger.info("Event --> new backup");
         BackupConfigurationRepository.insertBackup(backup);
-
-        updateBackupTable();
-    }
-
-    public static void deleteBackup(int selectedRow, BackupTable backupTable, boolean isConfermationRequired) {
-        logger.info("Event --> deleting backup");
-
-        if (isConfermationRequired) {
-            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                return;
-            }
-        }
-
-        String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-        deleteBackup(backupName);
     }
 
     public static void deleteBackup(String backupName) {
@@ -61,13 +39,12 @@ public class BackupHelper {
     public static void deleteBackup(ConfigurationBackup backup) {
         logger.info("Event --> deleting backup" + backup.getName());
         BackupConfigurationRepository.deleteBackup(backup.getId());
-        updateBackupTable();
     }
 
     public static void deleteBackupWithConfirmition(ConfigurationBackup backup) {
         logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
 
-        int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             BackupHelper.deleteBackup(backup);
         }
@@ -82,28 +59,28 @@ public class BackupHelper {
             logger.info("Updating backup: " + updatedBackup.getName());
             BackupConfigurationRepository.updateBackup(updatedBackup);
         }
-
-        updateBackupTable();
     }
 
     public static List<ConfigurationBackup> getBackupList() {
         List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
-        // BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
         return backups;
     }
 
-    public static TimeInterval openTimePicker(TimeInterval time) {
-        TimePickerDialog picker = new TimePickerDialog(time);
+    public static TimeInterval openTimePicker() {
+        return openTimePicker(new TimePickerDialog(null));
+    }
+
+    public static TimeInterval openTimePicker(TimePickerDialog picker) {
         picker.setVisible(true);
         return picker.getResult();
     }
 
     public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
-        String from = TCategory.GENERAL.getTranslation(TKey.FROM);
-        String to = TCategory.GENERAL.getTranslation(TKey.TO);
-        String activated = TCategory.DIALOGS.getTranslation(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
-        String setted = TCategory.DIALOGS.getTranslation(TKey.SETTED_EVERY_MESSAGE);
-        String days = TCategory.DIALOGS.getTranslation(TKey.DAYS_MESSAGE);
+        String from = Translations.get(TKey.FROM);
+        String to = Translations.get(TKey.TO);
+        String activated = Translations.get(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
+        String setted = Translations.get(TKey.SETTED_EVERY_MESSAGE);
+        String days = Translations.get(TKey.DAYS_MESSAGE);
 
         JOptionPane.showMessageDialog(null,
                 activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
@@ -120,19 +97,13 @@ public class BackupHelper {
 
     public static void forceBackupTermination(int requestId) {
         BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
-        updateBackupTable();
-    }
-
-    private static void updateBackupTable() {
-        // if (BackupManagerGUI.model != null)
-        //     TableDataManager.updateTableWithNewBackupList(getBackupList());
     }
 
     public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
         logger.info("Event --> automatic backup");
 
         if (backup.isAutomatic()) {
-            int response = JOptionPane.showConfirmDialog(null, TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TCategory.DIALOGS.getTranslation(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 return null;
             }
@@ -157,7 +128,7 @@ public class BackupHelper {
             if (backup.getName() == null || backup.getName().isEmpty()) return null;
 
             // message
-            TimeInterval timeInterval = openTimePicker(null);
+            TimeInterval timeInterval = openTimePicker();
             if (timeInterval == null) return null;
 
             //set date for next backup

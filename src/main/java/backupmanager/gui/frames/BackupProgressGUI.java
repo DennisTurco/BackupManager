@@ -1,7 +1,7 @@
 package backupmanager.gui.frames;
 
 import backupmanager.gui.Controllers.GuiController;
-import backupmanager.Enums.Translations.TCategory;
+import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.gui.frames.Controllers.BackupProgressController;
 
@@ -34,10 +34,10 @@ public class BackupProgressGUI extends javax.swing.JDialog {
         fileZippedLabel.setText(fileProcessed);
 
         // edit the title with counts
-        setTitle(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.PROGRESS_BACKUP_TITLE) + " - " + filesCopiedSoFar + "/" + totalFilesCount);
+        setTitle(Translations.get(TKey.PROGRESS_BACKUP_TITLE) + " - " + filesCopiedSoFar + "/" + totalFilesCount);
 
         if (value == 100) {
-            loadingMessageLabel.setText(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.STATUS_COMPLETED));
+            loadingMessageLabel.setText(Translations.get(TKey.STATUS_COMPLETED));
             closeButton.setEnabled(true);
             CancelButton.setEnabled(false);
             fileZippedLabel.setText("");
@@ -155,10 +155,10 @@ public class BackupProgressGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void setTranslations() {
-        setTitle(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.PROGRESS_BACKUP_TITLE));
-        CancelButton.setText(TCategory.GENERAL.getTranslation(TKey.CANCEL_BUTTON));
-        closeButton.setText(TCategory.GENERAL.getTranslation(TKey.CLOSE_BUTTON));
-        loadingMessageLabel.setText(TCategory.PROGRESS_BACKUP_FRAME.getTranslation(TKey.STATUS_LOADING));
+        setTitle(Translations.get(TKey.PROGRESS_BACKUP_TITLE));
+        CancelButton.setText(Translations.get(TKey.CANCEL_BUTTON));
+        closeButton.setText(Translations.get(TKey.CLOSE_BUTTON));
+        loadingMessageLabel.setText(Translations.get(TKey.STATUS_LOADING));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

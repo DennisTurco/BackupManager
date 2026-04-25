@@ -41,7 +41,7 @@ public class PanelThemes extends JPanel {
                 this.titleHeight = 0;
 
                 String title = categories.get(index);
-                String name = ((ThemesInfo) value).name;
+                String name = ((ThemesInfo) value).name();
                 int sep = name.indexOf('/');
                 if (sep >= 0) {
                     name = name.substring(sep + 1).trim();
@@ -58,12 +58,12 @@ public class PanelThemes extends JPanel {
             }
 
             private String buildToolTip(ThemesInfo th) {
-                if (th.resourceName == null) {
-                    return th.name;
+                if (th.resourceName() == null) {
+                    return th.name();
                 }
-                return "Name :" + th.name
-                        + "\nLicense: " + th.license
-                        + "\nSource Code: " + th.sourceCodeUrl;
+                return "Name :" + th.name()
+                        + "\nLicense: " + th.license()
+                        + "\nSource Code: " + th.sourceCodeUrl();
             }
         });
         themesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -87,8 +87,8 @@ public class PanelThemes extends JPanel {
         // add core themes
         categories.put(themes.size(), "Core Themes");
         for (ThemesInfo th : themesManager.coreThemes) {
-            boolean show = (showLight && !th.dark) || (showDark && th.dark);
-            if (show && !th.name.contains("/")) {
+            boolean show = (showLight && !th.dark()) || (showDark && th.dark());
+            if (show && !th.name().contains("/")) {
                 themes.add(th);
             }
         }
@@ -96,8 +96,8 @@ public class PanelThemes extends JPanel {
         // add uncategorized bundled themes
         categories.put(themes.size(), "IntelliJ Themes");
         for (ThemesInfo th : themesManager.bundledThemes) {
-            boolean show = (showLight && !th.dark) || (showDark && th.dark);
-            if (show && !th.name.contains("/")) {
+            boolean show = (showLight && !th.dark()) || (showDark && th.dark());
+            if (show && !th.name().contains("/")) {
                 themes.add(th);
             }
         }
@@ -105,12 +105,12 @@ public class PanelThemes extends JPanel {
         // add categorized bundled themes
         String lastCategory = null;
         for (ThemesInfo th : themesManager.bundledThemes) {
-            boolean show = (showLight && !th.dark) || (showDark && th.dark);
-            int sep = th.name.indexOf('/');
+            boolean show = (showLight && !th.dark()) || (showDark && th.dark());
+            int sep = th.name().indexOf('/');
             if (!show || sep < 0) {
                 continue;
             }
-            String category = th.name.substring(0, sep).trim();
+            String category = th.name().substring(0, sep).trim();
             if (!Objects.equals(lastCategory, category)) {
                 lastCategory = category;
                 categories.put(themes.size(), category);
@@ -148,11 +148,11 @@ public class PanelThemes extends JPanel {
         String lafClassName = lookAndFeel.getClass().getName();
         for (int i = 0; i < themes.size(); i++) {
             ThemesInfo ti = themes.get(i);
-            if (theme == null && ti.lafClassName != null && lafClassName.equals(ti.lafClassName)) {
+            if (theme == null && ti.lafClassName() != null && lafClassName.equals(ti.lafClassName())) {
                 themesList.setSelectedIndex(i);
                 break;
             }
-            if (theme != null && ti.resourceName != null && theme.substring(AppPreferences.RESOURCE_PREFIX.length()).equals(ti.resourceName)) {
+            if (theme != null && ti.resourceName() != null && theme.substring(AppPreferences.RESOURCE_PREFIX.length()).equals(ti.resourceName())) {
                 themesList.setSelectedIndex(i);
                 break;
             }
@@ -161,7 +161,7 @@ public class PanelThemes extends JPanel {
 
     private void themesListValueChanged(ListSelectionEvent e) {
         ThemesInfo themesInfo = themesList.getSelectedValue();
-        boolean bundledTheme = (themesInfo != null && themesInfo.resourceName != null);
+        boolean bundledTheme = (themesInfo != null && themesInfo.resourceName() != null);
         if (e.getValueIsAdjusting()) {
             return;
         }
@@ -174,25 +174,25 @@ public class PanelThemes extends JPanel {
         }
 
         // change look and feel
-        if (themesInfo.lafClassName != null) {
-            if (themesInfo.lafClassName.equals(UIManager.getLookAndFeel().getClass().getName())) {
+        if (themesInfo.lafClassName() != null) {
+            if (themesInfo.lafClassName().equals(UIManager.getLookAndFeel().getClass().getName())) {
                 return;
             }
             FlatAnimatedLafChange.showSnapshot();
             try {
-                UIManager.setLookAndFeel(themesInfo.lafClassName);
+                UIManager.setLookAndFeel(themesInfo.lafClassName());
             } catch (Exception e) {
                 LoggingFacade.INSTANCE.logSevere(null, e);
-                showInformationDialog("Failed to create '" + themesInfo.lafClassName + "'.", e);
+                showInformationDialog("Failed to create '" + themesInfo.lafClassName() + "'.", e);
             }
         } else {
             String theme = UIManager.getLookAndFeelDefaults().getString(AppPreferences.THEME_UI_KEY);
-            if (theme != null && themesInfo.resourceName.equals(theme.substring(AppPreferences.RESOURCE_PREFIX.length()))) {
+            if (theme != null && themesInfo.resourceName().equals(theme.substring(AppPreferences.RESOURCE_PREFIX.length()))) {
                 return;
             }
             FlatAnimatedLafChange.showSnapshot();
-            IntelliJTheme.setup(getClass().getResourceAsStream(THEMES_PACKAGE + themesInfo.resourceName));
-            AppPreferences.getState().put(AppPreferences.KEY_LAF_THEME, AppPreferences.RESOURCE_PREFIX + themesInfo.resourceName);
+            IntelliJTheme.setup(getClass().getResourceAsStream(THEMES_PACKAGE + themesInfo.resourceName()));
+            AppPreferences.getState().put(AppPreferences.KEY_LAF_THEME, AppPreferences.RESOURCE_PREFIX + themesInfo.resourceName());
         }
         FlatLaf.updateUI();
         FlatAnimatedLafChange.hideSnapshotWithAnimation();
