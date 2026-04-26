@@ -102,7 +102,7 @@ public class Subscription extends JPanel {
                 validTo,
                 ConfigKey.EMAIL.getValue(),
                 subject,
-                Translations.get(TKey.SUBSCRIPTION_CONTACT_US),
+                Translations.get(TKey.CONTACT_US),
                 Translations.get(TKey.SUBSCRIPTION_TO_EXTEND)
         );
     }

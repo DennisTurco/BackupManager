@@ -13,6 +13,7 @@
         "EditButton": "Editar",
         "DeleteButton": "Eliminar",
         "QuickSearch": "Búsqueda rápida",
+        "ContactUs": "Contáctanos",
         "To": "A"
     },
     "TrayIcon": {
@@ -110,7 +111,6 @@
         "Status": "Estado de la suscripción",
         "ValidFrom": "Válido desde",
         "ValidTo": "Válido hasta",
-        "ContactUs": "Contáctanos",
         "ToExtend": "para extender el período de suscripción."
     },
     "ProgressBackupFrame": {
@@ -148,7 +148,6 @@
         "Github": "Página de GitHub",
         "Paypal": "PayPal",
         "BuyMeACoffe": "Invítame a un café",
-        "ContactUs": "Contáctanos",
         "Subscription": "Suscripción"
     },
     "BackupList": {
@@ -199,11 +198,9 @@
         "BackupList": "Lista de Copias de Seguridad"
     },
     "UserDialog": {
-        "ErrorMessageForMissingData": "Por favor, completa todos los campos requeridos.",
         "EmailConfirmationBody": "Hola [UserName],\n\n¡Gracias por descargar y registrar Backup Manager, tu nueva herramienta para una gestión segura y eficiente de tus copias de seguridad!\n\nEste es un correo automático enviado para confirmar tu registro. Nos pondremos en contacto contigo por correo solo para informarte sobre nuevas versiones o actualizaciones importantes de la aplicación.\n\nMientras tanto, si tienes preguntas, necesitas ayuda o tienes sugerencias, estamos siempre a tu disposición. Puedes contactarnos en [SupportEmail].\n\n¡Gracias nuevamente por elegir Backup Manager y disfruta gestionando tus copias de seguridad!\n\nSaludos cordiales,\nEl equipo de Backup Manager",
         "EmailConfirmationSubject": "¡Gracias por elegir Backup Manager!",
         "Surname": "Apellido",
-        "ErrorMessageForWrongEmail": "La dirección de correo electrónico proporcionada no es válida. Por favor, proporciona una correcta.",
         "Name": "Nombre",
         "Email": "Correo electrónico",
         "UserTitle": "Inserta tus datos",
@@ -296,5 +293,20 @@
       "SearchNoResult": "Sin resultados para",
       "SearchFavorite": "Favorito",
       "SearchRecent": "Recientes"
+    },
+    "Toast": {
+        "BackupEditedOk": "Copia de seguridad actualizada correctamente",
+        "BackupCreatedOk": "Copia de seguridad creada correctamente",
+        "BackupDeletedOk": "Copia de seguridad eliminada correctamente",
+        "BackupReplacedOk": "Copia de seguridad existente reemplazada correctamente",
+        "BackupDeletedError": "No se pudo eliminar la copia de seguridad",
+        "BackupReplacedError": "No se pudo reemplazar la copia de seguridad",
+        "InvalidTime": "Intervalo de tiempo no válido",
+        "SubscriptionExpiring": "Tu suscripción a Backup Manager expirará pronto. Contáctanos para renovarla",
+        "SubscriptionExpired": "Tu suscripción a Backup Manager ha expirado. Contáctanos para renovarla",
+        "LanguageChange": "Algunos cambios tendrán efecto después de reiniciar la aplicación",
+        "MissingDataLoginError": "Por favor completa todos los campos obligatorios",
+        "WrongEmailLoginError": "La dirección de correo electrónico proporcionada no es válida. Introduce una correcta",
+        "LoginOk": "¡Bienvenido! Has iniciado sesión correctamente"
     }
 }

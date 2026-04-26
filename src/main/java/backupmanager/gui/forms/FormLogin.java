@@ -12,6 +12,7 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.LimitDocument;
 import backupmanager.Services.LoginService;
+import backupmanager.gui.Controllers.EntryUserController;
 import backupmanager.gui.menu.DrawerManager;
 import backupmanager.gui.system.FormManager;
 import net.miginfocom.swing.MigLayout;
@@ -19,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 public class FormLogin extends CustomForm {
 
     private final LoginService loginService = new LoginService();
+    private final EntryUserController userController = new EntryUserController();
 
     public FormLogin() {
         build();
@@ -39,7 +41,6 @@ public class FormLogin extends CustomForm {
 
     @Override
     protected void loadData() {
-
         JPanel panelLogin = new JPanel(new MigLayout());
         JPanel loginContent = new JPanel(
                 new MigLayout("fillx,wrap,insets 35 35 25 35", "[fill,300]")
@@ -102,7 +103,7 @@ public class FormLogin extends CustomForm {
             String surname = txtSurname.getText().trim();
             String email = txtEmail.getText().trim();
 
-            if (name.isEmpty() || surname.isEmpty() || email.isEmpty())
+            if (!userController.isInputOkAndShowErrorIfNecessary(this, name, surname, email))
                 return;
 
             User user = new User(name, surname, email);

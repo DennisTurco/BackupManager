@@ -37,7 +37,9 @@ public class Translations {
         ABOUT("About"),
         DASHBOARD("Dashboard"),
         SETTINGS("Settings"),
-        SEARCH_BAR("SearchBar");
+        SEARCH_BAR("SearchBar"),
+        TOAST("Toast"),
+        ;
 
         private final String categoryName;
         private final Map<TKey, String> translations = new HashMap<>();
@@ -79,6 +81,7 @@ public class Translations {
         CREATE_BUTTON(TCategory.GENERAL, "CreateButton", "Create"),
         EDIT_BUTTON(TCategory.GENERAL, "EditButton", "Edit"),
         DELETE_BUTTON(TCategory.GENERAL, "DeleteButton", "Delete"),
+        CONTACT_US(TCategory.GENERAL, "ContactUs", "Contact us"),
         QUICK_SEARCH(TCategory.GENERAL, "QuickSearch", "Quick Search..."),
 
         // Menu
@@ -111,9 +114,7 @@ public class Translations {
         GITHUB_PAGE(TCategory.MENU, "Github", "Github page"),
         PAYPAL(TCategory.MENU, "Paypal", "Paypal"),
         BUYMEACOFFE(TCategory.MENU, "BuyMeACoffe", "Buy me a coffe"),
-        CONTACT_US(TCategory.MENU, "ContactUs", "Contact us"),
         SUBSCRIPTION(TCategory.MENU, "Subscription", "Subscription"),
-
 
         // TabbedFrames
         BACKUP_ENTRY(TCategory.TABBED_FRAMES, "BackupEntry", "Backup Entry"),
@@ -209,8 +210,6 @@ public class Translations {
         USER_NAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserNamePlaceholder", "Enter your name"),
         USER_SURNAME_PLACEHOLDER(TCategory.USER_DIALOG, "UserSurnamePlaceholder", "Enter your surname"),
         USER_EMAIL_PLACEHOLDER(TCategory.USER_DIALOG, "UserEmailPlaceholder", "Enter your email"),
-        ERROR_MESSAGE_FOR_MISSING_DATA(TCategory.USER_DIALOG, "ErrorMessageForMissingData", "Please fill in all the required fields."),
-        ERROR_MESSAGE_FOR_WRONG_EMAIL(TCategory.USER_DIALOG, "ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
         EMAIL_CONFIRMATION_SUBJECT(TCategory.USER_DIALOG, "EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
         EMAIL_CONFIRMATION_BODY(TCategory.USER_DIALOG, "EmailConfirmationBody", "Hi [UserName],\n\nThank you for downloading and registering **Backup Manager**, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at **[SupportEmail]**.\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"),
 
@@ -307,7 +306,6 @@ public class Translations {
         SUBSCRIPTION_STATUS(TCategory.SUBSCRIPTION, "Status", "Subscription status"),
         SUBSCRIPTION_VALID_FROM(TCategory.SUBSCRIPTION, "ValidFrom", "Valid from"),
         SUBSCRIPTION_VALID_TO(TCategory.SUBSCRIPTION, "ValidTo", "Valid to"),
-        SUBSCRIPTION_CONTACT_US(TCategory.SUBSCRIPTION, "ContactUs", "Contact us"),
         SUBSCRIPTION_TO_EXTEND(TCategory.SUBSCRIPTION, "ToExtend", "to extend the subscription period."),
 
         // DASHBOARD
@@ -364,6 +362,21 @@ public class Translations {
         SEARCH_NO_RESULT(TCategory.SEARCH_BAR, "SearchNoResult", "No result for"),
         SEARCH_FAVORITE(TCategory.SEARCH_BAR, "SearchFavorite", "Favorite"),
         SEARCH_RECENT(TCategory.SEARCH_BAR, "SearchRecent", "Recents"),
+
+        // TOAST MESSAGES
+        TOAST_BACKUP_EDITED(TCategory.TOAST, "BackupEditedOk", "Backup updated successfully"),
+        TOAST_BACKUP_CREATED(TCategory.TOAST, "BackupCreatedOk", "Backup created successfully"),
+        TOAST_BACKUP_DELETED(TCategory.TOAST, "BackupDeletedOk", "Backup deleted successfully"),
+        TOAST_BACKUP_REPLACED(TCategory.TOAST, "BackupReplacedOk", "Existing backup replaced successfully"),
+        TOAST_BACKUP_DELETED_ERROR(TCategory.TOAST, "BackupDeletedError", "Failed to delete the backup"),
+        TOAST_BACKUP_REPLACED_ERROR(TCategory.TOAST, "BackupReplacedError", "Failed to replace the backup"),
+        TOAST_INVALID_TIME(TCategory.TOAST, "InvalidTime", "Invalid time interval"),
+        TOAST_SUBSCRIPTION_EXPIRING(TCategory.TOAST, "SubscriptionExpiring", "Your Backup Manager subscription will expire soon. Please contact us to renew it"),
+        TOAST_SUBSCRIPTION_EXPIRED(TCategory.TOAST, "SubscriptionExpired", "Your Backup Manager subscription has expired. Please contact us to renew it"),
+        TOAST_LANGUAGE_CHANGE(TCategory.TOAST, "LanguageChange", "Some changes will take effect after restarting the application"),
+        TOAST_MISSING_DATA_LOGIN_ERROR(TCategory.TOAST, "MissingDataLoginError", "Please fill in all the required fields"),
+        TOAST_WRONG_EMAIL_LOGIN_ERROR(TCategory.TOAST, "WrongEmailLoginError", "The provided email address is invalid. Please provide a correct one"),
+        TOAST_LOGIN(TCategory.TOAST, "LoginOk", "Welcome! You have successfully signed in"),
         ;
 
 

@@ -41,6 +41,7 @@ import backupmanager.gui.system.FormManager;
 import backupmanager.gui.themes.PanelThemes;
 import backupmanager.Utils.AppPreferences;
 import backupmanager.Utils.SystemForm;
+import backupmanager.Utils.ToastUtils;
 import net.miginfocom.swing.MigLayout;
 import raven.color.ColorPicker;
 import raven.modal.Drawer;
@@ -59,6 +60,7 @@ import raven.modal.option.Option;
 public class FormSetting extends CustomForm {
 
     private static final Logger logger = LoggerFactory.getLogger(FormSetting.class);
+    private boolean languageInitializing = true;
 
     public FormSetting() {
         build();
@@ -217,13 +219,18 @@ public class FormSetting extends CustomForm {
         initComboItem(languageCombo);
 
         languageCombo.addActionListener(e -> {
-            Object selected = languageCombo.getSelectedItem();
-            String languageName = selected.toString();
+            if (languageInitializing)
+                return;
+
+            String languageName = languageCombo.getSelectedItem().toString();
+
             LanguageManager.setLanguage(languageName);
+            ToastUtils.showDefault(this, Translations.get(TKey.TOAST_LANGUAGE_CHANGE));
         });
 
         languageCombo.setSelectedItem(LanguageManager.getLanguage().getLanguageName());
         panel.add(languageCombo);
+        languageInitializing = false;
 
         return panel;
     }

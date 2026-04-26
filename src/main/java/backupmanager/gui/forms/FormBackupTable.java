@@ -32,11 +32,13 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.formatter;
 import backupmanager.Services.BackupObserver;
 import backupmanager.Services.BackupService;
 import backupmanager.Utils.SystemForm;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.Utils.table.TableHeaderAlignment;
 import backupmanager.gui.Table.BackupTable;
 import backupmanager.gui.Table.BackupTableDataService;
@@ -371,7 +373,15 @@ public class FormBackupTable extends CustomForm {
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
         switch (action) {
             case "EDIT" -> showEditModal(backup);
-            case "DELETE" -> BackupHelper.deleteBackup(backup);
+            case "DELETE" -> {
+                try {
+                    boolean deleted = BackupHelper.deleteBackupWithConfirmition(backup);
+                    if (deleted)
+                        ToastUtils.showSuccess(this, Translations.get(TKey.TOAST_BACKUP_DELETED));
+                } catch (BackupDeletionException ex) {
+                    ToastUtils.showError(this, Translations.get(TKey.TOAST_BACKUP_DELETED_ERROR));
+                }
+            }
             case "DUPLICATE" -> BackupPopupController.popupItemDuplicateBackup(backup);
             case "RENAME" -> BackupPopupController.popupItemRenameBackup(backups, backup);
             case "OPEN_TARGET" -> BackupPopupController.popupItemOpenInitialPath(backup);
@@ -491,7 +501,13 @@ public class FormBackupTable extends CustomForm {
             return;
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
-        BackupHelper.deleteBackupWithConfirmition(backup);
+        try {
+            boolean deleted = BackupHelper.deleteBackupWithConfirmition(backup);
+            if (deleted)
+                ToastUtils.showSuccess(this, Translations.get(TKey.TOAST_BACKUP_DELETED));
+        } catch (BackupDeletionException e) {
+            ToastUtils.showError(this, Translations.get(TKey.TOAST_BACKUP_DELETED_ERROR));
+        }
         formRefresh();
     }
 

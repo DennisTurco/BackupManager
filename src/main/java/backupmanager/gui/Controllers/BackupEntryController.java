@@ -1,5 +1,6 @@
 package backupmanager.gui.Controllers;
 
+import java.awt.Component;
 import java.io.File;
 import java.time.LocalDateTime;
 
@@ -19,8 +20,10 @@ import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
@@ -77,7 +80,7 @@ public class BackupEntryController {
         return time;
     }
 
-    public boolean canDisposeAfterOk(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep, boolean create) {
+    public boolean canDisposeAfterOk(Component owner, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep, boolean create) throws BackupDeletionException {
         if (name.isBlank() || destinationPath.isBlank() || initialPath.isBlank())
             return false;
 
@@ -88,9 +91,10 @@ public class BackupEntryController {
                 int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.DUPLICATED_BACKUP_NAME_MESSAGE), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
                     BackupHelper.deleteBackup(currentBackup.getName());
-                } else {
-                    return false;
+                    ToastUtils.showInfo(owner, Translations.get(TKey.TOAST_BACKUP_EDITED));
                 }
+                else
+                    return false;
             }
             BackupHelper.newBackup(currentBackup);
         } else {

@@ -14,34 +14,8 @@ public class BackupService {
         return BackupConfigurationRepository.getBackupList();
     }
 
-    public boolean isRunning(String name) {
-        return RunningBackupService.getRunningBackupByName(name).isPresent();
-    }
-
-    public void deleteBackup(int id) {
-        BackupConfigurationRepository.deleteBackup(id);
-    }
-
-    public void deleteBackups(List<String> names) {
-        names.forEach(name -> {
-            ConfigurationBackup backup = getBackupByName(name);
-            if (backup != null) {
-                BackupConfigurationRepository.deleteBackup(backup.getId());
-            }
-        });
-    }
-
-    public String getBackupDetails(String name) {
-        ConfigurationBackup backup = getBackupByName(name);
-        return buildDetails(backup);
-    }
-
     public void updateBackup(ConfigurationBackup backup) {
         BackupConfigurationRepository.updateBackup(backup);
-    }
-
-    public ConfigurationBackup getBackupByName(String name) {
-        return BackupConfigurationRepository.getBackupByName(name);
     }
 
     public String buildDetails(ConfigurationBackup backup) {

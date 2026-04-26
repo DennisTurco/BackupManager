@@ -1,5 +1,6 @@
 package backupmanager.Helpers;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,6 +16,7 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.simple.TimePickerDialog;
@@ -30,24 +32,26 @@ public class BackupHelper {
         BackupConfigurationRepository.insertBackup(backup);
     }
 
-    public static void deleteBackup(String backupName) {
-        logger.info("Event --> deleting backup");
-        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
-        deleteBackup(backup);
-    }
-
-    public static void deleteBackup(ConfigurationBackup backup) {
-        logger.info("Event --> deleting backup" + backup.getName());
-        BackupConfigurationRepository.deleteBackup(backup.getId());
-    }
-
-    public static void deleteBackupWithConfirmition(ConfigurationBackup backup) {
+    public static boolean deleteBackupWithConfirmition(ConfigurationBackup backup) throws BackupDeletionException {
         logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
 
         int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
-            BackupHelper.deleteBackup(backup);
+            return BackupHelper.deleteBackup(backup);
         }
+        return false;
+    }
+
+    public static boolean deleteBackup(String backupName) throws BackupDeletionException {
+        logger.info("Event --> deleting backup");
+        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
+        return deleteBackup(backup);
+    }
+
+    public static boolean deleteBackup(ConfigurationBackup backup) throws BackupDeletionException {
+        logger.info("Event --> deleting backup" + backup.getName());
+        BackupConfigurationRepository.deleteBackup(backup.getId());
+        return true;
     }
 
     public static void updateBackup(ConfigurationBackup updatedBackup) {

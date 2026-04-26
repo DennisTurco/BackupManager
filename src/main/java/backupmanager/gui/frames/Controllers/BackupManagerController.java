@@ -10,6 +10,7 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Services.BackupService;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.forms.CustomForm;
 import backupmanager.gui.simple.BackupEntryDialog;
@@ -79,6 +80,8 @@ public class BackupManagerController {
                                 ConfigurationBackup backup = dialog.getResult();
                                 backupService.updateBackup(backup);
 
+                                ToastUtils.showSuccess(form, Translations.get(TKey.TOAST_BACKUP_CREATED));
+
                                 form.formRefresh();
                                 controller.close();
                             }
@@ -104,15 +107,15 @@ public class BackupManagerController {
                         Translations.get(TKey.PAGE_SUBTITLE_EDIT),
                         SimpleModalBorder.OK_CANCEL_OPTION,
                         (controller, action) -> {
-
                             if (action == SimpleModalBorder.OK_OPTION) {
-
                                 if (!dialog.canDispose()) {
                                     return;
                                 }
 
                                 ConfigurationBackup editedBackup = dialog.getResult();
                                 backupService.updateBackup(editedBackup);
+
+                                ToastUtils.showSuccess(form, Translations.get(TKey.TOAST_BACKUP_EDITED));
 
                                 form.formRefresh();
                                 controller.close();

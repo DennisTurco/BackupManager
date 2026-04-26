@@ -13,6 +13,7 @@
         "EditButton": "Bearbeiten",
         "DeleteButton": "Löschen",
         "QuickSearch": "Schnellsuche",
+        "ContactUs": "Kontaktieren Sie uns",
         "To": "Nach"
     },
     "TrayIcon": {
@@ -110,7 +111,6 @@
         "Status": "Abonnementstatus",
         "ValidFrom": "Gültig ab",
         "ValidTo": "Gültig bis",
-        "ContactUs": "Kontaktieren Sie uns",
         "ToExtend": "um den Abonnementzeitraum zu verlängern."
     },
     "ProgressBackupFrame": {
@@ -148,7 +148,6 @@
         "Github": "GitHub-Seite",
         "Paypal": "PayPal",
         "BuyMeACoffe": "Spendiere mir einen Kaffee",
-        "ContactUs": "Kontaktieren Sie uns",
         "Subscription": "Abonnement"
     },
     "BackupList": {
@@ -199,11 +198,9 @@
         "BackupList": "Backup-Liste"
     },
     "UserDialog": {
-        "ErrorMessageForMissingData": "Bitte füllen Sie alle erforderlichen Felder aus.",
         "EmailConfirmationBody": "Hallo [UserName],\n\nVielen Dank, dass Sie Backup Manager heruntergeladen und registriert haben - Ihr neues Tool für eine sichere und effiziente Verwaltung Ihrer Backups!\n\nDies ist eine automatisierte E-Mail, die zur Bestätigung Ihrer Registrierung gesendet wurde. Wir werden Sie nur per E-Mail kontaktieren, um Sie über neue Versionen oder wichtige Updates der Anwendung zu informieren.\n\nFalls Sie Fragen haben, Unterstützung benötigen oder Vorschläge machen möchten, stehen wir Ihnen jederzeit gerne zur Verfügung. Sie können uns unter [SupportEmail] erreichen.\n\nVielen Dank nochmals, dass Sie sich für Backup Manager entschieden haben, und viel Erfolg bei der Verwaltung Ihrer Backups!\n\nMit freundlichen Grüßen,\nDas Backup Manager-Team",
         "EmailConfirmationSubject": "Vielen Dank, dass Sie sich für Backup Manager entschieden haben!",
         "Surname": "Nachname",
-        "ErrorMessageForWrongEmail": "Die angegebene E-Mail-Adresse ist ungültig. Bitte geben Sie eine korrekte Adresse an.",
         "Name": "Vorname",
         "Email": "E-Mail",
         "UserTitle": "Geben Sie Ihre Daten ein",
@@ -296,5 +293,20 @@
       "SearchNoResult": "Kein Ergebnis für",
       "SearchFavorite": "Favorit",
       "SearchRecent": "Letzte"
+    },
+    "Toast": {
+        "BackupEditedOk": "Backup erfolgreich aktualisiert",
+        "BackupCreatedOk": "Backup erfolgreich erstellt",
+        "BackupDeletedOk": "Backup erfolgreich gelöscht",
+        "BackupReplacedOk": "Vorhandenes Backup erfolgreich ersetzt",
+        "BackupDeletedError": "Backup konnte nicht gelöscht werden",
+        "BackupReplacedError": "Backup konnte nicht ersetzt werden",
+        "InvalidTime": "Ungültiges Zeitintervall",
+        "SubscriptionExpiring": "Ihr Backup Manager-Abonnement läuft bald ab. Bitte kontaktieren Sie uns zur Verlängerung",
+        "SubscriptionExpired": "Ihr Backup Manager-Abonnement ist abgelaufen. Bitte kontaktieren Sie uns zur Verlängerung",
+        "LanguageChange": "Einige Änderungen werden nach einem Neustart der Anwendung wirksam",
+        "MissingDataLoginError": "Bitte füllen Sie alle erforderlichen Felder aus",
+        "WrongEmailLoginError": "Die angegebene E-Mail-Adresse ist ungültig. Bitte geben Sie eine korrekte ein",
+        "LoginOk": "Willkommen! Sie haben sich erfolgreich angemeldet"
     }
 }

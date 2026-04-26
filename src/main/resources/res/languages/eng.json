@@ -13,6 +13,7 @@
         "EditButton": "Edit",
         "DeleteButton": "Delete",
         "QuickSearch": "Quick search",
+        "ContactUs": "Contact us",
         "To": "A"
     },
     "TrayIcon": {
@@ -110,7 +111,6 @@
         "Status": "Subscription status",
         "ValidFrom": "Valid from",
         "ValidTo": "Valid to",
-        "ContactUs": "Contact us",
         "ToExtend": "to extend the subscription period."
     },
     "ProgressBackupFrame": {
@@ -148,7 +148,6 @@
         "Github": "Github page",
         "Paypal": "Paypal",
         "BuyMeACoffe": "Buy me a coffe",
-        "ContactUs": "Contact us",
         "Subscription": "Subscription"
     },
     "BackupList": {
@@ -199,11 +198,9 @@
         "BackupList": "BackupList"
     },
     "UserDialog": {
-        "ErrorMessageForMissingData": "Please fill in all the required fields.",
         "EmailConfirmationBody": "Hi [UserName],\n\nThank you for downloading and registering Backup Manager, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at [SupportEmail].\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team",
         "EmailConfirmationSubject": "Thank you for choosing Backup Manager!",
         "Surname": "Surname",
-        "ErrorMessageForWrongEmail": "The provided email address is invalid. Please provide a correct one.",
         "Name": "Name",
         "Email": "Email",
         "UserTitle": "Insert your data",
@@ -296,5 +293,20 @@
         "SearchNoResult": "No result for",
         "SearchFavorite": "Favorite",
         "SearchRecent": "Recents"
+    },
+    "Toast": {
+        "BackupEditedOk": "Backup updated successfully",
+        "BackupCreatedOk": "Backup created successfully",
+        "BackupDeletedOk": "Backup deleted successfully",
+        "BackupReplacedOk": "Existing backup replaced successfully",
+        "BackupDeletedError": "Failed to delete the backup",
+        "BackupReplacedError": "Failed to replace the backup",
+        "InvalidTime": "Invalid time interval",
+        "SubscriptionExpiring": "Your Backup Manager subscription will expire soon. Please contact us to renew it",
+        "SubscriptionExpired": "Your Backup Manager subscription has expired. Please contact us to renew it",
+        "LanguageChange": "Some changes will take effect after restarting the application",
+        "MissingDataLoginError": "Please fill in all the required fields",
+        "WrongEmailLoginError": "The provided email address is invalid. Please provide a correct one",
+        "LoginOk": "Welcome! You have successfully signed in"
     }
 }

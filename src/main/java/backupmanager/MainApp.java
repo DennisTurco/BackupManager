@@ -13,6 +13,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
@@ -28,12 +29,7 @@ public class MainApp {
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     public static void main(String[] args) {
-        ConfigKey.loadFromJson(CONFIG);
-
-        databaseInitialization();
-
-        AppPreferences.init();
-        LanguageManager.loadPreferredLanguage();
+        dataInit();
 
         boolean isBackgroundMode = isBackgroundMode(args);
 
@@ -46,6 +42,16 @@ public class MainApp {
         else if (!isBackgroundMode) {
             runGui();
         }
+    }
+
+    private static void dataInit() {
+        ConfigKey.loadFromJson(CONFIG);
+
+        databaseInitialization();
+
+        AppPreferences.init();
+        LanguageManager.loadPreferredLanguage();
+        Configurations.loadAllConfigurations();
     }
 
     private static void databaseInitialization() {

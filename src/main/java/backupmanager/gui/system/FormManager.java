@@ -6,8 +6,12 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.util.ColorFunctions;
 
+import backupmanager.Enums.SubscriptionStatus;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Helpers.SubscriptionHelper;
+import backupmanager.Helpers.SubscriptionNotifier;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.Utils.UndoRedo;
 import backupmanager.gui.component.About;
 import backupmanager.gui.component.Subscription;
@@ -85,6 +89,7 @@ public class FormManager {
         frame.getContentPane().add(getMainForm());
 
         Drawer.setSelectedItemClass(FormBackupTable.class);
+        showSubscriptionAlertIfNeeded();
         frame.repaint();
         frame.revalidate();
     }
@@ -128,5 +133,19 @@ public class FormManager {
         ModalDialog.showModal(frame, new SimpleModalBorder(new Subscription(), Translations.get(TKey.SUBSCRIPTION)),
                 ModalDialog.createOption().setAnimationEnabled(false)
         );
+    }
+
+    private static void showSubscriptionAlertIfNeeded() {
+        SubscriptionStatus status = SubscriptionHelper.getSubscriptionStatus();
+
+        switch (status) {
+            case SubscriptionStatus.EXPIRATION -> {
+                ToastUtils.showWarning(frame, Translations.get(TKey.TOAST_SUBSCRIPTION_EXPIRING));
+            }
+            case SubscriptionStatus.EXPIRED -> {
+                ToastUtils.showError(frame, Translations.get(TKey.TOAST_SUBSCRIPTION_EXPIRED));
+            }
+            case ACTIVE, NONE -> { }
+        }
     }
 }

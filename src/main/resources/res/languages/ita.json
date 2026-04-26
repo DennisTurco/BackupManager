@@ -13,6 +13,7 @@
         "EditButton": "Modifica",
         "DeleteButton": "Elimina",
         "QuickSearch": "Ricerca rapida",
+        "ContactUs": "Contattaci",
         "To": "A"
     },
     "TrayIcon": {
@@ -110,7 +111,6 @@
         "Status": "Stato abbonamento",
         "ValidFrom": "Valido dal",
         "ValidTo": "Valido fino al",
-        "ContactUs": "Contattaci",
         "ToExtend": "per estendere il periodo di abbonamento."
     },
     "ProgressBackupFrame": {
@@ -148,7 +148,6 @@
         "Github": "Pagina GitHub",
         "Paypal": "PayPal",
         "BuyMeACoffe": "Offrimi un caffè",
-        "ContactUs": "Contattaci",
         "Subscription": "Abbonamento"
     },
     "BackupList": {
@@ -199,11 +198,9 @@
         "BackupList": "ListaBackup"
     },
     "UserDialog": {
-        "ErrorMessageForMissingData": "Per favore, compila tutti i campi richiesti.",
         "EmailConfirmationBody": "Ciao [UserName],\n\nGrazie per aver scaricato e registrato Backup Manager, il tuo nuovo strumento per una gestione sicura ed efficiente dei backup!\n\nQuesta è un’email automatica, inviata per confermare la tua registrazione. Ti contatteremo via email esclusivamente per comunicarti il rilascio di nuove versioni o aggiornamenti importanti dell’applicazione.\n\nNel frattempo, se hai domande, necessiti assistenza o hai suggerimenti, siamo sempre a tua disposizione. Puoi contattarci scrivendo a [SupportEmail].\n\nGrazie ancora per aver scelto Backup Manager e buon lavoro con i tuoi backup!\n\nA presto,\nIl Team di Backup Manager",
         "EmailConfirmationSubject": "Grazie per aver scelto Backup Manager!",
         "Surname": "Cognome",
-        "ErrorMessageForWrongEmail": "L'indirizzo email fornito non è valido. Inseriscine uno corretto.",
         "Name": "Nome",
         "Email": "Email",
         "UserTitle": "Inserisci i tuoi dati",
@@ -296,5 +293,20 @@
       "SearchNoResult": "Nessun risultato per",
       "SearchFavorite": "Preferiti",
       "SearchRecent": "Recenti"
+    },
+    "Toast": {
+        "BackupEditedOk": "Backup aggiornato con successo",
+        "BackupCreatedOk": "Backup creato con successo",
+        "BackupDeletedOk": "Backup eliminato con successo",
+        "BackupReplacedOk": "Backup esistente sostituito con successo",
+        "BackupDeletedError": "Impossibile eliminare il backup",
+        "BackupReplacedError": "Impossibile sostituire il backup",
+        "InvalidTime": "Intervallo di tempo non valido",
+        "SubscriptionExpiring": "Il tuo abbonamento Backup Manager scadrà presto. Contattaci per rinnovarlo",
+        "SubscriptionExpired": "Il tuo abbonamento Backup Manager è scaduto. Contattaci per rinnovarlo",
+        "LanguageChange": "Alcune modifiche avranno effetto dopo il riavvio dell'applicazione",
+        "MissingDataLoginError": "Compila tutti i campi obbligatori",
+        "WrongEmailLoginError": "L'indirizzo email fornito non è valido. Inseriscine uno corretto",
+        "LoginOk": "Benvenuto! Accesso effettuato con successo"
     }
 }

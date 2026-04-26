@@ -24,8 +24,10 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupAlreadyRunningException;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Exceptions.InvalidTimeInterval;
 import backupmanager.Helpers.BackupHelper;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.gui.Controllers.BackupEntryController;
 import backupmanager.gui.Table.BackupTableDataService;
 import net.miginfocom.swing.MigLayout;
@@ -164,8 +166,8 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
                                 TimeInterval time = entryController.handleTimePickerAction(timePicker, txtTargetPath.getText(), txtDestinationPath.getText());
                                 timeIntervalBtn.setToolTipText(time.toString());
                                 openBackupActivationMessage(time);
-
                             } catch (InvalidTimeInterval e) {
+                                ToastUtils.showError(this, Translations.get(TKey.TOAST_INVALID_TIME));
                                 // no actions
                             }
 
@@ -252,7 +254,12 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
     }
 
     public boolean canDispose() {
-        return entryController.canDisposeAfterOk(txtBackupName.getText(), txtTargetPath.getText(), txtDestinationPath.getText(), textAreaNotes.getText(), automaticBackupBtn.isSelected(), (int) maxToKeeSpinner.getValue(), create);
+        try {
+            return entryController.canDisposeAfterOk(this, txtBackupName.getText(), txtTargetPath.getText(), txtDestinationPath.getText(), textAreaNotes.getText(), automaticBackupBtn.isSelected(), (int) maxToKeeSpinner.getValue(), create);
+        } catch (BackupDeletionException e) {
+            ToastUtils.showError(this, Translations.get(TKey.TOAST_BACKUP_REPLACED_ERROR));
+            return false;
+        }
     }
 
     private void disableAutoBackup(ConfigurationBackup backup) {
