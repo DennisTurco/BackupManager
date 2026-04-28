@@ -15,6 +15,7 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Managers.WebsiteManager;
+import backupmanager.gui.menu.DrawerManager;
 import net.miginfocom.swing.MigLayout;
 
 public class Subscription extends JPanel {
@@ -55,7 +56,7 @@ public class Subscription extends JPanel {
 
         pane.addHyperlinkListener(e -> {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                WebsiteManager.openWebSite(e.getURL().toString());
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), e.getURL().toString());
             }
         });
 

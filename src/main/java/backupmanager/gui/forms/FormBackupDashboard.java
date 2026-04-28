@@ -36,7 +36,7 @@ import backupmanager.gui.component.chart.themes.DefaultChartTheme;
 import backupmanager.gui.component.dashboard.CardBox;
 import net.miginfocom.swing.MigLayout;
 
-@SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard")
+@SystemForm(name = "Backup Dashboard", description = "Backup analytics dashboard", tags = {"backups", "dashboard"})
 public class FormBackupDashboard extends CustomForm {
 
     private static final int CARD_TOTAL_CONFIG = 0;
@@ -69,24 +69,20 @@ public class FormBackupDashboard extends CustomForm {
         cardBox.setValueAt(CARD_TOTAL_CONFIG,
                 String.valueOf(configurations.size()),
                 "",
-                "",
                 true);
 
         cardBox.setValueAt(CARD_SUCCESS_RATE,
                 String.valueOf(snapshot.totalRequests()),
-                "Success rate",
                 String.format("%.2f%%", snapshot.successRate()),
                 true);
 
         cardBox.setValueAt(CARD_DURATION,
                 String.format("%.2f min", BackupAnalyticsService.convertAvgDurationinMinutes(snapshot)),
                 "",
-                "",
                 true);
 
         cardBox.setValueAt(CARD_COMPRESSION,
                 String.format("%.1f%%", snapshot.avgCompressionRate() * 100),
-                "",
                 "",
                 true);
 
@@ -201,7 +197,10 @@ public class FormBackupDashboard extends CustomForm {
         cardBox.setTitleTextAt(CARD_SUCCESS_RATE, Translations.get(TKey.DASHBOARD_CARD_TOTAL_EXECUTIONS));
         cardBox.setTitleTextAt(CARD_DURATION, Translations.get(TKey.DASHBOARD_CARD_AVG_DURATION));
         cardBox.setTitleTextAt(CARD_COMPRESSION, Translations.get(TKey.DASHBOARD_CARD_COMPRESSION_RATE));
+        cardBox.setDescriptionTextAt(CARD_TOTAL_CONFIG, "");
         cardBox.setDescriptionTextAt(CARD_SUCCESS_RATE, Translations.get(TKey.DASHBOARD_CARD_SUCCESS_RATE));
+        cardBox.setDescriptionTextAt(CARD_DURATION, "");
+        cardBox.setDescriptionTextAt(CARD_COMPRESSION, "");
     }
 
     private JLabel title;

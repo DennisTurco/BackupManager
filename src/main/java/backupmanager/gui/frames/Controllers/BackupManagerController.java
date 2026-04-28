@@ -1,12 +1,9 @@
 package backupmanager.gui.frames.Controllers;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
 import backupmanager.Entities.ConfigurationBackup;
-import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Services.BackupService;
@@ -27,15 +24,6 @@ public class BackupManagerController {
     public BackupManagerController(BackupService backupService, BackupTableDataService backupTable) {
         this.backupService = backupService;
         this.backupTable = backupTable;
-    }
-
-
-    // TODO: enable it
-    public int[] getScreenSize() {
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = Math.min((int) size.getWidth(), Integer.parseInt(ConfigKey.GUI_WIDTH.getValue()));
-        int height = Math.min((int) size.getHeight(), Integer.parseInt(ConfigKey.GUI_HEIGHT.getValue()));
-        return new int[]{width, height};
     }
 
     public List<ConfigurationBackup> researchInTableAndGet(List<ConfigurationBackup> backups, String research) {

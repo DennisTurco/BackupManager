@@ -38,8 +38,8 @@ public class CardBox extends JPanel {
         add(cardItem, "width 100%");
     }
 
-    public void setValueAt(int index, String value, String description, String tags, boolean up) {
-        cardItems.get(index).setValue(value, description, tags, up);
+    public void setValueAt(int index, String value, String tags, boolean up) {
+        cardItems.get(index).setValue(value, tags, up);
     }
 
     public void setCardIconColor(int index, Color color) {

@@ -12,6 +12,7 @@ public class DrawerManager implements ITranslatable {
 
     private DrawerPanel drawerPanel;
     private MenuItem[] menuItems;
+    private JFrame parent;
 
     private static DrawerManager instance;
 
@@ -22,21 +23,14 @@ public class DrawerManager implements ITranslatable {
         return instance;
     }
 
-    public DrawerPanel getDrawer() {
-        return drawerPanel;
-    }
-
-    public MenuItem[] getMenuItems() {
-        return menuItems;
-    }
-
     public void install(JFrame frame) {
+        parent = frame;
         MyDrawerBuilder builder = new MyDrawerBuilder();
 
         drawerPanel = builder.createDrawer();
         menuItems = builder.getSimpleMenuOption().getMenus();
 
-        Drawer.installDrawer(frame, builder);
+        Drawer.installDrawer(parent, builder);
     }
 
     private DrawerManager() {
@@ -47,6 +41,18 @@ public class DrawerManager implements ITranslatable {
     private void rebuildDrawer() {
         MyDrawerBuilder builder = new MyDrawerBuilder();
         drawerPanel = builder.createDrawer();
+    }
+
+     public DrawerPanel getDrawer() {
+        return drawerPanel;
+    }
+
+    public MenuItem[] getMenuItems() {
+        return menuItems;
+    }
+
+    public JFrame getParent() {
+        return parent;
     }
 
     // it's not the best rebuild the menu every time the language is changed but right now there is no a method to update

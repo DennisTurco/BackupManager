@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
@@ -28,6 +29,7 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.gui.Table.BackupTableDataService;
 import backupmanager.gui.frames.BackupProgressGUI;
@@ -40,20 +42,20 @@ public class BackupPopupController {
         // TODO: add it
     }
 
-    public static void popupItemRenameBackup(List<ConfigurationBackup> backups, ConfigurationBackup backup) {
-        renameBackup(backups, backup);
+    public static void popupItemRenameBackup(JComponent parent, List<ConfigurationBackup> backups, ConfigurationBackup backup) {
+        renameBackup(parent, backups, backup);
     }
 
-    public static void popupItemOpenDestinationPath(ConfigurationBackup backup) {
-        openFolder(backup.getDestinationPath());
+    public static void popupItemOpenDestinationPath(JComponent parent, ConfigurationBackup backup) {
+        openFolder(parent, backup.getDestinationPath());
     }
 
-    public static void popupItemOpenInitialPath(ConfigurationBackup backup) {
-        openFolder(backup.getTargetPath());
+    public static void popupItemOpenInitialPath(JComponent parent, ConfigurationBackup backup) {
+        openFolder(parent, backup.getTargetPath());
     }
 
-    public static void popupItemAutoBackup(ConfigurationBackup backup) {
-        BackupHelper.toggleAutomaticBackup(backup);
+    public static void popupItemAutoBackup(JComponent parent, ConfigurationBackup backup) {
+        BackupHelper.toggleAutomaticBackup(parent, backup);
     }
 
     public static void popupItemRunBackup(ConfigurationBackup backup, BackupTableDataService backupTable, JMenuItem interruptBackupPopupItem, JMenuItem RunBackupPopupItem) {
@@ -125,10 +127,10 @@ public class BackupPopupController {
         return max + 1;
     }
 
-    private static void renameBackup(List<ConfigurationBackup> backups, ConfigurationBackup backup) {
+    private static void renameBackup(JComponent parent, List<ConfigurationBackup> backups, ConfigurationBackup backup) {
         logger.info("Event --> backup renaming");
 
-        String backupName = getBackupNameFromInputDialog(backups, backup.getName(), false);
+        String backupName = getBackupNameFromInputDialog(parent, backups, backup.getName(), false);
         if (backupName == null || backupName.isEmpty()) return;
 
         backup.setName(backupName);
@@ -136,7 +138,7 @@ public class BackupPopupController {
         BackupHelper.updateBackup(backup);
     }
 
-    private static String getBackupNameFromInputDialog(List<ConfigurationBackup> backups, String oldName, boolean canOverwrite) {
+    private static String getBackupNameFromInputDialog(JComponent parent, List<ConfigurationBackup> backups, String oldName, boolean canOverwrite) {
         while (true) {
             String backupName = JOptionPane.showInputDialog(null, Translations.get(TKey.BACKUP_NAME_INPUT), oldName);
 
@@ -159,7 +161,7 @@ public class BackupPopupController {
                 }
                 } else {
                     logger.warn("Backup name '{}' is already in use", backupName);
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.BACKUP_NAME_ALREADY_USED_MESSAGE), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                    ToastUtils.showError(parent, Translations.get(TKey.TOAST_BACKUP_NAME_ALREADY_USED));
                 }
             } else {
                 return backupName;  // Return valid name
@@ -167,7 +169,7 @@ public class BackupPopupController {
         }
     }
 
-    private static void openFolder(String path) {
+    private static void openFolder(JComponent parent, String path) {
         logger.info("Event --> opening folder");
 
         File folder = new File(path);
@@ -191,7 +193,7 @@ public class BackupPopupController {
             }
         } else {
             logger.warn("The folder does not exist or is invalid");
-            JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_FOR_FOLDER_NOT_EXISTING), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            ToastUtils.showError(parent, Translations.get(TKey.TOAST_FOLDER_NOT_EXISTING));
         }
     }
 }

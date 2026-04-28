@@ -7,10 +7,11 @@ import javax.swing.JFrame;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import backupmanager.Enums.ConfigKey;
 import backupmanager.gui.menu.DrawerManager;
 import backupmanager.gui.system.FormManager;
 
-public class BackupManager extends JFrame{
+public class BackupManager extends JFrame {
 
     private static BackupManager instance;
 
@@ -30,7 +31,8 @@ public class BackupManager extends JFrame{
         getRootPane().putClientProperty(FlatClientProperties.FULL_WINDOW_CONTENT, true);
         DrawerManager.getInstance().install(this);
         FormManager.install(this);
-        setSize(new Dimension(1366, 768));
+        setSize(new Dimension(Integer.parseInt(ConfigKey.GUI_WIDTH.getValue()), Integer.parseInt(ConfigKey.GUI_HEIGHT.getValue())));
+        setMinimumSize(new Dimension(Integer.parseInt(ConfigKey.GUI_MIN_WIDTH.getValue()), Integer.parseInt(ConfigKey.GUI_MIN_HEIGHT.getValue())));
         setLocationRelativeTo(null);
     }
 }

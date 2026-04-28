@@ -47,7 +47,7 @@ import backupmanager.gui.frames.Controllers.BackupPopupController;
 import backupmanager.gui.svg.SVGButton;
 import net.miginfocom.swing.MigLayout;
 
-@SystemForm(name = "Table", description = "table is a user interface component", tags = {"list"})
+@SystemForm(name = "Backup Configurations", description = "Backup configurations and management", tags = {"list", "backups"})
 public class FormBackupTable extends CustomForm {
 
     private static final Logger logger = LoggerFactory.getLogger(FormBackupTable.class);
@@ -383,9 +383,9 @@ public class FormBackupTable extends CustomForm {
                 }
             }
             case "DUPLICATE" -> BackupPopupController.popupItemDuplicateBackup(backup);
-            case "RENAME" -> BackupPopupController.popupItemRenameBackup(backups, backup);
-            case "OPEN_TARGET" -> BackupPopupController.popupItemOpenInitialPath(backup);
-            case "OPEN_DEST" -> BackupPopupController.popupItemOpenDestinationPath(backup);
+            case "RENAME" -> BackupPopupController.popupItemRenameBackup(this, backups, backup);
+            case "OPEN_TARGET" -> BackupPopupController.popupItemOpenInitialPath(this, backup);
+            case "OPEN_DEST" -> BackupPopupController.popupItemOpenDestinationPath(this, backup);
             case "RUN_SINGLE" -> BackupPopupController.popupItemRunBackup(backup, tableService, interruptBackupPopupItem, RunBackupPopupItem);
             case "COPY_NAME" -> BackupPopupController.popupItemCopyBackupName(backup);
             case "COPY_TARGET" -> BackupPopupController.popupItemCopyInitialPath(backup);
@@ -401,7 +401,7 @@ public class FormBackupTable extends CustomForm {
             return;
 
         ConfigurationBackup backup = getBackupFromTableRow(selectedRow);
-        BackupPopupController.popupItemAutoBackup(backup);
+        BackupPopupController.popupItemAutoBackup(this, backup);
 
         formRefresh();
     }

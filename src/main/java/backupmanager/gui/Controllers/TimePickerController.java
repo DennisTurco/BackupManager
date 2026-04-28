@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Utils.ToastUtils;
 import backupmanager.gui.simple.TimePickerDialog;
 
 public class TimePickerController {
@@ -19,7 +20,7 @@ public class TimePickerController {
             return new TimeInterval(days, hours, minutes);
         }
         else
-            showErrorMessageForLongTime(null);
+            ToastUtils.showError(dialog, Translations.get(TKey.TOAST_INVALID_TIME));
         return null;
     }
 
@@ -30,10 +31,6 @@ public class TimePickerController {
 
     private boolean isShortTimeCorrect(int days, int hours) {
         return days == 0 && hours == 0;
-    }
-
-    private void showErrorMessageForLongTime(javax.swing.JDialog dialog) {
-        JOptionPane.showMessageDialog(dialog, Translations.get(TKey.ERROR_WRONG_TIME_INTERVAL), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
     }
 
     private boolean showWarningMessageForShortTimeAndGetIfItOkayResponse(javax.swing.JDialog dialog) {

@@ -104,7 +104,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                 FormManager.showForm(AllForms.getForm(FormBackupDashboard.class)));
 
         menuActionMap.put(MenuItems.Export, () ->
-                ExportManager.exportAsCSV(BackupConfigurationRepository.getBackupList(), ConfigurationBackup.getCSVHeader()));
+                ExportManager.exportAsCSV(DrawerManager.getInstance().getParent(), BackupConfigurationRepository.getBackupList(), ConfigurationBackup.getCSVHeader()));
 
         menuActionMap.put(MenuItems.Settings, () ->
                 FormManager.showForm(AllForms.getForm(FormSetting.class)));
@@ -113,19 +113,19 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                 FormManager.showForm(AllForms.getForm(FormHistory.class)));
 
         menuActionMap.put(MenuItems.InfoPage, () ->
-                WebsiteManager.openWebSite(ConfigKey.INFO_PAGE_LINK.getValue()));
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.INFO_PAGE_LINK.getValue()));
 
         menuActionMap.put(MenuItems.BugReport, () ->
-                WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue()));
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.ISSUE_PAGE_LINK.getValue()));
 
         menuActionMap.put(MenuItems.ContactUs, () ->
-                WebsiteManager.sendEmail());
+                WebsiteManager.sendEmail(DrawerManager.getInstance().getParent()));
 
         menuActionMap.put(MenuItems.PaypalDonate, () ->
-                WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue()));
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.DONATE_PAYPAL_LINK.getValue()));
 
         menuActionMap.put(MenuItems.BuymeacoffeeDonate, () ->
-                WebsiteManager.openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue()));
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue()));
 
         menuActionMap.put(MenuItems.Subscription, () ->
                 FormManager.showSubscription());
@@ -248,11 +248,15 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         // Backup menu
         Item backupItem = createMenuItem(Translations.get(TKey.BACKUP_TABLE), "forms.svg", MenuItems.BackupList, FormBackupTable.class);
 
-        if (config.isMenuItemEnabled(MenuItems.Import.name()))
+        if (config.isMenuItemEnabled(MenuItems.Import.name())) {
             backupItem.subMenu(Translations.get(TKey.IMPORT_BACKUP));
+            bindSubMenu(Translations.get(TKey.IMPORT_BACKUP), MenuItems.Import);
+        }
 
-        if (config.isMenuItemEnabled(MenuItems.Export.name()))
+        if (config.isMenuItemEnabled(MenuItems.Export.name())) {
             backupItem.subMenu(Translations.get(TKey.EXPORT_BACKUP));
+            bindSubMenu(Translations.get(TKey.EXPORT_BACKUP), MenuItems.Export);
+        }
 
         itemList.add(backupItem);
 

@@ -207,12 +207,12 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
                 (int) maxToKeeSpinner.getValue()
             );
         } catch (BackupAlreadyRunningException e) {
-            // no handle
+            ToastUtils.showWarning(this, Translations.get(TKey.TOAST_BACKUP_ALREADY_IN_PROGRESS));
         }
     }
 
     private void toggleAutomaticBackup() {
-        if (entryController.toggleAutomaticBackup(txtBackupName.getText(), txtTargetPath.getText(), txtDestinationPath.getText(), txtNotes.getText(), automaticBackupBtn.isSelected(), (int) maxToKeeSpinner.getValue())) {
+        if (entryController.toggleAutomaticBackup(this, txtBackupName.getText(), txtTargetPath.getText(), txtDestinationPath.getText(), txtNotes.getText(), automaticBackupBtn.isSelected(), (int) maxToKeeSpinner.getValue())) {
             setAutoBackupOn(entryController.getCurrentBackup());
             automaticBackupBtn.setSelected(true);
             timeIntervalBtn.setToolTipText(entryController.getCurrentBackup().getTimeIntervalBackup().toString());
@@ -272,7 +272,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
     }
 
     private void openBackupActivationMessage(TimeInterval newtimeInterval) {
-        entryController.handleOpenBackupActivationMessage(newtimeInterval, txtTargetPath.getText(), txtDestinationPath.getText());
+        entryController.handleOpenBackupActivationMessage(this, newtimeInterval, txtTargetPath.getText(), txtDestinationPath.getText());
     }
 
     private void setAutoBackupPreference(boolean option) {

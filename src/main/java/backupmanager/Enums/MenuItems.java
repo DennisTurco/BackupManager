@@ -8,10 +8,8 @@ public enum MenuItems {
     BuymeacoffeeDonate,
     History,
     InfoPage,
-    New, //TODO: Used??
     Import,
     Export,
-    Share, //TODO: Used??
     Support,
     ContactUs,
     Website,

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
@@ -16,12 +17,13 @@ import backupmanager.BackupOperations;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Utils.ToastUtils;
 
 public class ExportManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ExportManager.class);
 
-    public static void exportAsCSV(List<ConfigurationBackup> backups, String header) {
+    public static void exportAsCSV(JFrame component, List<ConfigurationBackup> backups, String header) {
         logger.info("Exporting backups to CSV");
 
         String path = BackupOperations.pathSearchWithFileChooser(false);
@@ -39,7 +41,7 @@ public class ExportManager {
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
-            JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_INVALID_FILENAME), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            ToastUtils.showError(component, Translations.get(TKey.TOAST_CSV_EXPORT_INVALID_FILENAME));
             logger.info("Exporting backups to CSV cancelled due to invalid file name");
             return;
         }
@@ -70,10 +72,10 @@ public class ExportManager {
                 }
             }
 
-            JOptionPane.showMessageDialog(null, Translations.get(TKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE), Translations.get(TKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
+            ToastUtils.showSuccess(component, Translations.get(TKey.TOAST_CSV_EXPORT));
         } catch (IOException ex) {
             logger.error("Error exporting backups to CSV: " + ex.getMessage(), ex);
-            JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_FOR_EXPORTING_TO_CSV) + ex.getMessage(), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            ToastUtils.showError(component, Translations.get(TKey.TOAST_CSV_EXPORT_ERROR) + ": " + ex.getMessage());
         } finally {
             logger.info("Exporting backups to CSV finished");
         }

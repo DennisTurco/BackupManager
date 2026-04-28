@@ -15,6 +15,8 @@ import backupmanager.Email.EmailSender;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
+import backupmanager.Utils.ToastUtils;
+import backupmanager.gui.menu.DrawerManager;
 
 public class ExceptionManager {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
@@ -22,9 +24,8 @@ public class ExceptionManager {
     public static void openExceptionMessage(String errorMessage, String stackTrace) {
         Object[] options = {Translations.get(TKey.CLOSE_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
 
-        if (errorMessage == null) {
+        if (errorMessage == null)
             errorMessage = "";
-        }
 
         stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
 
@@ -75,9 +76,9 @@ public class ExceptionManager {
                 StringSelection selection = new StringSelection(stackTrace);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
                 logger.info("Error text has been copied to the clipboard");
-                JOptionPane.showMessageDialog(null, Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
+                ToastUtils.showInfo(DrawerManager.getInstance().getParent(), Translations.get(TKey.TOAST_ERROR_TEXT_CLIPBOARD));
             } else if (choice == 2) {
-                WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.ISSUE_PAGE_LINK.getValue());
             }
         } while (choice == 1 || choice == 2);
     }

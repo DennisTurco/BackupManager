@@ -1,6 +1,6 @@
 package backupmanager.Helpers;
 
-import java.sql.SQLException;
+import java.awt.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,9 +17,11 @@ import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupDeletionException;
+import backupmanager.Utils.ModalUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.simple.TimePickerDialog;
+import raven.modal.component.SimpleModalBorder;
 
 public class BackupHelper {
 
@@ -79,17 +81,18 @@ public class BackupHelper {
         return picker.getResult();
     }
 
-    public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
+    public static void showMessageActivationAutoBackup(Component parent, TimeInterval timeInterval, String startPath, String destinationPath) {
         String from = Translations.get(TKey.FROM);
         String to = Translations.get(TKey.TO);
         String activated = Translations.get(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
         String setted = Translations.get(TKey.SETTED_EVERY_MESSAGE);
         String days = Translations.get(TKey.DAYS_MESSAGE);
 
-        JOptionPane.showMessageDialog(null,
-                activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
-                + destinationPath + setted + " " + timeInterval.toString() + days,
-                "AutoBackup", 1);
+        String message =
+                activated + "\n\n" + from + ": " + startPath + "\n" + to + ": "
+                + destinationPath + "\n" + setted + " " + timeInterval.toString() + days;
+
+        ModalUtils.showInfo(parent, Translations.get(TKey.AUTO_BACKUP_MESSAGE), message, SimpleModalBorder.CLOSE_OPTION);
     }
 
     public static LocalDateTime getNexDateBackup(TimeInterval timeInterval) {
@@ -103,7 +106,7 @@ public class BackupHelper {
         BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
     }
 
-    public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
+    public static ConfigurationBackup toggleAutomaticBackup(Component parent, ConfigurationBackup backup) {
         logger.info("Event --> automatic backup");
 
         if (backup.isAutomatic()) {
@@ -145,7 +148,7 @@ public class BackupHelper {
 
             logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
 
-            showMessageActivationAutoBackup(timeInterval, backup.getTargetPath(), backup.getDestinationPath());
+            showMessageActivationAutoBackup(parent, timeInterval, backup.getTargetPath(), backup.getDestinationPath());
 
             updateBackup(backup);
 

@@ -81,8 +81,10 @@ public class BackupEntryController {
     }
 
     public boolean canDisposeAfterOk(Component owner, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep, boolean create) throws BackupDeletionException {
-        if (name.isBlank() || destinationPath.isBlank() || initialPath.isBlank())
+        if (name.isBlank() || destinationPath.isBlank() || initialPath.isBlank()) {
+            ToastUtils.showError(owner, Translations.get(TKey.TOAST_BACKUP_PATHS_EMPTY_ERROR));
             return false;
+        }
 
         updateCurrentBackup(name, initialPath, destinationPath, notes, autoBackup, maxBackupsToKeep);
 
@@ -96,6 +98,7 @@ public class BackupEntryController {
                 else
                     return false;
             }
+
             BackupHelper.newBackup(currentBackup);
         } else {
             BackupHelper.updateBackup(currentBackup);
@@ -111,12 +114,12 @@ public class BackupEntryController {
         }
     }
 
-    public boolean toggleAutomaticBackup(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {
+    public boolean toggleAutomaticBackup(Component parent, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {
         updateCurrentBackup(name, initialPath, destinationPath,notes, autoBackup, maxBackupsToKeep);
 
         currentBackup.setAutomatic(!currentBackup.isAutomatic());
 
-        ConfigurationBackup backup = BackupHelper.toggleAutomaticBackup(currentBackup);
+        ConfigurationBackup backup = BackupHelper.toggleAutomaticBackup(parent, currentBackup);
 
         if (backup == null)
             return false;
@@ -134,10 +137,6 @@ public class BackupEntryController {
 
     public void handleSingleBackupRequest(BackupTableDataService backupTable, String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) throws BackupAlreadyRunningException {
         if (BackupRequestRepository.isAnyBackupRunning()) {
-            JOptionPane.showMessageDialog(null,
-                Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE),
-                Translations.get(TKey.WARNING_GENERIC_TITLE),
-                JOptionPane.WARNING_MESSAGE);
             throw new BackupAlreadyRunningException();
         }
 
@@ -198,17 +197,13 @@ public class BackupEntryController {
         }
     }
 
-    public void handleOpenBackupActivationMessage(TimeInterval newtimeInterval, String target, String destination) {
+    public void handleOpenBackupActivationMessage(Component parent, TimeInterval newtimeInterval, String target, String destination) {
         currentBackup.setTimeIntervalBackup(newtimeInterval);
-        BackupHelper.showMessageActivationAutoBackup(newtimeInterval, target, destination);
+        BackupHelper.showMessageActivationAutoBackup(parent, newtimeInterval, target, destination);
     }
 
     public ConfigurationBackup getCurrentBackup() {
         return currentBackup;
-    }
-
-    public void setCurrentBackup(ConfigurationBackup currentBackup) {
-        this.currentBackup = currentBackup;
     }
 
     private void updateCurrentBackup(String name, String initialPath, String destinationPath, String notes, boolean autoBackup, int maxBackupsToKeep) {

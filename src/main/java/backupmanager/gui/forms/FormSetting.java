@@ -36,12 +36,12 @@ import com.formdev.flatlaf.util.ScaledEmptyBorder;
 import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Managers.LanguageManager;
-import backupmanager.gui.component.AccentColorIcon;
-import backupmanager.gui.system.FormManager;
-import backupmanager.gui.themes.PanelThemes;
 import backupmanager.Utils.AppPreferences;
 import backupmanager.Utils.SystemForm;
 import backupmanager.Utils.ToastUtils;
+import backupmanager.gui.component.AccentColorIcon;
+import backupmanager.gui.system.FormManager;
+import backupmanager.gui.themes.PanelThemes;
 import net.miginfocom.swing.MigLayout;
 import raven.color.ColorPicker;
 import raven.modal.Drawer;
@@ -478,8 +478,9 @@ public class FormSetting extends CustomForm {
         JPanel panel = new JPanel(new MigLayout("wrap,fill,insets 0", "[fill]", "[grow 0,fill]0[fill]"));
         final PanelThemes panelThemes = new PanelThemes();
         JPanel panelHeader = new JPanel(new MigLayout("fillx,insets 3", "[grow 0]push[]"));
-        panelHeader.add(new JLabel("Themes"));
-        JComboBox<Object> combo = new JComboBox<>(new Object[]{"All", "Light", "Dark"});
+        themeLabel = new JLabel("Themes");
+        panelHeader.add(themeLabel);
+        JComboBox<Object> combo = new JComboBox<>(new Object[] {Translations.get(TKey.SETTINGS_THEME_ALL), Translations.get(TKey.SETTINGS_THEME_LIGHT), Translations.get(TKey.SETTINGS_THEME_DARK)} );
         combo.addActionListener(e -> {
             panelThemes.updateThemesList(combo.getSelectedIndex());
         });
@@ -515,6 +516,7 @@ public class FormSetting extends CustomForm {
         jrStyleOption1.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_RETTANGLE));
         jrStyleOption2.setText(Translations.get(TKey.SETTINGS_LINE_STYLE_ELLIPSE));
         chPaintLineColor.setText(Translations.get(TKey.SETTINGS_COLOR_OPTION_PAINTED));
+        themeLabel.setText(Translations.get(TKey.SETTINGS_THEMES));
     }
 
     private JTabbedPane tabbedPane;
@@ -543,4 +545,5 @@ public class FormSetting extends CustomForm {
     private JRadioButton jrStyleOption1;
     private JRadioButton jrStyleOption2;
     private JCheckBox chPaintLineColor;
+    private JLabel themeLabel;
 }

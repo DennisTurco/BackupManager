@@ -31,7 +31,10 @@ import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Utils.FolderUtils;
+import backupmanager.Utils.ModalUtils;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.menu.DrawerManager;
+import raven.modal.component.SimpleModalBorder;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
@@ -42,7 +45,7 @@ public class BackupOperations {
                 if (!BackupRequestRepository.isAnyBackupRunning())
                     singleBackup(context, triggeredBy);
                 else
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), Translations.get(TKey.WARNING_GENERIC_TITLE), JOptionPane.WARNING_MESSAGE);
+                    ModalUtils.showWarning(DrawerManager.getInstance().getParent(), Translations.get(TKey.WARNING_GENERIC_TITLE), Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), SimpleModalBorder.CLOSE_OPTION);
             }
             case SCHEDULER -> singleBackup(context, triggeredBy);
         }

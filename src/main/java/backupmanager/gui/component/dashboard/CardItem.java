@@ -43,12 +43,15 @@ public class CardItem extends JPanel {
         add(lbTags);
     }
 
-    public void setValue(String value, String description, String tags, boolean up) {
+    public void setValue(String value, String tags, boolean up) {
         lbValue.setText(value);
-        lbDescription.setText(description);
+
         lbTags.setText(tags);
-        lbTags.putClientProperty(FlatClientProperties.STYLE_CLASS, (up ? "greenBadge" : "redBadge") + " small");
-        lbDescription.setVisible(description != null);
+        lbTags.putClientProperty(
+                FlatClientProperties.STYLE_CLASS,
+                (up ? "greenBadge" : "redBadge") + " small"
+        );
+
         lbTags.setVisible(tags != null);
     }
 

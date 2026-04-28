@@ -16,6 +16,7 @@ import backupmanager.Enums.Translations;
 import backupmanager.Enums.Translations.TKey;
 import backupmanager.Json.JsonConfig;
 import backupmanager.Managers.WebsiteManager;
+import backupmanager.gui.menu.DrawerManager;
 import net.miginfocom.swing.MigLayout;
 
 public class About extends JPanel {
@@ -37,7 +38,7 @@ public class About extends JPanel {
 
         description.addHyperlinkListener(e -> {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
-                WebsiteManager.openWebSite(e.getURL().toString());
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), e.getURL().toString());
         });
 
         add(title);
