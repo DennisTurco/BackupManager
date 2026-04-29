@@ -10,6 +10,7 @@ import backupmanager.BackupOperations;
 import backupmanager.Enums.SubscriptionStatus;
 import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Helpers.SubscriptionNotifier;
+import backupmanager.MainApp;
 import backupmanager.Services.BackgroundService;
 import backupmanager.gui.frames.BackupManager;
 
@@ -65,15 +66,20 @@ public class AppController {
 
     private void openGui() {
         logger.info("Opening main GUI");
-        BackupManager frame = BackupManager.getInstance();
 
-        frame.setVisible(true);
-        frame.toFront();
-        frame.requestFocus();
+        java.awt.EventQueue.invokeLater(() -> {
+            MainApp.initLaf();
 
-        if (frame.getState() == Frame.ICONIFIED) {
-            frame.setState(Frame.NORMAL);
-        }
+            BackupManager frame = BackupManager.getInstance();
+
+            frame.setVisible(true);
+            frame.toFront();
+            frame.requestFocus();
+
+            if (frame.getState() == Frame.ICONIFIED) {
+                frame.setState(Frame.NORMAL);
+            }
+        });
     }
 
     private void exitApp() {

@@ -17,12 +17,12 @@ import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
+import backupmanager.Utils.AppPreferences;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
 import backupmanager.gui.Controllers.AppController;
 import backupmanager.gui.frames.BackupManager;
-import backupmanager.Utils.AppPreferences;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -86,13 +86,18 @@ public class MainApp {
 
     private static void runGui() {
         java.awt.EventQueue.invokeLater(() -> {
-            FlatRobotoFont.install();
-            FlatLaf.registerCustomDefaultsSource(".themes");
-            UIManager.put("defaultFont", FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
-            AppPreferences.setupLaf();
-
-            BackupManager frame = BackupManager.getInstance();
-            frame.setVisible(true);
+            initLaf();
+            BackupManager.getInstance().setVisible(true);
         });
+    }
+
+    public static void initLaf() {
+        FlatRobotoFont.install();
+        FlatLaf.registerCustomDefaultsSource(".themes");
+        UIManager.put(
+            "defaultFont",
+            FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13)
+        );
+        AppPreferences.setupLaf();
     }
 }
