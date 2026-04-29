@@ -10,8 +10,8 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.host" value="${smtp.smtp}" />
     <property name="smtp.email_confirmation_to" value="${smtp.email_confirmation_to}" />
-    <!-- <property name="EMAIL_TO" value="test1@shardpc.it" /> -->
-    <property name="EMAIL_TO" value="assistenza@shardpc.it" />
+    <property name="EMAIL_TO" value="test1@shardpc.it" />
+    <!-- <property name="EMAIL_TO" value="assistenza@shardpc.it" /> -->
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ BackupManager - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 BackupManager - New user registered!! 🆕" />
     <property name="EMAIL_CONFIRMATION_SUBJECT" value="BackupManager - Welcome!" />
@@ -127,7 +127,7 @@
     </logger>
 
     <!-- Root logger -->
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC" />
         <appender-ref ref="ERROR_FILE" />

@@ -18,11 +18,11 @@ public record TimeInterval (int days, int hours, int minutes) {
     }
 
     public static TimeInterval getTimeIntervalFromString(String time) {
-        if (time != null && !time.matches("\\d+\\.\\d{1,2}:\\d{1,2}")) {
+        if (time != null && !time.matches("\\d+\\.\\d{1,2}:\\d{1,2}"))
             throw new IllegalArgumentException("Invalid time format. Expected format: days.hours:minutes (e.g., 1.12:30)");
-        }
 
-        if (time == null) return null;
+        if (time == null)
+            return null;
 
         String[] dayAndTime = time.split("\\.");
         int parsedDays = Integer.parseInt(dayAndTime[0]);
@@ -31,15 +31,12 @@ public record TimeInterval (int days, int hours, int minutes) {
         int parsedHours = Integer.parseInt(hourAndMinute[0]);
         int parsedMinutes = Integer.parseInt(hourAndMinute[1]);
 
-        if (parsedDays < 0) {
+        if (parsedDays < 0)
             throw new IllegalArgumentException("Days cannot be negative");
-        }
-        if (parsedHours < 0 || parsedHours > 23) {
+        if (parsedHours < 0 || parsedHours > 23)
             throw new IllegalArgumentException("Hours must be between 0 and 23");
-        }
-        if (parsedMinutes < 0 || parsedMinutes > 59) {
+        if (parsedMinutes < 0 || parsedMinutes > 59)
             throw new IllegalArgumentException("Minutes must be between 0 and 59");
-        }
 
         return new TimeInterval(parsedDays, parsedHours, parsedMinutes);
     }

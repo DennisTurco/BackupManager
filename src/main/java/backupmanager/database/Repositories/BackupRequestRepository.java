@@ -103,7 +103,6 @@ public class BackupRequestRepository {
                     BackupTriggerType triggeredBy = BackupTriggerType.fromCode(triggeredByInt);
 
                     backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
-                    logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
                 }
             }
 
@@ -163,7 +162,6 @@ public class BackupRequestRepository {
                     BackupStatus status = BackupStatus.fromCode(statusInt);
 
                     backups.add(new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage));
-                    logger.debug("Loaded running backup: backupRequestId={} configurationId={}", backupRequestId, backupConfigurationId);
                 }
             }
 

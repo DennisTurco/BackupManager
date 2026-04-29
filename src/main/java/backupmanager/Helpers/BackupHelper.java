@@ -1,5 +1,6 @@
 package backupmanager.Helpers;
 
+import java.awt.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,19 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Dialogs.BackupEntryDialog;
-import backupmanager.Dialogs.TimePicker;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.GUI.BackupManagerGUI;
-import backupmanager.GUI.BackupProgressGUI;
-import backupmanager.Table.BackupTable;
-import backupmanager.Table.TableDataManager;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Exceptions.BackupDeletionException;
+import backupmanager.Utils.ModalUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.simple.TimePickerDialog;
+import raven.modal.component.SimpleModalBorder;
 
 public class BackupHelper {
 
@@ -30,40 +29,31 @@ public class BackupHelper {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH-mm-ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void openBackupById(int id, java.awt.Frame frame) {
-        logger.info("Event --> opening backup");
-
-        ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
-        dialog.setVisible(true);
-    }
-
-    public static void newBackup(BackupProgressGUI progressBar, java.awt.Frame frame) {
-        logger.info("Event --> new backup");
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
-        dialog.setVisible(true);
-    }
-
     public static void newBackup(ConfigurationBackup backup) {
+        logger.info("Event --> new backup");
         BackupConfigurationRepository.insertBackup(backup);
-
-        updateBackupTable();
     }
 
-    public static void deleteBackup(int selectedRow, BackupTable backupTable, boolean isConfermationRequired) {
-        logger.info("Event --> deleting backup");
+    public static boolean deleteBackupWithConfirmition(ConfigurationBackup backup) throws BackupDeletionException {
+        logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
 
-        if (isConfermationRequired) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                return;
-            }
+        int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            return BackupHelper.deleteBackup(backup);
         }
+        return false;
+    }
 
-        String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-        removeBackup(backupName);
+    public static boolean deleteBackup(String backupName) throws BackupDeletionException {
+        logger.info("Event --> deleting backup");
+        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
+        return deleteBackup(backup);
+    }
+
+    public static boolean deleteBackup(ConfigurationBackup backup) throws BackupDeletionException {
+        logger.info("Event --> deleting backup" + backup.getName());
+        BackupConfigurationRepository.deleteBackup(backup.getId());
+        return true;
     }
 
     public static void updateBackup(ConfigurationBackup updatedBackup) {
@@ -75,47 +65,34 @@ public class BackupHelper {
             logger.info("Updating backup: " + updatedBackup.getName());
             BackupConfigurationRepository.updateBackup(updatedBackup);
         }
-
-        updateBackupTable();
     }
 
     public static List<ConfigurationBackup> getBackupList() {
         List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
-        BackupManagerGUI.backups = backups; // i have to keep update also the backup list in the main panel
         return backups;
     }
 
-    public static TimeInterval openTimePicker(java.awt.Dialog parent, TimeInterval time) {
-        TimePicker picker = new TimePicker(parent, time, true);
+    public static TimeInterval openTimePicker() {
+        return openTimePicker(new TimePickerDialog(null));
+    }
+
+    public static TimeInterval openTimePicker(TimePickerDialog picker) {
         picker.setVisible(true);
-        return picker.getTimeInterval();
+        return picker.getResult();
     }
 
-    public static void showMessageActivationAutoBackup(TimeInterval timeInterval, String startPath, String destinationPath) {
-        String from = TranslationCategory.GENERAL.getTranslation(TranslationKey.FROM);
-        String to = TranslationCategory.GENERAL.getTranslation(TranslationKey.TO);
-        String activated = TranslationCategory.DIALOGS.getTranslation(TranslationKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
-        String setted = TranslationCategory.DIALOGS.getTranslation(TranslationKey.SETTED_EVERY_MESSAGE);
-        String days = TranslationCategory.DIALOGS.getTranslation(TranslationKey.DAYS_MESSAGE);
+    public static void showMessageActivationAutoBackup(Component parent, TimeInterval timeInterval, String startPath, String destinationPath) {
+        String from = Translations.get(TKey.FROM);
+        String to = Translations.get(TKey.TO);
+        String activated = Translations.get(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
+        String setted = Translations.get(TKey.SETTED_EVERY_MESSAGE);
+        String days = Translations.get(TKey.DAYS_MESSAGE);
 
-        JOptionPane.showMessageDialog(null,
-                activated + "\n\t" + from + ": " + startPath + "\n\t" + to + ": "
-                + destinationPath + setted + " " + timeInterval.toString() + days,
-                "AutoBackup", 1);
-    }
+        String message =
+                activated + "\n\n" + from + ": " + startPath + "\n" + to + ": "
+                + destinationPath + "\n" + setted + " " + timeInterval.toString() + days;
 
-    public static void openBackupByName(String backupName, java.awt.Frame frame) {
-        logger.info("Event --> opening backup");
-
-        ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backupName);
-
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false, backup);
-        dialog.setVisible(true);
-    }
-
-    public static void openBackupEntryDialog(java.awt.Frame frame) {
-        BackupEntryDialog dialog = new BackupEntryDialog(frame, false);
-        dialog.setVisible(true);
+        ModalUtils.showInfo(parent, Translations.get(TKey.AUTO_BACKUP_MESSAGE), message, SimpleModalBorder.CLOSE_OPTION);
     }
 
     public static LocalDateTime getNexDateBackup(TimeInterval timeInterval) {
@@ -125,44 +102,15 @@ public class BackupHelper {
             .plusMinutes(timeInterval.minutes());
     }
 
-    public static void deleteBackup(int selectedRow, BackupTable backupTable) {
-        logger.info("Event --> deleting backup");
-
-        if (selectedRow != -1) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (response == JOptionPane.YES_OPTION) {
-                String backupName = (String) backupTable.getValueAt(selectedRow, 0);
-                BackupHelper.removeBackup(backupName);
-            }
-        }
-    }
-
     public static void forceBackupTermination(int requestId) {
         BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
-        updateBackupTable();
     }
 
-    public static void removeBackup(String backupName) {
-        ConfigurationBackup backup = ConfigurationBackup.getBackupByName(backupName);
-        removeBackup(backup);
-    }
-
-    private static void removeBackup(ConfigurationBackup backup) {
-        logger.info("Event --> removing backup" + backup.getName());
-        BackupConfigurationRepository.deleteBackup(backup.getId());
-        updateBackupTable();
-    }
-
-    private static void updateBackupTable() {
-        if (BackupManagerGUI.model != null)
-            TableDataManager.updateTableWithNewBackupList(getBackupList(), formatter);
-    }
-
-    public static ConfigurationBackup toggleAutomaticBackup(ConfigurationBackup backup) {
+    public static ConfigurationBackup toggleAutomaticBackup(Component parent, ConfigurationBackup backup) {
         logger.info("Event --> automatic backup");
 
         if (backup.isAutomatic()) {
-            int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response != JOptionPane.YES_OPTION) {
                 return null;
             }
@@ -187,7 +135,7 @@ public class BackupHelper {
             if (backup.getName() == null || backup.getName().isEmpty()) return null;
 
             // message
-            TimeInterval timeInterval = openTimePicker(null, null);
+            TimeInterval timeInterval = openTimePicker();
             if (timeInterval == null) return null;
 
             //set date for next backup
@@ -200,7 +148,7 @@ public class BackupHelper {
 
             logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
 
-            showMessageActivationAutoBackup(timeInterval, backup.getTargetPath(), backup.getDestinationPath());
+            showMessageActivationAutoBackup(parent, timeInterval, backup.getTargetPath(), backup.getDestinationPath());
 
             updateBackup(backup);
 

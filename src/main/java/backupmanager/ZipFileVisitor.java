@@ -85,7 +85,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
     private boolean isZippingThreadInterrupted() {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.backup().getId());
+            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.execution().backup().getId());
             logger.info("Zipping process manually interrupted");
             return true;
         }

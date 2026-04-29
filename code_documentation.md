@@ -157,3 +157,7 @@ Backup Manager is intentionally designed to be:
 * Minimal in external dependencies
 
 The goal is to avoid enterprise-level complexity while maintaining production-grade stability.
+
+## Build
+
+To build the project: `mvn clean install`

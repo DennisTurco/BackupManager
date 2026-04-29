@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
@@ -91,7 +92,7 @@ public class BackupConfigurationRepository {
         }
     }
 
-    public static void deleteBackup(int backupId) {
+    public static void deleteBackup(int backupId) throws BackupDeletionException {
         String sql = "DELETE FROM BackupConfigurations WHERE BackupId = ?";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -102,8 +103,10 @@ public class BackupConfigurationRepository {
             logger.info("Backup deleted succesfully");
 
         } catch (SQLException e) {
-            logger.error("Backup configuration deleting error: " + e.getMessage());
+            String error = "Backup configuration deleting error: " + e.getMessage();
+            logger.error(error);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+            throw new BackupDeletionException(error, e);
         }
     }
 
