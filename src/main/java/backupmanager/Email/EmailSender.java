@@ -1,13 +1,14 @@
 package backupmanager.Email;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,29 +168,33 @@ public class EmailSender {
     }
 
     private static String getTextFromLogFile(int rows) {
-        File file = new File(ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue());
+        Path file = Paths.get(
+            ConfigKey.LOG_DIRECTORY_STRING.getValue(),
+            ConfigKey.LOG_FILE_STRING.getValue()
+        );
 
-        if (!file.exists() || !file.isFile() || file.length() == 0) {
+        if (!Files.exists(file) || !Files.isRegularFile(file)) {
             return "Log file does not exist or is empty.";
         }
 
-        List<String> lastLines = new LinkedList<>();
+        try {
+            Deque<String> lastLines = new ArrayDeque<>(rows);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                if (lastLines.size() == rows) {
-                    lastLines.remove(0); // remove the older
-                }
-                lastLines.add(line);
+            try (Stream<String> stream = Files.lines(file, StandardCharsets.UTF_8)) {
+                stream.forEach(line -> {
+                    if (lastLines.size() == rows) {
+                        lastLines.removeFirst();
+                    }
+                    lastLines.addLast(line);
+                });
             }
+
+            return String.join("\n", lastLines);
+
         } catch (IOException e) {
-            logger.error("An error occurred during reading the log file for getting the last rows: " + e.getMessage(), e);
+            logger.error("Error reading log file: " + e.getMessage(), e);
             return "Error reading the log file.";
         }
-
-        return String.join("\n", lastLines);
     }
 
     private static User getCurrentUser() {

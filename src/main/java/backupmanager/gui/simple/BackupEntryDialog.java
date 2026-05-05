@@ -55,6 +55,7 @@ public class BackupEntryDialog extends CustomDialog<ConfigurationBackup> {
         build();
 
         setAutoBackupOff();
+        executeBackupBtn.setEnabled(false);
     }
 
     public BackupEntryDialog(BackupTableDataService backupTable, ConfigurationBackup currentBackup) {

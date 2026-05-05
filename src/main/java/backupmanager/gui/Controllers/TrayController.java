@@ -76,7 +76,6 @@ public class TrayController {
 
         popup.add(openItem);
         popup.addSeparator();
-        popup.addSeparator();
         popup.add(exitItem);
 
         openItem.addActionListener(e -> onOpen.run());

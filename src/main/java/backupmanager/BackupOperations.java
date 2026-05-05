@@ -293,47 +293,10 @@ public class BackupOperations {
         List<BackupRequest> requests = BackupRequestRepository.getRunningBackups();
         if (requests != null) {
             for (BackupRequest request : requests) {
-                deletePartialBackup(request.outputPath());
-                BackupHelper.forceBackupTermination(request.backupRequestId());
+                ZippingThread.stopExecutorService(1);
+                BackupHelper.forceBackupTermination(request);
             }
         }
-    }
-
-    private static boolean deletePartialBackup(String filePath) {
-        logger.info("Attempting to delete partial backup: " + filePath);
-
-        ZippingThread.stopExecutorService(1);
-
-        if (filePath == null || filePath.isEmpty()) {
-            logger.warn("The file path is null or empty.");
-            return false;
-        }
-
-        File file = new File(filePath);
-
-        // Check if the file exists and is a valid file
-        if (file.exists()) {
-            if (file.isFile()) {
-                try {
-                    if (file.delete()) {
-                        logger.info("Partial backup deleted successfully: " + file.getName());
-                        return true;
-                    } else {
-                        logger.warn("Failed to delete partial backup (delete failed): " + file.getName());
-                    }
-                } catch (SecurityException e) {
-                    logger.error("Security exception occurred while attempting to delete: " + file.getName(), e);
-                } catch (Exception e) {
-                    logger.error("Unexpected error while attempting to delete: " + file.getName(), e);
-                }
-            } else {
-                logger.warn("The path points to a directory, not a file: " + filePath);
-            }
-        } else {
-            logger.warn("The file does not exist: " + filePath);
-        }
-
-        return false;
     }
 
     public static void setError(ErrorType error, TrayIcon trayIcon, String backupName) {

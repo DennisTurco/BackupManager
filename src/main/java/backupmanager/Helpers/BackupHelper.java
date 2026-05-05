@@ -1,6 +1,7 @@
 package backupmanager.Helpers;
 
 import java.awt.Component;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
+import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
@@ -102,8 +104,9 @@ public class BackupHelper {
             .plusMinutes(timeInterval.minutes());
     }
 
-    public static void forceBackupTermination(int requestId) {
-        BackupRequestRepository.updateRequestStatusByRequestId(requestId, BackupStatus.TERMINATED);
+    public static void forceBackupTermination(BackupRequest request) {
+        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
+        deletePartialBackup(request.outputPath());
     }
 
     public static ConfigurationBackup toggleAutomaticBackup(Component parent, ConfigurationBackup backup) {
@@ -156,5 +159,40 @@ public class BackupHelper {
         }
 
         return null;
+    }
+
+    private static boolean deletePartialBackup(String filePath) {
+        logger.info("Attempting to delete partial backup: " + filePath);
+
+        if (filePath == null || filePath.isEmpty()) {
+            logger.warn("The file path is null or empty.");
+            return false;
+        }
+
+        File file = new File(filePath);
+
+        // Check if the file exists and is a valid file
+        if (file.exists()) {
+            if (file.isFile()) {
+                try {
+                    if (file.delete()) {
+                        logger.info("Partial backup deleted successfully: " + file.getName());
+                        return true;
+                    } else {
+                        logger.warn("Failed to delete partial backup (delete failed): " + file.getName());
+                    }
+                } catch (SecurityException e) {
+                    logger.error("Security exception occurred while attempting to delete: " + file.getName(), e);
+                } catch (Exception e) {
+                    logger.error("Unexpected error while attempting to delete: " + file.getName(), e);
+                }
+            } else {
+                logger.warn("The path points to a directory, not a file: " + filePath);
+            }
+        } else {
+            logger.warn("The file does not exist: " + filePath);
+        }
+
+        return false;
     }
 }

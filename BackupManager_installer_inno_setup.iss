@@ -37,7 +37,6 @@ Source: "config.enc"; DestDir: "{app}"
 
 Source: "jre\*"; DestDir: "{app}\jre"; Flags: recursesubdirs
 Source: "src\main\resources\*"; DestDir: "{app}\src\main\resources"; Flags: recursesubdirs
-Source: "docs\*"; DestDir: "{app}\docs"; Flags: recursesubdirs
 
 ; =========================================
 ; AVVIO AUTOMATICO (PER-UTENTE)

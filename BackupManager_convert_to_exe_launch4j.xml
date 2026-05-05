@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\Dennis\Documents\Programmazione\BackupManager\target\BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar</jar>
+  <jar>C:\Users\Dennis\Documents\Programmazione\BackupManager\target\backupmanager-2.6.1-jar-with-dependencies.jar</jar>
   <outfile>C:\Users\Dennis\Documents\Programmazione\BackupManager\BackupManager.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>

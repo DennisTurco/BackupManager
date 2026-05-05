@@ -33,7 +33,7 @@ public class RunningBackupService {
 
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
-        BackupHelper.forceBackupTermination(request.backupRequestId());
+        BackupHelper.forceBackupTermination(request);
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {

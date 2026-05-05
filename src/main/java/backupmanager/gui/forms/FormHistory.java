@@ -2,7 +2,9 @@ package backupmanager.gui.forms;
 
 import java.awt.Component;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,17 +34,22 @@ public class FormHistory extends CustomForm {
     @Override
     protected void loadData() {
         try {
-            try (InputStream is = getClass().getClassLoader().getResourceAsStream("res/logs/" + ConfigKey.LOG_FILE_STRING.getValue())) {
-                if (is == null) {
-                    logsPane.setText("Log file not found in resources");
-                    return;
-                }
+            Path logFile = Paths.get(
+                System.getProperty("user.home"),
+                ".backupmanager",
+                "logs",
+                ConfigKey.LOG_FILE_STRING.getValue()
+            );
 
-                String content = new String(is.readAllBytes());
-
-                logsPane.setText(content);
-                logsPane.setCaretPosition(0);
+            if (!Files.exists(logFile)) {
+                logsPane.setText("Log file not found:\n" + logFile);
+                return;
             }
+
+            String content = Files.readString(logFile);
+
+            logsPane.setText(content);
+            logsPane.setCaretPosition(0);
 
         } catch (IOException ex) {
             logsPane.setText("Failed to load logs:\n" + ex.getMessage());

@@ -45,6 +45,7 @@ public class MainApp {
     }
 
     private static void dataInit() {
+        ensureLogDirectory();
         ConfigKey.loadFromJson(CONFIG);
 
         databaseInitialization();
@@ -73,6 +74,19 @@ public class MainApp {
         }
 
         return isBackgroundMode;
+    }
+
+    private static void ensureLogDirectory() {
+        try {
+            String logDir = System.getProperty("user.home") + "/.backupmanager/logs";
+            java.nio.file.Path path = java.nio.file.Paths.get(logDir);
+            java.nio.file.Files.createDirectories(path);
+
+            logger.info("Log directory ensured at: {}", path.toAbsolutePath());
+        } catch (IOException e) {
+            logger.error("Failed to create log directory", e);
+            throw new RuntimeException("Cannot initialize log directory", e);
+        }
     }
 
     private static void runBackgroundProcess() {

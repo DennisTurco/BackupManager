@@ -20,6 +20,7 @@ public class WebsiteManager {
 
     public static void openWebSite(JFrame parent, String reportUrl) {
         try {
+            logger.info("Opening website: {}", reportUrl);
             if (Desktop.isDesktopSupported()) {
                 Desktop desktop = Desktop.getDesktop();
                 if (desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -33,6 +34,7 @@ public class WebsiteManager {
     }
 
     public static void sendEmail(JFrame parent) {
+        logger.info("Attempting to open default mail client (support request)");
         if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
 

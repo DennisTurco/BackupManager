@@ -30,6 +30,7 @@
         "ErrorMessageForPathNotExisting": "Uno o entrambi i percorsi non esistono!",
         "ExceptionMessageReportMessage": "Si prega di segnalare questo errore, allegando un'immagine dello schermo o copiando il seguente testo dell'errore (è apprezzato fornire una descrizione delle operazioni eseguite prima dell'errore):",
         "ErrorGenericTitle": "Errore",
+        "ErrorMessageForSamePaths": "Il percorso iniziale e il percorso di destinazione non possono essere identici. Scegli percorsi diversi!",
         "SettedEveryMessage": "\nImpostato ogni",
         "WarningBackupAlreadyInProgressMessage": "È già in corso un backup. Non è possibile eseguire backup in parallelo.",
         "WarningShortTimeIntervalMessage": "L'intervallo di tempo selezionato è molto breve. Per un funzionamento ottimale, consigliamo di impostarlo ad almeno un'ora. Vuoi comunque procedere?",
