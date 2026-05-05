@@ -3,12 +3,11 @@ package backupmanager.Entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import backupmanager.Enums.ConfigKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 
 public class ConfigurationBackup {
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
 
     private int id;
     private String name;
@@ -23,22 +22,6 @@ public class ConfigurationBackup {
     private LocalDateTime lastUpdateDate;
     private int count;
     private int maxToKeep;
-
-    public ConfigurationBackup() {
-        id = 0;
-        name = "";
-        targetPath = "";
-        destinationPath = "";
-        lastBackupDate = null;
-        automatic = false;
-        nextBackupDate = null;
-        timeIntervalBackup = null;
-        notes = "";
-        creationDate = LocalDateTime.now();
-        lastUpdateDate = LocalDateTime.now();
-        count = 0;
-        maxToKeep = configReader.getConfigValue("MaxCountForSameBackup", 1);
-    }
 
     public ConfigurationBackup(String name, String targetPath, String destinationPath, LocalDateTime lastBackupDate, Boolean automatic, LocalDateTime nextBackupDate, TimeInterval timeIntervalBackup, String notes, LocalDateTime creationDate, LocalDateTime lastUpdateDate, int count, int maxToKeep) {
         this.name = name;
@@ -120,6 +103,19 @@ public class ConfigurationBackup {
         );
     }
 
+    public Object[] toTableRow() {
+        return new Object[] {
+            name,
+            targetPath,
+            destinationPath,
+            lastBackupDate,
+            automatic,
+            nextBackupDate,
+            timeIntervalBackup,
+            maxToKeep
+        };
+    }
+
     public static ConfigurationBackup getBackupByName(List<ConfigurationBackup> backups, String name) {
         for (ConfigurationBackup backup : backups) {
             if (backup.getName().equals(name)) {
@@ -137,103 +133,43 @@ public class ConfigurationBackup {
         return "BackupName,targetPath,DestinationPath,lastBackupDate,IsAutoBackup,NextDate,Interval (gg.HH:mm),MaxBackupsToKeep";
     }
 
-    public int getId() {
-        return id;
+    public static String[] getCSVHeaderArray() {
+        return new String[] {
+            Translations.get(TKey.BACKUP_NAME_COLUMN),
+            Translations.get(TKey.INITIAL_PATH_COLUMN),
+            Translations.get(TKey.DESTINATION_PATH_COLUMN),
+            Translations.get(TKey.LAST_BACKUP_COLUMN),
+            Translations.get(TKey.AUTOMATIC_BACKUP_COLUMN),
+            Translations.get(TKey.NEXT_BACKUP_DATE_COLUMN),
+            Translations.get(TKey.TIME_INTERVAL_COLUMN),
+            Translations.get(TKey.MAX_BACKUPS_COLUMN)
+        };
     }
 
-    public String getName() {
-        return name;
-    }
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public String getTargetPath() { return targetPath; }
+    public String getDestinationPath() { return destinationPath; }
+    public LocalDateTime getLastBackupDate() { return lastBackupDate; }
+    public boolean isAutomatic() { return automatic; }
+    public LocalDateTime getNextBackupDate() { return nextBackupDate; }
+    public TimeInterval getTimeIntervalBackup() { return timeIntervalBackup; }
+    public String getNotes() { return notes; }
+    public LocalDateTime getCreationDate() { return creationDate; }
+    public LocalDateTime getLastUpdateDate() { return lastUpdateDate; }
+    public int getCount() { return count; }
+    public int getMaxToKeep() { return maxToKeep; }
 
-    public String getTargetPath() {
-        return targetPath;
-    }
-
-    public String getDestinationPath() {
-        return destinationPath;
-    }
-
-    public LocalDateTime getLastBackupDate() {
-        return lastBackupDate;
-    }
-
-    public boolean isAutomatic() {
-        return automatic;
-    }
-
-    public LocalDateTime getNextBackupDate() {
-        return nextBackupDate;
-    }
-
-    public TimeInterval getTimeIntervalBackup() {
-        return timeIntervalBackup;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public LocalDateTime getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public int getMaxToKeep() {
-        return maxToKeep;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public void setAutomatic(boolean automatic) {
-        this.automatic = automatic;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setDestinationPath(String destinationPath) {
-        this.destinationPath = destinationPath;
-    }
-
-    public void setLastBackupDate(LocalDateTime lastBackupDate) {
-        this.lastBackupDate = lastBackupDate;
-    }
-
-    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public void setNextBackupDate(LocalDateTime nextBackupDate) {
-        this.nextBackupDate = nextBackupDate;
-    }
-
-    public void setTargetPath(String targetPath) {
-        this.targetPath = targetPath;
-    }
-
-    public void setTimeIntervalBackup(TimeInterval timeIntervalBackup) {
-        this.timeIntervalBackup = timeIntervalBackup;
-    }
-
-    public void setMaxToKeep(int maxToKeep) {
-        this.maxToKeep = maxToKeep;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
+    public void setName(String name) { this.name = name; }
+    public void setNotes(String notes) { this.notes = notes; }
+    public void setAutomatic(boolean automatic) { this.automatic = automatic; }
+    public void setCreationDate(LocalDateTime creationDate) { this.creationDate = creationDate; }
+    public void setDestinationPath(String destinationPath) { this.destinationPath = destinationPath; }
+    public void setLastBackupDate(LocalDateTime lastBackupDate) { this.lastBackupDate = lastBackupDate; }
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) { this.lastUpdateDate = lastUpdateDate; }
+    public void setNextBackupDate(LocalDateTime nextBackupDate) { this.nextBackupDate = nextBackupDate; }
+    public void setTargetPath(String targetPath) { this.targetPath = targetPath; }
+    public void setTimeIntervalBackup(TimeInterval timeIntervalBackup) { this.timeIntervalBackup = timeIntervalBackup; }
+    public void setMaxToKeep(int maxToKeep) { this.maxToKeep = maxToKeep; }
+    public void setCount(int count) { this.count = count; }
 }

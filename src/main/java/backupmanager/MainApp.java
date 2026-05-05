@@ -1,31 +1,35 @@
 package backupmanager;
 
+import java.awt.Font;
 import java.io.IOException;
 import java.util.Arrays;
+
+import javax.swing.UIManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Controllers.AppController;
-import backupmanager.Entities.Confingurations;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.util.FontUtils;
+
+import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum;
-import backupmanager.GUI.BackupManagerGUI;
 import backupmanager.Managers.ExceptionManager;
+import backupmanager.Managers.LanguageManager;
+import backupmanager.Utils.AppPreferences;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
+import backupmanager.gui.Controllers.AppController;
+import backupmanager.gui.frames.BackupManager;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     public static void main(String[] args) {
-        ConfigKey.loadFromJson(CONFIG);
-
-        databaseInitialization();
-
-        loadPreferredLanguage();
+        dataInit();
 
         boolean isBackgroundMode = isBackgroundMode(args);
 
@@ -40,6 +44,17 @@ public class MainApp {
         }
     }
 
+    private static void dataInit() {
+        ensureLogDirectory();
+        ConfigKey.loadFromJson(CONFIG);
+
+        databaseInitialization();
+
+        AppPreferences.init();
+        LanguageManager.loadPreferredLanguage();
+        Configurations.loadAllConfigurations();
+    }
+
     private static void databaseInitialization() {
         try {
             Database.init(DatabasePaths.getProductionDatabasePath());
@@ -47,15 +62,6 @@ public class MainApp {
         } catch (Exception ex) {
             logger.error("Unable to init the database");
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
-    }
-
-    private static void loadPreferredLanguage() {
-        try {
-            Confingurations.loadAllConfigurations();
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Confingurations.getLanguage().getFileName());
-        } catch (IOException ex) {
-            logger.error("An error occurred during loading preferences: {}", ex.getMessage(), ex);
         }
     }
 
@@ -70,6 +76,19 @@ public class MainApp {
         return isBackgroundMode;
     }
 
+    private static void ensureLogDirectory() {
+        try {
+            String logDir = System.getProperty("user.home") + "/.backupmanager/logs";
+            java.nio.file.Path path = java.nio.file.Paths.get(logDir);
+            java.nio.file.Files.createDirectories(path);
+
+            logger.info("Log directory ensured at: {}", path.toAbsolutePath());
+        } catch (IOException e) {
+            logger.error("Failed to create log directory", e);
+            throw new RuntimeException("Cannot initialize log directory", e);
+        }
+    }
+
     private static void runBackgroundProcess() {
         try {
             AppController.startBackgroundProcess();
@@ -80,9 +99,19 @@ public class MainApp {
     }
 
     private static void runGui() {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            BackupManagerGUI gui = new BackupManagerGUI();
-            gui.showWindow();
+        java.awt.EventQueue.invokeLater(() -> {
+            initLaf();
+            BackupManager.getInstance().setVisible(true);
         });
+    }
+
+    public static void initLaf() {
+        FlatRobotoFont.install();
+        FlatLaf.registerCustomDefaultsSource(".themes");
+        UIManager.put(
+            "defaultFont",
+            FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13)
+        );
+        AppPreferences.setupLaf();
     }
 }

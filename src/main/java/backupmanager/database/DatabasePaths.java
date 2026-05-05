@@ -14,5 +14,4 @@ public class DatabasePaths {
     public static Path getTestDatabasePath() {
         return Paths.get("data", "BackupManager.db");
     }
-
 }

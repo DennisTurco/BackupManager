@@ -1,13 +1,14 @@
 package backupmanager.Email;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,9 @@ import backupmanager.Entities.Email;
 import backupmanager.Entities.User;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Enums.EmailType;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.EmailRepository;
 import backupmanager.database.Repositories.UserRepository;
 import ch.qos.logback.classic.LoggerContext;
@@ -29,7 +30,7 @@ import ch.qos.logback.classic.net.SMTPAppender;
  */
 public class EmailSender {
 
-    private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private static final JsonConfig configReader = JsonConfig.getInstance();
 
     private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
@@ -113,8 +114,8 @@ public class EmailSender {
     public static void sendConfirmEmailToUser(User user) {
         if (user == null) throw new IllegalArgumentException("User object cannot be null");
 
-        String subject = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_SUBJECT);
-        String body = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_BODY);
+        String subject = Translations.get(TKey.EMAIL_CONFIRMATION_SUBJECT);
+        String body = Translations.get(TKey.EMAIL_CONFIRMATION_BODY);
 
         body = body.replace("[UserName]", user.getUserCompleteName());
         body = body.replace("[SupportEmail]", ConfigKey.EMAIL.getValue());
@@ -167,29 +168,33 @@ public class EmailSender {
     }
 
     private static String getTextFromLogFile(int rows) {
-        File file = new File(ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue());
+        Path file = Paths.get(
+            ConfigKey.LOG_DIRECTORY_STRING.getValue(),
+            ConfigKey.LOG_FILE_STRING.getValue()
+        );
 
-        if (!file.exists() || !file.isFile() || file.length() == 0) {
+        if (!Files.exists(file) || !Files.isRegularFile(file)) {
             return "Log file does not exist or is empty.";
         }
 
-        List<String> lastLines = new LinkedList<>();
+        try {
+            Deque<String> lastLines = new ArrayDeque<>(rows);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                if (lastLines.size() == rows) {
-                    lastLines.remove(0); // remove the older
-                }
-                lastLines.add(line);
+            try (Stream<String> stream = Files.lines(file, StandardCharsets.UTF_8)) {
+                stream.forEach(line -> {
+                    if (lastLines.size() == rows) {
+                        lastLines.removeFirst();
+                    }
+                    lastLines.addLast(line);
+                });
             }
+
+            return String.join("\n", lastLines);
+
         } catch (IOException e) {
-            logger.error("An error occurred during reading the log file for getting the last rows: " + e.getMessage(), e);
+            logger.error("Error reading log file: " + e.getMessage(), e);
             return "Error reading the log file.";
         }
-
-        return String.join("\n", lastLines);
     }
 
     private static User getCurrentUser() {

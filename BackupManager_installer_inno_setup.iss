@@ -4,14 +4,14 @@
 
 [Setup]
 AppName=BackupManager
-AppVersion=2.2.1
+AppVersion=3.0.0
 AppPublisher=Shard
 AppPublisherURL=https://www.shardpc.it/
 DefaultDirName={userdocs}\Shard\BackupManager
 DisableDirPage=yes
 DisableProgramGroupPage=no
 PrivilegesRequired=lowest
-OutputBaseFilename=BackupManager_v2.2.1_Setup
+OutputBaseFilename=BackupManager_v3.0.0_Setup
 SetupIconFile=src\main\resources\res\img\logo.ico
 SetupLogging=yes
 Compression=lzma
@@ -37,7 +37,6 @@ Source: "config.enc"; DestDir: "{app}"
 
 Source: "jre\*"; DestDir: "{app}\jre"; Flags: recursesubdirs
 Source: "src\main\resources\*"; DestDir: "{app}\src\main\resources"; Flags: recursesubdirs
-Source: "docs\*"; DestDir: "{app}\docs"; Flags: recursesubdirs
 
 ; =========================================
 ; AVVIO AUTOMATICO (PER-UTENTE)

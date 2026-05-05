@@ -13,24 +13,25 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Email.EmailSender;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationCategory;
-import backupmanager.Enums.TranslationLoaderEnum.TranslationKey;
+import backupmanager.Enums.Translations;
+import backupmanager.Enums.Translations.TKey;
+import backupmanager.Utils.ToastUtils;
+import backupmanager.gui.menu.DrawerManager;
 
 public class ExceptionManager {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
 
     public static void openExceptionMessage(String errorMessage, String stackTrace) {
-        Object[] options = {TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
+        Object[] options = {Translations.get(TKey.CLOSE_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
 
-        if (errorMessage == null) {
+        if (errorMessage == null)
             errorMessage = "";
-        }
 
         stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
 
         EmailSender.sendErrorEmail("Critical Error Report", stackTrace, errorMessage);
 
-        String stackTraceMessage = TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
+        String stackTraceMessage = Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
 
         int choice;
 
@@ -59,7 +60,7 @@ public class ExceptionManager {
             scrollPane.setPreferredSize(new Dimension(MAX_WIDTH, 300));
 
             // Display the option dialog with the JScrollPane
-            String error = TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE);
+            String error = Translations.get(TKey.ERROR_GENERIC_TITLE);
             choice = JOptionPane.showOptionDialog(
                 null,
                 scrollPane,                           // The JScrollPane containing the error message
@@ -75,9 +76,9 @@ public class ExceptionManager {
                 StringSelection selection = new StringSelection(stackTrace);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
                 logger.info("Error text has been copied to the clipboard");
-                JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
+                ToastUtils.showInfo(DrawerManager.getInstance().getParent(), Translations.get(TKey.TOAST_ERROR_TEXT_CLIPBOARD));
             } else if (choice == 2) {
-                WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
+                WebsiteManager.openWebSite(DrawerManager.getInstance().getParent(), ConfigKey.ISSUE_PAGE_LINK.getValue());
             }
         } while (choice == 1 || choice == 2);
     }

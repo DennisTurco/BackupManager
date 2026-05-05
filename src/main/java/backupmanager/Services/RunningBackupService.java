@@ -9,11 +9,12 @@ import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Helpers.SqlHelper;
-import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.Utils.FolderUtils;
 
 public class RunningBackupService {
+
     public static Optional<BackupRequest> getRunningBackupByName(String backupName) {
         ConfigurationBackup config = BackupConfigurationRepository.getBackupByName(backupName);
         if (config == null) return Optional.empty();
@@ -32,7 +33,7 @@ public class RunningBackupService {
 
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
-        BackupHelper.forceBackupTermination(request.backupRequestId());
+        BackupHelper.forceBackupTermination(request);
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {
