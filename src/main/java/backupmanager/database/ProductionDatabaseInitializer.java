@@ -23,11 +23,16 @@ public class ProductionDatabaseInitializer extends DatabaseInitializer {
 
                 conn.setAutoCommit(false);
 
-                runSql(conn, "/db/001_schema.sql");
-                runSql(conn, "/db/002_seed.sql");
-                // runSql(conn, "/db/003_enable_demo_version.sql"); Enable it only if you want to create a demo version of the program
+                try {
+                    runSql(conn, "/db/001_schema.sql");
+                    runSql(conn, "/db/002_seed.sql");
+                    // runSql(conn, "/db/003_enable_demo_version.sql"); Enable it only if you want to create a demo version of the program
 
-                conn.commit();
+                    conn.commit();
+                } catch (Exception e) {
+                    conn.rollback();
+                    throw e;
+                }
             } else {
                 logger.info("Database already exists: {}", dbPath);
             }

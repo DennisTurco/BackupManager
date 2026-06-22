@@ -162,7 +162,7 @@ public class BackupEntryController {
         String path1 = target;
         String path2 = destination;
 
-        currentBackup.setTargetPath(path2);
+        currentBackup.setTargetPath(path1);
 
         if (!BackupOperations.checkInputCorrect(currentBackup.getName(), path1, path2, null)) return;
 

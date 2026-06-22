@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -37,7 +36,7 @@ public class BackupHelper {
     }
 
     public static boolean deleteBackupWithConfirmition(ConfigurationBackup backup) throws BackupDeletionException {
-        logger.info("Event --> deleting backup request with confirmation for backup: " + backup.getName());
+        logger.info("Event --> deleting backup request with confirmation for backup: {}", backup.getName());
 
         int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
@@ -53,7 +52,7 @@ public class BackupHelper {
     }
 
     public static boolean deleteBackup(ConfigurationBackup backup) throws BackupDeletionException {
-        logger.info("Event --> deleting backup" + backup.getName());
+        logger.info("Event --> deleting backup: {}", backup.getName());
         BackupConfigurationRepository.deleteBackup(backup.getId());
         return true;
     }
@@ -64,14 +63,9 @@ public class BackupHelper {
         }
 
         if (updatedBackup.getId() != 0) {
-            logger.info("Updating backup: " + updatedBackup.getName());
+            logger.info("Updating backup: {}", updatedBackup.getName());
             BackupConfigurationRepository.updateBackup(updatedBackup);
         }
-    }
-
-    public static List<ConfigurationBackup> getBackupList() {
-        List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
-        return backups;
     }
 
     public static TimeInterval openTimePicker() {
@@ -133,8 +127,8 @@ public class BackupHelper {
         if(!BackupOperations.checkInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null))
             return null;
 
-        // if the file has not been saved you need to save it before setting the auto backup
-        if(!backup.isAutomatic() || backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {
+        // backup is not automatic at this point — check if time interval needs to be configured
+        if(backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {
             if (backup.getName() == null || backup.getName().isEmpty()) return null;
 
             // message

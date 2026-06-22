@@ -33,11 +33,18 @@ public class RunningBackupService {
 
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
+        if (request == null) {
+            return;
+        }
         BackupHelper.forceBackupTermination(request);
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
+
+        if (request == null) {
+            return;
+        }
 
         LocalDateTime completionDate = LocalDateTime.now();
         long duration = SqlHelper.toMilliseconds(completionDate) - SqlHelper.toMilliseconds(request.startedDate());

@@ -41,7 +41,11 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
 
-        String zipEntryName = sourceDir.relativize(dir).toString() + "/";
+        String relative = sourceDir.relativize(dir).toString();
+        if (relative.isEmpty()) {
+            return FileVisitResult.CONTINUE;
+        }
+        String zipEntryName = relative + "/";
         logger.debug("Adding directory to zip: " + zipEntryName);
 
         zipOut.putNextEntry(new ZipEntry(zipEntryName));

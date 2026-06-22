@@ -9,15 +9,15 @@ public class Configurations {
         setSubscriptionNedded(ConfigurationRepository.getConfigurationValueByCode("SubscriptionNedded"));
     }
 
-    // i don't want to update the subscription value from the code. for now the only method is doing manually
-    public static void updateAllConfigurations() {
-    }
-
     public static void setSubscriptionNedded(boolean isNedded) {
         subscriptionNedded = isNedded;
     }
 
     private static void setSubscriptionNedded(String subscriptionValue) {
+        if (subscriptionValue == null) {
+            subscriptionNedded = false;
+            return;
+        }
         subscriptionValue = subscriptionValue.trim().toLowerCase();
         subscriptionNedded = subscriptionValue.equals("true") || subscriptionValue.equals("1");
     }

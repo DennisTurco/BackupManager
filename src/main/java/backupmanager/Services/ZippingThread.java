@@ -66,7 +66,7 @@ public class ZippingThread {
 
     private static void handleError(String message, ErrorType errorType, ZippingContext context) {
         logger.error(message);
-        BackupOperations.setError(errorType, context.ui().trayIcon(), null);
+        BackupOperations.setError(errorType, context.ui().trayIcon(), context.execution().backup() != null ? context.execution().backup().getName() : null);
         BackupOperations.reEnableButtonsAndTable(context);
     }
 

@@ -32,6 +32,7 @@ import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Utils.FolderUtils;
 import backupmanager.Utils.ModalUtils;
+import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.gui.menu.DrawerManager;
 import raven.modal.component.SimpleModalBorder;
@@ -117,15 +118,17 @@ public class BackupOperations {
         // next day backup update
         if (context.execution().backup().isAutomatic()) {
             TimeInterval time = context.execution().backup().getTimeIntervalBackup();
-            LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
-            context.execution().backup().setNextBackupDate(nextDateBackup);
-            logger.info("Next date backup setted to: " + nextDateBackup);
+            if (time != null) {
+                LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
+                context.execution().backup().setNextBackupDate(nextDateBackup);
+                logger.info("Next date backup setted to: " + nextDateBackup);
+            }
         }
         context.execution().backup().setLastBackupDate(LocalDateTime.now());
         context.execution().backup().setCount(context.execution().backup().getCount()+1);
 
         try {
-            List<ConfigurationBackup> backups = BackupHelper.getBackupList();
+            List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
 
             for (ConfigurationBackup b : backups) {
                 if (b.getName().equals(context.execution().backup().getName())) {
@@ -147,7 +150,7 @@ public class BackupOperations {
     }
 
     public static String pathSearchWithFileChooser(boolean allowFiles) {
-        logger.debug("File chooser, " + " files allowed: " + false);
+        logger.debug("File chooser, files allowed: {}", allowFiles);
 
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
@@ -172,8 +175,7 @@ public class BackupOperations {
     }
 
     public static boolean checkInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
-        //check if inputs are null
-        if(path1.length() == 0 || path2.length() == 0) {
+        if(path1 == null || path2 == null || path1.isEmpty() || path2.isEmpty()) {
             setError(ErrorType.InputMissing, trayIcon, backupName);
             return false;
         }
@@ -242,6 +244,11 @@ public class BackupOperations {
 
         File file = new File(destinationPath);
         File folder = file.getParentFile();
+
+        if (folder == null) {
+            logger.warn("Cannot determine parent folder of destination path: {}", destinationPath);
+            return;
+        }
 
         String baseName = removeExtension(file.getName());
         int lastUnderscore = baseName.lastIndexOf('_');
