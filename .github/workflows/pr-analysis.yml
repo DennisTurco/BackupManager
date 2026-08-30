@@ -1,0 +1,320 @@
+name: PR Code Analysis
+
+on:
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  analyze:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      # Run tests + generate JaCoCo coverage report.
+      # maven.test.failure.ignore=true ensures the verify phase completes
+      # even if some tests fail, so JaCoCo always generates its XML report.
+      - name: Tests + Coverage (JaCoCo)
+        id: tests
+        run: mvn -B clean verify -Dmaven.test.failure.ignore=true -Djava.awt.headless=true
+        continue-on-error: true
+
+      - name: Bug & Vulnerability Analysis (SpotBugs + find-sec-bugs)
+        id: spotbugs
+        run: mvn -B spotbugs:spotbugs -Djava.awt.headless=true
+        continue-on-error: true
+
+      - name: Complexity & Duplication Analysis (PMD + CPD)
+        id: pmd
+        run: mvn -B pmd:pmd pmd:cpd -Djava.awt.headless=true
+        continue-on-error: true
+
+      - name: Parse analysis results
+        id: parse
+        if: always()
+        run: |
+          python3 - << 'PYEOF'
+          import xml.etree.ElementTree as ET
+          import json
+
+          def parse_jacoco():
+              try:
+                  tree = ET.parse('target/site/jacoco/jacoco.xml')
+                  root = tree.getroot()
+                  result = {'status': 'ok'}
+                  for counter in root.findall('counter'):
+                      t = counter.get('type')
+                      missed = int(counter.get('missed', 0))
+                      covered = int(counter.get('covered', 0))
+                      total = missed + covered
+                      pct = round((covered / total) * 100) if total > 0 else 0
+                      if t == 'LINE':
+                          result.update({'line_pct': pct, 'line_covered': covered, 'line_total': total})
+                      elif t == 'BRANCH':
+                          result.update({'branch_pct': pct, 'branch_covered': covered, 'branch_total': total})
+                  return result
+              except Exception as e:
+                  return {'status': 'error', 'error': str(e)}
+
+          def parse_spotbugs():
+              try:
+                  tree = ET.parse('target/spotbugsXml.xml')
+                  root = tree.getroot()
+                  counts = {1: 0, 2: 0, 3: 0}
+                  high_bugs = []
+                  for bug in root.findall('BugInstance'):
+                      priority = int(bug.get('priority', 3))
+                      priority = priority if priority in counts else 3
+                      counts[priority] += 1
+                      if priority == 1:
+                          sl = bug.find('.//SourceLine[@primary="true"]') or bug.find('SourceLine')
+                          file_info = ''
+                          if sl is not None:
+                              src = sl.get('sourcepath', '')
+                              line = sl.get('start', '')
+                              file_info = (src + ':' + line) if line else src
+                          msg_el = bug.find('LongMessage') or bug.find('ShortMessage')
+                          high_bugs.append({
+                              'type': bug.get('type', 'UNKNOWN'),
+                              'category': bug.get('category', ''),
+                              'file': file_info,
+                              'message': (msg_el.text or '').strip() if msg_el is not None else ''
+                          })
+                  return {
+                      'status': 'ok',
+                      'high': counts[1], 'medium': counts[2], 'low': counts[3],
+                      'total': sum(counts.values()),
+                      'high_bugs': high_bugs
+                  }
+              except Exception as e:
+                  return {'status': 'error', 'error': str(e)}
+
+          def parse_pmd():
+              try:
+                  tree = ET.parse('target/pmd.xml')
+                  root = tree.getroot()
+                  count = len(root.findall('.//violation'))
+                  return {'status': 'ok', 'count': count}
+              except Exception as e:
+                  return {'status': 'error', 'error': str(e)}
+
+          def parse_cpd():
+              try:
+                  tree = ET.parse('target/cpd.xml')
+                  root = tree.getroot()
+                  count = len(root.findall('duplication'))
+                  return {'status': 'ok', 'count': count}
+              except Exception as e:
+                  return {'status': 'error', 'error': str(e)}
+
+          data = {
+              'jacoco':    parse_jacoco(),
+              'spotbugs':  parse_spotbugs(),
+              'pmd':       parse_pmd(),
+              'cpd':       parse_cpd(),
+          }
+
+          with open('analysis.json', 'w') as f:
+              json.dump(data, f, indent=2)
+
+          print('Results parsed:')
+          for key, val in data.items():
+              print(f'  {key}: {val}')
+          PYEOF
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+
+            let data = {};
+            try { data = JSON.parse(fs.readFileSync('analysis.json', 'utf-8')); } catch {}
+
+            const j   = data.jacoco   || {};
+            const sb  = data.spotbugs || {};
+            const pmd = data.pmd      || {};
+            const cpd = data.cpd      || {};
+
+            // Coverage row
+            let coverageRow;
+            if (j.status === 'ok') {
+              const icon = j.line_pct >= 80 ? '✅' : j.line_pct >= 60 ? '⚠️' : '❌';
+              const bPct = j.branch_pct !== undefined ? j.branch_pct : '?';
+              const bC   = j.branch_covered !== undefined ? j.branch_covered : '?';
+              const bT   = j.branch_total   !== undefined ? j.branch_total   : '?';
+              coverageRow = `${icon} Lines: **${j.line_pct}%** (${j.line_covered}/${j.line_total}) · Branches: **${bPct}%** (${bC}/${bT})`;
+            } else {
+              coverageRow = '❓ Not available — tests may have failed or errored';
+            }
+
+            // SpotBugs row
+            let spotbugsRow;
+            if (sb.status === 'ok') {
+              const icon = sb.high > 0 ? '❌' : sb.medium > 0 ? '⚠️' : sb.total === 0 ? '✅' : '🔵';
+              spotbugsRow = `${icon} **${sb.total}** bugs — 🔴 High: ${sb.high} · 🟡 Medium: ${sb.medium} · 🔵 Low: ${sb.low}`;
+            } else {
+              spotbugsRow = '❓ Not available';
+            }
+
+            // PMD row
+            let pmdRow;
+            if (pmd.status === 'ok') {
+              const icon = pmd.count === 0 ? '✅' : pmd.count < 20 ? '⚠️' : '❌';
+              pmdRow = `${icon} **${pmd.count}** violations`;
+            } else {
+              pmdRow = '❓ Not available';
+            }
+
+            // CPD row
+            let cpdRow;
+            if (cpd.status === 'ok') {
+              const icon = cpd.count === 0 ? '✅' : cpd.count < 5 ? '⚠️' : '❌';
+              cpdRow = `${icon} **${cpd.count}** duplicated blocks (threshold: 100 tokens)`;
+            } else {
+              cpdRow = '❓ Not available';
+            }
+
+            const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
+            const runUrl = `${serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const marker = '<!-- code-quality-report -->';
+
+            const body = [
+              marker,
+              '## 🔍 Code Quality Report',
+              '',
+              '| Check | Result |',
+              '|-------|--------|',
+              `| 🧪 **Test Coverage** | ${coverageRow} |`,
+              `| 🐛 **SpotBugs** | ${spotbugsRow} |`,
+              `| 📐 **PMD Complexity** | ${pmdRow} |`,
+              `| 📋 **CPD Duplication** | ${cpdRow} |`,
+              '',
+              `<sub>📎 [Full analysis logs](${runUrl}) · Updated on every push to this PR</sub>`,
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(c => c.body && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+              core.info(`Updated existing comment #${existing.id}`);
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+              core.info('Posted new analysis comment');
+            }
+
+      - name: Open issue for high-severity bugs
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+
+            let data = {};
+            try { data = JSON.parse(fs.readFileSync('analysis.json', 'utf-8')); } catch { return; }
+
+            const sb = data.spotbugs || {};
+            if (sb.status !== 'ok' || !sb.high_bugs || sb.high_bugs.length === 0) {
+              core.info('No high-severity bugs — skipping issue creation');
+              return;
+            }
+
+            const prNumber  = context.issue.number;
+            const pr        = context.payload.pull_request;
+            const prTitle   = pr?.title ?? `PR #${prNumber}`;
+            const prUrl     = pr?.html_url ?? '';
+            const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
+            const runUrl    = `${serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            const rows = sb.high_bugs.map(b =>
+              `| \`${b.type}\` | \`${b.file || 'N/A'}\` | ${b.message} |`
+            ).join('\n');
+
+            const issueBody = [
+              `## 🔴 High-severity bugs found in [PR #${prNumber}](${prUrl})`,
+              '',
+              `Automated SpotBugs analysis detected **${sb.high_bugs.length}** high-severity bug(s) in: _${prTitle}_`,
+              '',
+              '| Bug type | File | Description |',
+              '|----------|------|-------------|',
+              rows,
+              '',
+              `> These issues must be resolved before merging. Re-run the [analysis](${runUrl}) to confirm fixes.`,
+            ].join('\n');
+
+            // Ensure required labels exist
+            const requiredLabels = [
+              { name: 'automated',  color: '0075ca', description: 'Created by automated analysis' },
+              { name: 'security',   color: 'e11d48', description: 'Security-related issue' },
+              { name: 'bug',        color: 'd73a4a', description: 'Confirmed bug' },
+            ];
+            for (const label of requiredLabels) {
+              try {
+                await github.rest.issues.getLabel({ owner: context.repo.owner, repo: context.repo.repo, name: label.name });
+              } catch {
+                try {
+                  await github.rest.issues.createLabel({ owner: context.repo.owner, repo: context.repo.repo, ...label });
+                } catch {}
+              }
+            }
+
+            // Avoid duplicates: search for an open issue already linked to this PR
+            const { data: openIssues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'automated',
+              state: 'open',
+            });
+
+            const existing = openIssues.find(i => i.body && i.body.includes(`PR #${prNumber}`));
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: issueBody,
+              });
+              core.notice(`Updated issue #${existing.number} with latest findings`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🔴 [Security] High-severity bugs in PR #${prNumber}: ${prTitle}`,
+                body: issueBody,
+                labels: ['automated', 'security', 'bug'],
+              });
+              core.notice(`Created issue #${created.number} for PR #${prNumber}`);
+            }

@@ -180,22 +180,66 @@
                 </execution>
             </executions>
         </plugin>
-        <!-- <plugin>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>4.8.3.0</version>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.2.5</version>
+            <configuration>
+                <argLine>@{argLine}</argLine>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
             <executions>
                 <execution>
+                    <id>prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
                     <phase>verify</phase>
                     <goals>
-                        <goal>check</goal>
+                        <goal>report</goal>
                     </goals>
                 </execution>
             </executions>
+        </plugin>
+        <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>4.8.3.0</version>
             <configuration>
+                <effort>Max</effort>
+                <threshold>Low</threshold>
+                <xmlOutput>true</xmlOutput>
                 <failOnError>false</failOnError>
+                <plugins>
+                    <plugin>
+                        <groupId>com.h3xstream.findsecbugs</groupId>
+                        <artifactId>findsecbugs-plugin</artifactId>
+                        <version>1.13.0</version>
+                    </plugin>
+                </plugins>
             </configuration>
-        </plugin> -->
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>3.23.0</version>
+            <configuration>
+                <minimumTokens>100</minimumTokens>
+                <targetJdk>21</targetJdk>
+                <failOnViolation>false</failOnViolation>
+                <printFailingErrors>false</printFailingErrors>
+                <rulesets>
+                    <ruleset>/rulesets/java/quickstart.xml</ruleset>
+                </rulesets>
+            </configuration>
+        </plugin>
     </plugins>
 </build>
 </project>
