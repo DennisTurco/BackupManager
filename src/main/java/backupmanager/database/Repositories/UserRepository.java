@@ -32,7 +32,7 @@ public class UserRepository {
             logger.info("User inserted succesfully");
 
         } catch (SQLException e) {
-            logger.error("User inserting error: " + e.getMessage());
+            logger.error("User inserting error: {}", e.getMessage(), e);
         }
     }
 
@@ -52,7 +52,7 @@ public class UserRepository {
             }
 
         } catch (SQLException e) {
-            logger.error("Error fetching last user: " + e.getMessage());
+            logger.error("Error fetching last user: {}", e.getMessage(), e);
         }
 
         return null;

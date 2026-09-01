@@ -14,7 +14,8 @@ public class ConfigReader {
 
     public static String getSMTPPassword() throws Exception {
         byte[] encryptedBytes = Files.readAllBytes(Paths.get("config.enc"));
-        byte[] decoded = Base64.getDecoder().decode(encryptedBytes);
+        // getMimeDecoder tolerates whitespace (e.g. trailing newline added by text editors)
+        byte[] decoded = Base64.getMimeDecoder().decode(encryptedBytes);
 
         SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance("AES");

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Helpers.SqlHelper;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.database.Database;
+import java.util.stream.Collectors;
 
 public class BackupConfigurationRepository {
     private static final Logger logger = LoggerFactory.getLogger(BackupConfigurationRepository.class);
@@ -50,7 +51,7 @@ public class BackupConfigurationRepository {
             logger.info("Backup inserted succesfully");
 
         } catch (SQLException ex) {
-            logger.error("Backup configuration inserting error: " + ex.getMessage());
+            logger.error("Backup configuration inserting error: {}", ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -87,28 +88,30 @@ public class BackupConfigurationRepository {
             logger.info("Backup configuration updated succesfully");
 
         } catch (SQLException e) {
-            logger.error("Backup configuration updating error: " + e.getMessage());
+            logger.error("Backup configuration updating error: {}", e.getMessage(), e);
         }
     }
 
-    public static void deleteBackup(int backupId) {
-        String sql = "DELETE FROM BackupConfigurations WHERE BackupId = ?";
+    public static void deleteBackup(int backupId) throws BackupDeletionException {
+        String sql = "UPDATE BackupConfigurations SET DeletedAt = ? WHERE BackupId = ?";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, backupId);
+            stmt.setLong(1, System.currentTimeMillis());
+            stmt.setInt(2, backupId);
             stmt.executeUpdate();
 
-            logger.info("Backup deleted succesfully");
+            logger.info("Backup soft-deleted successfully (id={})", backupId);
 
         } catch (SQLException e) {
-            logger.error("Backup configuration deleting error: " + e.getMessage());
+            String error = "Backup configuration deleting error: " + e.getMessage();
+            logger.error("{}", error, e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+            throw new BackupDeletionException(error, e);
         }
     }
 
-    public static List<ConfigurationBackup> getBackupList() {
-        String sql = """
+    private static final String SELECT_ALL_COLUMNS = """
             SELECT
                 BackupId, BackupName, TargetPath, DestinationPath, LastBackupDate, Automatic, NextBackupDate,
                 TimeIntervalBackup, CreationDate, LastUpdateDate, BackupCount, MaxToKeep, Notes
@@ -116,154 +119,72 @@ public class BackupConfigurationRepository {
                 BackupConfigurations
             """;
 
-        List<ConfigurationBackup> backups = new ArrayList<>();
+    private static ConfigurationBackup mapResultSet(ResultSet rs) throws SQLException {
+        int id = rs.getInt("BackupId");
+        String name = rs.getString("BackupName");
+        String targetPath = rs.getString("TargetPath");
+        String destinationPath = rs.getString("DestinationPath");
+        LocalDateTime lastBackupDate = SqlHelper.toLocalDateTime(rs.getLong("LastBackupDate"));
+        boolean automatic = rs.getBoolean("Automatic");
+        LocalDateTime nextBackupDate = SqlHelper.toLocalDateTime(rs.getLong("NextBackupDate"));
+        TimeInterval timeInterval = SqlHelper.toTimeInterval(rs.getString("TimeIntervalBackup"));
+        LocalDateTime creationDate = SqlHelper.toLocalDateTime(rs.getLong("CreationDate"));
+        LocalDateTime lastUpdateDate = SqlHelper.toLocalDateTime(rs.getLong("LastUpdateDate"));
+        int count = rs.getInt("BackupCount");
+        int max = rs.getInt("MaxToKeep");
+        String notes = rs.getString("Notes");
+        return new ConfigurationBackup(id, name, targetPath, destinationPath, lastBackupDate, automatic, nextBackupDate, timeInterval, notes, creationDate, lastUpdateDate, count, max);
+    }
 
+    public static List<ConfigurationBackup> getBackupList() {
+        List<ConfigurationBackup> backups = new ArrayList<>();
+        String sql = SELECT_ALL_COLUMNS + " WHERE DeletedAt IS NULL";
         try (
             Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
         ) {
             while (rs.next()) {
-                int id = rs.getInt("BackupId");
-                String name = rs.getString("BackupName");
-                String targetPath = rs.getString("TargetPath");
-                String destinationPath = rs.getString("DestinationPath");
-                Long lastBackupDateMillis = rs.getLong("LastBackupDate");
-                boolean automatic = rs.getBoolean("Automatic");
-                Long nextBackupDateMillis = rs.getLong("NextBackupDate");
-                String timeIntervalStr = rs.getString("TimeIntervalBackup");
-                Long creationDateMillis = rs.getLong("CreationDate");
-                Long lastUpdateDateMillis = rs.getLong("LastUpdateDate");
-
-                LocalDateTime lastBackupDate = SqlHelper.toLocalDateTime(lastBackupDateMillis);
-                LocalDateTime nextBackupDate = SqlHelper.toLocalDateTime(nextBackupDateMillis);
-                TimeInterval timeInterval = SqlHelper.toTimeInterval(timeIntervalStr);
-                LocalDateTime creationDate = SqlHelper.toLocalDateTime(creationDateMillis);
-                LocalDateTime lastUpdateDate = SqlHelper.toLocalDateTime(lastUpdateDateMillis);
-
-                int count = rs.getInt("BackupCount");
-                int max = rs.getInt("MaxToKeep");
-                String notes = rs.getString("Notes");
-
-                backups.add(new ConfigurationBackup(id, name, targetPath, destinationPath, lastBackupDate, automatic, nextBackupDate, timeInterval, notes, creationDate, lastUpdateDate, count, max));
+                backups.add(mapResultSet(rs));
             }
-
         } catch (SQLException e) {
-            logger.error("Error fetching backup configuration list: " + e.getMessage(), e);
+            logger.error("Error fetching backup configuration list: {}", e.getMessage(), e);
         }
-
         return backups;
     }
 
     public static ConfigurationBackup getBackupById(int backupId) {
-        String sql = """
-            SELECT
-                BackupId, BackupName, TargetPath, DestinationPath, LastBackupDate, Automatic, NextBackupDate,
-                TimeIntervalBackup, CreationDate, LastUpdateDate, BackupCount, MaxToKeep, Notes
-            FROM
-                BackupConfigurations
-            WHERE
-                BackupId = ?
-            """;
-
+        String sql = SELECT_ALL_COLUMNS + " WHERE BackupId = ?";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, backupId);
-
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int id = rs.getInt("BackupId");
-                    String name = rs.getString("BackupName");
-                    String targetPath = rs.getString("TargetPath");
-                    String destinationPath = rs.getString("DestinationPath");
-                    Long lastBackupDateMillis = rs.getLong("LastBackupDate");
-                    boolean automatic = rs.getBoolean("Automatic");
-                    Long nextBackupDateMillis = rs.getLong("NextBackupDate");
-                    String timeIntervalStr = rs.getString("TimeIntervalBackup");
-                    Long creationDateMillis = rs.getLong("CreationDate");
-                    Long lastUpdateDateMillis = rs.getLong("LastUpdateDate");
-
-                    LocalDateTime lastBackupDate = SqlHelper.toLocalDateTime(lastBackupDateMillis);
-                    LocalDateTime nextBackupDate = SqlHelper.toLocalDateTime(nextBackupDateMillis);
-                    TimeInterval timeInterval = SqlHelper.toTimeInterval(timeIntervalStr);
-                    LocalDateTime creationDate = SqlHelper.toLocalDateTime(creationDateMillis);
-                    LocalDateTime lastUpdateDate = SqlHelper.toLocalDateTime(lastUpdateDateMillis);
-
-                    int count = rs.getInt("BackupCount");
-                    int max = rs.getInt("MaxToKeep");
-                    String notes = rs.getString("Notes");
-
-                    return new ConfigurationBackup(id, name, targetPath, destinationPath, lastBackupDate, automatic, nextBackupDate, timeInterval, notes, creationDate, lastUpdateDate, count, max);
-                }
+                if (rs.next()) return mapResultSet(rs);
             }
-
         } catch (SQLException e) {
-            logger.error("Error fetching backup configuration by ID: " + e.getMessage(), e);
+            logger.error("Error fetching backup configuration by ID: {}", e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
-
         return null;
     }
 
     public static ConfigurationBackup getBackupByName(String backupName) {
-        String sql = """
-            SELECT
-                BackupId, BackupName, TargetPath, DestinationPath, LastBackupDate, Automatic, NextBackupDate,
-                TimeIntervalBackup, CreationDate, LastUpdateDate, BackupCount, MaxToKeep, Notes
-            FROM
-                BackupConfigurations
-            WHERE
-                BackupName = ?
-            """;
-
+        String sql = SELECT_ALL_COLUMNS + " WHERE BackupName = ? AND DeletedAt IS NULL";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, backupName);
-
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int id = rs.getInt("BackupId");
-                    String name = rs.getString("BackupName");
-                    String targetPath = rs.getString("TargetPath");
-                    String destinationPath = rs.getString("DestinationPath");
-                    Long lastBackupDateMillis = rs.getLong("LastBackupDate");
-                    boolean automatic = rs.getBoolean("Automatic");
-                    Long nextBackupDateMillis = rs.getLong("NextBackupDate");
-                    String timeIntervalStr = rs.getString("TimeIntervalBackup");
-                    Long creationDateMillis = rs.getLong("CreationDate");
-                    Long lastUpdateDateMillis = rs.getLong("LastUpdateDate");
-
-                    LocalDateTime lastBackupDate = SqlHelper.toLocalDateTime(lastBackupDateMillis);
-                    LocalDateTime nextBackupDate = SqlHelper.toLocalDateTime(nextBackupDateMillis);
-                    TimeInterval timeInterval = SqlHelper.toTimeInterval(timeIntervalStr);
-                    LocalDateTime creationDate = SqlHelper.toLocalDateTime(creationDateMillis);
-                    LocalDateTime lastUpdateDate = SqlHelper.toLocalDateTime(lastUpdateDateMillis);
-
-                    int count = rs.getInt("BackupCount");
-                    int max = rs.getInt("MaxToKeep");
-                    String notes = rs.getString("Notes");
-
-                    return new ConfigurationBackup(id, name, targetPath, destinationPath, lastBackupDate, automatic, nextBackupDate, timeInterval, notes, creationDate, lastUpdateDate, count, max);
-                }
+                if (rs.next()) return mapResultSet(rs);
             }
-
         } catch (SQLException e) {
-            logger.error("Error fetching backup configuration by Name: " + e.getMessage(), e);
+            logger.error("Error fetching backup configuration by Name: {}", e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
-
         return null;
     }
 
     public static Map<Integer, ConfigurationBackup> getBackupMap() {
-
-        List<ConfigurationBackup> backups = getBackupList();
-        Map<Integer, ConfigurationBackup> map = new HashMap<>(backups.size());
-
-        for (ConfigurationBackup backup : backups) {
-            map.put(backup.getId(), backup);
-        }
-
-        return map;
+        return getBackupList().stream()
+                .collect(Collectors.toMap(ConfigurationBackup::getId, b -> b));
     }
 }

@@ -41,7 +41,11 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
 
-        String zipEntryName = sourceDir.relativize(dir).toString() + "/";
+        String relative = sourceDir.relativize(dir).toString();
+        if (relative.isEmpty()) {
+            return FileVisitResult.CONTINUE;
+        }
+        String zipEntryName = relative + "/";
         logger.debug("Adding directory to zip: " + zipEntryName);
 
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
@@ -85,7 +89,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
 
     private boolean isZippingThreadInterrupted() {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.backup().getId());
+            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.execution().backup().getId());
             logger.info("Zipping process manually interrupted");
             return true;
         }

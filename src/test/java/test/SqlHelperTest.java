@@ -25,7 +25,8 @@ public class SqlHelperTest {
 
     @Test
     void toMilliseconds_shouldReturnTrue_forNullLocalDate() {
-        long mills = SqlHelper.toMilliseconds(null);
+        LocalDateTime date = null;
+        long mills = SqlHelper.toMilliseconds(date);
         assertTrue(mills == 0);
     }
 

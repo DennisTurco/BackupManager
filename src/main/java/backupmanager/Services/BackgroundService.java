@@ -14,15 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
-import backupmanager.Controllers.TrayController;
+import backupmanager.Entities.BackupExecutionContext;
 import backupmanager.Entities.BackupRequest;
+import backupmanager.Entities.BackupUIContext;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
-import backupmanager.Enums.ConfigKey;
-import backupmanager.Json.JSONConfigReader;
+import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
+import backupmanager.gui.Controllers.TrayController;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
@@ -30,7 +31,7 @@ public class BackgroundService {
     private ScheduledExecutorService scheduler;
 
     private TrayController trayIcon;
-    private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private final JsonConfig jsonConfig = JsonConfig.getInstance();
     private final AtomicBoolean isBackingUp = new AtomicBoolean(false);
 
     public void start(TrayController trayIcon) throws IOException {
@@ -116,8 +117,11 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 try {
                     for (ConfigurationBackup backup : backups) {
-                        ZippingContext context = ZippingContext.create(backup, trayIcon.getTrayIcon(), null, null, null, null);
-                        BackupOperations.singleBackup(context, BackupTriggerType.SCHEDULER);
+                        ZippingContext context = new ZippingContext(
+                            BackupExecutionContext.create(backup),
+                            new BackupUIContext(trayIcon.getTrayIcon(), null, null, null, null)
+                        );
+                        BackupOperations.requestSingleBackup(context, BackupTriggerType.SCHEDULER);
                     }
                 } finally {
                     logger.info("All backups completed. Resetting isBackingUp flag.");

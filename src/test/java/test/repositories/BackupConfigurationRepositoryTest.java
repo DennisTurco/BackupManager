@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -41,7 +42,7 @@ public class BackupConfigurationRepositoryTest {
     }
 
     @Test
-    protected void deleteBackup_shuldBeTrue_afterDelete() {
+    protected void deleteBackup_shuldBeTrue_afterDelete() throws BackupDeletionException {
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupByName(backups.get(1).getName());
         BackupConfigurationRepository.deleteBackup(backup.getId());
         ConfigurationBackup backupDeleted = BackupConfigurationRepository.getBackupById(backup.getId());

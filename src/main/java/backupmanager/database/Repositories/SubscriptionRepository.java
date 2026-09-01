@@ -56,7 +56,14 @@ public class SubscriptionRepository {
                     LocalDateTime insertDate = SqlHelper.toLocalDateTime(insertDateLong);
                     LocalDate startDate = SqlHelper.toLocalDate(startDateLong);
                     LocalDate endDate = SqlHelper.toLocalDate(endDateLong);
-                    SubscriptionCreationType creationType = SubscriptionCreationType.valueOf(creationTypeStr);
+
+                    SubscriptionCreationType creationType;
+                    try {
+                        creationType = SubscriptionCreationType.valueOf(creationTypeStr);
+                    } catch (IllegalArgumentException | NullPointerException ex) {
+                        logger.error("Unknown or null CreationType '{}' in Subscriptions table, skipping row", creationTypeStr, ex);
+                        return null;
+                    }
 
                     return new Subscription(id, insertDate, startDate, endDate, creationType);
                 }
@@ -67,5 +74,33 @@ public class SubscriptionRepository {
         }
 
         return null;
+    }
+
+    // only for unit tests
+    public static void insertSubscription(Subscription sub) throws SQLException {
+        String sql = "INSERT INTO Subscriptions (InsertDate, StartDate, EndDate, CreationType) VALUES (?, ?, ?, ?)";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, SqlHelper.toMilliseconds(sub.insertDate()));
+            stmt.setLong(2, SqlHelper.toMilliseconds(sub.startDate()));
+            stmt.setLong(3, SqlHelper.toMilliseconds(sub.endDate()));
+            stmt.setString(4, sub.creationType().name());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Subscription inserting error: " + e.getMessage(), e);
+        }
+    }
+
+    // only for unit tests
+    public static void deleteSubscriptions() throws SQLException {
+        String sql = "DELETE FROM Subscriptions";
+        try (Connection conn = Database.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Subscription deletion error: " + e.getMessage(), e);
+        }
     }
 }

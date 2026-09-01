@@ -29,7 +29,10 @@ public enum ConfigKey {
     SHARE_LINK,
     VERSION,
     GUI_WIDTH,
-    GUI_HEIGHT;
+    GUI_HEIGHT,
+    GUI_MIN_WIDTH,
+    GUI_MIN_HEIGHT,
+    ;
 
     private static final Map<ConfigKey, String> configValues = new EnumMap<>(ConfigKey.class);
     private static final Logger logger = LoggerFactory.getLogger(ConfigKey.class);

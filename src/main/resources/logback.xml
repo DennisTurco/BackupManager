@@ -10,12 +10,12 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.host" value="${smtp.smtp}" />
     <property name="smtp.email_confirmation_to" value="${smtp.email_confirmation_to}" />
-    <!-- <property name="EMAIL_TO" value="test1@shardpc.it" /> -->
-    <property name="EMAIL_TO" value="assistenza@shardpc.it" />
+    <property name="EMAIL_TO" value="test1@shardpc.it" />
+    <!-- <property name="EMAIL_TO" value="assistenza@shardpc.it" /> -->
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ BackupManager - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 BackupManager - New user registered!! 🆕" />
     <property name="EMAIL_CONFIRMATION_SUBJECT" value="BackupManager - Welcome!" />
-    <property name="LOG_DIR" value="./src/main/resources/res/logs" />
+    <property name="LOG_DIR" value="${user.home}/.backupmanager/logs" />
     <property name="MAX_HISTORY" value="7" />
     <property name="TOTAL_SIZE" value="100MB" />
 
@@ -36,11 +36,6 @@
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
-    </appender>
-
-    <!-- async appender -->
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="ROLLING_FILE" />
     </appender>
 
     <!--Appernder only for the error logs-->
@@ -127,9 +122,9 @@
     </logger>
 
     <!-- Root logger -->
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="ASYNC" />
+        <appender-ref ref="ROLLING_FILE" />
         <appender-ref ref="ERROR_FILE" />
     </root>
 </configuration>

@@ -32,7 +32,7 @@ public class EmailRepository {
             logger.info("Email inserted succesfully");
 
         } catch (SQLException e) {
-            logger.error("Email inserting error: " + e.getMessage());
+            logger.error("Email inserting error: {}", e.getMessage(), e);
         }
     }
 

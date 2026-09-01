@@ -29,9 +29,9 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 | ------------------------ | ------------------------ |
 | ![image7](./docs/imgs/Home3.png) | . |
 
-## Code Ducumentation
+## Code Documentation
 
-$\rightarrow$ [Code tecnical documentation](./code_documentation.md)
+$\rightarrow$ [Code technical documentation](./code_documentation.md)
 
 ## Important Notes
 
@@ -58,12 +58,29 @@ $\rightarrow$ [Code tecnical documentation](./code_documentation.md)
 
 ## Code Quality
 
-This project enforces automatic code quality checks during the Maven verify phase.
-Running the following command will execute formatting checks, static analysis, and tests:
+This project uses automated code quality analysis on every Pull Request targeting `master`.
+The analysis runs the following tools and posts a summary comment directly on the PR:
 
-`mvn clean verify`
+| Tool | What it checks |
+|------|---------------|
+| JaCoCo | Test coverage (line & branch) |
+| SpotBugs + find-sec-bugs | Bugs and security vulnerabilities |
+| PMD | Code complexity and style violations |
+| CPD | Code duplication (blocks > 100 tokens) |
 
-If any rule is violated, the build will fail.
+To run the analysis locally:
+
+```powershell
+./analyze.ps1
+```
+
+Or run individual checks:
+
+```powershell
+./mvnw clean verify "-Dmaven.test.failure.ignore=true"   # tests + coverage
+./mvnw spotbugs:spotbugs                                  # bug analysis
+./mvnw pmd:pmd pmd:cpd                                    # complexity + duplication
+```
 
 ## Licence
 
