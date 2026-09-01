@@ -29,9 +29,96 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 | ------------------------ | ------------------------ |
 | ![image7](./docs/imgs/Home3.png) | . |
 
-## Code Ducumentation
+## Architecture
 
-$\rightarrow$ [Code tecnical documentation](./code_documentation.md)
+```
+BackupManager/
+├── src/main/java/backupmanager/   # Java backend (Maven)
+│   ├── api/                       # REST API layer (Javalin 6 on port 7070)
+│   │   └── routes/                # BackupRoutes, AnalyticsRoutes, SettingsRoutes, LogRoutes, AuthRoutes
+│   ├── Services/                  # BackgroundService (scheduler), backup engine
+│   ├── Repositories/              # SQLite persistence via JDBC
+│   └── MainApp.java               # Entry point — GUI | background | api-server mode
+└── ui/                            # Electron + React + TypeScript frontend
+    ├── src/main/index.ts          # Electron main — spawns Java JAR with --api-server flag
+    ├── src/preload/index.ts       # Exposes env.apiBase to the renderer
+    └── src/renderer/src/          # React app (Vite)
+        ├── pages/                 # BackupTablePage, DashboardPage, HistoryPage, SettingsPage
+        ├── services/api.ts        # Axios client for all REST endpoints
+        └── context/ThemeContext   # Dark / light theme
+```
+
+**Runtime flow:** Electron spawns `java -jar BackupManager.jar --api-server` → Java starts Javalin REST server on `http://localhost:7070` → React renderer calls the API via Axios.
+
+## Local Development Setup
+
+### Prerequisites
+
+| Tool | Version |
+|------|---------|
+| JDK  | 21+     |
+| Maven | 3.9+   |
+| Node.js | 20+  |
+| npm  | 10+     |
+
+### 1 — Build the Java backend
+
+```bash
+mvn clean package -DskipTests
+```
+
+This produces `target/BackupManager-<version>.jar`.
+
+### 2 — Run the REST API server standalone (optional, for UI-only dev)
+
+```bash
+java -jar target/BackupManager-*.jar --api-server
+```
+
+The API will be available at `http://localhost:7070/api/status`. Keep this terminal open.
+
+### 3 — Start the React + Electron UI
+
+```bash
+cd ui
+npm install
+npm run dev
+```
+
+This opens Electron in development mode with hot-reload. Electron automatically spawns the Java JAR; if you are already running the JAR manually (step 2), comment out the `spawnJar` call in `src/main/index.ts` to avoid a port conflict.
+
+### 4 — Build a distributable package
+
+```bash
+# Build Java JAR first
+mvn clean package -DskipTests
+
+# Then package Electron app (bundles the JAR inside)
+cd ui
+npm run build
+npm run dist   # or: npm run package
+```
+
+### Available npm scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Electron + Vite dev server with HMR |
+| `npm run build` | Compile TypeScript + Vite bundle |
+| `npm run preview` | Preview the built renderer in a browser |
+| `npm run dist` | Build distributable (via electron-builder) |
+
+### Code quality — Java
+
+```bash
+mvn clean verify
+```
+
+Runs Checkstyle, SpotBugs and unit tests. The build fails on any violation.
+
+## Code Documentation
+
+$\rightarrow$ [Code technical documentation](./code_documentation.md)
 
 ## Important Notes
 
@@ -43,8 +130,8 @@ $\rightarrow$ [Code tecnical documentation](./code_documentation.md)
 | Platform | Availability |
 | --- | --- |
 | Windows | ✅ |
-| Linux | ❌ |
-| MacOS | ❌ |
+| Linux | ✅ (via Electron) |
+| MacOS | ✅ (via Electron) |
 
 ## Supported Languages
 

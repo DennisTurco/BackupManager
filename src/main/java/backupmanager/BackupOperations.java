@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
@@ -49,6 +50,7 @@ public class BackupOperations {
                     ModalUtils.showWarning(DrawerManager.getInstance().getParent(), Translations.get(TKey.WARNING_GENERIC_TITLE), Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), SimpleModalBorder.CLOSE_OPTION);
             }
             case SCHEDULER -> singleBackup(context, triggeredBy);
+            case API -> singleBackup(context, triggeredBy);
         }
     }
 
@@ -193,17 +195,6 @@ public class BackupOperations {
         return true;
     }
 
-    public static void interruptBackupProcess(ZippingContext context) {
-        logger.info("Event --> interrupt backup process");
-
-        ZippingThread.stopExecutorService(1);
-        if (ZippingThread.isInterrupted())
-            reEnableButtonsAndTable(context);
-
-        if (context.ui().progressBar() != null)
-            context.ui().progressBar().dispose();
-    }
-
     public static void reEnableButtonsAndTable(ZippingContext context) {
         if (context.ui().interruptBackupPopupItem() != null) context.ui().interruptBackupPopupItem().setEnabled(false);
         if (context.ui().deleteBackupPopupItem() != null) context.ui().deleteBackupPopupItem().setEnabled(true);
@@ -307,54 +298,55 @@ public class BackupOperations {
     }
 
     public static void setError(ErrorType error, TrayIcon trayIcon, String backupName) {
+        boolean headless = GraphicsEnvironment.isHeadless();
         switch (error) {
             case InputMissing -> {
                 logger.warn("Input Missing!");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case InputError -> {
                 logger.warn("Input Error! One or both paths do not exist.");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_PATH_NOT_EXISTING), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case SamePaths -> {
                 logger.warn("The initial path and destination path cannot be the same. Please choose different paths");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ErrorCountingFiles -> {
                 logger.warn("Error during counting files in directory");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingGenericError -> {
                 logger.warn("Error during zipping directory");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingIOError -> {
                 logger.warn("I/O error occurred while zipping directory");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             case ZippingSecurityError -> {
                 logger.warn("Security exception while zipping directory");
                 if (trayIcon != null)
                     trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
-                else
+                else if (!headless)
                     JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
             default -> throw new IllegalArgumentException("Error type not recognized: " + error);

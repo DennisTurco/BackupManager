@@ -1,13 +1,33 @@
+# ── Java / Maven ──────────────────────────────────────────────────────────────
 /target/
+/jre/
+BackupManager.exe
+/Output
+
+# ── App data ──────────────────────────────────────────────────────────────────
+/data/
+config.enc
+config.txt
 /src/main/resources/res/logs/*
 logs/*
 **/logs/
 **/*.log
 
-/jre/
-BackupManager.exe
-/Output
-config.enc
-config.txt
+# ── Electron / Node ───────────────────────────────────────────────────────────
+ui/node_modules/
+ui/dist/
+ui/dist-electron/
+ui/out/
+ui/.vite/
 
-/data/
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Editor & OS ───────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

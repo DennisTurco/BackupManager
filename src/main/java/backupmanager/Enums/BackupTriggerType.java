@@ -5,7 +5,8 @@ import backupmanager.Enums.utils.EnumUtil;
 
 public enum BackupTriggerType implements CodeEnum {
     USER(1),
-    SCHEDULER(2);
+    SCHEDULER(2),
+    API(3);
 
     private final int code;
 

@@ -13,11 +13,14 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.util.FontUtils;
 
+import backupmanager.BackupOperations;
 import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
+import backupmanager.Services.BackgroundService;
 import backupmanager.Utils.AppPreferences;
+import backupmanager.api.ApiServer;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
@@ -31,16 +34,14 @@ public class MainApp {
     public static void main(String[] args) {
         dataInit();
 
-        boolean isBackgroundMode = isBackgroundMode(args);
+        String mode = parseMode(args);
 
-        logger.info("Application started");
-        logger.debug("Background mode: {}", isBackgroundMode);
+        logger.info("Application started in mode: {}", mode);
 
-        if (isBackgroundMode) {
-            runBackgroundProcess();
-        }
-        else if (!isBackgroundMode) {
-            runGui();
+        switch (mode) {
+            case "background" -> runBackgroundProcess();
+            case "api-server" -> runApiServer();
+            default -> runGui();
         }
     }
 
@@ -65,15 +66,16 @@ public class MainApp {
         }
     }
 
-    private static boolean isBackgroundMode(String[] args) {
-        boolean isBackgroundMode = args.length > 0 && args[0].equalsIgnoreCase("--background");
-
-        if (!isBackgroundMode && args.length > 0) {
-            logger.error("Argument \"{}\" not valid!", args[0]);
-            throw new IllegalArgumentException("Argument passed is not valid!");
-        }
-
-        return isBackgroundMode;
+    private static String parseMode(String[] args) {
+        if (args.length == 0) return "gui";
+        return switch (args[0].toLowerCase()) {
+            case "--background" -> "background";
+            case "--api-server" -> "api-server";
+            default -> {
+                logger.error("Argument \"{}\" not valid!", args[0]);
+                throw new IllegalArgumentException("Argument passed is not valid: " + args[0]);
+            }
+        };
     }
 
     private static void ensureLogDirectory() {
@@ -95,6 +97,31 @@ public class MainApp {
         } catch (IOException ex) {
             logger.error("An error occurred: {}", ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
+    }
+
+    private static void runApiServer() {
+        System.setProperty("java.awt.headless", "true");
+        try {
+            BackupOperations.deletePotentiallyIncompletedBackupsFromLastExecution();
+
+            BackgroundService backgroundService = new BackgroundService();
+            backgroundService.start();
+
+            ApiServer apiServer = new ApiServer();
+            apiServer.start();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                backgroundService.stop();
+                apiServer.stop();
+            }));
+
+            Thread.currentThread().join();
+        } catch (IOException ex) {
+            logger.error("API server startup failed: {}", ex.getMessage(), ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            logger.info("API server process interrupted");
         }
     }
 

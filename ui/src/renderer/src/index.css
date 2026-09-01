@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens (dark default, matching FlatDarcula) ─────────────────── */
+:root {
+  --bg-0:       #1e1f22;
+  --bg-1:       #2b2d30;
+  --bg-2:       #313335;
+  --bg-3:       #3c3f41;
+  --bg-4:       #45494a;
+  --border:     #515254;
+  --border-lt:  #6b6d6e;
+  --accent:     #2196f3;
+  --accent-dim: #1565c0;
+  --text:       #dfe1e5;
+  --text-muted: #8c8c8c;
+  --text-dim:   #6b6d6e;
+  --success:    #5aad4e;
+  --error:      #e05252;
+  --warning:    #e8a735;
+  --radius:     6px;
+}
+
+[data-theme="light"] {
+  --bg-0:       #f0f0f0;
+  --bg-1:       #ffffff;
+  --bg-2:       #ebebeb;
+  --bg-3:       #e0e0e0;
+  --bg-4:       #d5d5d5;
+  --border:     #c9c9c9;
+  --border-lt:  #d9d9d9;
+  --text:       #1a1a1a;
+  --text-muted: #666666;
+  --text-dim:   #999999;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  background: var(--bg-0);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-lt); }
+
+/* ─── Shared components ───────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.input {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 13px;
+  padding: 5px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.input:focus { border-color: var(--accent); }
+.input::placeholder { color: var(--text-dim); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, opacity 0.15s;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary  { background: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--accent-dim); }
+.btn-ghost    { background: var(--bg-3); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover:not(:disabled) { background: var(--bg-4); }
+.btn-danger   { background: transparent; color: var(--error); border: 1px solid transparent; }
+.btn-danger:hover:not(:disabled) { background: rgba(224,82,82,.12); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.badge-success { background: rgba(90,173,78,.18); color: var(--success); }
+.badge-error   { background: rgba(224,82,82,.18); color: var(--error);   }
+.badge-warning { background: rgba(232,167,53,.18); color: var(--warning); }
+.badge-muted   { background: var(--bg-3); color: var(--text-muted); }
+.badge-accent  { background: rgba(33,150,243,.18); color: var(--accent); }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+/* ─── Page header ─────────────────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.page-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.page-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ─── Table ───────────────────────────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover td { background: var(--bg-3); }
+.data-table tbody tr.selected td { background: rgba(33,150,243,.1); }
+
+/* ─── Modal overlay ───────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(2px);
+}
+.modal-box {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.45);
+}
+.modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+
+/* ─── Log viewer ──────────────────────────────────────────────────────────── */
+.log-row:hover td { background: var(--bg-3); }
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+.spin { animation: spin 0.8s linear infinite; }

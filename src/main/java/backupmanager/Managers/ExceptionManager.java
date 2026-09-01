@@ -1,6 +1,7 @@
 package backupmanager.Managers;
 
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 
@@ -22,6 +23,10 @@ public class ExceptionManager {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
 
     public static void openExceptionMessage(String errorMessage, String stackTrace) {
+        if (GraphicsEnvironment.isHeadless()) {
+            logger.error("Exception (headless — no dialog): {} | {}", errorMessage, stackTrace);
+            return;
+        }
         Object[] options = {Translations.get(TKey.CLOSE_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), Translations.get(TKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
 
         if (errorMessage == null)

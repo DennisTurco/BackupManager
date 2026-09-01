@@ -1,30 +1,15 @@
 package backupmanager.Services;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 import backupmanager.Entities.BackupRequest;
-import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Enums.BackupStatus;
 import backupmanager.Helpers.BackupHelper;
 import backupmanager.Helpers.SqlHelper;
-import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import backupmanager.Utils.FolderUtils;
 
 public class RunningBackupService {
-
-    public static Optional<BackupRequest> getRunningBackupByName(String backupName) {
-        ConfigurationBackup config = BackupConfigurationRepository.getBackupByName(backupName);
-        if (config == null) return Optional.empty();
-
-        List<BackupRequest> running = BackupRequestRepository.getRunningBackups();
-        return running.stream()
-                .filter(r -> r.backupConfigurationId() == config.getId()
-                          && r.status() == BackupStatus.IN_PROGRESS)
-                .findFirst();
-    }
 
     public static void updateBackupZippedFolderSizeById(int requestId, String pathFolderSize) {
         long folderSize = FolderUtils.calculateFileOrFolderSize(pathFolderSize);

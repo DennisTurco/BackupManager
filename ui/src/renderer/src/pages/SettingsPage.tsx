@@ -1,0 +1,246 @@
+import { useState, useEffect } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Save, Sun, Moon, Monitor } from 'lucide-react'
+import { settingsApi } from '../services/api'
+import { useTheme } from '../context/ThemeContext'
+
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'it', label: 'Italiano' },
+  { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'es', label: 'Español' },
+]
+
+export default function SettingsPage() {
+  const { theme, toggle } = useTheme()
+  const qc = useQueryClient()
+  const [saved, setSaved] = useState(false)
+
+  const { data: settings, isLoading } = useQuery({
+    queryKey: ['settings'],
+    queryFn: settingsApi.get,
+  })
+
+  const [form, setForm] = useState<Record<string, string>>({})
+  useEffect(() => { if (settings) setForm(settings) }, [settings])
+
+  const mutation = useMutation({
+    mutationFn: (data: Record<string, string>) => settingsApi.update(data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['settings'] })
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+    }
+  })
+
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }))
+
+  if (isLoading) {
+    return (
+      <div style={{ color: 'var(--text-muted)', padding: 32, textAlign: 'center' }}>
+        Loading settings…
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {/* Header */}
+      <div className="page-header">
+        <div>
+          <div className="page-title">Settings</div>
+          <div className="page-desc">Application preferences and configuration</div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {saved && (
+            <span style={{ fontSize: 12, color: 'var(--success)' }}>Saved!</span>
+          )}
+          <button
+            className="btn btn-primary"
+            onClick={() => mutation.mutate(form)}
+            disabled={mutation.isPending}
+          >
+            <Save size={13} />
+            {mutation.isPending ? 'Saving…' : 'Save changes'}
+          </button>
+        </div>
+      </div>
+
+      {/* Appearance */}
+      <Section title="Appearance">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+          <ThemeCard
+            icon={<Sun size={18} />}
+            label="Light"
+            active={theme === 'light'}
+            onClick={() => theme !== 'light' && toggle()}
+          />
+          <ThemeCard
+            icon={<Moon size={18} />}
+            label="Dark"
+            active={theme === 'dark'}
+            onClick={() => theme !== 'dark' && toggle()}
+          />
+          <ThemeCard
+            icon={<Monitor size={18} />}
+            label="System"
+            active={false}
+            disabled
+          />
+        </div>
+      </Section>
+
+      {/* Language */}
+      <Section title="Language">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
+          {LANGUAGES.map(lang => (
+            <button
+              key={lang.code}
+              onClick={() => set('language', lang.code)}
+              style={{
+                padding: '10px 0',
+                borderRadius: 6,
+                border: `1px solid ${form['language'] === lang.code ? 'var(--accent)' : 'var(--border)'}`,
+                background: form['language'] === lang.code ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
+                color: form['language'] === lang.code ? 'var(--accent)' : 'var(--text-muted)',
+                fontWeight: form['language'] === lang.code ? 600 : 400,
+                fontSize: 13,
+                cursor: 'pointer',
+                transition: 'all 0.12s',
+              }}
+            >
+              {lang.label}
+            </button>
+          ))}
+        </div>
+      </Section>
+
+      {/* Backup settings */}
+      <Section title="Backup defaults">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+          <FormField label="Default destination path" value={form['defaultDestinationPath'] ?? ''}
+            onChange={v => set('defaultDestinationPath', v)} placeholder="/backups" />
+          <NumField label="Default max backups to keep" value={Number(form['defaultMaxToKeep'] ?? 5)}
+            onChange={v => set('defaultMaxToKeep', String(v))} min={1} />
+        </div>
+      </Section>
+
+      {/* Notifications */}
+      <Section title="Notifications">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <Toggle
+            label="Show notification on backup completion"
+            checked={form['notifyOnComplete'] === 'true'}
+            onChange={v => set('notifyOnComplete', String(v))}
+          />
+          <Toggle
+            label="Show notification on backup failure"
+            checked={form['notifyOnFailure'] !== 'false'}
+            onChange={v => set('notifyOnFailure', String(v))}
+          />
+          <Toggle
+            label="Start minimized to system tray"
+            checked={form['startMinimized'] === 'true'}
+            onChange={v => set('startMinimized', String(v))}
+          />
+        </div>
+      </Section>
+    </div>
+  )
+}
+
+/* ─── Sub-components ─────────────────────────────────────────────────────── */
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="card" style={{ padding: '16px 20px' }}>
+      <div className="section-label" style={{ marginBottom: 14, fontSize: 11 }}>{title}</div>
+      {children}
+    </div>
+  )
+}
+
+function ThemeCard({ icon, label, active, onClick, disabled }: {
+  icon: React.ReactNode; label: string; active: boolean; onClick?: () => void; disabled?: boolean
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{
+        padding: '16px 0',
+        borderRadius: 8,
+        border: `1px solid ${active ? 'var(--accent)' : 'var(--border)'}`,
+        background: active ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
+        color: active ? 'var(--accent)' : 'var(--text-muted)',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.5 : 1,
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+        fontSize: 13, fontWeight: active ? 600 : 400,
+        transition: 'all 0.12s',
+      }}
+    >
+      {icon}
+      {label}
+      {active && (
+        <span style={{
+          width: 6, height: 6, borderRadius: '50%',
+          background: 'var(--accent)',
+        }} />
+      )}
+    </button>
+  )
+}
+
+function FormField({ label, value, onChange, placeholder }: {
+  label: string; value: string; onChange: (v: string) => void; placeholder?: string
+}) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <label className="section-label">{label}</label>
+      <input className="input" value={value} placeholder={placeholder}
+        onChange={e => onChange(e.target.value)} />
+    </div>
+  )
+}
+
+function NumField({ label, value, onChange, min }: {
+  label: string; value: number; onChange: (v: number) => void; min?: number
+}) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <label className="section-label">{label}</label>
+      <input className="input" type="number" value={value} min={min}
+        onChange={e => onChange(Number(e.target.value))} />
+    </div>
+  )
+}
+
+function Toggle({ label, checked, onChange }: {
+  label: string; checked: boolean; onChange: (v: boolean) => void
+}) {
+  return (
+    <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}>
+      <div
+        onClick={() => onChange(!checked)}
+        style={{
+          width: 34, height: 18, borderRadius: 9,
+          background: checked ? 'var(--accent)' : 'var(--bg-4)',
+          position: 'relative', flexShrink: 0,
+          cursor: 'pointer',
+          transition: 'background 0.18s',
+        }}
+      >
+        <div style={{
+          position: 'absolute', top: 2, left: checked ? 18 : 2,
+          width: 14, height: 14, borderRadius: '50%',
+          background: '#fff',
+          transition: 'left 0.18s',
+          boxShadow: '0 1px 3px rgba(0,0,0,.4)',
+        }} />
+      </div>
+      <span style={{ fontSize: 13, color: 'var(--text)' }}>{label}</span>
+    </label>
+  )
+}

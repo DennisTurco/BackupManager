@@ -34,6 +34,10 @@ public class BackgroundService {
     private final JsonConfig jsonConfig = JsonConfig.getInstance();
     private final AtomicBoolean isBackingUp = new AtomicBoolean(false);
 
+    public void start() throws IOException {
+        start(null);
+    }
+
     public void start(TrayController trayIcon) throws IOException {
         if (isRunning()) {
             logger.warn("BackgroundService already running");
@@ -114,12 +118,13 @@ public class BackgroundService {
         }
 
         private void executeBackups(List<ConfigurationBackup> backups) {
-            javax.swing.SwingUtilities.invokeLater(() -> {
+            java.awt.TrayIcon icon = (trayIcon != null) ? trayIcon.getTrayIcon() : null;
+            Runnable task = () -> {
                 try {
                     for (ConfigurationBackup backup : backups) {
                         ZippingContext context = new ZippingContext(
                             BackupExecutionContext.create(backup),
-                            new BackupUIContext(trayIcon.getTrayIcon(), null, null, null, null)
+                            new BackupUIContext(icon, null, null, null, null)
                         );
                         BackupOperations.requestSingleBackup(context, BackupTriggerType.SCHEDULER);
                     }
@@ -127,7 +132,13 @@ public class BackgroundService {
                     logger.info("All backups completed. Resetting isBackingUp flag.");
                     isBackingUp.set(false);
                 }
-            });
+            };
+
+            if (trayIcon != null) {
+                javax.swing.SwingUtilities.invokeLater(task);
+            } else {
+                task.run();
+            }
         }
     }
 }
