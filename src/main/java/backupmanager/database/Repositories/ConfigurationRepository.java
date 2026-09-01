@@ -36,12 +36,17 @@ private static final Logger logger = LoggerFactory.getLogger(ConfigurationReposi
     }
 
     public static void updateConfigurationValueByCode(String code, String value) {
-        String sql = "UPDATE Configurations SET Value = ? WHERE Code = ?";
+        // Upsert: most EDITABLE_KEYS (e.g. LANGUAGE, THEME) have no seeded row, so a plain
+        // UPDATE would silently affect zero rows and never persist the first save.
+        String sql = """
+            INSERT INTO Configurations (Code, Value) VALUES (?, ?)
+            ON CONFLICT(Code) DO UPDATE SET Value = excluded.Value
+            """;
         try (Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, value);
-            stmt.setString(2, code);
+            stmt.setString(1, code);
+            stmt.setString(2, value);
             stmt.executeUpdate();
 
             logger.info("Configuration {} updated succesfully with value {}", code, value);

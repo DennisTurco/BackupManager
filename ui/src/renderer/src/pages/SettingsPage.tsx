@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Save, Sun, Moon, Monitor } from 'lucide-react'
 import { settingsApi } from '../services/api'
 import { useTheme } from '../context/ThemeContext'
+import { useTranslation } from '../context/TranslationContext'
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -13,6 +14,7 @@ const LANGUAGES = [
 ]
 
 export default function SettingsPage() {
+  const { t } = useTranslation()
   const { theme, toggle } = useTheme()
   const qc = useQueryClient()
   const [saved, setSaved] = useState(false)
@@ -39,7 +41,7 @@ export default function SettingsPage() {
   if (isLoading) {
     return (
       <div style={{ color: 'var(--text-muted)', padding: 32, textAlign: 'center' }}>
-        Loading settings…
+        {t('ReactUI.LoadingSettings', 'Loading settings…')}
       </div>
     )
   }
@@ -49,12 +51,12 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <div className="page-title">Settings</div>
-          <div className="page-desc">Application preferences and configuration</div>
+          <div className="page-title">{t('ReactUI.SettingsTitle', 'Settings')}</div>
+          <div className="page-desc">{t('ReactUI.SettingsDesc', 'Application preferences and configuration')}</div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {saved && (
-            <span style={{ fontSize: 12, color: 'var(--success)' }}>Saved!</span>
+            <span style={{ fontSize: 12, color: 'var(--success)' }}>{t('ReactUI.SavedText', 'Saved!')}</span>
           )}
           <button
             className="btn btn-primary"
@@ -62,29 +64,29 @@ export default function SettingsPage() {
             disabled={mutation.isPending}
           >
             <Save size={13} />
-            {mutation.isPending ? 'Saving…' : 'Save changes'}
+            {mutation.isPending ? 'Saving…' : t('General.SaveButton', 'Save changes')}
           </button>
         </div>
       </div>
 
       {/* Appearance */}
-      <Section title="Appearance">
+      <Section title={t('ReactUI.SectionAppearance', 'Appearance')}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
           <ThemeCard
             icon={<Sun size={18} />}
-            label="Light"
+            label={t('ReactUI.ThemeLight', 'Light')}
             active={theme === 'light'}
             onClick={() => theme !== 'light' && toggle()}
           />
           <ThemeCard
             icon={<Moon size={18} />}
-            label="Dark"
+            label={t('ReactUI.ThemeDark', 'Dark')}
             active={theme === 'dark'}
             onClick={() => theme !== 'dark' && toggle()}
           />
           <ThemeCard
             icon={<Monitor size={18} />}
-            label="System"
+            label={t('ReactUI.ThemeSystem', 'System')}
             active={false}
             disabled
           />
@@ -92,19 +94,19 @@ export default function SettingsPage() {
       </Section>
 
       {/* Language */}
-      <Section title="Language">
+      <Section title={t('ReactUI.SectionLanguage', 'Language')}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
           {LANGUAGES.map(lang => (
             <button
               key={lang.code}
-              onClick={() => set('language', lang.code)}
+              onClick={() => set('LANGUAGE', lang.code)}
               style={{
                 padding: '10px 0',
                 borderRadius: 6,
-                border: `1px solid ${form['language'] === lang.code ? 'var(--accent)' : 'var(--border)'}`,
-                background: form['language'] === lang.code ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
-                color: form['language'] === lang.code ? 'var(--accent)' : 'var(--text-muted)',
-                fontWeight: form['language'] === lang.code ? 600 : 400,
+                border: `1px solid ${form['LANGUAGE'] === lang.code ? 'var(--accent)' : 'var(--border)'}`,
+                background: form['LANGUAGE'] === lang.code ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
+                color: form['LANGUAGE'] === lang.code ? 'var(--accent)' : 'var(--text-muted)',
+                fontWeight: form['LANGUAGE'] === lang.code ? 600 : 400,
                 fontSize: 13,
                 cursor: 'pointer',
                 transition: 'all 0.12s',
@@ -117,30 +119,30 @@ export default function SettingsPage() {
       </Section>
 
       {/* Backup settings */}
-      <Section title="Backup defaults">
+      <Section title={t('ReactUI.SectionBackupDefaults', 'Backup defaults')}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-          <FormField label="Default destination path" value={form['defaultDestinationPath'] ?? ''}
+          <FormField label={t('ReactUI.DefaultDestPathLabel', 'Default destination path')} value={form['defaultDestinationPath'] ?? ''}
             onChange={v => set('defaultDestinationPath', v)} placeholder="/backups" />
-          <NumField label="Default max backups to keep" value={Number(form['defaultMaxToKeep'] ?? 5)}
+          <NumField label={t('ReactUI.DefaultMaxToKeepLabel', 'Default max backups to keep')} value={Number(form['defaultMaxToKeep'] ?? 5)}
             onChange={v => set('defaultMaxToKeep', String(v))} min={1} />
         </div>
       </Section>
 
       {/* Notifications */}
-      <Section title="Notifications">
+      <Section title={t('ReactUI.SectionNotifications', 'Notifications')}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <Toggle
-            label="Show notification on backup completion"
+            label={t('ReactUI.NotifyOnComplete', 'Show notification on backup completion')}
             checked={form['notifyOnComplete'] === 'true'}
             onChange={v => set('notifyOnComplete', String(v))}
           />
           <Toggle
-            label="Show notification on backup failure"
+            label={t('ReactUI.NotifyOnFailure', 'Show notification on backup failure')}
             checked={form['notifyOnFailure'] !== 'false'}
             onChange={v => set('notifyOnFailure', String(v))}
           />
           <Toggle
-            label="Start minimized to system tray"
+            label={t('ReactUI.StartMinimized', 'Start minimized to system tray')}
             checked={form['startMinimized'] === 'true'}
             onChange={v => set('startMinimized', String(v))}
           />

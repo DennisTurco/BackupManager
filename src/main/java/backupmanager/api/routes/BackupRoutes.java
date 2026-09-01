@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.BackupOperations;
 import backupmanager.Entities.BackupExecutionContext;
-import backupmanager.Entities.BackupUIContext;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
@@ -170,10 +169,7 @@ public class BackupRoutes {
             return;
         }
 
-        ZippingContext zCtx = new ZippingContext(
-            BackupExecutionContext.create(backup),
-            new BackupUIContext(null, null, null, null, null)
-        );
+        ZippingContext zCtx = new ZippingContext(BackupExecutionContext.create(backup));
         Thread.ofVirtual().start(() -> {
             try {
                 BackupOperations.requestSingleBackup(zCtx, BackupTriggerType.API);

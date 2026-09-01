@@ -2,20 +2,75 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Maven: Build backend jar",
+      "type": "shell",
+      "command": ".\\mvnw.cmd",
+      "args": ["clean", "package", "-DskipTests"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "UI: Install dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["install"],
+      "options": {
+        "cwd": "${workspaceFolder}/ui"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "UI: Dev (Electron + Vite)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/ui"
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run App (build backend + start UI)",
+      "dependsOrder": "sequence",
+      "dependsOn": ["Maven: Build backend jar", "UI: Dev (Electron + Vite)"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run App (fast, skip backend build)",
+      "dependsOn": ["UI: Dev (Electron + Vite)"],
+      "problemMatcher": []
+    },
+    {
       "label": "Inno Setup: Compile Script",
       "type": "process",
       "command": "ISCC.exe",
-      "args": [
-        "${file}"
-      ],
+      "args": ["${file}"],
       "presentation": {
         "reveal": "always",
         "echo": false
       },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "group": "build"
     }
   ]
 }

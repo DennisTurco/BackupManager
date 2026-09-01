@@ -1,25 +1,35 @@
 import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   LineChart, Line, CartesianGrid
 } from 'recharts'
-import { Database, Play, Timer, Archive } from 'lucide-react'
+import { Database, Play, Timer, Archive, Info, Lock, Zap } from 'lucide-react'
 import { analyticsApi, historyApi } from '../services/api'
+import { useSubscription } from '../context/SubscriptionContext'
+import { useTranslation } from '../context/TranslationContext'
 import type { BackupRequest } from '../types'
 
 export default function DashboardPage() {
+  const { isLocked, isLoading: loadingSub } = useSubscription()
+  const { t } = useTranslation()
+
   const { data: snapshot, isLoading: loadingSnap } = useQuery({
     queryKey: ['analytics'],
     queryFn: analyticsApi.getSnapshot,
     refetchInterval: 15_000,
+    enabled: !isLocked,
   })
 
   const { data: history = [] } = useQuery({
     queryKey: ['history'],
     queryFn: historyApi.getAll,
     refetchInterval: 15_000,
+    enabled: !isLocked,
   })
 
+  if (loadingSub) return <Spinner />
+  if (isLocked) return <LockedDashboard />
   if (loadingSnap || !snapshot) return <Spinner />
 
   const executionsByMonth = computeExecutionsByMonth(history)
@@ -34,8 +44,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <div className="page-title">Backup Analytics Dashboard</div>
-          <div className="page-desc">Overview of backup configurations and execution statistics</div>
+          <div className="page-title">{t('ReactUI.DashboardTitle', 'Backup Analytics Dashboard')}</div>
+          <div className="page-desc">{t('ReactUI.DashboardDesc', 'Overview of backup configurations and execution statistics')}</div>
         </div>
       </div>
 
@@ -43,25 +53,25 @@ export default function DashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
         <KpiCard
           icon={<Database size={18} />} color="#2196f3"
-          label="Total Configurations"
+          label={t('ReactUI.KpiTotalConfigs', 'Total Configurations')}
           value={String(history.filter((r, i, arr) => arr.findIndex(x => x.backupConfigurationId === r.backupConfigurationId) === i).length)}
           sub=""
         />
         <KpiCard
           icon={<Play size={18} />} color="#5aad4e"
-          label="Total Executions"
+          label={t('ReactUI.KpiTotalExecutions', 'Total Executions')}
           value={String(snapshot.totalRequests)}
-          sub={`${snapshot.successRate.toFixed(1)}% success rate`}
+          sub={`${snapshot.successRate.toFixed(1)}${t('ReactUI.KpiSuccessRateSuffix', '% success rate')}`}
         />
         <KpiCard
           icon={<Timer size={18} />} color="#e8a735"
-          label="Avg Duration"
+          label={t('ReactUI.KpiAvgDuration', 'Avg Duration')}
           value={fmtDuration(snapshot.avgDurationMs)}
           sub=""
         />
         <KpiCard
           icon={<Archive size={18} />} color="#9c6ae1"
-          label="Avg Compression"
+          label={t('ReactUI.KpiAvgCompression', 'Avg Compression')}
           value={`${(snapshot.avgCompressionRate * 100).toFixed(1)}%`}
           sub=""
         />
@@ -70,26 +80,26 @@ export default function DashboardPage() {
       {/* Charts */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
         {/* Executions by month */}
-        <ChartCard title="Executions by month">
+        <ChartCard title={t('ReactUI.ChartExecutionsByMonth', 'Executions by month')}>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={executionsByMonth} barSize={22}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
               <XAxis dataKey="month" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-              <Tooltip content={<CustomTooltip unit="executions" />} />
+              <Tooltip content={<CustomTooltip unit={t('ReactUI.ChartUnitExecutions', 'executions')} />} />
               <Bar dataKey="count" fill="var(--accent)" radius={[4, 4, 0, 0]} name="Executions" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
 
         {/* Duration trend */}
-        <ChartCard title="Avg duration trend (min)">
+        <ChartCard title={t('ReactUI.ChartAvgDurationTrend', 'Avg duration trend (min)')}>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={durationTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
               <XAxis dataKey="date" tick={{ fill: 'var(--text-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip unit="min" />} />
+              <Tooltip content={<CustomTooltip unit={t('ReactUI.ChartUnitMin', 'min')} />} />
               <Line dataKey="avgS" stroke="#e8a735" strokeWidth={2} dot={false} name="Avg (min)" />
             </LineChart>
           </ResponsiveContainer>
@@ -98,9 +108,12 @@ export default function DashboardPage() {
 
       {/* Quick status strip */}
       <div className="card" style={{ display: 'flex', gap: 0, overflow: 'hidden' }}>
-        <StatusStrip label="Successful" value={snapshot.successCount} color="var(--success)" />
-        <StatusStrip label="Failed"     value={snapshot.failedCount}  color="var(--error)"   borderLeft />
-        <StatusStrip label="Disk used"  value={fmtBytes(snapshot.totalDiskUsageBytes)} color="var(--accent)" borderLeft />
+        <StatusStrip label={t('ReactUI.StatusSuccessful', 'Successful')} value={snapshot.successCount} color="var(--success)" />
+        <StatusStrip
+          label={t('ReactUI.StatusFailed', 'Failed')} value={snapshot.failedCount} color="var(--error)" borderLeft
+          info={t('ReactUI.FailedInfoTooltip', 'A backup counts as failed when it gets interrupted before completing — e.g. the app was closed or crashed mid-backup, or the process was stopped manually. Any partial output file is discarded automatically.')}
+        />
+        <StatusStrip label={t('ReactUI.StatusDiskUsed', 'Disk used')}  value={fmtBytes(snapshot.totalDiskUsageBytes)} color="var(--accent)" borderLeft />
       </div>
     </div>
   )
@@ -139,8 +152,8 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
   )
 }
 
-function StatusStrip({ label, value, color, borderLeft }: {
-  label: string; value: string | number; color: string; borderLeft?: boolean
+function StatusStrip({ label, value, color, borderLeft, info }: {
+  label: string; value: string | number; color: string; borderLeft?: boolean; info?: string
 }) {
   return (
     <div style={{
@@ -148,7 +161,14 @@ function StatusStrip({ label, value, color, borderLeft }: {
       borderLeft: borderLeft ? '1px solid var(--border)' : undefined,
       display: 'flex', flexDirection: 'column', gap: 3,
     }}>
-      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>{label}</span>
+      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 5 }}>
+        {label}
+        {info && (
+          <span title={info} style={{ display: 'inline-flex', cursor: 'help' }}>
+            <Info size={12} color="var(--text-dim)" style={{ flexShrink: 0 }} />
+          </span>
+        )}
+      </span>
       <span style={{ fontSize: 18, fontWeight: 700, color }}>{value}</span>
     </div>
   )
@@ -173,10 +193,48 @@ function CustomTooltip({ active, payload, label, unit }: {
   )
 }
 
+function LockedDashboard() {
+  const { t } = useTranslation()
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <div className="page-header">
+        <div>
+          <div className="page-title">{t('ReactUI.DashboardTitle', 'Backup Analytics Dashboard')}</div>
+          <div className="page-desc">{t('ReactUI.DashboardDesc', 'Overview of backup configurations and execution statistics')}</div>
+        </div>
+      </div>
+      <div className="card" style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+        gap: 14, padding: '48px 24px',
+        borderColor: 'var(--error)', background: 'rgba(224,82,82,.06)',
+      }}>
+        <div style={{
+          width: 44, height: 44, borderRadius: 12,
+          background: 'rgba(224,82,82,.15)', color: 'var(--error)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Lock size={20} />
+        </div>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{t('ReactUI.LockedTitle', 'Analytics Dashboard is a Pro feature')}</div>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6, maxWidth: 420 }}>
+            {t('ReactUI.LockedDescLine1', "La tua subscription è scaduta. Rinnovala per tornare ad avere accesso alla dashboard analytics,")}{' '}
+            {t('ReactUI.LockedDescLine2', "oltre ai backup automatici e all'assistenza prioritaria.")}
+          </div>
+        </div>
+        <Link to="/subscription" className="btn btn-primary" style={{ marginTop: 4 }}>
+          <Zap size={13} /> {t('ReactUI.GoToSubscription', 'Go to Subscription')}
+        </Link>
+      </div>
+    </div>
+  )
+}
+
 function Spinner() {
+  const { t } = useTranslation()
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200, color: 'var(--text-muted)' }}>
-      Loading analytics…
+      {t('ReactUI.LoadingAnalytics', 'Loading analytics…')}
     </div>
   )
 }

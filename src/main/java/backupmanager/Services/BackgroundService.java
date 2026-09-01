@@ -16,35 +16,26 @@ import org.slf4j.LoggerFactory;
 import backupmanager.BackupOperations;
 import backupmanager.Entities.BackupExecutionContext;
 import backupmanager.Entities.BackupRequest;
-import backupmanager.Entities.BackupUIContext;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Json.JsonConfig;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.Controllers.TrayController;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
 
     private ScheduledExecutorService scheduler;
 
-    private TrayController trayIcon;
     private final JsonConfig jsonConfig = JsonConfig.getInstance();
     private final AtomicBoolean isBackingUp = new AtomicBoolean(false);
 
     public void start() throws IOException {
-        start(null);
-    }
-
-    public void start(TrayController trayIcon) throws IOException {
         if (isRunning()) {
             logger.warn("BackgroundService already running");
             return;
         }
-
-        this.trayIcon = trayIcon;
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Backup-Background-Service"));
 
@@ -118,26 +109,14 @@ public class BackgroundService {
         }
 
         private void executeBackups(List<ConfigurationBackup> backups) {
-            java.awt.TrayIcon icon = (trayIcon != null) ? trayIcon.getTrayIcon() : null;
-            Runnable task = () -> {
-                try {
-                    for (ConfigurationBackup backup : backups) {
-                        ZippingContext context = new ZippingContext(
-                            BackupExecutionContext.create(backup),
-                            new BackupUIContext(icon, null, null, null, null)
-                        );
-                        BackupOperations.requestSingleBackup(context, BackupTriggerType.SCHEDULER);
-                    }
-                } finally {
-                    logger.info("All backups completed. Resetting isBackingUp flag.");
-                    isBackingUp.set(false);
+            try {
+                for (ConfigurationBackup backup : backups) {
+                    ZippingContext context = new ZippingContext(BackupExecutionContext.create(backup));
+                    BackupOperations.requestSingleBackup(context, BackupTriggerType.SCHEDULER);
                 }
-            };
-
-            if (trayIcon != null) {
-                javax.swing.SwingUtilities.invokeLater(task);
-            } else {
-                task.run();
+            } finally {
+                logger.info("All backups completed. Resetting isBackingUp flag.");
+                isBackingUp.set(false);
             }
         }
     }

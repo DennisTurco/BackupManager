@@ -36,6 +36,12 @@ export interface BackupRequest {
   errorMessage: string | null
 }
 
+export interface SubscriptionInfo {
+  status: 'NONE' | 'ACTIVE' | 'EXPIRATION' | 'EXPIRED'
+  validFrom: string | null
+  validUntil: string | null
+}
+
 export interface AnalyticsSnapshot {
   totalRequests: number
   successCount: number

@@ -1,94 +1,46 @@
-import { Check, Zap, Shield, Clock, HardDrive, Mail } from 'lucide-react'
+import { useState } from 'react'
+import { Shield, AlertTriangle, AlertOctagon, Mail, Send, Check, Lock } from 'lucide-react'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import { useConfig } from '../context/ConfigContext'
-
-const FREE_FEATURES = [
-  'Up to 5 backup configurations',
-  'Manual and scheduled backups',
-  'Light / Dark theme',
-  'Multilingual support (EN, IT, DE, ES, FR)',
-  'Backup history & log viewer',
-  'Tray icon with background service',
-]
-
-const PRO_FEATURES = [
-  'Unlimited backup configurations',
-  'Everything in Free',
-  'Email notifications on completion / failure',
-  'Priority support',
-  'Advanced analytics & reports',
-  'Cloud destination support (coming soon)',
-]
+import { useTranslation } from '../context/TranslationContext'
+import { subscriptionApi } from '../services/api'
+import type { SubscriptionInfo } from '../types'
 
 export default function SubscriptionPage() {
   const cfg = useConfig()
+  const { t } = useTranslation()
+  const { data: sub, isLoading } = useQuery({
+    queryKey: ['subscription-status'],
+    queryFn: subscriptionApi.getStatus,
+    refetchInterval: 60_000,
+  })
+
+  const [confirming, setConfirming] = useState(false)
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       {/* Header */}
       <div className="page-header">
         <div>
-          <div className="page-title">Subscription</div>
-          <div className="page-desc">Your current plan and available upgrades</div>
+          <div className="page-title">{t('ReactUI.SubscriptionTitle', 'Subscription')}</div>
+          <div className="page-desc">{t('ReactUI.SubscriptionDesc', 'Stato reale della subscription e dei backup automatici')}</div>
         </div>
       </div>
 
-      {/* Current plan banner */}
-      <div className="card" style={{
-        padding: '18px 22px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        borderColor: 'var(--accent)',
-        background: 'rgba(33,150,243,.07)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: 'rgba(33,150,243,.18)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--accent)',
-          }}>
-            <Shield size={20} />
-          </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>Free plan</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
-              You are on the free tier — no expiration
-            </div>
-          </div>
+      {/* Current status */}
+      {isLoading ? (
+        <div className="card" style={{ padding: '18px 22px', color: 'var(--text-muted)', fontSize: 13 }}>
+          Caricamento…
         </div>
-        <span className="badge badge-accent" style={{ fontSize: 12, padding: '4px 12px' }}>Active</span>
-      </div>
+      ) : sub ? (
+        <SubscriptionBanner sub={sub} onRequestRenewal={() => setConfirming(true)} />
+      ) : (
+        <div className="card" style={{ padding: '18px 22px', color: 'var(--error)', fontSize: 13 }}>
+          Impossibile recuperare lo stato della subscription.
+        </div>
+      )}
 
-      {/* Stats strip */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-        <StatCard icon={<HardDrive size={16} />} color="#2196f3" label="Backup configs" value="Free · up to 5" />
-        <StatCard icon={<Clock size={16} />}     color="#5aad4e" label="Scheduler"      value="Included" />
-        <StatCard icon={<Mail size={16} />}       color="#e8a735" label="Notifications"  value="Pro only" />
-      </div>
-
-      {/* Plans */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <PlanCard
-          name="Free"
-          price="€0"
-          period="forever"
-          features={FREE_FEATURES}
-          current
-          accentColor="var(--border)"
-          badgeLabel="Current plan"
-        />
-        <PlanCard
-          name="Pro"
-          price="€4.99"
-          period="per month"
-          features={PRO_FEATURES}
-          accentColor="var(--accent)"
-          badgeLabel="Upgrade"
-          onUpgrade={() => {
-            /* open external purchase URL */
-          }}
-        />
-      </div>
-
-      {/* Footer note */}
+      {/* Footer: donation + contact us */}
       {(cfg.links.donatePaypal || cfg.links.donateBuymeacoffee) && cfg.menuItems.Donate !== false && (
         <div style={{ display: 'flex', justifyContent: 'center', gap: 10 }}>
           {cfg.links.donatePaypal && cfg.menuItems.PaypalDonate !== false && (
@@ -104,103 +56,186 @@ export default function SubscriptionPage() {
         </div>
       )}
       <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
-        Questions? Contact us at{' '}
+        {t('General.ContactUs', 'Questions? Contact us')} at{' '}
         <a href={`mailto:${cfg.email || 'dennisturco@gmail.com'}`} style={{ color: 'var(--accent)', textDecoration: 'none' }}>
           {cfg.email || 'dennisturco@gmail.com'}
         </a>
       </p>
+
+      {confirming && (
+        <RenewalConfirmModal onClose={() => setConfirming(false)} />
+      )}
     </div>
   )
 }
 
-/* ─── Sub-components ─────────────────────────────────────────────────────── */
+/* ─── Status banner ──────────────────────────────────────────────────────── */
 
-function StatCard({ icon, color, label, value }: {
-  icon: React.ReactNode; color: string; label: string; value: string
-}) {
+function fmtDate(iso: string | null) {
+  return iso ? new Date(iso).toLocaleDateString() : null
+}
+
+const BANNER_BY_STATUS: Record<SubscriptionInfo['status'], {
+  icon: React.ReactNode; color: string; bg: string
+  titleKey: string; titleFallback: string; badgeKey: string; badgeFallback: string
+}> = {
+  NONE: {
+    icon: <Shield size={20} />, color: 'var(--accent)', bg: 'rgba(33,150,243,.07)',
+    titleKey: 'ReactUI.BannerTitleNone', titleFallback: 'Subscription non richiesta',
+    badgeKey: 'ReactUI.BannerBadgeNone', badgeFallback: 'Non richiesta',
+  },
+  ACTIVE: {
+    icon: <Shield size={20} />, color: 'var(--success)', bg: 'rgba(90,173,78,.08)',
+    titleKey: 'ReactUI.BannerTitleActive', titleFallback: 'Subscription attiva',
+    badgeKey: 'ReactUI.BannerBadgeActive', badgeFallback: 'Attiva',
+  },
+  EXPIRATION: {
+    icon: <AlertTriangle size={20} />, color: 'var(--warning)', bg: 'rgba(232,167,53,.1)',
+    titleKey: 'ReactUI.BannerTitleExpiration', titleFallback: 'Subscription in scadenza',
+    badgeKey: 'ReactUI.BannerBadgeExpiration', badgeFallback: 'In scadenza',
+  },
+  EXPIRED: {
+    icon: <AlertOctagon size={20} />, color: 'var(--error)', bg: 'rgba(224,82,82,.1)',
+    titleKey: 'ReactUI.BannerTitleExpired', titleFallback: 'Subscription scaduta',
+    badgeKey: 'ReactUI.BannerBadgeExpired', badgeFallback: 'Scaduta',
+  },
+}
+
+function BenefitItem({ enabled, label }: { enabled: boolean; label: string }) {
   return (
-    <div className="card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 12 }}>
-      <div style={{
-        width: 34, height: 34, borderRadius: 8,
-        background: `${color}22`, color,
-        display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-      }}>
-        {icon}
-      </div>
-      <div>
-        <div className="section-label" style={{ marginBottom: 3 }}>{label}</div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{value}</div>
-      </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: enabled ? 'var(--text)' : 'var(--text-dim)' }}>
+      {enabled
+        ? <Check size={13} color="var(--success)" />
+        : <Lock size={11} color="var(--text-dim)" />}
+      {label}
     </div>
   )
 }
 
-function PlanCard({ name, price, period, features, current, accentColor, badgeLabel, onUpgrade }: {
-  name: string; price: string; period: string; features: string[]
-  current?: boolean; accentColor: string; badgeLabel: string
-  onUpgrade?: () => void
-}) {
+function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; onRequestRenewal: () => void }) {
+  const { t } = useTranslation()
+  const cfg = BANNER_BY_STATUS[sub.status]
+  const from = fmtDate(sub.validFrom)
+  const to = fmtDate(sub.validUntil)
+
   return (
     <div className="card" style={{
-      padding: '22px 24px',
-      border: `1px solid ${current ? 'var(--border)' : 'var(--accent)'}`,
-      background: current ? 'var(--bg-2)' : 'rgba(33,150,243,.05)',
-      display: 'flex', flexDirection: 'column', gap: 18,
+      padding: '18px 22px',
+      display: 'flex', flexDirection: 'column', gap: 14,
+      borderColor: cfg.color,
+      background: cfg.bg,
     }}>
-      {/* Plan header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text)' }}>{name}</div>
-          <div style={{ marginTop: 6 }}>
-            <span style={{ fontSize: 26, fontWeight: 800, color: accentColor === 'var(--border)' ? 'var(--text)' : 'var(--accent)' }}>
-              {price}
-            </span>
-            <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 5 }}>{period}</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: `${cfg.color}22`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: cfg.color, flexShrink: 0,
+          }}>
+            {cfg.icon}
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{t(cfg.titleKey, cfg.titleFallback)}</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
+              {sub.status === 'NONE' && t('ReactUI.StatusDescNone', "Questa installazione non richiede una subscription: tutte le funzionalità sono sempre attive.")}
+              {sub.status === 'ACTIVE' && t('ReactUI.StatusDescActive', 'Subscription attiva: hai accesso a tutte le funzionalità Pro.')}
+              {sub.status === 'EXPIRATION' && t('ReactUI.StatusDescExpiration', 'Le funzionalità Pro sono ancora attive, ma la subscription sta per scadere.')}
+              {sub.status === 'EXPIRED' && t('ReactUI.StatusDescExpired', 'Le funzionalità Pro sono in pausa. I backup manuali restano sempre disponibili.')}
+            </div>
           </div>
         </div>
-        {!current && (
-          <div style={{
-            padding: '3px 10px', borderRadius: 99,
-            background: 'rgba(33,150,243,.15)', color: 'var(--accent)',
-            fontSize: 11, fontWeight: 600,
-          }}>
-            <Zap size={11} style={{ display: 'inline', marginRight: 4, verticalAlign: 'middle' }} />
-            {badgeLabel}
-          </div>
-        )}
-        {current && (
-          <div style={{
-            padding: '3px 10px', borderRadius: 99,
-            background: 'var(--bg-3)', color: 'var(--text-muted)',
-            fontSize: 11, fontWeight: 600,
-          }}>
-            {badgeLabel}
-          </div>
-        )}
+        <span className="badge" style={{ fontSize: 12, padding: '4px 12px', background: `${cfg.color}22`, color: cfg.color, flexShrink: 0 }}>
+          {t(cfg.badgeKey, cfg.badgeFallback)}
+        </span>
       </div>
 
-      {/* Features */}
-      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 9 }}>
-        {features.map(f => (
-          <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-            <Check size={13} color="var(--success)" style={{ flexShrink: 0, marginTop: 1 }} />
-            <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>{f}</span>
-          </li>
-        ))}
-      </ul>
+      {/* What an active subscription unlocks */}
+      <div style={{
+        display: 'flex', flexWrap: 'wrap', gap: 16,
+        borderTop: `1px solid ${cfg.color}33`, paddingTop: 12,
+      }}>
+        <BenefitItem enabled={sub.status !== 'EXPIRED'} label={t('ReactUI.BenefitAutoBackups', 'Backup automatici')} />
+        <BenefitItem enabled={sub.status !== 'EXPIRED'} label={t('ReactUI.BenefitAnalyticsDashboard', 'Dashboard Analytics')} />
+        <BenefitItem enabled={sub.status !== 'EXPIRED'} label={t('ReactUI.BenefitPriorityAssistance', 'Assistenza prioritaria')} />
+      </div>
 
-      {/* CTA */}
-      {onUpgrade ? (
-        <button className="btn btn-primary" onClick={onUpgrade}
-          style={{ justifyContent: 'center', padding: '8px 0', marginTop: 'auto' }}>
-          <Zap size={13} /> Upgrade to Pro
-        </button>
-      ) : (
-        <button className="btn btn-ghost" disabled
-          style={{ justifyContent: 'center', padding: '8px 0', marginTop: 'auto' }}>
-          Current plan
-        </button>
+      {/* Duration — only meaningful while not expired */}
+      {sub.status !== 'EXPIRED' && sub.status !== 'NONE' && (from || to) && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          fontSize: 12, color: 'var(--text-muted)',
+          borderTop: `1px solid ${cfg.color}33`, paddingTop: 12,
+        }}>
+          <span>{t('ReactUI.DurationLabel', 'Durata')}:</span>
+          <strong style={{ color: 'var(--text)' }}>{from ?? '—'}</strong>
+          <span>→</span>
+          <strong style={{ color: 'var(--text)' }}>{to ?? '—'}</strong>
+        </div>
       )}
+
+      {/* Renewal request — only when expired */}
+      {sub.status === 'EXPIRED' && (
+        <div style={{ borderTop: `1px solid ${cfg.color}33`, paddingTop: 12 }}>
+          <button className="btn btn-primary" onClick={onRequestRenewal}>
+            <Mail size={13} /> {t('ReactUI.RequestRenewalButton', 'Richiedi rinnovo')}
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ─── Renewal confirmation modal ─────────────────────────────────────────── */
+
+function RenewalConfirmModal({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation()
+  const [sent, setSent] = useState(false)
+  const mutation = useMutation({
+    mutationFn: subscriptionApi.requestRenewal,
+    onSuccess: () => setSent(true),
+  })
+
+  return (
+    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose() }}>
+      <div className="modal-box" style={{ maxWidth: 420 }}>
+        {!sent ? (
+          <>
+            <div className="modal-title">{t('ReactUI.ModalTitleRequest', 'Richiedi rinnovo subscription')}</div>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 6 }}>
+              {t('ReactUI.ModalBodyRequest', "Verrà inviata un'email all'assistenza con i tuoi dati utente e lo stato attuale della subscription, per richiedere un prolungamento del rinnovo.")}
+            </p>
+            {mutation.isError && (
+              <div style={{ fontSize: 12, color: 'var(--error)', background: 'rgba(224,82,82,.1)',
+                border: '1px solid rgba(224,82,82,.25)', borderRadius: 5, padding: '7px 10px', marginBottom: 6 }}>
+                {t('ReactUI.ModalSendError', 'Invio non riuscito. Riprova più tardi.')}
+              </div>
+            )}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 8 }}>
+              <button type="button" className="btn btn-ghost" onClick={onClose} disabled={mutation.isPending}>
+                {t('General.CancelButton', 'Annulla')}
+              </button>
+              <button
+                type="button" className="btn btn-primary"
+                onClick={() => mutation.mutate()}
+                disabled={mutation.isPending}
+              >
+                <Send size={13} /> {mutation.isPending ? t('ReactUI.ModalSending', 'Invio…') : t('ReactUI.ModalConfirmSend', 'Conferma e invia')}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="modal-title">{t('ReactUI.ModalTitleSent', 'Richiesta inviata')}</div>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
+              {t('ReactUI.ModalBodySent', "La richiesta di rinnovo è stata inviata all'assistenza. Verrai ricontattato al più presto.")}
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button type="button" className="btn btn-primary" onClick={onClose}>{t('General.CloseButton', 'Chiudi')}</button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -5,7 +5,8 @@ import backupmanager.Enums.utils.EnumUtil;
 
 public enum EmailType implements CodeEnum {
     WELCOME(1),
-    CRITICAL_ERROR(2);
+    CRITICAL_ERROR(2),
+    SUBSCRIPTION_RENEWAL_REQUEST(3);
 
     private final int code;
 

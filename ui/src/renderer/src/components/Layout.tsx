@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, Database, ScrollText, Settings, Sun, Moon, Github, CreditCard, Loader, CheckCircle } from 'lucide-react'
+import { LayoutDashboard, Database, ScrollText, Settings, Sun, Moon, Github, CreditCard, Loader, CheckCircle, Lock, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../context/ThemeContext'
 import { useConfig } from '../context/ConfigContext'
+import { useSubscription } from '../context/SubscriptionContext'
+import { useTranslation } from '../context/TranslationContext'
 import { historyApi, backupApi } from '../services/api'
-import type { BackupRequest } from '../types'
 
 interface Toast { id: number; text: string }
 
@@ -13,6 +14,19 @@ export default function Layout() {
   const { theme, toggle } = useTheme()
   const cfg = useConfig()
   const m = cfg.menuItems
+  const { isLocked: subscriptionLocked } = useSubscription()
+  const { t } = useTranslation()
+
+  const [collapsed, setCollapsed] = useState(() => {
+    try { return localStorage.getItem('sidebarCollapsed') === 'true' } catch { return false }
+  })
+  const toggleCollapsed = () => {
+    setCollapsed(prev => {
+      const next = !prev
+      try { localStorage.setItem('sidebarCollapsed', String(next)) } catch { /* ignore */ }
+      return next
+    })
+  }
 
   const [toasts, setToasts] = useState<Toast[]>([])
   const addToast = (text: string) => {
@@ -34,91 +48,105 @@ export default function Layout() {
     refetchInterval: 2000,
   })
 
-  // Map of requestId → configurationId for the previous poll, so we can name completed backups
-  const prevRunningRef = useRef<Map<number, number>>(new Map())
+  // Detect completions by watching each backup's lastBackupDate rather than diffing the
+  // running-list poll — a fast backup can start and finish between two 2s polls of that list
+  // and would otherwise never be seen as "running" at all, so no toast would ever fire for it.
+  const prevLastBackupDatesRef = useRef<Map<number, string | null> | null>(null)
 
   useEffect(() => {
-    const prev = prevRunningRef.current
+    const prev = prevLastBackupDatesRef.current
 
-    // Any request that was running before but is no longer in the running list → completed
-    prev.forEach((configId, requestId) => {
-      if (!running.some((r: BackupRequest) => r.backupRequestId === requestId)) {
-        const backup = backups.find(b => b.id === configId)
-        addToast(backup ? `Backup "${backup.name}" completed` : 'Backup completed')
+    if (prev) {
+      for (const backup of backups) {
+        const prevDate = prev.get(backup.id)
+        if (prevDate !== undefined && prevDate !== backup.lastBackupDate && backup.lastBackupDate) {
+          addToast(t('ReactUI.BackupCompletedToast', 'Backup "{name}" completed').replace('{name}', backup.name))
+        }
       }
-    })
+    }
 
-    prevRunningRef.current = new Map(
-      running.map((r: BackupRequest) => [r.backupRequestId, r.backupConfigurationId])
-    )
-  }, [running])
+    prevLastBackupDatesRef.current = new Map(backups.map(b => [b.id, b.lastBackupDate]))
+  }, [backups]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const mainNav = [
-    m.BackupList !== false && { to: '/backups',   label: 'Backup Configurations', icon: Database },
-    m.Dashboard  !== false && { to: '/dashboard', label: 'Dashboard',              icon: LayoutDashboard },
-  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType }[]
+    m.BackupList !== false && { to: '/backups',   label: t('ReactUI.NavBackupConfigurations', 'Backup Configurations'), icon: Database },
+    m.Dashboard  !== false && { to: '/dashboard', label: t('ReactUI.NavDashboard', 'Dashboard'),                        icon: LayoutDashboard, locked: subscriptionLocked },
+  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType; locked?: boolean }[]
 
   const otherNav = [
-    m.History !== false && { to: '/history',      label: 'History',      icon: ScrollText },
-    { to: '/subscription', label: 'Subscription', icon: CreditCard },
-    m.Settings !== false && { to: '/settings',    label: 'Settings',     icon: Settings },
-  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType }[]
+    m.History !== false && { to: '/history',      label: t('ReactUI.NavHistory', 'History'),           icon: ScrollText },
+    { to: '/subscription', label: t('ReactUI.NavSubscription', 'Subscription'), icon: CreditCard },
+    m.Settings !== false && { to: '/settings',    label: t('ReactUI.NavSettings', 'Settings'),          icon: Settings },
+  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType; locked?: boolean }[]
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'var(--bg-0)' }}>
       {/* ── Sidebar ──────────────────────────────────────────────── */}
       <aside style={{
-        width: 220, flexShrink: 0,
+        width: collapsed ? 60 : 220, flexShrink: 0,
         background: 'var(--bg-1)',
         borderRight: '1px solid var(--border)',
         display: 'flex', flexDirection: 'column',
         userSelect: 'none',
+        transition: 'width 0.15s ease',
+        overflow: 'hidden',
       }}>
         {/* Logo / app name */}
         <div style={{
-          padding: '18px 16px 14px',
+          padding: collapsed ? '18px 0 14px' : '18px 16px 14px',
           borderBottom: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', gap: 10,
+          justifyContent: collapsed ? 'center' : 'flex-start',
         }}>
-          <div style={{
-            width: 30, height: 30, borderRadius: 8,
-            background: 'var(--accent)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <Database size={16} color="#fff" />
-          </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text)' }}>Backup Manager</div>
-          </div>
+          <img
+            src="/icon.png"
+            alt=""
+            style={{ width: 30, height: 30, borderRadius: 8, flexShrink: 0, objectFit: 'contain' }}
+          />
+          {!collapsed && (
+            <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
+              <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text)' }}>Backup Manager</div>
+              {cfg.email && (
+                <div style={{ fontSize: 10, color: 'var(--text-dim)' }}>{cfg.email}</div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Navigation */}
-        <nav style={{ flex: 1, padding: '8px 6px', overflowY: 'auto' }}>
-          <div className="section-label" style={{ padding: '12px 10px 6px' }}>Main</div>
-          {mainNav.map(({ to, label, icon: Icon }) => (
-            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} />
+        <nav style={{ flex: 1, padding: '8px 6px', overflowY: 'auto', overflowX: 'hidden' }}>
+          {!collapsed && <div className="section-label" style={{ padding: '12px 10px 6px' }}>Main</div>}
+          {mainNav.map(({ to, label, icon: Icon, locked }) => (
+            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} locked={locked} collapsed={collapsed} />
           ))}
 
-          <div className="section-label" style={{ padding: '16px 10px 6px' }}>Other</div>
+          {!collapsed && <div className="section-label" style={{ padding: '16px 10px 6px' }}>Other</div>}
           {otherNav.map(({ to, label, icon: Icon }) => (
-            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} />
+            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} collapsed={collapsed} />
           ))}
         </nav>
 
         {/* Footer */}
         <div style={{
           borderTop: '1px solid var(--border)',
-          padding: '10px 10px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px',
+          display: 'flex', alignItems: 'center',
+          justifyContent: collapsed ? 'center' : 'space-between',
+          flexDirection: collapsed ? 'column' : 'row',
+          gap: collapsed ? 6 : 0,
         }}>
-          <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>{cfg.version ? `v${cfg.version}` : ''}</span>
-          <div style={{ display: 'flex', gap: 4 }}>
-            <IconBtn title="GitHub" onClick={() => {}}>
-              <Github size={14} />
-            </IconBtn>
-            <IconBtn title="Toggle theme" onClick={toggle}>
+          {!collapsed && <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>{cfg.version ? `v${cfg.version}` : ''}</span>}
+          <div style={{ display: 'flex', gap: 4, flexDirection: collapsed ? 'column' : 'row' }}>
+            {!collapsed && (
+              <IconBtn title={t('ReactUI.GithubTooltip', 'GitHub')} onClick={() => {}}>
+                <Github size={14} />
+              </IconBtn>
+            )}
+            <IconBtn title={t('ReactUI.ToggleThemeTooltip', 'Toggle theme')} onClick={toggle}>
               {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            </IconBtn>
+            <IconBtn title={collapsed ? t('ReactUI.ExpandSidebar', 'Espandi sidebar') : t('ReactUI.CollapseSidebar', 'Comprimi sidebar')} onClick={toggleCollapsed}>
+              {collapsed ? <ChevronsRight size={14} /> : <ChevronsLeft size={14} />}
             </IconBtn>
           </div>
         </div>
@@ -141,8 +169,8 @@ export default function Layout() {
           }}>
             <Loader size={13} className="spin" />
             {running.length === 1
-              ? `Backup in progress… (${running[0].progress ?? 0}%)`
-              : `${running.length} backups running`}
+              ? t('ReactUI.BackupProgressToast', 'Backup in progress… ({percent}%)').replace('{percent}', String(running[0].progress ?? 0))
+              : t('ReactUI.BackupsRunningToast', '{count} backups running').replace('{count}', String(running.length))}
           </div>
         )}
         <Outlet />
@@ -170,13 +198,23 @@ export default function Layout() {
   )
 }
 
-function SidebarLink({ to, label, icon }: { to: string; label: string; icon: React.ReactNode }) {
+function SidebarLink({ to, label, icon, locked, collapsed }: {
+  to: string; label: string; icon: React.ReactNode; locked?: boolean; collapsed?: boolean
+}) {
+  const { t } = useTranslation()
+  const lockedSuffix = t('ReactUI.LockedNavSuffix', 'Pro feature, subscription expired')
+  const tooltip = collapsed
+    ? (locked ? `${label} — ${lockedSuffix}` : label)
+    : (locked ? `${label} — ${lockedSuffix}` : undefined)
+
   return (
     <NavLink
       to={to}
+      title={tooltip}
       style={({ isActive }) => ({
         display: 'flex', alignItems: 'center', gap: 9,
-        padding: '7px 10px',
+        padding: collapsed ? '9px 0' : '7px 10px',
+        justifyContent: collapsed ? 'center' : 'flex-start',
         borderRadius: 6,
         marginBottom: 1,
         fontSize: 13,
@@ -189,10 +227,14 @@ function SidebarLink({ to, label, icon }: { to: string; label: string; icon: Rea
     >
       {({ isActive }) => (
         <>
-          <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-dim)', flexShrink: 0 }}>
+          <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-dim)', flexShrink: 0, position: 'relative' }}>
             {icon}
+            {locked && collapsed && (
+              <Lock size={9} color="var(--text-dim)" style={{ position: 'absolute', bottom: -3, right: -5 }} />
+            )}
           </span>
-          {label}
+          {!collapsed && <span style={{ flex: 1, whiteSpace: 'nowrap' }}>{label}</span>}
+          {locked && !collapsed && <Lock size={11} color="var(--text-dim)" style={{ flexShrink: 0 }} />}
         </>
       )}
     </NavLink>

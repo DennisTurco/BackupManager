@@ -3,16 +3,16 @@ package backupmanager.api.routes;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
-import backupmanager.Enums.ConfigKey;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import io.javalin.Javalin;
-import io.javalin.http.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import backupmanager.Enums.ConfigKey;
+import io.javalin.Javalin;
+import io.javalin.http.Context;
 
 public class ConfigRoutes {
 

@@ -10,6 +10,8 @@ import backupmanager.api.routes.BackupRoutes;
 import backupmanager.api.routes.ConfigRoutes;
 import backupmanager.api.routes.LogRoutes;
 import backupmanager.api.routes.SettingsRoutes;
+import backupmanager.api.routes.SubscriptionRoutes;
+import backupmanager.api.routes.TranslationsRoutes;
 import io.javalin.Javalin;
 import io.javalin.json.JavalinJackson;
 
@@ -19,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class ApiServer {
 
     private static final Logger logger = LoggerFactory.getLogger(ApiServer.class);
-    private static final int PORT = Integer.parseInt(System.getProperty("api.port", "7070"));
+    private static final int PORT = Integer.parseInt(System.getProperty("api.port", "7089"));
 
     private Javalin app;
 
@@ -37,12 +39,17 @@ public class ApiServer {
 
         app.get("/api/status", ctx -> ctx.json("{\"status\":\"ok\"}"));
 
-        BackupRoutes.register(app);
+        // AnalyticsRoutes registers /api/backups/running, a static path that must be
+        // matched before BackupRoutes' /api/backups/{id} — Javalin resolves ambiguous
+        // routes in registration order, not by specificity.
         AnalyticsRoutes.register(app);
+        BackupRoutes.register(app);
         SettingsRoutes.register(app);
         AuthRoutes.register(app);
         LogRoutes.register(app);
         ConfigRoutes.register(app);
+        SubscriptionRoutes.register(app);
+        TranslationsRoutes.register(app);
 
         app.exception(Exception.class, (e, ctx) -> {
             logger.error("Unhandled API error", e);

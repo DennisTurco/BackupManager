@@ -5,6 +5,8 @@ import java.util.List;
 import backupmanager.Entities.BackupAnalyticsSnapshot;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
+import backupmanager.Enums.SubscriptionStatus;
+import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Services.BackupAnalyticsService;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
@@ -22,6 +24,11 @@ public class AnalyticsRoutes {
     }
 
     private static void getSnapshot(Context ctx) {
+        // Analytics dashboard is a Pro feature, gated the same way as automatic backups
+        if (SubscriptionHelper.getSubscriptionStatus() == SubscriptionStatus.EXPIRED) {
+            ctx.status(402).json(new ErrorMsg("Subscription expired — Analytics dashboard is a Pro feature"));
+            return;
+        }
         List<BackupRequest> all = BackupRequestRepository.getRequestBackups();
         BackupAnalyticsSnapshot snapshot = BackupAnalyticsService.buildSnapshot(all);
         ctx.json(snapshot);
@@ -55,4 +62,6 @@ public class AnalyticsRoutes {
            .header("Content-Disposition", "attachment; filename=\"backups.csv\"")
            .result(sb.toString());
     }
+
+    private record ErrorMsg(String message) {}
 }

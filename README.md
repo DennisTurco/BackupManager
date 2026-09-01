@@ -10,10 +10,9 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 
 * 📁 Automatic backup of folders and subfolders
 * 🕒 Flexible scheduling for recurring backups
-* 🖱️ Simple GUI with tray icon support
+* 🖱️ Electron desktop app with tray icon support
 * 📝 Detailed logs and backup history
 * 🎨 Light/Dark themes and multilingual support (EN, IT, DE, ES, FR)
-* 🪟 Auto-start with the operating system (configurable)
 
 ## Screenshots and Videos
 
@@ -33,12 +32,12 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 
 ```
 BackupManager/
-├── src/main/java/backupmanager/   # Java backend (Maven)
-│   ├── api/                       # REST API layer (Javalin 6 on port 7070)
+├── src/main/java/backupmanager/   # Java backend (Maven), headless — no GUI
+│   ├── api/                       # REST API layer (Javalin 6 on port 7089)
 │   │   └── routes/                # BackupRoutes, AnalyticsRoutes, SettingsRoutes, LogRoutes, AuthRoutes
 │   ├── Services/                  # BackgroundService (scheduler), backup engine
 │   ├── Repositories/              # SQLite persistence via JDBC
-│   └── MainApp.java               # Entry point — GUI | background | api-server mode
+│   └── MainApp.java               # Entry point — always starts the REST API server
 └── ui/                            # Electron + React + TypeScript frontend
     ├── src/main/index.ts          # Electron main — spawns Java JAR with --api-server flag
     ├── src/preload/index.ts       # Exposes env.apiBase to the renderer
@@ -48,7 +47,7 @@ BackupManager/
         └── context/ThemeContext   # Dark / light theme
 ```
 
-**Runtime flow:** Electron spawns `java -jar BackupManager.jar --api-server` → Java starts Javalin REST server on `http://localhost:7070` → React renderer calls the API via Axios.
+**Runtime flow:** Electron spawns `java -jar BackupManager.jar --api-server` → Java starts Javalin REST server on `http://localhost:7089` → React renderer calls the API via Axios.
 
 ## Local Development Setup
 
@@ -67,15 +66,15 @@ BackupManager/
 mvn clean package -DskipTests
 ```
 
-This produces `target/BackupManager-<version>.jar`.
+This produces `target/backupmanager-jar-with-dependencies.jar`.
 
 ### 2 — Run the REST API server standalone (optional, for UI-only dev)
 
 ```bash
-java -jar target/BackupManager-*.jar --api-server
+java -jar target/backupmanager-jar-with-dependencies.jar --api-server
 ```
 
-The API will be available at `http://localhost:7070/api/status`. Keep this terminal open.
+The API will be available at `http://localhost:7089/api/status`. Keep this terminal open.
 
 ### 3 — Start the React + Electron UI
 
@@ -85,7 +84,7 @@ npm install
 npm run dev
 ```
 
-This opens Electron in development mode with hot-reload. Electron automatically spawns the Java JAR; if you are already running the JAR manually (step 2), comment out the `spawnJar` call in `src/main/index.ts` to avoid a port conflict.
+This opens Electron in development mode with hot-reload. Electron automatically spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`); if you are already running the JAR manually (step 2), comment out that call to avoid a port conflict.
 
 ### 4 — Build a distributable package
 
@@ -122,8 +121,8 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 
 ## Important Notes
 
-* If, for any reason, the setup program doesn't add the application to the startup registry (`regedit`), you can manually run "add_to_startup.bat" located in the installation folder by double-clicking it.
-* This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
+* The Java backend is fully headless — it has no window of its own and no standalone `.exe`. It's always launched by the Electron app (`spawnJavaBackend` in `ui/src/main/index.ts`), which also owns the tray icon.
+* Automatic backups only run while the Electron app is running (in the tray or foreground). There is currently no OS-level auto-start-on-boot entry configured by the installer — if you need that, add the app to your OS startup manually.
 
 ## Platforms
 

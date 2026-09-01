@@ -1,28 +1,19 @@
 package backupmanager.Helpers;
 
-import java.awt.Component;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.JOptionPane;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.BackupOperations;
 import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Enums.BackupStatus;
-import backupmanager.Enums.Translations;
-import backupmanager.Enums.Translations.TKey;
 import backupmanager.Exceptions.BackupDeletionException;
-import backupmanager.Utils.ModalUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.simple.TimePickerDialog;
-import raven.modal.component.SimpleModalBorder;
 
 public class BackupHelper {
 
@@ -33,16 +24,6 @@ public class BackupHelper {
     public static void newBackup(ConfigurationBackup backup) {
         logger.info("Event --> new backup");
         BackupConfigurationRepository.insertBackup(backup);
-    }
-
-    public static boolean deleteBackupWithConfirmition(ConfigurationBackup backup) throws BackupDeletionException {
-        logger.info("Event --> deleting backup request with confirmation for backup: {}", backup.getName());
-
-        int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_BEFORE_DELETE_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            return BackupHelper.deleteBackup(backup);
-        }
-        return false;
     }
 
     public static boolean deleteBackup(String backupName) throws BackupDeletionException {
@@ -68,29 +49,6 @@ public class BackupHelper {
         }
     }
 
-    public static TimeInterval openTimePicker() {
-        return openTimePicker(new TimePickerDialog(null));
-    }
-
-    public static TimeInterval openTimePicker(TimePickerDialog picker) {
-        picker.setVisible(true);
-        return picker.getResult();
-    }
-
-    public static void showMessageActivationAutoBackup(Component parent, TimeInterval timeInterval, String startPath, String destinationPath) {
-        String from = Translations.get(TKey.FROM);
-        String to = Translations.get(TKey.TO);
-        String activated = Translations.get(TKey.AUTO_BACKUP_ACTIVATED_MESSAGE);
-        String setted = Translations.get(TKey.SETTED_EVERY_MESSAGE);
-        String days = Translations.get(TKey.DAYS_MESSAGE);
-
-        String message =
-                activated + "\n\n" + from + ": " + startPath + "\n" + to + ": "
-                + destinationPath + "\n" + setted + " " + timeInterval.toString() + days;
-
-        ModalUtils.showInfo(parent, Translations.get(TKey.AUTO_BACKUP_MESSAGE), message, SimpleModalBorder.CLOSE_OPTION);
-    }
-
     public static LocalDateTime getNexDateBackup(TimeInterval timeInterval) {
         return LocalDateTime.now()
             .plusDays(timeInterval.days())
@@ -101,58 +59,6 @@ public class BackupHelper {
     public static void forceBackupTermination(BackupRequest request) {
         BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
         deletePartialBackup(request.outputPath());
-    }
-
-    public static ConfigurationBackup toggleAutomaticBackup(Component parent, ConfigurationBackup backup) {
-        logger.info("Event --> automatic backup");
-
-        if (backup.isAutomatic()) {
-            int response = JOptionPane.showConfirmDialog(null, Translations.get(TKey.CONFIRMATION_MESSAGE_CANCEL_AUTO_BACKUP), Translations.get(TKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (response != JOptionPane.YES_OPTION) {
-                return null;
-            }
-
-            backup.setAutomatic(false);
-            backup.setTimeIntervalBackup(null);
-            backup.setNextBackupDate(null);
-            backup.setLastUpdateDate(LocalDateTime.now());
-
-            logger.info("Automatic backup turned off");
-
-            updateBackup(backup);
-
-            return backup;
-        }
-
-        if(!BackupOperations.checkInputCorrect(backup.getName(), backup.getTargetPath(), backup.getDestinationPath(), null))
-            return null;
-
-        // backup is not automatic at this point — check if time interval needs to be configured
-        if(backup.getNextBackupDate() == null || backup.getTimeIntervalBackup() == null) {
-            if (backup.getName() == null || backup.getName().isEmpty()) return null;
-
-            // message
-            TimeInterval timeInterval = openTimePicker();
-            if (timeInterval == null) return null;
-
-            //set date for next backup
-            LocalDateTime nextDateBackup = getNexDateBackup(timeInterval);
-
-            backup.setAutomatic(true);
-            backup.setTimeIntervalBackup(timeInterval);
-            backup.setNextBackupDate(nextDateBackup);
-            backup.setLastUpdateDate(LocalDateTime.now());
-
-            logger.info("Automatic backup turned On and next date backup setted to {}", nextDateBackup);
-
-            showMessageActivationAutoBackup(parent, timeInterval, backup.getTargetPath(), backup.getDestinationPath());
-
-            updateBackup(backup);
-
-            return backup;
-        }
-
-        return null;
     }
 
     private static boolean deletePartialBackup(String filePath) {

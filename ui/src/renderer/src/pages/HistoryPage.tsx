@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCw, Download, ArrowDown } from 'lucide-react'
 import { logsApi } from '../services/api'
+import { useTranslation } from '../context/TranslationContext'
 
 export default function HistoryPage() {
+  const { t } = useTranslation()
   const [autoScroll, setAutoScroll] = useState(true)
   const bottomRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -34,16 +36,16 @@ export default function HistoryPage() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <div className="page-title">Application Log</div>
-          <div className="page-desc">Live view of the backup manager log file</div>
+          <div className="page-title">{t('ReactUI.HistoryTitle', 'Application Log')}</div>
+          <div className="page-desc">{t('ReactUI.HistoryDesc', 'Live view of the backup manager log file')}</div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {isFetching && (
-            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Refreshing…</span>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('ReactUI.Refreshing', 'Refreshing…')}</span>
           )}
           <button className="btn btn-ghost" onClick={() => refetch()} disabled={isFetching}>
             <RefreshCw size={13} className={isFetching ? 'spin' : ''} />
-            Refresh
+            {t('ReactUI.RefreshButton', 'Refresh')}
           </button>
           <button
             className="btn btn-ghost"
@@ -51,7 +53,7 @@ export default function HistoryPage() {
             style={{ color: autoScroll ? 'var(--accent)' : undefined }}
           >
             <ArrowDown size={13} />
-            {autoScroll ? 'Auto-scroll on' : 'Auto-scroll off'}
+            {autoScroll ? t('ReactUI.AutoScrollOn', 'Auto-scroll on') : t('ReactUI.AutoScrollOff', 'Auto-scroll off')}
           </button>
           {logContent && (
             <button
@@ -65,7 +67,7 @@ export default function HistoryPage() {
                 URL.revokeObjectURL(a.href)
               }}
             >
-              <Download size={13} /> Download
+              <Download size={13} /> {t('ReactUI.DownloadButton', 'Download')}
             </button>
           )}
         </div>
@@ -87,11 +89,11 @@ export default function HistoryPage() {
       >
         {isLoading ? (
           <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-muted)' }}>
-            Loading log…
+            {t('ReactUI.LoadingLog', 'Loading log…')}
           </div>
         ) : lines.length === 0 ? (
           <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-muted)' }}>
-            Log file is empty.
+            {t('ReactUI.LogEmpty', 'Log file is empty.')}
           </div>
         ) : (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>

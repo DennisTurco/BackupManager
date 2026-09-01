@@ -1,6 +1,5 @@
 package backupmanager;
 
-import java.awt.TrayIcon;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,11 +8,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileSystemView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,34 +18,24 @@ import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ErrorType;
-import backupmanager.Enums.Translations;
-import backupmanager.Enums.Translations.TKey;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Utils.FolderUtils;
-import backupmanager.Utils.ModalUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
-import backupmanager.gui.menu.DrawerManager;
-import raven.modal.component.SimpleModalBorder;
 
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
 
     public static void requestSingleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
-        switch (triggeredBy) {
-            case USER -> {
-                if (!BackupRequestRepository.isAnyBackupRunning())
-                    singleBackup(context, triggeredBy);
-                else
-                    ModalUtils.showWarning(DrawerManager.getInstance().getParent(), Translations.get(TKey.WARNING_GENERIC_TITLE), Translations.get(TKey.WARNING_BACKUP_ALREADY_IN_PROGRESS_MESSAGE), SimpleModalBorder.CLOSE_OPTION);
-            }
-            case SCHEDULER -> singleBackup(context, triggeredBy);
-            case API -> singleBackup(context, triggeredBy);
+        if (BackupRequestRepository.isAnyBackupRunning()) {
+            logger.warn("A backup is already running. Skipping this request (triggeredBy={}).", triggeredBy);
+            return;
         }
+        singleBackup(context, triggeredBy);
     }
 
     private static void singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
@@ -63,11 +47,8 @@ public class BackupOperations {
             String path1 = context.execution().backup().getTargetPath();
             String path2 = context.execution().backup().getDestinationPath();
 
-            if(!checkInputCorrect(context.execution().backup().getName(), path1, path2, context.ui().trayIcon()))
+            if(!checkInputCorrect(context.execution().backup().getName(), path1, path2))
                 return;
-
-            if (context.ui().progressBar() != null)
-                context.ui().progressBar().setVisible(true);
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
@@ -81,7 +62,6 @@ public class BackupOperations {
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-            reEnableButtonsAndTable(context);
         }
     }
 
@@ -115,8 +95,6 @@ public class BackupOperations {
 
         logger.info("Backup completed!");
 
-        reEnableButtonsAndTable(context);
-
         // next day backup update
         if (context.execution().backup().isAutomatic()) {
             TimeInterval time = context.execution().backup().getTimeIntervalBackup();
@@ -142,53 +120,25 @@ public class BackupOperations {
             BackupHelper.updateBackup(context.execution().backup());
 
             logger.info("Backup :\"" + context.execution().backup().getName() + "\" updated after the backup");
-
-            if (context.ui().trayIcon() != null)
-                context.ui().trayIcon().displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + context.execution().backup().getName() + Translations.get(TKey.SUCCESS_MESSAGE) + "\n" + Translations.get(TKey.FROM) + ": " + path1 + "\n" + Translations.get(TKey.TO) + ": " + path2, TrayIcon.MessageType.INFO);
         } catch (IllegalArgumentException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
-    public static String pathSearchWithFileChooser(boolean allowFiles) {
-        logger.debug("File chooser, files allowed: {}", allowFiles);
-
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-
-        if (allowFiles)
-            jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        else
-            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        int returnValue = jfc.showSaveDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-
-            if (selectedFile.isDirectory())
-                logger.info("You selected the directory: " + selectedFile);
-            else if (selectedFile.isFile())
-                logger.info("You selected the file: " + selectedFile);
-
-            return selectedFile.toString();
-        }
-
-        return null;
-    }
-
-    public static boolean checkInputCorrect(String backupName, String path1, String path2, TrayIcon trayIcon) {
+    public static boolean checkInputCorrect(String backupName, String path1, String path2) {
         if(path1 == null || path2 == null || path1.isEmpty() || path2.isEmpty()) {
-            setError(ErrorType.InputMissing, trayIcon, backupName);
+            setError(ErrorType.InputMissing, backupName);
             return false;
         }
 
         if (!Files.exists(Path.of(path1)) || !Files.exists(Path.of(path2))) {
-            setError(ErrorType.InputError, trayIcon, backupName);
+            setError(ErrorType.InputError, backupName);
             return false;
         }
 
         if (path1.equals(path2)) {
-            setError(ErrorType.SamePaths, trayIcon, backupName);
+            setError(ErrorType.SamePaths, backupName);
             return false;
         }
 
@@ -196,24 +146,12 @@ public class BackupOperations {
     }
 
     public static void reEnableButtonsAndTable(ZippingContext context) {
-        if (context.ui().interruptBackupPopupItem() != null) context.ui().interruptBackupPopupItem().setEnabled(false);
-        if (context.ui().deleteBackupPopupItem() != null) context.ui().deleteBackupPopupItem().setEnabled(true);
-
         RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.execution().backup().getId());
-
-        if (context.ui().backupTableService() != null)
-            context.ui().backupTableService().removeProgress(context.execution().backup());
     }
 
     public static void updateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
         if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
             logger.info("Zipping progress: " + value + "%");
-
-        if (context.ui().progressBar() != null)
-            context.ui().progressBar().updateProgressBar(value, fileProcessed, filesCopiedSoFar, totalFilesCount);
-
-        if (context.ui().backupTableService() != null)
-            context.ui().backupTableService().updateProgress(context.execution().backup(), value);
 
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.execution().backup().getId());
         if (request != null) {
@@ -297,58 +235,15 @@ public class BackupOperations {
         }
     }
 
-    public static void setError(ErrorType error, TrayIcon trayIcon, String backupName) {
-        boolean headless = GraphicsEnvironment.isHeadless();
+    public static void setError(ErrorType error, String backupName) {
         switch (error) {
-            case InputMissing -> {
-                logger.warn("Input Missing!");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_INPUT_MISSING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case InputError -> {
-                logger.warn("Input Error! One or both paths do not exist.");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_FILES_NOT_EXISTING), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_PATH_NOT_EXISTING), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case SamePaths -> {
-                logger.warn("The initial path and destination path cannot be the same. Please choose different paths");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_SAME_PATHS_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case ErrorCountingFiles -> {
-                logger.warn("Error during counting files in directory");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_COUNTING_FILES), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case ZippingGenericError -> {
-                logger.warn("Error during zipping directory");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_GENERIC), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case ZippingIOError -> {
-                logger.warn("I/O error occurred while zipping directory");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_IO), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
-            case ZippingSecurityError -> {
-                logger.warn("Security exception while zipping directory");
-                if (trayIcon != null)
-                    trayIcon.displayMessage(Translations.get(TKey.APP_NAME), Translations.get(TKey.BACKUP) + ": " + backupName + Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), TrayIcon.MessageType.ERROR);
-                else if (!headless)
-                    JOptionPane.showMessageDialog(null, Translations.get(TKey.ERROR_MESSAGE_ZIPPING_SECURITY), Translations.get(TKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            }
+            case InputMissing -> logger.warn("Input Missing! Backup: {}", backupName);
+            case InputError -> logger.warn("Input Error! One or both paths do not exist. Backup: {}", backupName);
+            case SamePaths -> logger.warn("The initial path and destination path cannot be the same. Backup: {}", backupName);
+            case ErrorCountingFiles -> logger.warn("Error during counting files in directory. Backup: {}", backupName);
+            case ZippingGenericError -> logger.warn("Error during zipping directory. Backup: {}", backupName);
+            case ZippingIOError -> logger.warn("I/O error occurred while zipping directory. Backup: {}", backupName);
+            case ZippingSecurityError -> logger.warn("Security exception while zipping directory. Backup: {}", backupName);
             default -> throw new IllegalArgumentException("Error type not recognized: " + error);
         }
     }

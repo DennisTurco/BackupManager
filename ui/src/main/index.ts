@@ -1,8 +1,8 @@
-import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog } from 'electron'
+import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog, Notification } from 'electron'
 import { join } from 'path'
 import { spawn, ChildProcess } from 'child_process'
 
-const API_PORT = 7070
+const API_PORT = 7089
 const API_BASE = `http://localhost:${API_PORT}`
 const JAR_PATH = app.isPackaged
   ? join(process.resourcesPath, 'backend.jar')
@@ -13,7 +13,10 @@ let tray: Tray | null = null
 let javaProcess: ChildProcess | null = null
 
 function spawnJavaBackend(): void {
+  const cwd = app.isPackaged ? process.resourcesPath : join(__dirname, '../../..')
+
   javaProcess = spawn('java', ['-jar', JAR_PATH, '--api-server'], {
+    cwd,
     stdio: ['ignore', 'pipe', 'pipe']
   })
 
@@ -37,6 +40,36 @@ async function waitForApi(maxWaitMs = 30_000): Promise<void> {
     await new Promise((r) => setTimeout(r, 500))
   }
   throw new Error('Java backend did not start in time')
+}
+
+let lastNotifiedSubscriptionStatus: string | null = null
+
+async function checkSubscriptionStatus(): Promise<void> {
+  try {
+    const res = await fetch(`${API_BASE}/api/subscription/status`)
+    if (!res.ok) return
+    const { status } = (await res.json()) as { status: string; validUntil: string | null }
+
+    // Only notify once per status change, not on every poll
+    if (status === lastNotifiedSubscriptionStatus) return
+    lastNotifiedSubscriptionStatus = status
+
+    if (status === 'EXPIRED') {
+      new Notification({
+        title: 'BackupManager — Subscription expired',
+        body: 'Automatic backups are paused until you renew. Manual backups are still available.',
+        icon: appIcon()
+      }).show()
+    } else if (status === 'EXPIRATION') {
+      new Notification({
+        title: 'BackupManager — Subscription expiring soon',
+        body: 'Renew soon to keep automatic backups running without interruption.',
+        icon: appIcon()
+      }).show()
+    }
+  } catch {
+    // API not reachable yet — ignore, next poll will retry
+  }
 }
 
 function appIcon(): Electron.NativeImage {
@@ -115,6 +148,9 @@ app.whenReady().then(async () => {
 
   createWindow()
   createTray()
+
+  checkSubscriptionStatus()
+  setInterval(checkSubscriptionStatus, 6 * 60 * 60 * 1000) // re-check every 6 hours
 })
 
 app.on('before-quit', () => {

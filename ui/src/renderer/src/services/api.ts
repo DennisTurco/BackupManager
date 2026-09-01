@@ -5,11 +5,12 @@ import type {
   BackupConfig,
   BackupRequest,
   CreateBackupPayload,
+  SubscriptionInfo,
   User
 } from '../types'
 
 const client = axios.create({
-  baseURL: 'http://localhost:7070',
+  baseURL: 'http://localhost:7089',
   headers: { 'Content-Type': 'application/json' }
 })
 
@@ -33,6 +34,17 @@ export const historyApi = {
   getByConfig: (configId: number) =>
     client.get<BackupRequest[]>(`/api/history/${configId}`).then((r) => r.data),
   getRunning: () => client.get<BackupRequest[]>('/api/backups/running').then((r) => r.data),
+}
+
+export const translationsApi = {
+  getLanguages: () => client.get<{ code: string; label: string }[]>('/api/translations/languages').then((r) => r.data),
+  getTranslations: (code: string) =>
+    client.get<Record<string, Record<string, string>>>(`/api/translations/${code}`).then((r) => r.data)
+}
+
+export const subscriptionApi = {
+  getStatus: () => client.get<SubscriptionInfo>('/api/subscription/status').then((r) => r.data),
+  requestRenewal: () => client.post('/api/subscription/request-renewal').then((r) => r.data)
 }
 
 export const analyticsApi = {
@@ -71,5 +83,5 @@ export const configApi = {
 
 export const logsApi = {
   get: () =>
-    axios.get<string>('http://localhost:7070/api/logs', { responseType: 'text' }).then((r) => r.data)
+    axios.get<string>('http://localhost:7089/api/logs', { responseType: 'text' }).then((r) => r.data)
 }

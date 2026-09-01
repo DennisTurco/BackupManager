@@ -6,18 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Backup Manager",
+            "name": "API server",
             "request": "launch",
             "mainClass": "backupmanager.MainApp",
             "projectName": "backupmanager"
-        },
-        {
-            "type": "java",
-            "name": "Background service",
-            "request": "launch",
-            "mainClass": "backupmanager.MainApp",
-            "projectName": "backupmanager",
-            "args": "--background"
         }
     ]
 }

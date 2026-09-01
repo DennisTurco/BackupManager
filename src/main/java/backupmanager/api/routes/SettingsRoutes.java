@@ -31,6 +31,11 @@ public class SettingsRoutes {
         Map<String, String> result = new LinkedHashMap<>();
         for (String key : EDITABLE_KEYS) {
             String value = ConfigurationRepository.getConfigurationValueByCode(key);
+            // LANGUAGE has no seeded row until the user saves it once — fall back to the
+            // language actually active on the backend, so the picker isn't empty on first load.
+            if (value == null && "LANGUAGE".equals(key)) {
+                value = LanguageManager.getLanguage().getCode();
+            }
             result.put(key, value);
         }
         ctx.json(result);
@@ -64,12 +69,12 @@ public class SettingsRoutes {
         ctx.json(Map.of("code", code, "value", req.value()));
     }
 
-    private static void reloadLanguage(String languageName) {
+    private static void reloadLanguage(String languageCode) {
         try {
-            LanguageManager.setLanguage(languageName);
-            logger.info("Translations reloaded for language: {}", languageName);
+            LanguageManager.setLanguageByCode(languageCode);
+            logger.info("Translations reloaded for language: {}", languageCode);
         } catch (Exception ex) {
-            logger.warn("Could not reload translations for language '{}': {}", languageName, ex.getMessage());
+            logger.warn("Could not reload translations for language '{}': {}", languageCode, ex.getMessage());
         }
     }
 

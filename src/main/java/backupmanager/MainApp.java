@@ -1,21 +1,15 @@
 package backupmanager;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.util.Arrays;
-
-import javax.swing.UIManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import com.formdev.flatlaf.util.FontUtils;
-
-import backupmanager.BackupOperations;
 import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
+import backupmanager.Enums.SubscriptionStatus;
+import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
 import backupmanager.Services.BackgroundService;
@@ -24,8 +18,6 @@ import backupmanager.api.ApiServer;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
 import backupmanager.database.ProductionDatabaseInitializer;
-import backupmanager.gui.Controllers.AppController;
-import backupmanager.gui.frames.BackupManager;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -34,15 +26,8 @@ public class MainApp {
     public static void main(String[] args) {
         dataInit();
 
-        String mode = parseMode(args);
-
-        logger.info("Application started in mode: {}", mode);
-
-        switch (mode) {
-            case "background" -> runBackgroundProcess();
-            case "api-server" -> runApiServer();
-            default -> runGui();
-        }
+        logger.info("Starting API server");
+        runApiServer();
     }
 
     private static void dataInit() {
@@ -66,18 +51,6 @@ public class MainApp {
         }
     }
 
-    private static String parseMode(String[] args) {
-        if (args.length == 0) return "gui";
-        return switch (args[0].toLowerCase()) {
-            case "--background" -> "background";
-            case "--api-server" -> "api-server";
-            default -> {
-                logger.error("Argument \"{}\" not valid!", args[0]);
-                throw new IllegalArgumentException("Argument passed is not valid: " + args[0]);
-            }
-        };
-    }
-
     private static void ensureLogDirectory() {
         try {
             String logDir = System.getProperty("user.home") + "/.backupmanager/logs";
@@ -91,22 +64,20 @@ public class MainApp {
         }
     }
 
-    private static void runBackgroundProcess() {
-        try {
-            AppController.startBackgroundProcess();
-        } catch (IOException ex) {
-            logger.error("An error occurred: {}", ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
-    }
-
     private static void runApiServer() {
         System.setProperty("java.awt.headless", "true");
         try {
             BackupOperations.deletePotentiallyIncompletedBackupsFromLastExecution();
 
             BackgroundService backgroundService = new BackgroundService();
-            backgroundService.start();
+            // Automatic backups run unless a subscription is required and none is valid —
+            // manual backups (triggered via the REST API) stay available either way.
+            SubscriptionStatus subscriptionStatus = SubscriptionHelper.getSubscriptionStatus();
+            if (subscriptionStatus != SubscriptionStatus.EXPIRED) {
+                backgroundService.start();
+            } else {
+                logger.warn("Subscription expired — automatic backup scheduler not started");
+            }
 
             ApiServer apiServer = new ApiServer();
             apiServer.start();
@@ -123,22 +94,5 @@ public class MainApp {
             Thread.currentThread().interrupt();
             logger.info("API server process interrupted");
         }
-    }
-
-    private static void runGui() {
-        java.awt.EventQueue.invokeLater(() -> {
-            initLaf();
-            BackupManager.getInstance().setVisible(true);
-        });
-    }
-
-    public static void initLaf() {
-        FlatRobotoFont.install();
-        FlatLaf.registerCustomDefaultsSource(".themes");
-        UIManager.put(
-            "defaultFont",
-            FontUtils.getCompositeFont(FlatRobotoFont.FAMILY, Font.PLAIN, 13)
-        );
-        AppPreferences.setupLaf();
     }
 }

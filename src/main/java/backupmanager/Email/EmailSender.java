@@ -130,6 +130,43 @@ public class EmailSender {
         logger.info("Confirmation registration email sent to the user: " + user.toString());
     }
 
+    /**
+     * Sends a subscription renewal request email to assistance, on behalf of the current user.
+     */
+    public static void sendSubscriptionRenewalRequestEmail(User user, String subscriptionStatus, String validUntil) {
+        if (user == null) throw new IllegalArgumentException("User object cannot be null");
+
+        String subject = "Subscription renewal request";
+        String emailMessage = String.format("""
+                Subject: %s
+
+                User: %s
+                Email: %s
+                Language: %s
+                Installed Version: %s
+
+                Current subscription status: %s
+                Valid until: %s
+
+                The user is requesting a subscription renewal.
+                """,
+                subject,
+                user.getUserCompleteName(),
+                user.email(),
+                user.language(),
+                ConfigKey.VERSION.getValue(),
+                subscriptionStatus,
+                validUntil != null ? validUntil : "N/A"
+        );
+
+        // Should be info, but if you change it, it doesn't work
+        emailInfoLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
+
+        logger.info("Subscription renewal request email sent for user: " + user.toString());
+
+        insertEmailInternally(EmailType.SUBSCRIPTION_RENEWAL_REQUEST, null);
+    }
+
     private static void insertEmailInternally(EmailType type, String payload) {
         Email email = Email.createNewEmail(type, ConfigKey.VERSION.getValue(), payload);
         EmailRepository.insertEmail(email);
