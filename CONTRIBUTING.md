@@ -38,6 +38,16 @@ Thank you for your interest in contributing to **Backup Manager**! Your ideas, b
 6. **Open a Pull Request (PR)**
     Open a PR on GitHub targeting the `master` branch. Describe what you did and why.
 
+## Before Submitting a PR
+
+Run the local analysis script to check for issues before opening a PR:
+
+```powershell
+./analyze.ps1
+```
+
+The CI pipeline will run the same checks automatically and post a report as a PR comment. High-severity SpotBugs findings will block the PR with an auto-opened issue.
+
 ## Need Help?
 
 If you have questions about contributing, contact: [dennisturco@gmail.com](dennisturco@gmail.com)

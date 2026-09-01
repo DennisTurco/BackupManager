@@ -1,11 +1,11 @@
-# Tecnical Documentation
+# Technical Documentation
 
 ## Application Startup Flow
 
 ```mermaid
 graph TD
   A(((PC Startup))) --> B[Initialize Database]
-  B --> J{Subscription Nedded?}
+  B --> J{Subscription Needed?}
 
   J -->|Yes| C{Subscription Valid?}
   J -->|No| F[Start Background Service]
@@ -92,8 +92,8 @@ Backup Manager includes a lightweight subscription system used to control access
 
 ### Goals
 
-By default the Subscription is setted to `false`.
-To turn it on isrequired a manual update on "Configurations" table.
+By default the Subscription is set to `false`.
+To turn it on, a manual update on the "Configurations" table is required.
 
 The subscription mechanism is designed to be:
 
@@ -116,7 +116,7 @@ When the threshold is reached:
 
 ### Useful Queries
 
-1. You can cantrol the Subscription from the "Configurations" table.
+1. You can control the Subscription from the "Configurations" table.
    * To turn it on:
 
       ```sql
@@ -161,3 +161,40 @@ The goal is to avoid enterprise-level complexity while maintaining production-gr
 ## Build
 
 To build the project: `mvn clean install`
+
+## CI / Code Quality
+
+### GitHub Actions Workflows
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `maven.yml` | Push to `master` | Fast build check (no tests) |
+| `pr-analysis.yml` | Pull Request to `master` | Full code quality analysis |
+
+### PR Analysis Workflow
+
+On every PR, the pipeline runs four checks and posts a summary comment:
+
+| Tool | What it checks | Output file |
+|------|---------------|-------------|
+| JaCoCo | Line and branch test coverage | `target/site/jacoco/jacoco.xml` |
+| SpotBugs + find-sec-bugs | Static bugs and security vulnerabilities | `target/spotbugsXml.xml` |
+| PMD | Cyclomatic complexity, code smells | `target/pmd.xml` |
+| CPD | Duplicated code blocks (> 100 tokens) | `target/cpd.xml` |
+
+If SpotBugs finds **high-severity** bugs, a GitHub Issue is opened automatically with labels `security`, `bug`, `automated`.
+
+### Running Locally
+
+```powershell
+./analyze.ps1
+```
+
+Or step by step:
+
+```powershell
+./mvnw clean verify "-Dmaven.test.failure.ignore=true"   # tests + coverage
+./mvnw spotbugs:spotbugs                                  # bugs + vulnerabilities
+./mvnw pmd:pmd pmd:cpd                                    # complexity + duplication
+./mvnw spotbugs:gui                                       # open SpotBugs visual report
+```

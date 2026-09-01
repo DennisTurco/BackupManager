@@ -44,6 +44,7 @@ public class SubscriptionHelper {
     private static boolean isSubscriptionExpiringSoon(Subscription subscription) {
         int days = configReader.getConfigValue("SubscriptionWarningDays", 7);
         LocalDate now = LocalDate.now();
+        if (subscription.endDate() == null) return false;
         LocalDate endMinusDays = subscription.endDate().minusDays(days);
         return now.isAfter(endMinusDays);
     }

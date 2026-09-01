@@ -1,7 +1,9 @@
 ; =========================================
-; BackupManager - Inno Setup Installer (Standard)
+; BackupManager - Inno Setup Installer (Demo)
 ; =========================================
-; Subscription: NOT required (free use, no trial)
+; Subscription: ENABLED with 1 month free trial
+; The installer writes a .demo-init marker file that the
+; application reads on first launch to apply the demo SQL.
 ; =========================================
 
 [Setup]
@@ -13,7 +15,7 @@ DefaultDirName={userdocs}\Shard\BackupManager
 DisableDirPage=yes
 DisableProgramGroupPage=no
 PrivilegesRequired=lowest
-OutputBaseFilename=BackupManager_v3.0.0_Setup
+OutputBaseFilename=BackupManager_v3.0.0_Demo_Setup
 SetupIconFile=src\main\resources\res\img\logo.ico
 SetupLogging=yes
 Compression=lzma
@@ -66,7 +68,27 @@ Name: "{userprograms}\BackupManager\BackupManager"; Filename: "{app}\BackupManag
 ; CODICE
 ; =========================================
 [Code]
+// Write the demo marker file to the database directory.
+// ProductionDatabaseInitializer reads it on first run, applies
+// 003_enable_demo_version.sql, then deletes the marker automatically.
+procedure CreateDemoMarker();
+var
+  DbDir: String;
+  MarkerPath: String;
+begin
+  DbDir := ExpandConstant('{userdocs}\Shard\data');
+  ForceDirectories(DbDir);
+  MarkerPath := DbDir + '\.demo-init';
+  SaveStringToFile(MarkerPath, 'demo', False);
+end;
+
 function InitializeSetup(): Boolean;
 begin
   Result := True;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssPostInstall then
+    CreateDemoMarker();
 end;

@@ -56,7 +56,14 @@ public class SubscriptionRepository {
                     LocalDateTime insertDate = SqlHelper.toLocalDateTime(insertDateLong);
                     LocalDate startDate = SqlHelper.toLocalDate(startDateLong);
                     LocalDate endDate = SqlHelper.toLocalDate(endDateLong);
-                    SubscriptionCreationType creationType = SubscriptionCreationType.valueOf(creationTypeStr);
+
+                    SubscriptionCreationType creationType;
+                    try {
+                        creationType = SubscriptionCreationType.valueOf(creationTypeStr);
+                    } catch (IllegalArgumentException | NullPointerException ex) {
+                        logger.error("Unknown or null CreationType '{}' in Subscriptions table, skipping row", creationTypeStr, ex);
+                        return null;
+                    }
 
                     return new Subscription(id, insertDate, startDate, endDate, creationType);
                 }
@@ -81,7 +88,7 @@ public class SubscriptionRepository {
             stmt.setString(4, sub.creationType().name());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Subscription inserting error: " + e.getMessage());
+            throw new SQLException("Subscription inserting error: " + e.getMessage(), e);
         }
     }
 
@@ -93,7 +100,7 @@ public class SubscriptionRepository {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Subscription deletion error: " + e.getMessage());
+            throw new SQLException("Subscription deletion error: " + e.getMessage(), e);
         }
     }
 }

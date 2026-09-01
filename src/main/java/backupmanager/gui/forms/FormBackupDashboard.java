@@ -76,13 +76,15 @@ public class FormBackupDashboard extends CustomForm {
                 String.format("%.2f%%", snapshot.successRate()),
                 true);
 
+        double avgMinutes = BackupAnalyticsService.convertAvgDurationinMinutes(snapshot);
         cardBox.setValueAt(CARD_DURATION,
-                String.format("%.2f min", BackupAnalyticsService.convertAvgDurationinMinutes(snapshot)),
+                avgMinutes == 0.0 ? "N/A" : String.format("%.2f min", avgMinutes),
                 "",
                 true);
 
+        double compressionPct = snapshot.avgCompressionRate() * 100;
         cardBox.setValueAt(CARD_COMPRESSION,
-                String.format("%.1f%%", snapshot.avgCompressionRate() * 100),
+                compressionPct == 0.0 ? "N/A" : String.format("%.1f%%", compressionPct),
                 "",
                 true);
 

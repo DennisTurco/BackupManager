@@ -54,7 +54,7 @@ public class BackupAnalyticsService {
 
         Map<LocalDate, Double> durationTrend =
                 requests.stream()
-                        .filter(r -> r.durationMs() != null)
+                        .filter(r -> r.durationMs() != null && r.startedDate() != null)
                         .collect(Collectors.groupingBy(
                                 r -> r.startedDate().toLocalDate(),
                                 Collectors.averagingDouble(
@@ -72,10 +72,10 @@ public class BackupAnalyticsService {
         LocalDate oneYearAgo = now.minusMonths(11).withDayOfMonth(1);
 
         Map<String, Long> map = requests.stream()
-                .filter(r -> !r.startedDate().toLocalDate().isBefore(oneYearAgo))
+                .filter(r -> r.startedDate() != null && !r.startedDate().toLocalDate().isBefore(oneYearAgo))
                 .collect(Collectors.groupingBy(
                         r -> {
-                            var d = r.startedDate();
+                            LocalDate d = r.startedDate().toLocalDate();
                             return d.getYear() + "-" + String.format("%02d", d.getMonthValue());
                         },
                         Collectors.counting()

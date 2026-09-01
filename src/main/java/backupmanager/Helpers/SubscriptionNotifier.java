@@ -24,7 +24,7 @@ public class SubscriptionNotifier {
     }
 
     private static void showMessage(TrayController trayController, String title, String message, TrayIcon.MessageType type) {
-        if (trayController.getTrayIcon() != null) {
+        if (trayController != null && trayController.getTrayIcon() != null) {
             trayController.getTrayIcon().displayMessage(title, message, type);
         } else {
             int messageType = (type == TrayIcon.MessageType.ERROR) ? JOptionPane.ERROR_MESSAGE : JOptionPane.WARNING_MESSAGE;

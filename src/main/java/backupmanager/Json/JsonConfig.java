@@ -86,7 +86,7 @@ public class JsonConfig {
                 return defaultValue;
             }
 
-            JsonElement value = logService.get(key);
+            JsonElement value = logService.get("value");
 
             if (value == null || value.isJsonNull() || !value.isJsonPrimitive()) {
                 return defaultValue;
