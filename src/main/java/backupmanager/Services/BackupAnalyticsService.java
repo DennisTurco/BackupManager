@@ -1,5 +1,6 @@
 package backupmanager.Services;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +38,14 @@ public class BackupAnalyticsService {
 
         double avgCompressionRate = computeCompressionRate(requests);
 
+        // Only count requests whose output file is still actually present on disk — the history
+        // table keeps a row for every run ever made, including ones long since removed by the
+        // "max backups to keep" retention policy, so summing all of them would massively
+        // overstate real disk usage.
         long diskUsage = requests.stream()
-                .mapToLong(r ->
-                        r.zippedTargetSize() != null ?
-                                r.zippedTargetSize() :
-                                0)
+                .filter(r -> r.zippedTargetSize() != null && r.outputPath() != null)
+                .filter(r -> new File(r.outputPath()).exists())
+                .mapToLong(BackupRequest::zippedTargetSize)
                 .sum();
 
         Map<LocalDate, Double> durationTrend =

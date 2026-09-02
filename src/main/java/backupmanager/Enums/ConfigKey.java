@@ -25,7 +25,6 @@ public enum ConfigKey {
     INFO_PAGE_LINK,
     EMAIL,
     SHARD_WEBSITE,
-    LOGO_IMG,
     SHARE_LINK,
     VERSION,
     GUI_WIDTH,

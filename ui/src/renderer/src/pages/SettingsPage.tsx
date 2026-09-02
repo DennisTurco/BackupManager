@@ -15,7 +15,7 @@ const LANGUAGES = [
 
 export default function SettingsPage() {
   const { t } = useTranslation()
-  const { theme, toggle } = useTheme()
+  const { mode, setMode } = useTheme()
   const qc = useQueryClient()
   const [saved, setSaved] = useState(false)
 
@@ -75,20 +75,20 @@ export default function SettingsPage() {
           <ThemeCard
             icon={<Sun size={18} />}
             label={t('ReactUI.ThemeLight', 'Light')}
-            active={theme === 'light'}
-            onClick={() => theme !== 'light' && toggle()}
+            active={mode === 'light'}
+            onClick={() => setMode('light')}
           />
           <ThemeCard
             icon={<Moon size={18} />}
             label={t('ReactUI.ThemeDark', 'Dark')}
-            active={theme === 'dark'}
-            onClick={() => theme !== 'dark' && toggle()}
+            active={mode === 'dark'}
+            onClick={() => setMode('dark')}
           />
           <ThemeCard
             icon={<Monitor size={18} />}
             label={t('ReactUI.ThemeSystem', 'System')}
-            active={false}
-            disabled
+            active={mode === 'system'}
+            onClick={() => setMode('system')}
           />
         </div>
       </Section>
@@ -121,10 +121,10 @@ export default function SettingsPage() {
       {/* Backup settings */}
       <Section title={t('ReactUI.SectionBackupDefaults', 'Backup defaults')}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-          <FormField label={t('ReactUI.DefaultDestPathLabel', 'Default destination path')} value={form['defaultDestinationPath'] ?? ''}
-            onChange={v => set('defaultDestinationPath', v)} placeholder="/backups" />
-          <NumField label={t('ReactUI.DefaultMaxToKeepLabel', 'Default max backups to keep')} value={Number(form['defaultMaxToKeep'] ?? 5)}
-            onChange={v => set('defaultMaxToKeep', String(v))} min={1} />
+          <FormField label={t('ReactUI.DefaultDestPathLabel', 'Default destination path')} value={form['DEFAULT_DESTINATION_PATH'] ?? ''}
+            onChange={v => set('DEFAULT_DESTINATION_PATH', v)} placeholder="/backups" />
+          <NumField label={t('ReactUI.DefaultMaxToKeepLabel', 'Default max backups to keep')} value={Number(form['DEFAULT_MAX_TO_KEEP'] ?? 5)}
+            onChange={v => set('DEFAULT_MAX_TO_KEEP', String(v))} min={1} />
         </div>
       </Section>
 
@@ -133,18 +133,18 @@ export default function SettingsPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <Toggle
             label={t('ReactUI.NotifyOnComplete', 'Show notification on backup completion')}
-            checked={form['notifyOnComplete'] === 'true'}
-            onChange={v => set('notifyOnComplete', String(v))}
+            checked={form['NOTIFY_ON_COMPLETE'] === 'true'}
+            onChange={v => set('NOTIFY_ON_COMPLETE', String(v))}
           />
           <Toggle
             label={t('ReactUI.NotifyOnFailure', 'Show notification on backup failure')}
-            checked={form['notifyOnFailure'] !== 'false'}
-            onChange={v => set('notifyOnFailure', String(v))}
+            checked={form['NOTIFY_ON_FAILURE'] !== 'false'}
+            onChange={v => set('NOTIFY_ON_FAILURE', String(v))}
           />
           <Toggle
             label={t('ReactUI.StartMinimized', 'Start minimized to system tray')}
-            checked={form['startMinimized'] === 'true'}
-            onChange={v => set('startMinimized', String(v))}
+            checked={form['START_MINIMIZED'] === 'true'}
+            onChange={v => set('START_MINIMIZED', String(v))}
           />
         </div>
       </Section>

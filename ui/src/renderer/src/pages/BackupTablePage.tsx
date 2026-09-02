@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Plus, Play, Pencil, Trash2, Search, X, ChevronUp, FolderOpen } from 'lucide-react'
-import { backupApi, historyApi } from '../services/api'
+import { Plus, Play, Pencil, Trash2, Search, X, ChevronUp, FolderOpen, ArrowUp, ArrowDown, ChevronsUpDown, StopCircle, CheckCircle2 } from 'lucide-react'
+import { backupApi, historyApi, settingsApi } from '../services/api'
 import type { BackupConfig, CreateBackupPayload, TimeInterval } from '../types'
 import { ContextMenu } from '../components/ContextMenu'
 import { useTranslation } from '../context/TranslationContext'
@@ -16,6 +16,21 @@ declare global {
 }
 
 interface CtxState { x: number; y: number; backup: BackupConfig }
+
+type SortKey = 'name' | 'targetPath' | 'destinationPath' | 'lastBackupDate' | 'automatic' | 'nextBackupDate' | 'interval' | 'maxToKeep'
+
+function compareBackups(a: BackupConfig, b: BackupConfig, key: SortKey): number {
+  switch (key) {
+    case 'name':            return a.name.localeCompare(b.name)
+    case 'targetPath':      return a.targetPath.localeCompare(b.targetPath)
+    case 'destinationPath': return a.destinationPath.localeCompare(b.destinationPath)
+    case 'lastBackupDate':  return (a.lastBackupDate ?? '').localeCompare(b.lastBackupDate ?? '')
+    case 'nextBackupDate':  return (a.nextBackupDate ?? '').localeCompare(b.nextBackupDate ?? '')
+    case 'automatic':       return Number(a.automatic) - Number(b.automatic)
+    case 'maxToKeep':       return a.maxToKeep - b.maxToKeep
+    case 'interval':        return intervalTotalMinutes(a.timeIntervalBackup) - intervalTotalMinutes(b.timeIntervalBackup)
+  }
+}
 
 export default function BackupTablePage() {
   const qc = useQueryClient()
@@ -121,6 +136,15 @@ export default function BackupTablePage() {
     ) : backups
   }, [backups, search])
 
+  const [sort, setSort] = useState<{ key: SortKey; dir: 'asc' | 'desc' }>({ key: 'name', dir: 'asc' })
+  const toggleSort = (key: SortKey) => {
+    setSort(prev => prev.key === key ? { key, dir: prev.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' })
+  }
+  const sorted = useMemo(() => {
+    const factor = sort.dir === 'asc' ? 1 : -1
+    return [...filtered].sort((a, b) => factor * compareBackups(a, b, sort.key))
+  }, [filtered, sort])
+
   const [runError, setRunError] = useState<string | null>(null)
   const runMutation = useMutation({
     mutationFn: (id: number) => backupApi.run(id),
@@ -138,6 +162,19 @@ export default function BackupTablePage() {
   const deleteMutation = useMutation({
     mutationFn: (id: number) => backupApi.delete(id),
     onSuccess: () => { setSelected(null); qc.invalidateQueries({ queryKey: ['backups'] }) }
+  })
+  const interruptMutation = useMutation({
+    mutationFn: (id: number) => backupApi.interrupt(id),
+    onSuccess: () => {
+      setRunError(null)
+      qc.invalidateQueries({ queryKey: ['backups-running'] })
+      qc.invalidateQueries({ queryKey: ['backups'] })
+    },
+    onError: (err: unknown) => {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
+      setRunError(msg ?? t('ReactUI.FailedToInterruptBackup', 'Failed to interrupt backup'))
+      setTimeout(() => setRunError(null), 5000)
+    }
   })
   const duplicateMutation = useMutation({
     mutationFn: (b: BackupConfig) => backupApi.create({
@@ -188,7 +225,7 @@ export default function BackupTablePage() {
             }
           }
         },
-        { label: t('ReactUI.MenuInterruptBackup', 'Interrupt backup process'), disabled: true },
+        { label: t('ReactUI.MenuInterruptBackup', 'Interrupt backup process'), onClick: () => interruptMutation.mutate(b.id), disabled: !busyIds.has(b.id) },
       ]
     },
     { type: 'separator' as const },
@@ -273,6 +310,15 @@ export default function BackupTablePage() {
         >
           <Play size={13} /> {t('ReactUI.RunButton', 'Avvia')}
         </button>
+        <button
+          className="btn btn-ghost"
+          disabled={!selected || !busyIds.has(selected.id)}
+          style={selected && busyIds.has(selected.id) ? { color: 'var(--error)' } : {}}
+          onClick={() => selected && interruptMutation.mutate(selected.id)}
+          title={t('ReactUI.MenuInterruptBackup', 'Interrupt backup process')}
+        >
+          <StopCircle size={13} /> {t('ReactUI.StopButton', 'Interrompi')}
+        </button>
       </div>
 
       {/* Run error banner */}
@@ -306,25 +352,29 @@ export default function BackupTablePage() {
           <table className="data-table">
             <thead>
               <tr>
-                <th>{t('ReactUI.ColName', 'Nome del Backup')}</th>
-                <th>{t('ReactUI.ColSourcePath', 'Percorso Iniziale')}</th>
-                <th>{t('ReactUI.ColDestPath', 'Percorso di Destinazione')}</th>
+                <SortableHeader label={t('ReactUI.ColName', 'Nome del Backup')} sortKey="name" sort={sort} onSort={toggleSort} />
+                <SortableHeader label={t('ReactUI.ColSourcePath', 'Percorso Iniziale')} sortKey="targetPath" sort={sort} onSort={toggleSort} />
+                <SortableHeader label={t('ReactUI.ColDestPath', 'Percorso di Destinazione')} sortKey="destinationPath" sort={sort} onSort={toggleSort} />
                 <th style={{ width: 140 }}>{t('ReactUI.ColStatus', 'Stato')}</th>
-                <th>{t('ReactUI.ColLastBackup', 'Ultimo Backup')}</th>
-                <th style={{ textAlign: 'center' }}>{t('ReactUI.ColAutoBackup', 'Backup Automatico')}</th>
-                <th>{t('ReactUI.ColNextDate', 'Data del Prossimo')}</th>
-                <th>{t('ReactUI.ColInterval', 'Intervallo (gg.HH:mm)')}</th>
-                <th style={{ textAlign: 'center' }}>{t('ReactUI.ColMaxToKeep', 'Numero massimo')}</th>
+                <SortableHeader label={t('ReactUI.ColLastBackup', 'Ultimo Backup')} sortKey="lastBackupDate" sort={sort} onSort={toggleSort} nowrap />
+                <SortableHeader label={t('ReactUI.ColAutoBackup', 'Auto')} sortKey="automatic" sort={sort} onSort={toggleSort} align="center" />
+                <SortableHeader label={t('ReactUI.ColNextDate', 'Data del Prossimo')} sortKey="nextBackupDate" sort={sort} onSort={toggleSort} nowrap />
+                <SortableHeader
+                  label={t('ReactUI.ColInterval', 'Intervallo')}
+                  tooltip={t('ReactUI.ColIntervalFormatHint', 'Formato: gg.HH:mm')}
+                  sortKey="interval" sort={sort} onSort={toggleSort}
+                />
+                <SortableHeader label={t('ReactUI.ColMaxToKeep', 'Numero massimo')} sortKey="maxToKeep" sort={sort} onSort={toggleSort} align="center" />
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr><td colSpan={9} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>{t('ReactUI.LoadingText', 'Caricamento…')}</td></tr>
-              ) : filtered.length === 0 ? (
+              ) : sorted.length === 0 ? (
                 <tr><td colSpan={9} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>
                   {search ? t('ReactUI.NoResults', 'Nessun risultato.') : t('ReactUI.NoBackupConfigs', 'Nessuna configurazione di backup.')}
                 </td></tr>
-              ) : filtered.map(b => (
+              ) : sorted.map(b => (
                 <tr
                   key={b.id}
                   className={selected?.id === b.id ? 'selected' : ''}
@@ -346,13 +396,10 @@ export default function BackupTablePage() {
                   <td style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
                     {b.lastBackupDate ? fmtDate(b.lastBackupDate) : ''}
                   </td>
-                  <td style={{ textAlign: 'center' }}>
-                    <input
-                      type="checkbox"
-                      readOnly
-                      checked={b.automatic}
-                      style={{ accentColor: 'var(--accent)', width: 14, height: 14, cursor: 'default', pointerEvents: 'none' }}
-                    />
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {b.automatic && <CheckCircle2 size={15} style={{ color: 'var(--success)' }} />}
+                    </div>
                   </td>
                   <td style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
                     {b.nextBackupDate ? fmtDate(b.nextBackupDate) : ''}
@@ -517,6 +564,7 @@ function BackupFormModal({ initial, onClose, onSaved }: {
   initial?: BackupConfig; onClose: () => void; onSaved: () => void
 }) {
   const { t } = useTranslation()
+  const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: settingsApi.get })
   const [form, setForm] = useState<CreateBackupPayload>({
     name: initial?.name ?? '',
     targetPath: initial?.targetPath ?? '',
@@ -526,6 +574,18 @@ function BackupFormModal({ initial, onClose, onSaved }: {
     notes: initial?.notes ?? '',
     maxToKeep: initial?.maxToKeep ?? 5,
   })
+
+  // Apply the user's configured defaults once, only for a brand-new backup and only if
+  // the field hasn't already been touched (dialogs are freshly mounted each time they open).
+  useEffect(() => {
+    if (initial || !settings) return
+    setForm(f => ({
+      ...f,
+      destinationPath: f.destinationPath || settings['DEFAULT_DESTINATION_PATH'] || '',
+      maxToKeep: settings['DEFAULT_MAX_TO_KEEP'] ? Number(settings['DEFAULT_MAX_TO_KEEP']) : f.maxToKeep,
+    }))
+  }, [settings]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -710,6 +770,30 @@ function usePrevious<T>(value: T): T | undefined {
   const ref = useRef<T>()
   useEffect(() => { ref.current = value })
   return ref.current
+}
+function SortableHeader({ label, sortKey, sort, onSort, align, nowrap, tooltip }: {
+  label: string; sortKey: SortKey; sort: { key: SortKey; dir: 'asc' | 'desc' }; onSort: (key: SortKey) => void
+  align?: 'center' | 'left'; nowrap?: boolean; tooltip?: string
+}) {
+  const active = sort.key === sortKey
+  return (
+    <th
+      onClick={() => onSort(sortKey)}
+      style={{ cursor: 'pointer', userSelect: 'none', textAlign: align, whiteSpace: nowrap ? 'nowrap' : undefined }}
+      title={tooltip ?? label}
+    >
+      <span style={{
+        display: 'inline-flex', alignItems: 'center', gap: 4,
+        justifyContent: align === 'center' ? 'center' : 'flex-start',
+        color: active ? 'var(--text)' : undefined,
+      }}>
+        {label}
+        {active
+          ? (sort.dir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />)
+          : <ChevronsUpDown size={11} color="var(--text-dim)" />}
+      </span>
+    </th>
+  )
 }
 function Truncated({ text }: { text: string }) {
   return (

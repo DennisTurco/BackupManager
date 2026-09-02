@@ -72,6 +72,78 @@ async function checkSubscriptionStatus(): Promise<void> {
   }
 }
 
+interface AppSettings {
+  NOTIFY_ON_COMPLETE?: string
+  NOTIFY_ON_FAILURE?: string
+  START_MINIMIZED?: string
+}
+
+async function getSettings(): Promise<AppSettings> {
+  try {
+    const res = await fetch(`${API_BASE}/api/settings`)
+    if (!res.ok) return {}
+    return (await res.json()) as AppSettings
+  } catch {
+    return {}
+  }
+}
+
+// Tracks configId → whether it was seen running on the previous poll, so we can detect the
+// exact moment a backup goes from running to not-running and look up how it actually ended.
+let previouslyRunningConfigIds = new Set<number>()
+
+async function checkBackupCompletions(): Promise<void> {
+  try {
+    const settings = await getSettings()
+    const notifyOnComplete = settings.NOTIFY_ON_COMPLETE === 'true'
+    const notifyOnFailure = settings.NOTIFY_ON_FAILURE !== 'false' // default on
+    if (!notifyOnComplete && !notifyOnFailure) {
+      previouslyRunningConfigIds = new Set()
+      return
+    }
+
+    const runningRes = await fetch(`${API_BASE}/api/backups/running`)
+    if (!runningRes.ok) return
+    const running = (await runningRes.json()) as { backupConfigurationId: number }[]
+    const currentlyRunning = new Set(running.map((r) => r.backupConfigurationId))
+
+    for (const configId of previouslyRunningConfigIds) {
+      if (currentlyRunning.has(configId)) continue
+
+      // This one just stopped running — find out how it ended
+      const [backupRes, historyRes] = await Promise.all([
+        fetch(`${API_BASE}/api/backups/${configId}`),
+        fetch(`${API_BASE}/api/history/${configId}`)
+      ])
+      if (!backupRes.ok || !historyRes.ok) continue
+      const backup = (await backupRes.json()) as { name: string }
+      const history = (await historyRes.json()) as { status: string; startedDate: string }[]
+      const latest = history.sort(
+        (a, b) => new Date(b.startedDate).getTime() - new Date(a.startedDate).getTime()
+      )[0]
+      if (!latest) continue
+
+      if (latest.status === 'FINISHED' && notifyOnComplete) {
+        new Notification({
+          title: 'BackupManager',
+          body: `Backup "${backup.name}" completed successfully.`,
+          icon: appIcon()
+        }).show()
+      } else if (latest.status === 'TERMINATED' && notifyOnFailure) {
+        new Notification({
+          title: 'BackupManager',
+          body: `Backup "${backup.name}" failed or was interrupted.`,
+          icon: appIcon()
+        }).show()
+      }
+    }
+
+    previouslyRunningConfigIds = currentlyRunning
+  } catch {
+    // API not reachable — ignore, next poll will retry
+  }
+}
+
 function appIcon(): Electron.NativeImage {
   const iconFile = app.isPackaged
     ? join(process.resourcesPath, 'icon.ico')
@@ -79,7 +151,7 @@ function appIcon(): Electron.NativeImage {
   return nativeImage.createFromPath(iconFile)
 }
 
-function createWindow(): void {
+function createWindow(startMinimized: boolean): void {
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
@@ -95,7 +167,9 @@ function createWindow(): void {
     }
   })
 
-  mainWindow.on('ready-to-show', () => mainWindow?.show())
+  mainWindow.on('ready-to-show', () => {
+    if (!startMinimized) mainWindow?.show()
+  })
 
   mainWindow.on('close', (e) => {
     e.preventDefault()
@@ -146,11 +220,15 @@ app.whenReady().then(async () => {
     return
   }
 
-  createWindow()
+  const settings = await getSettings()
+  createWindow(settings.START_MINIMIZED === 'true')
   createTray()
 
   checkSubscriptionStatus()
   setInterval(checkSubscriptionStatus, 6 * 60 * 60 * 1000) // re-check every 6 hours
+
+  checkBackupCompletions()
+  setInterval(checkBackupCompletions, 3000)
 })
 
 app.on('before-quit', () => {

@@ -16,12 +16,15 @@ public class RunningBackupService {
         BackupRequestRepository.updateRequestFolderSizeZippedByRequestId(requestId, folderSize);
     }
 
+    // Called mid-flight from ZipFileVisitor while the output ZipOutputStream is still open —
+    // only marks the DB status here. ZippingThread deletes the partial file once the stream
+    // is safely closed (deleting an open file handle silently fails on Windows).
     public static void updateBackupStatusAfterForceTerminationByBackupConfigurationId(int backupConfigurationId) {
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupConfigurationId);
         if (request == null) {
             return;
         }
-        BackupHelper.forceBackupTermination(request);
+        BackupHelper.markTerminated(request);
     }
 
     public static void updateBackupStatusAfterCompletitionByBackupConfigurationId(int backupConfigurationId) {

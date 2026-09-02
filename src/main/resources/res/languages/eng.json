@@ -40,9 +40,9 @@
         "ColDestPath": "Destination Path",
         "ColStatus": "Status",
         "ColLastBackup": "Last Backup",
-        "ColAutoBackup": "Automatic Backup",
+        "ColAutoBackup": "Auto",
         "ColNextDate": "Next Date",
-        "ColInterval": "Interval (dd.HH:mm)",
+        "ColInterval": "Interval",
         "ColMaxToKeep": "Max to Keep",
         "NavBackupConfigurations": "Backup Configurations",
         "NavDashboard": "Dashboard",
@@ -174,6 +174,9 @@
         "LoadingLog": "Loading log…",
         "LogEmpty": "Log file is empty.",
         "BackupRunSuccess": "Backup \"{name}\" completed successfully",
-        "BackupRunFailedResult": "Backup \"{name}\" failed"
+        "BackupRunFailedResult": "Backup \"{name}\" failed",
+        "StopButton": "Stop",
+        "FailedToInterruptBackup": "Failed to interrupt backup",
+        "ColIntervalFormatHint": "Format: dd.HH:mm"
     }
 }

@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
@@ -20,12 +21,14 @@ import org.slf4j.LoggerFactory;
 import backupmanager.BackupOperations;
 import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.ErrorType;
+import backupmanager.Helpers.BackupHelper;
 import backupmanager.ZipFileVisitor;
 
 public class ZippingThread {
 
     private static final Logger logger = LoggerFactory.getLogger(ZippingThread.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static volatile Future<?> currentTask;
 
     public static void zipDirectory(File sourceFile, File outputFile, ZippingContext context, int totalFilesCount) {
         logger.info("Starting zipping process");
@@ -46,7 +49,7 @@ public class ZippingThread {
             executorService = Executors.newSingleThreadExecutor();  // Recreate the executor
         }
 
-        executorService.submit(() -> {
+        currentTask = executorService.submit(() -> {
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(outupZipPath))) {
                 Path sourceDir = Paths.get(sourceDirectoryPath);
 
@@ -59,6 +62,13 @@ public class ZippingThread {
                 logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);
                 handleError("I/O error occurred", ErrorType.ZippingIOError, context);
             } finally {
+                // The ZipOutputStream is guaranteed closed by this point (try-with-resources runs
+                // before finally), so it's now safe to delete the partial file on an interrupted run.
+                // Thread.interrupted() clears the flag — this is a pooled single-thread executor,
+                // so leaving it set would make the *next* submitted backup look interrupted too.
+                if (Thread.interrupted()) {
+                    BackupHelper.deletePartialBackup(outupZipPath);
+                }
                 finalizeProcess(context);
             }
         });
@@ -128,5 +138,22 @@ public class ZippingThread {
 
     public static boolean isInterrupted() {
         return executorService.isShutdown() || executorService.isTerminated();
+    }
+
+    /**
+     * Interrupts the currently running zip task, if any. The task itself checks
+     * Thread.interrupted() between files/directories (see ZipFileVisitor) and stops
+     * cleanly, marking the backup request as TERMINATED and removing the partial file.
+     *
+     * @return true if a running task was found and interrupted, false if nothing was running.
+     */
+    public static boolean interruptCurrentTask() {
+        Future<?> task = currentTask;
+        if (task != null && !task.isDone()) {
+            logger.info("Interrupting current zipping task");
+            task.cancel(true);
+            return true;
+        }
+        return false;
     }
 }

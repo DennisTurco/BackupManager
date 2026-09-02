@@ -16,6 +16,7 @@ import backupmanager.Entities.ZippingContext;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Exceptions.BackupDeletionException;
 import backupmanager.Helpers.BackupHelper;
+import backupmanager.Services.ZippingThread;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
 import backupmanager.database.Repositories.BackupRequestRepository;
 import io.javalin.Javalin;
@@ -33,6 +34,7 @@ public class BackupRoutes {
         app.put("/api/backups/{id}", BackupRoutes::update);
         app.delete("/api/backups/{id}", BackupRoutes::delete);
         app.post("/api/backups/{id}/run", BackupRoutes::runBackup);
+        app.post("/api/backups/{id}/interrupt", BackupRoutes::interruptBackup);
     }
 
     private static void getAll(Context ctx) {
@@ -179,6 +181,25 @@ public class BackupRoutes {
         });
 
         ctx.status(202).json(new ErrorMsg("Backup started"));
+    }
+
+    private static void interruptBackup(Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
+        if (backup == null) throw new NotFoundResponse("Backup not found: " + id);
+
+        if (BackupRequestRepository.getLastBackupInProgressByConfigurationId(id) == null) {
+            ctx.status(409).json(new ErrorMsg("No backup is currently running for this configuration"));
+            return;
+        }
+
+        boolean interrupted = ZippingThread.interruptCurrentTask();
+        if (!interrupted) {
+            ctx.status(409).json(new ErrorMsg("No backup is currently running"));
+            return;
+        }
+
+        ctx.status(202).json(new ErrorMsg("Backup interruption requested"));
     }
 
     public record BackupRequest(

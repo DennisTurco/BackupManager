@@ -16,9 +16,14 @@ public class SettingsRoutes {
 
     private static final Logger logger = LoggerFactory.getLogger(SettingsRoutes.class);
 
+    // Every key here must actually be read somewhere (Electron main process or the React UI) —
+    // THEME/CHECK_INTERVAL_MINUTES/EMAIL_* used to live here but were never read by anything
+    // (theme is handled entirely via localStorage, the real backup interval comes from
+    // JsonConfig, and SMTP config comes from config.enc), so they were removed rather than
+    // left as a setting that silently did nothing.
     private static final String[] EDITABLE_KEYS = {
-        "LANGUAGE", "THEME", "CHECK_INTERVAL_MINUTES", "MAX_LOG_FILES",
-        "EMAIL_ENABLED", "EMAIL_HOST", "EMAIL_PORT", "EMAIL_USERNAME"
+        "LANGUAGE", "NOTIFY_ON_COMPLETE", "NOTIFY_ON_FAILURE", "START_MINIMIZED",
+        "DEFAULT_DESTINATION_PATH", "DEFAULT_MAX_TO_KEEP"
     };
 
     public static void register(Javalin app) {

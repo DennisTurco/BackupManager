@@ -44,6 +44,18 @@
       {
         "from": "../target/backupmanager-jar-with-dependencies.jar",
         "to": "backend.jar"
+      },
+      {
+        "from": "../src/main/resources",
+        "to": "src/main/resources"
+      },
+      {
+        "from": "../config.enc",
+        "to": "config.enc"
+      },
+      {
+        "from": "resources/icon.ico",
+        "to": "icon.ico"
       }
     ],
     "linux": {

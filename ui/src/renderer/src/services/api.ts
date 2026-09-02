@@ -24,7 +24,8 @@ export const backupApi = {
   update: (id: number, payload: CreateBackupPayload) =>
     client.put<BackupConfig>(`/api/backups/${id}`, payload).then((r) => r.data),
   delete: (id: number) => client.delete(`/api/backups/${id}`),
-  run: (id: number) => client.post(`/api/backups/${id}/run`)
+  run: (id: number) => client.post(`/api/backups/${id}/run`),
+  interrupt: (id: number) => client.post(`/api/backups/${id}/interrupt`)
 }
 
 // ── History & Analytics ───────────────────────────────────────────────────────

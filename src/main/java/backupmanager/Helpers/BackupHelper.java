@@ -57,11 +57,18 @@ public class BackupHelper {
     }
 
     public static void forceBackupTermination(BackupRequest request) {
-        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
+        markTerminated(request);
         deletePartialBackup(request.outputPath());
     }
 
-    private static boolean deletePartialBackup(String filePath) {
+    // DB-status-only variant: used when the output file may still be open (e.g. a live
+    // in-process interrupt), where deleting it here would fail on Windows (locked handle).
+    // The caller is responsible for deleting the file once it's safely closed.
+    public static void markTerminated(BackupRequest request) {
+        BackupRequestRepository.updateRequestStatusByRequestId(request.backupRequestId(), BackupStatus.TERMINATED);
+    }
+
+    public static boolean deletePartialBackup(String filePath) {
         logger.info("Attempting to delete partial backup: " + filePath);
 
         if (filePath == null || filePath.isEmpty()) {
