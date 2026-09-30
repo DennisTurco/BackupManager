@@ -1,45 +1,80 @@
 import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog, Notification } from 'electron'
 import { join } from 'path'
+import { existsSync } from 'fs'
 import { spawn, ChildProcess } from 'child_process'
 
 const API_PORT = 7089
 const API_BASE = `http://localhost:${API_PORT}`
+const ROOT_DIR = app.isPackaged ? process.resourcesPath : join(__dirname, '../../..')
 const JAR_PATH = app.isPackaged
   ? join(process.resourcesPath, 'backend.jar')
-  : join(__dirname, '../../../target/backupmanager-jar-with-dependencies.jar')
+  : join(ROOT_DIR, 'target/backupmanager-jar-with-dependencies.jar')
+// Set when the backend is launched separately (e.g. by the VS Code Java debugger)
+const BACKEND_EXTERNAL = !!process.env.BACKEND_EXTERNAL
+
+if (process.env.REMOTE_DEBUGGING_PORT) {
+  app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUGGING_PORT)
+}
 
 let mainWindow: BrowserWindow | null = null
 let tray: Tray | null = null
 let javaProcess: ChildProcess | null = null
+let javaExitCode: number | null = null
+
+// Prefer the bundled JRE, then JAVA_HOME, then whatever `java` is on PATH
+function resolveJavaExecutable(): string {
+  const exe = process.platform === 'win32' ? 'java.exe' : 'java'
+  const candidates = [join(ROOT_DIR, 'jre', 'bin', exe)]
+  if (process.env.JAVA_HOME) candidates.push(join(process.env.JAVA_HOME, 'bin', exe))
+  return candidates.find((p) => existsSync(p)) ?? 'java'
+}
 
 function spawnJavaBackend(): void {
-  const cwd = app.isPackaged ? process.resourcesPath : join(__dirname, '../../..')
+  if (!existsSync(JAR_PATH)) {
+    throw new Error(`Backend jar not found at:\n${JAR_PATH}\n\nBuild it with: mvnw package -DskipTests`)
+  }
 
-  javaProcess = spawn('java', ['-jar', JAR_PATH, '--api-server'], {
-    cwd,
+  javaProcess = spawn(resolveJavaExecutable(), ['-jar', JAR_PATH, '--api-server'], {
+    cwd: ROOT_DIR,
     stdio: ['ignore', 'pipe', 'pipe']
   })
 
   javaProcess.stdout?.on('data', (data) => process.stdout.write(`[java] ${data}`))
   javaProcess.stderr?.on('data', (data) => process.stderr.write(`[java] ${data}`))
 
+  javaProcess.on('error', (err) => {
+    console.error('Unable to start Java backend:', err)
+    javaExitCode = -1
+  })
   javaProcess.on('exit', (code) => {
     console.log(`Java backend exited with code ${code}`)
+    javaExitCode = code ?? -1
   })
 }
 
-async function waitForApi(maxWaitMs = 30_000): Promise<void> {
+async function isApiUp(): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE}/api/status`)
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+async function waitForApi(maxWaitMs: number): Promise<void> {
   const start = Date.now()
   while (Date.now() - start < maxWaitMs) {
-    try {
-      const res = await fetch(`${API_BASE}/api/status`)
-      if (res.ok) return
-    } catch {
-      // not ready yet
+    if (await isApiUp()) return
+    if (javaExitCode !== null) {
+      throw new Error(`Java backend exited during startup (code ${javaExitCode})`)
     }
     await new Promise((r) => setTimeout(r, 500))
   }
-  throw new Error('Java backend did not start in time')
+  throw new Error(
+    BACKEND_EXTERNAL
+      ? `No backend answered on ${API_BASE} (BACKEND_EXTERNAL is set, start it separately)`
+      : 'Java backend did not start in time'
+  )
 }
 
 let lastNotifiedSubscriptionStatus: string | null = null
@@ -210,12 +245,13 @@ ipcMain.handle('dialog:openFolder', async () => {
 ipcMain.handle('shell:openPath', (_event, path: string) => shell.openPath(path))
 
 app.whenReady().then(async () => {
-  spawnJavaBackend()
-
   try {
-    await waitForApi()
+    // Reuse a backend that is already running (external/debugged one or leftover instance)
+    if (!BACKEND_EXTERNAL && !(await isApiUp())) spawnJavaBackend()
+    await waitForApi(BACKEND_EXTERNAL ? 90_000 : 30_000)
   } catch (err) {
     console.error(err)
+    dialog.showErrorBox('BackupManager — backend unavailable', String((err as Error).message ?? err))
     app.quit()
     return
   }

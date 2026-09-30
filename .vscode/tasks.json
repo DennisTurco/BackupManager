@@ -2,6 +2,20 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "UI: Ensure dependencies",
+      "type": "shell",
+      "command": "node",
+      "args": ["scripts/prepare-dev.mjs", "--deps"],
+      "options": {
+        "cwd": "${workspaceFolder}/ui"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Maven: Build backend jar",
       "type": "shell",
       "command": ".\\mvnw.cmd",
@@ -31,34 +45,24 @@
       "problemMatcher": []
     },
     {
-      "label": "UI: Dev (Electron + Vite)",
+      "label": "Run App",
       "type": "shell",
       "command": "npm",
       "args": ["run", "dev"],
       "options": {
         "cwd": "${workspaceFolder}/ui"
       },
+      "dependsOn": ["UI: Ensure dependencies"],
       "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
         "clear": true
       },
-      "problemMatcher": []
-    },
-    {
-      "label": "Run App (build backend + start UI)",
-      "dependsOrder": "sequence",
-      "dependsOn": ["Maven: Build backend jar", "UI: Dev (Electron + Vite)"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Run App (fast, skip backend build)",
-      "dependsOn": ["UI: Dev (Electron + Vite)"],
       "problemMatcher": []
     },
     {

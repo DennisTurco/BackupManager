@@ -4,6 +4,7 @@
   "description": "BackupManager desktop UI — Electron + React + TypeScript",
   "main": "./out/main/index.js",
   "scripts": {
+    "predev": "node scripts/prepare-dev.mjs --backend",
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "preview": "electron-vite preview",

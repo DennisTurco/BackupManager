@@ -1,15 +1,69 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // F5 = debug, Ctrl+F5 = run without debugging.
+    // Every config installs missing UI deps and rebuilds the backend jar only when needed.
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "App (UI + backend)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ui",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev", "--", "--sourcemap"],
+            "env": { "REMOTE_DEBUGGING_PORT": "9222" },
+            "preLaunchTask": "UI: Ensure dependencies",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "presentation": { "group": "1-app", "order": 1 }
+        },
+        {
+            "name": "UI with external backend",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ui",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev", "--", "--sourcemap"],
+            "env": { "REMOTE_DEBUGGING_PORT": "9222", "BACKEND_EXTERNAL": "1" },
+            "preLaunchTask": "UI: Ensure dependencies",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "presentation": { "group": "2-parts", "order": 2 }
+        },
+        {
+            "name": "Backend (Java)",
             "type": "java",
-            "name": "API server",
             "request": "launch",
             "mainClass": "backupmanager.MainApp",
-            "projectName": "backupmanager"
+            "projectName": "backupmanager",
+            "args": "--api-server",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "presentation": { "group": "2-parts", "order": 1 }
+        },
+        {
+            "name": "Attach renderer (React)",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/ui/src/renderer",
+            "timeout": 90000,
+            "presentation": { "group": "2-parts", "order": 3 }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full stack debug (Java + Electron + React)",
+            "configurations": ["Backend (Java)", "UI with external backend", "Attach renderer (React)"],
+            "stopAll": true,
+            "presentation": { "group": "1-app", "order": 2 }
+        },
+        {
+            "name": "App + React debugger",
+            "configurations": ["App (UI + backend)", "Attach renderer (React)"],
+            "stopAll": true,
+            "presentation": { "group": "1-app", "order": 3 }
         }
     ]
 }
