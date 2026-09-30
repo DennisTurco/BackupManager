@@ -11,6 +11,10 @@ const JAR_PATH = app.isPackaged
   : join(ROOT_DIR, 'target/backupmanager-jar-with-dependencies.jar')
 // Set when the backend is launched separately (e.g. by the VS Code Java debugger)
 const BACKEND_EXTERNAL = !!process.env.BACKEND_EXTERNAL
+// Dev only (see ui/scripts/first-launch.mjs): run against a throwaway home, so the backend creates a
+// fresh database/logs there and Electron uses a fresh profile — i.e. a simulated first launch
+const SANDBOX_HOME = app.isPackaged ? undefined : process.env.BM_SANDBOX_HOME
+if (SANDBOX_HOME) app.setPath('userData', join(SANDBOX_HOME, 'electron-profile'))
 
 if (process.env.REMOTE_DEBUGGING_PORT) {
   app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUGGING_PORT)
@@ -34,7 +38,8 @@ function spawnJavaBackend(): void {
     throw new Error(`Backend jar not found at:\n${JAR_PATH}\n\nBuild it with: mvnw package -DskipTests`)
   }
 
-  javaProcess = spawn(resolveJavaExecutable(), ['-jar', JAR_PATH, '--api-server'], {
+  const sandboxArgs = SANDBOX_HOME ? [`-Duser.home=${SANDBOX_HOME}`] : []
+  javaProcess = spawn(resolveJavaExecutable(), [...sandboxArgs, '-jar', JAR_PATH, '--api-server'], {
     cwd: ROOT_DIR,
     stdio: ['ignore', 'pipe', 'pipe']
   })
@@ -130,7 +135,7 @@ let previouslyRunningConfigIds = new Set<number>()
 async function checkBackupCompletions(): Promise<void> {
   try {
     const settings = await getSettings()
-    const notifyOnComplete = settings.NOTIFY_ON_COMPLETE === 'true'
+    const notifyOnComplete = settings.NOTIFY_ON_COMPLETE !== 'false' // default on
     const notifyOnFailure = settings.NOTIFY_ON_FAILURE !== 'false' // default on
     if (!notifyOnComplete && !notifyOnFailure) {
       previouslyRunningConfigIds = new Set()
@@ -261,6 +266,10 @@ app.whenReady().then(async () => {
   if (!app.hasSingleInstanceLock()) return
   try {
     // Reuse a backend that is already running (external/debugged one or leftover instance)
+    if (SANDBOX_HOME && (await isApiUp())) {
+      // Reusing it would mean working on the real database instead of the sandbox
+      throw new Error(`A BackupManager backend is already running on ${API_BASE}.\n\nClose it before simulating a first launch.`)
+    }
     if (!BACKEND_EXTERNAL && !(await isApiUp())) spawnJavaBackend()
     await waitForApi(BACKEND_EXTERNAL ? 90_000 : 30_000)
   } catch (err) {

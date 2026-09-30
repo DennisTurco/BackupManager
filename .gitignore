@@ -20,6 +20,7 @@ ui/dist-electron/
 ui/out/
 ui/release/
 ui/.vite/
+ui/.sandbox/
 
 # ── Environment & secrets ─────────────────────────────────────────────────────
 .env

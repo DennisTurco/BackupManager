@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import backupmanager.api.routes.AnalyticsRoutes;
-import backupmanager.api.routes.AuthRoutes;
 import backupmanager.api.routes.BackupRoutes;
 import backupmanager.api.routes.ConfigRoutes;
 import backupmanager.api.routes.LogRoutes;
@@ -45,7 +44,6 @@ public class ApiServer {
         AnalyticsRoutes.register(app);
         BackupRoutes.register(app);
         SettingsRoutes.register(app);
-        AuthRoutes.register(app);
         LogRoutes.register(app);
         ConfigRoutes.register(app);
         SubscriptionRoutes.register(app);

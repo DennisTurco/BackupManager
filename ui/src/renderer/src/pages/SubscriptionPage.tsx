@@ -2,8 +2,8 @@ import { Shield, AlertTriangle, AlertOctagon, Mail, Check, Lock } from 'lucide-r
 import { useQuery } from '@tanstack/react-query'
 import { useConfig } from '../context/ConfigContext'
 import { useTranslation } from '../context/TranslationContext'
-import { authApi, subscriptionApi } from '../services/api'
-import type { SubscriptionInfo, User } from '../types'
+import { subscriptionApi } from '../services/api'
+import type { SubscriptionInfo } from '../types'
 import { PageHeader } from '../components/ui'
 
 export default function SubscriptionPage() {
@@ -15,7 +15,6 @@ export default function SubscriptionPage() {
     refetchInterval: 60_000,
   })
 
-  const { data: user } = useQuery({ queryKey: ['user'], queryFn: authApi.getUser, staleTime: Infinity })
   const supportEmail = cfg.email || 'dennisturco@gmail.com'
 
   return (
@@ -31,7 +30,7 @@ export default function SubscriptionPage() {
           {t('ReactUI.LoadingText', 'Loading…')}
         </div>
       ) : sub ? (
-        <SubscriptionBanner sub={sub} renewalHref={renewalMailto(supportEmail, sub, user, cfg.version)} />
+        <SubscriptionBanner sub={sub} renewalHref={renewalMailto(supportEmail, sub, cfg.version)} />
       ) : (
         <div className="card" style={{ padding: '18px 22px', color: 'var(--error)', fontSize: 13 }}>
           {t('ReactUI.SubscriptionLoadFailed', 'Unable to retrieve the subscription status.')}
@@ -184,13 +183,11 @@ function SubscriptionBanner({ sub, renewalHref }: { sub: SubscriptionInfo; renew
 /* ─── Renewal request ────────────────────────────────────────────────────── */
 
 // The app doesn't send emails itself: the request opens in the user's own mail client
-function renewalMailto(to: string, sub: SubscriptionInfo, user: User | undefined, version: string) {
+function renewalMailto(to: string, sub: SubscriptionInfo, version: string) {
   const subject = 'BackupManager - Subscription renewal request'
   const body = [
     'Hello, I would like to renew my BackupManager subscription.',
     '',
-    user ? `Name: ${user.name} ${user.surname}` : null,
-    user ? `Email: ${user.email}` : null,
     `Subscription status: ${sub.status}`,
     sub.validUntil ? `Valid until: ${sub.validUntil}` : null,
     version ? `App version: ${version}` : null,

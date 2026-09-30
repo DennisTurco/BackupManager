@@ -5,8 +5,7 @@ import type {
   BackupConfig,
   BackupRequest,
   CreateBackupPayload,
-  SubscriptionInfo,
-  User
+  SubscriptionInfo
 } from '../types'
 
 const client = axios.create({
@@ -51,14 +50,10 @@ export const analyticsApi = {
   getSnapshot: () => client.get<AnalyticsSnapshot>('/api/analytics').then((r) => r.data)
 }
 
-// ── Auth / User ───────────────────────────────────────────────────────────────
+// ── Status ────────────────────────────────────────────────────────────────────
 
-export const authApi = {
-  status: () =>
-    client.get<{ firstAccess: boolean }>('/api/auth/status').then((r) => r.data),
-  getUser: () => client.get<User>('/api/auth/user').then((r) => r.data),
-  register: (name: string, surname: string, email: string) =>
-    client.post<User>('/api/auth/register', { name, surname, email }).then((r) => r.data)
+export const statusApi = {
+  check: () => client.get('/api/status').then((r) => r.data)
 }
 
 // ── Settings ──────────────────────────────────────────────────────────────────

@@ -10,10 +10,6 @@
         "QuickSearch": "Ricerca rapida",
         "SaveButton": "Salva"
     },
-    "UserDialog": {
-        "EmailConfirmationSubject": "Grazie per aver scelto Backup Manager!",
-        "EmailConfirmationBody": "Ciao [UserName],\n\nGrazie per aver scaricato e registrato Backup Manager, il tuo nuovo strumento per una gestione sicura ed efficiente dei backup!\n\nQuesta è un’email automatica, inviata per confermare la tua registrazione. Ti contatteremo via email esclusivamente per comunicarti il rilascio di nuove versioni o aggiornamenti importanti dell’applicazione.\n\nNel frattempo, se hai domande, necessiti assistenza o hai suggerimenti, siamo sempre a tua disposizione. Puoi contattarci scrivendo a [SupportEmail].\n\nGrazie ancora per aver scelto Backup Manager e buon lavoro con i tuoi backup!\n\nA presto,\nIl Team di Backup Manager"
-    },
     "BackupList": {
         "BackupNameColumn": "Nome del Backup",
         "InitialPathColumn": "Percorso Iniziale",
@@ -137,13 +133,6 @@
         "BenefitPriorityAssistance": "Assistenza prioritaria",
         "DurationLabel": "Durata",
         "RequestRenewalButton": "Richiedi rinnovo",
-        "ModalTitleRequest": "Richiedi rinnovo subscription",
-        "ModalBodyRequest": "Verrà inviata un'email all'assistenza con i tuoi dati utente e lo stato attuale della subscription, per richiedere un prolungamento del rinnovo.",
-        "ModalSendError": "Invio non riuscito. Riprova più tardi.",
-        "ModalConfirmSend": "Conferma e invia",
-        "ModalSending": "Invio…",
-        "ModalTitleSent": "Richiesta inviata",
-        "ModalBodySent": "La richiesta di rinnovo è stata inviata all'assistenza. Verrai ricontattato al più presto.",
         "GithubTooltip": "GitHub",
         "ToggleThemeTooltip": "Cambia tema",
         "CollapseSidebar": "Comprimi sidebar",
@@ -192,13 +181,11 @@
         "ColStarted": "Avviato",
         "ColTrigger": "Avvio",
         "ConfigCount": "{count} configurazioni",
-        "CreatingProfile": "Creazione profilo…",
         "DeleteConfirmNote": "I file di backup già creati non vengono eliminati.",
         "DeleteFailed": "Eliminazione non riuscita",
         "DeleteModalTitle": "Elimina configurazione di backup",
         "DeletedBackup": "Configurazione eliminata",
         "DonatePaypal": "Dona con PayPal",
-        "EmailLabel": "Email",
         "EmptyStateHint": "Crea la tua prima configurazione: scegli una cartella da proteggere e dove salvarne i backup.",
         "ExportCsv": "Esporta CSV",
         "ExportFailed": "Esportazione non riuscita",
@@ -208,11 +195,8 @@
         "FilterLog": "Filtra log…",
         "FilterWarnings": "Avvisi+",
         "FilteredCount": "{shown} di {total}",
-        "FirstNameLabel": "Nome",
-        "GetStarted": "Inizia",
         "HistoryPageDesc": "Tutte le esecuzioni dei backup e il log dell'applicazione",
         "KpiAutomaticSuffix": "{count} automatici",
-        "LastNameLabel": "Cognome",
         "LoadFailed": "Impossibile caricare i dati.",
         "LogTruncated": "Sono mostrate le ultime {count} righe: scarica il file per il log completo.",
         "MoreActions": "Altre azioni",
@@ -224,7 +208,6 @@
         "ProjectPage": "Pagina del progetto",
         "QuestionsContactUs": "Domande? Scrivi a",
         "RecentRuns": "Esecuzioni recenti",
-        "RegistrationFailed": "Registrazione non riuscita. Riprova.",
         "ReportBug": "Segnala un bug",
         "RetryButton": "Riprova",
         "RunsCount": "{count} esecuzioni",
@@ -240,7 +223,6 @@
         "ThemeLabel": "Tema",
         "TriggerScheduler": "Pianificato",
         "TriggerUser": "Manuale",
-        "WelcomeText": "Benvenuto! Crea il tuo profilo per iniziare.",
         "RenewalMailHint": "Apre il tuo programma di posta con la richiesta di rinnovo già compilata."
     }
 }

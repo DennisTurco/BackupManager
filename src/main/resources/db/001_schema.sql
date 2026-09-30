@@ -52,16 +52,6 @@ CREATE TABLE IF NOT EXISTS "Configurations" (
 	"Value" TEXT NOT NULL
 );
 
--- Table: Users
-CREATE TABLE IF NOT EXISTS "Users" (
-	"UserId" INTEGER PRIMARY KEY AUTOINCREMENT,
-	"Name" TEXT NOT NULL,
-	"Surname" TEXT NOT NULL,
-	"Email"	TEXT NOT NULL UNIQUE,
-	"Language" TEXT NOT NULL,
-	"InsertDate" INTEGER NOT NULL
-);
-
 -- Table: SchemaVersion
 CREATE TABLE IF NOT EXISTS "SchemaVersion" (
     "Version" INTEGER PRIMARY KEY

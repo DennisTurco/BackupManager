@@ -26,7 +26,6 @@ public class Translations {
     // (see backupmanager.api.routes.TranslationsRoutes) and is not constrained by this enum —
     // its keys live under the "ReactUI" category, which this loader simply ignores.
     public enum TCategory {
-        USER_DIALOG("UserDialog"),
         BACKUP_LIST("BackupList"),
         ;
 
@@ -56,10 +55,6 @@ public class Translations {
     }
 
     public enum TKey {
-        // User dialog / registration email
-        EMAIL_CONFIRMATION_SUBJECT(TCategory.USER_DIALOG, "EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
-        EMAIL_CONFIRMATION_BODY(TCategory.USER_DIALOG, "EmailConfirmationBody", "Hi [UserName],\n\nThank you for downloading and registering **Backup Manager**, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at **[SupportEmail]**.\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"),
-
         // BackupList — CSV export headers (GET /api/backups/export.csv)
         BACKUP_NAME_COLUMN(TCategory.BACKUP_LIST, "BackupNameColumn", "Backup Name"),
         INITIAL_PATH_COLUMN(TCategory.BACKUP_LIST, "InitialPathColumn", "Initial Path"),

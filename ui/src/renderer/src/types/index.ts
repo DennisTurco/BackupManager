@@ -53,14 +53,6 @@ export interface AnalyticsSnapshot {
   durationTrend: Record<string, number>
 }
 
-export interface User {
-  id: number
-  name: string
-  surname: string
-  email: string
-  language: string
-}
-
 export interface AppConfig {
   version: string
   email: string

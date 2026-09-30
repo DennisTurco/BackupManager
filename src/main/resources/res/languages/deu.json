@@ -10,10 +10,6 @@
         "QuickSearch": "Schnellsuche",
         "SaveButton": "Speichern"
     },
-    "UserDialog": {
-        "EmailConfirmationSubject": "Vielen Dank, dass Sie sich für Backup Manager entschieden haben!",
-        "EmailConfirmationBody": "Hallo [UserName],\n\nVielen Dank, dass Sie Backup Manager heruntergeladen und registriert haben - Ihr neues Tool für eine sichere und effiziente Verwaltung Ihrer Backups!\n\nDies ist eine automatisierte E-Mail, die zur Bestätigung Ihrer Registrierung gesendet wurde. Wir werden Sie nur per E-Mail kontaktieren, um Sie über neue Versionen oder wichtige Updates der Anwendung zu informieren.\n\nFalls Sie Fragen haben, Unterstützung benötigen oder Vorschläge machen möchten, stehen wir Ihnen jederzeit gerne zur Verfügung. Sie können uns unter [SupportEmail] erreichen.\n\nVielen Dank nochmals, dass Sie sich für Backup Manager entschieden haben, und viel Erfolg bei der Verwaltung Ihrer Backups!\n\nMit freundlichen Grüßen,\nDas Backup Manager-Team"
-    },
     "BackupList": {
         "BackupNameColumn": "Backup-Name",
         "InitialPathColumn": "Anfangspfad",
@@ -137,13 +133,6 @@
         "BenefitPriorityAssistance": "Vorrangiger Support",
         "DurationLabel": "Dauer",
         "RequestRenewalButton": "Verlängerung anfordern",
-        "ModalTitleRequest": "Verlängerung des Abonnements anfordern",
-        "ModalBodyRequest": "Es wird eine E-Mail an den Support mit Ihren Benutzerdaten und dem aktuellen Abonnementstatus gesendet, um eine Verlängerung zu beantragen.",
-        "ModalSendError": "Senden fehlgeschlagen. Bitte versuchen Sie es später erneut.",
-        "ModalConfirmSend": "Bestätigen und senden",
-        "ModalSending": "Wird gesendet…",
-        "ModalTitleSent": "Anfrage gesendet",
-        "ModalBodySent": "Die Verlängerungsanfrage wurde an den Support gesendet. Sie werden so bald wie möglich kontaktiert.",
         "GithubTooltip": "GitHub",
         "ToggleThemeTooltip": "Thema wechseln",
         "CollapseSidebar": "Seitenleiste einklappen",
@@ -192,13 +181,11 @@
         "ColStarted": "Gestartet",
         "ColTrigger": "Auslöser",
         "ConfigCount": "{count} Konfigurationen",
-        "CreatingProfile": "Profil wird erstellt…",
         "DeleteConfirmNote": "Bereits erstellte Sicherungsdateien werden nicht entfernt.",
         "DeleteFailed": "Löschen fehlgeschlagen",
         "DeleteModalTitle": "Backup-Konfiguration löschen",
         "DeletedBackup": "Gelöschte Konfiguration",
         "DonatePaypal": "Über PayPal spenden",
-        "EmailLabel": "E-Mail",
         "EmptyStateHint": "Erstelle deine erste Konfiguration: Wähle einen Ordner zum Sichern und den Speicherort der Backups.",
         "ExportCsv": "CSV exportieren",
         "ExportFailed": "Export fehlgeschlagen",
@@ -208,11 +195,8 @@
         "FilterLog": "Log filtern…",
         "FilterWarnings": "Warnungen+",
         "FilteredCount": "{shown} von {total}",
-        "FirstNameLabel": "Vorname",
-        "GetStarted": "Loslegen",
         "HistoryPageDesc": "Alle Backup-Ausführungen und das Anwendungsprotokoll",
         "KpiAutomaticSuffix": "{count} automatisch",
-        "LastNameLabel": "Nachname",
         "LoadFailed": "Daten konnten nicht geladen werden.",
         "LogTruncated": "Es werden die letzten {count} Zeilen angezeigt – lade die Datei für das vollständige Protokoll herunter.",
         "MoreActions": "Weitere Aktionen",
@@ -224,7 +208,6 @@
         "ProjectPage": "Projektseite",
         "QuestionsContactUs": "Fragen? Schreib an",
         "RecentRuns": "Letzte Ausführungen",
-        "RegistrationFailed": "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
         "ReportBug": "Fehler melden",
         "RetryButton": "Erneut versuchen",
         "RunsCount": "{count} Ausführungen",
@@ -240,7 +223,6 @@
         "ThemeLabel": "Design",
         "TriggerScheduler": "Geplant",
         "TriggerUser": "Manuell",
-        "WelcomeText": "Willkommen! Erstelle dein Profil, um loszulegen.",
         "RenewalMailHint": "Öffnet dein E-Mail-Programm mit der bereits ausgefüllten Verlängerungsanfrage."
     }
 }

@@ -10,10 +10,6 @@
         "QuickSearch": "Quick search",
         "SaveButton": "Save"
     },
-    "UserDialog": {
-        "EmailConfirmationSubject": "Thank you for choosing Backup Manager!",
-        "EmailConfirmationBody": "Hi [UserName],\n\nThank you for downloading and registering Backup Manager, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at [SupportEmail].\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"
-    },
     "BackupList": {
         "BackupNameColumn": "Backup Name",
         "InitialPathColumn": "Initial Path",
@@ -137,13 +133,6 @@
         "BenefitPriorityAssistance": "Priority assistance",
         "DurationLabel": "Duration",
         "RequestRenewalButton": "Request renewal",
-        "ModalTitleRequest": "Request subscription renewal",
-        "ModalBodyRequest": "An email will be sent to assistance with your user data and the current subscription status, to request a renewal extension.",
-        "ModalSendError": "Failed to send. Please try again later.",
-        "ModalConfirmSend": "Confirm and send",
-        "ModalSending": "Sending…",
-        "ModalTitleSent": "Request sent",
-        "ModalBodySent": "The renewal request has been sent to assistance. You will be contacted as soon as possible.",
         "GithubTooltip": "GitHub",
         "ToggleThemeTooltip": "Toggle theme",
         "CollapseSidebar": "Collapse sidebar",
@@ -192,13 +181,11 @@
         "ColStarted": "Started",
         "ColTrigger": "Trigger",
         "ConfigCount": "{count} configurations",
-        "CreatingProfile": "Creating profile…",
         "DeleteConfirmNote": "Backup files already created are not removed.",
         "DeleteFailed": "Delete failed",
         "DeleteModalTitle": "Delete backup configuration",
         "DeletedBackup": "Deleted configuration",
         "DonatePaypal": "Donate via PayPal",
-        "EmailLabel": "Email",
         "EmptyStateHint": "Create your first configuration: choose a folder to protect and where to save its backups.",
         "ExportCsv": "Export CSV",
         "ExportFailed": "Export failed",
@@ -208,11 +195,8 @@
         "FilterLog": "Filter log…",
         "FilterWarnings": "Warnings+",
         "FilteredCount": "{shown} of {total}",
-        "FirstNameLabel": "First name",
-        "GetStarted": "Get started",
         "HistoryPageDesc": "Every backup execution and the application log",
         "KpiAutomaticSuffix": "{count} automatic",
-        "LastNameLabel": "Last name",
         "LoadFailed": "Unable to load data.",
         "LogTruncated": "Showing the last {count} lines — download the file for the full log.",
         "MoreActions": "More actions",
@@ -224,7 +208,6 @@
         "ProjectPage": "Project page",
         "QuestionsContactUs": "Questions? Write to",
         "RecentRuns": "Recent runs",
-        "RegistrationFailed": "Registration failed. Please try again.",
         "ReportBug": "Report a bug",
         "RetryButton": "Retry",
         "RunsCount": "{count} executions",
@@ -240,7 +223,6 @@
         "ThemeLabel": "Theme",
         "TriggerScheduler": "Scheduled",
         "TriggerUser": "Manual",
-        "WelcomeText": "Welcome! Create your profile to get started.",
         "RenewalMailHint": "Opens your email program with the renewal request already filled in."
     }
 }

@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import {
   LayoutDashboard, Database, History, Settings, Sun, Moon, CreditCard, Loader,
-  Lock, ChevronsLeft, ChevronsRight, Bug, Globe, UserRound,
+  Lock, ChevronsLeft, ChevronsRight, Bug, Globe,
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { useConfig } from '../context/ConfigContext'
 import { useSubscription } from '../context/SubscriptionContext'
 import { useTranslation } from '../context/TranslationContext'
 import { useBackupRuns } from '../context/BackupRunsContext'
-import { authApi } from '../services/api'
 
 interface NavItem { to: string; label: string; icon: React.ElementType; locked?: boolean; badge?: number }
 
@@ -22,8 +20,6 @@ export default function Layout() {
   const { t } = useTranslation()
   const { running, backups } = useBackupRuns()
   const navigate = useNavigate()
-
-  const { data: user } = useQuery({ queryKey: ['user'], queryFn: authApi.getUser, staleTime: Infinity })
 
   const [collapsed, setCollapsed] = useState(() => {
     try { return localStorage.getItem('sidebarCollapsed') === 'true' } catch { return false }
@@ -87,24 +83,8 @@ export default function Layout() {
           {otherNav.map(item => <SidebarLink key={item.to} item={item} collapsed={collapsed} />)}
         </nav>
 
-        {/* Footer: user + quick actions */}
+        {/* Footer: quick actions */}
         <div style={{ borderTop: '1px solid var(--border)', padding: 8, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {user && !collapsed && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 6px', minWidth: 0 }} title={user.email}>
-              <div style={{
-                width: 26, height: 26, borderRadius: '50%', flexShrink: 0,
-                background: 'var(--accent-soft)', color: 'var(--accent)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 11, fontWeight: 700,
-              }}>
-                {initials(user.name, user.surname) || <UserRound size={13} />}
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <div className="truncate" style={{ fontSize: 12, fontWeight: 600 }}>{user.name} {user.surname}</div>
-                <div className="truncate" style={{ fontSize: 10, color: 'var(--text-dim)' }}>{user.email}</div>
-              </div>
-            </div>
-          )}
           <div style={{
             display: 'flex', gap: 2,
             flexDirection: collapsed ? 'column' : 'row',
@@ -191,8 +171,4 @@ function SidebarLink({ item, collapsed }: { item: NavItem; collapsed: boolean })
       {!collapsed && badge && <span className="nav-badge">{badge}</span>}
     </NavLink>
   )
-}
-
-function initials(name?: string, surname?: string) {
-  return `${name?.[0] ?? ''}${surname?.[0] ?? ''}`.toUpperCase()
 }

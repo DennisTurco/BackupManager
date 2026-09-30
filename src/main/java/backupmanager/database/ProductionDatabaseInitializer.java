@@ -24,6 +24,7 @@ public class ProductionDatabaseInitializer extends DatabaseInitializer {
         MIGRATIONS.put(5, "/db/005_soft_delete.sql");
         MIGRATIONS.put(6, "/db/006_schema_fixes.sql");
         MIGRATIONS.put(7, "/db/007_drop_emails.sql");
+        MIGRATIONS.put(8, "/db/008_drop_users.sql");
     }
 
     public static void init() throws Exception {

@@ -11,7 +11,6 @@ import backupmanager.Enums.ConfigKey;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
 import backupmanager.Services.BackgroundService;
-import backupmanager.Utils.AppPreferences;
 import backupmanager.api.ApiServer;
 import backupmanager.database.Database;
 import backupmanager.database.DatabasePaths;
@@ -34,8 +33,7 @@ public class MainApp {
 
         databaseInitialization();
 
-        AppPreferences.init();
-        LanguageManager.loadPreferredLanguage();
+        LanguageManager.initialize();
         Configurations.loadAllConfigurations();
     }
 

@@ -113,7 +113,7 @@ export default function SettingsPage() {
       <Section title={t('ReactUI.SectionNotifications', 'Notifications')}>
         <Switch
           label={t('ReactUI.NotifyOnComplete', 'Show notification on backup completion')}
-          checked={form['NOTIFY_ON_COMPLETE'] === 'true'}
+          checked={form['NOTIFY_ON_COMPLETE'] !== 'false'}
           onChange={v => commit('NOTIFY_ON_COMPLETE', String(v))}
         />
         <Switch

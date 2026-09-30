@@ -43,6 +43,32 @@
             "presentation": { "group": "2-parts", "order": 1 }
         },
         {
+            "name": "First launch (standard, sandbox)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ui",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev:first-launch", "--", "--sourcemap"],
+            "preLaunchTask": "UI: Ensure dependencies",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "presentation": { "group": "3-first-launch", "order": 1 }
+        },
+        {
+            "name": "First launch (demo, sandbox)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/ui",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev:first-launch:demo", "--", "--sourcemap"],
+            "preLaunchTask": "UI: Ensure dependencies",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "presentation": { "group": "3-first-launch", "order": 2 }
+        },
+        {
             "name": "Attach renderer (React)",
             "type": "chrome",
             "request": "attach",

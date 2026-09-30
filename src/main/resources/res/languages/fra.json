@@ -10,10 +10,6 @@
         "QuickSearch": "Recherche rapide",
         "SaveButton": "Enregistrer"
     },
-    "UserDialog": {
-        "EmailConfirmationSubject": "Merci d'avoir choisi Backup Manager !",
-        "EmailConfirmationBody": "Bonjour [UserName],\n\nMerci d'avoir téléchargé et enregistré Backup Manager, votre nouvel outil pour une gestion sécurisée et efficace des sauvegardes !\n\nCeci est un email automatique envoyé pour confirmer votre inscription. Nous vous contacterons uniquement par email pour vous informer des nouvelles versions ou des mises à jour importantes de l'application.\n\nEn attendant, si vous avez des questions, besoin d'aide ou des suggestions, nous sommes toujours à votre disposition. Vous pouvez nous contacter à [SupportEmail].\n\nMerci encore d'avoir choisi Backup Manager et bonne gestion de vos sauvegardes !\n\nCordialement,\nL'équipe de Backup Manager"
-    },
     "BackupList": {
         "BackupNameColumn": "Nom de la Sauvegarde",
         "InitialPathColumn": "Chemin Initial",
@@ -137,13 +133,6 @@
         "BenefitPriorityAssistance": "Assistance prioritaire",
         "DurationLabel": "Durée",
         "RequestRenewalButton": "Demander le renouvellement",
-        "ModalTitleRequest": "Demander le renouvellement de l'abonnement",
-        "ModalBodyRequest": "Un e-mail sera envoyé à l'assistance avec vos données utilisateur et l'état actuel de l'abonnement, pour demander une prolongation du renouvellement.",
-        "ModalSendError": "Échec de l'envoi. Veuillez réessayer plus tard.",
-        "ModalConfirmSend": "Confirmer et envoyer",
-        "ModalSending": "Envoi…",
-        "ModalTitleSent": "Demande envoyée",
-        "ModalBodySent": "La demande de renouvellement a été envoyée à l'assistance. Vous serez contacté dès que possible.",
         "GithubTooltip": "GitHub",
         "ToggleThemeTooltip": "Changer de thème",
         "CollapseSidebar": "Réduire la barre latérale",
@@ -192,13 +181,11 @@
         "ColStarted": "Démarré",
         "ColTrigger": "Déclencheur",
         "ConfigCount": "{count} configurations",
-        "CreatingProfile": "Création du profil…",
         "DeleteConfirmNote": "Les fichiers de sauvegarde déjà créés ne sont pas supprimés.",
         "DeleteFailed": "Échec de la suppression",
         "DeleteModalTitle": "Supprimer la configuration de sauvegarde",
         "DeletedBackup": "Configuration supprimée",
         "DonatePaypal": "Faire un don via PayPal",
-        "EmailLabel": "E-mail",
         "EmptyStateHint": "Créez votre première configuration : choisissez un dossier à protéger et où enregistrer ses sauvegardes.",
         "ExportCsv": "Exporter en CSV",
         "ExportFailed": "Échec de l'export",
@@ -208,11 +195,8 @@
         "FilterLog": "Filtrer le journal…",
         "FilterWarnings": "Avertissements+",
         "FilteredCount": "{shown} sur {total}",
-        "FirstNameLabel": "Prénom",
-        "GetStarted": "Commencer",
         "HistoryPageDesc": "Toutes les exécutions de sauvegarde et le journal de l'application",
         "KpiAutomaticSuffix": "{count} automatiques",
-        "LastNameLabel": "Nom",
         "LoadFailed": "Impossible de charger les données.",
         "LogTruncated": "Affichage des {count} dernières lignes — téléchargez le fichier pour le journal complet.",
         "MoreActions": "Plus d'actions",
@@ -224,7 +208,6 @@
         "ProjectPage": "Page du projet",
         "QuestionsContactUs": "Des questions ? Écrivez à",
         "RecentRuns": "Exécutions récentes",
-        "RegistrationFailed": "Échec de l'inscription. Veuillez réessayer.",
         "ReportBug": "Signaler un bug",
         "RetryButton": "Réessayer",
         "RunsCount": "{count} exécutions",
@@ -240,7 +223,6 @@
         "ThemeLabel": "Thème",
         "TriggerScheduler": "Planifiée",
         "TriggerUser": "Manuelle",
-        "WelcomeText": "Bienvenue ! Créez votre profil pour commencer.",
         "RenewalMailHint": "Ouvre votre logiciel de messagerie avec la demande de renouvellement déjà remplie."
     }
 }

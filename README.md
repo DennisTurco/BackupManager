@@ -62,6 +62,16 @@ npm run dev
 
 This opens Electron in development mode with hot-reload. `npm run dev` rebuilds the backend JAR first when the Java sources changed, then Electron spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`). If a backend is already answering on port 7089 (e.g. you started it in step 2 or from the IDE debugger), Electron reuses it instead of starting a second one.
 
+### Simulating a first launch
+
+```bash
+cd ui
+npm run dev:first-launch        # standard edition
+npm run dev:first-launch:demo   # demo edition (subscription trial), like the demo installer
+```
+
+Starts the app against a throwaway home folder in `ui/.sandbox/` (recreated on every run): the backend gets a brand-new database, logs and Electron profile, so you see the first-run behaviour (new database, language detected from the PC, demo trial) without touching your real data in `Documents\Shard\data`. Add `-- --keep` to reuse the previous sandbox and test the second launch. Close any running BackupManager first: if a backend is already answering on port 7089 the app refuses to start instead of silently using your real database.
+
 ### 4. Build the Windows installer
 
 ```bash

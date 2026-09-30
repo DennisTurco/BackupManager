@@ -6,6 +6,8 @@
   "scripts": {
     "predev": "node scripts/prepare-dev.mjs --backend",
     "dev": "electron-vite dev",
+    "dev:first-launch": "node scripts/first-launch.mjs",
+    "dev:first-launch:demo": "node scripts/first-launch.mjs --demo",
     "build": "electron-vite build",
     "preview": "electron-vite preview",
     "dist": "npm run build && electron-builder",
