@@ -6,15 +6,19 @@ import {
 } from 'recharts'
 import { Database, Play, Timer, Archive, Info, Lock, Zap } from 'lucide-react'
 import { analyticsApi, historyApi } from '../services/api'
+import { useBackupRuns } from '../context/BackupRunsContext'
+import { PageHeader, CenteredMessage } from '../components/ui'
+import { fmtBytes, fmtDuration } from '../utils/format'
 import { useSubscription } from '../context/SubscriptionContext'
 import { useTranslation } from '../context/TranslationContext'
 import type { BackupRequest } from '../types'
 
 export default function DashboardPage() {
   const { isLocked, isLoading: loadingSub } = useSubscription()
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
+  const { backups } = useBackupRuns()
 
-  const { data: snapshot, isLoading: loadingSnap } = useQuery({
+  const { data: snapshot, isLoading: loadingSnap, isError: snapError } = useQuery({
     queryKey: ['analytics'],
     queryFn: analyticsApi.getSnapshot,
     refetchInterval: 15_000,
@@ -30,47 +34,49 @@ export default function DashboardPage() {
 
   if (loadingSub) return <Spinner />
   if (isLocked) return <LockedDashboard />
+  if (snapError) return <div className="page"><DashboardHeader /><CenteredMessage>{t('ReactUI.LoadFailed', 'Unable to load data.')}</CenteredMessage></div>
   if (loadingSnap || !snapshot) return <Spinner />
 
-  const executionsByMonth = computeExecutionsByMonth(history)
+  const executionsByMonth = computeExecutionsByMonth(history, language)
 
   const durationTrend = Object.entries(snapshot.durationTrend)
     .sort(([a], [b]) => a.localeCompare(b))
     .slice(-30)
-    .map(([date, ms]) => ({ date: shortDate(date), avgS: +(ms / 60_000).toFixed(2) }))
+    // The backend sends daily averages already in minutes (BackupAnalyticsService)
+    .map(([date, minutes]) => ({ date: shortDate(date), ms: minutes * 60_000 }))
+  // Short backups would flatten a minutes axis to zero — switch to seconds when that's the case
+  const useSeconds = durationTrend.every(p => p.ms < 120_000)
+  const trendUnit = useSeconds ? 's' : t('ReactUI.ChartUnitMin', 'min')
+  const trendData = durationTrend.map(p => ({ date: p.date, value: +(p.ms / (useSeconds ? 1000 : 60_000)).toFixed(useSeconds ? 1 : 2) }))
+
+  const automaticCount = backups.filter(b => b.automatic).length
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* Header */}
-      <div className="page-header">
-        <div>
-          <div className="page-title">{t('ReactUI.DashboardTitle', 'Backup Analytics Dashboard')}</div>
-          <div className="page-desc">{t('ReactUI.DashboardDesc', 'Overview of backup configurations and execution statistics')}</div>
-        </div>
-      </div>
+    <div className="page">
+      <DashboardHeader />
 
       {/* KPI cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 12 }}>
         <KpiCard
-          icon={<Database size={18} />} color="#2196f3"
+          icon={<Database size={18} />} color="var(--accent)" soft="var(--accent-soft)"
           label={t('ReactUI.KpiTotalConfigs', 'Total Configurations')}
-          value={String(history.filter((r, i, arr) => arr.findIndex(x => x.backupConfigurationId === r.backupConfigurationId) === i).length)}
-          sub=""
+          value={String(backups.length)}
+          sub={t('ReactUI.KpiAutomaticSuffix', '{count} automatic').replace('{count}', String(automaticCount))}
         />
         <KpiCard
-          icon={<Play size={18} />} color="#5aad4e"
+          icon={<Play size={18} />} color="var(--success)" soft="var(--success-soft)"
           label={t('ReactUI.KpiTotalExecutions', 'Total Executions')}
           value={String(snapshot.totalRequests)}
           sub={`${snapshot.successRate.toFixed(1)}${t('ReactUI.KpiSuccessRateSuffix', '% success rate')}`}
         />
         <KpiCard
-          icon={<Timer size={18} />} color="#e8a735"
+          icon={<Timer size={18} />} color="var(--warning)" soft="var(--warning-soft)"
           label={t('ReactUI.KpiAvgDuration', 'Avg Duration')}
           value={fmtDuration(snapshot.avgDurationMs)}
           sub=""
         />
         <KpiCard
-          icon={<Archive size={18} />} color="#9c6ae1"
+          icon={<Archive size={18} />} color="var(--purple)" soft="var(--purple-soft)"
           label={t('ReactUI.KpiAvgCompression', 'Avg Compression')}
           value={`${(snapshot.avgCompressionRate * 100).toFixed(1)}%`}
           sub=""
@@ -78,7 +84,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 12 }}>
         {/* Executions by month */}
         <ChartCard title={t('ReactUI.ChartExecutionsByMonth', 'Executions by month')}>
           <ResponsiveContainer width="100%" height={200}>
@@ -93,14 +99,14 @@ export default function DashboardPage() {
         </ChartCard>
 
         {/* Duration trend */}
-        <ChartCard title={t('ReactUI.ChartAvgDurationTrend', 'Avg duration trend (min)')}>
+        <ChartCard title={`${t('ReactUI.KpiAvgDuration', 'Avg Duration')} (${trendUnit})`}>
           <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={durationTrend}>
+            <LineChart data={trendData}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
               <XAxis dataKey="date" tick={{ fill: 'var(--text-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip unit={t('ReactUI.ChartUnitMin', 'min')} />} />
-              <Line dataKey="avgS" stroke="#e8a735" strokeWidth={2} dot={false} name="Avg (min)" />
+              <Tooltip content={<CustomTooltip unit={trendUnit} />} />
+              <Line dataKey="value" stroke="var(--warning)" strokeWidth={2} dot={trendData.length < 12} name="avg" />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -121,8 +127,8 @@ export default function DashboardPage() {
 
 /* ─── Sub-components ─────────────────────────────────────────────────────── */
 
-function KpiCard({ icon, color, label, value, sub }: {
-  icon: React.ReactNode; color: string
+function KpiCard({ icon, color, soft, label, value, sub }: {
+  icon: React.ReactNode; color: string; soft: string
   label: string; value: string; sub: string
 }) {
   return (
@@ -130,7 +136,7 @@ function KpiCard({ icon, color, label, value, sub }: {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
         <div style={{
           width: 34, height: 34, borderRadius: 8,
-          background: `${color}22`,
+          background: soft,
           color, display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           {icon}
@@ -146,7 +152,7 @@ function KpiCard({ icon, color, label, value, sub }: {
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="card" style={{ padding: '16px 18px' }}>
-      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 14 }}>{title}</div>
+      <div className="card-title">{title}</div>
       {children}
     </div>
   )
@@ -196,21 +202,16 @@ function CustomTooltip({ active, payload, label, unit }: {
 function LockedDashboard() {
   const { t } = useTranslation()
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div className="page-header">
-        <div>
-          <div className="page-title">{t('ReactUI.DashboardTitle', 'Backup Analytics Dashboard')}</div>
-          <div className="page-desc">{t('ReactUI.DashboardDesc', 'Overview of backup configurations and execution statistics')}</div>
-        </div>
-      </div>
+    <div className="page">
+      <DashboardHeader />
       <div className="card" style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
         gap: 14, padding: '48px 24px',
-        borderColor: 'var(--error)', background: 'rgba(224,82,82,.06)',
+        borderColor: 'var(--error)', background: 'var(--error-soft)',
       }}>
         <div style={{
           width: 44, height: 44, borderRadius: 12,
-          background: 'rgba(224,82,82,.15)', color: 'var(--error)',
+          background: 'var(--error-soft)', color: 'var(--error)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <Lock size={20} />
@@ -230,18 +231,24 @@ function LockedDashboard() {
   )
 }
 
-function Spinner() {
+function DashboardHeader() {
   const { t } = useTranslation()
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200, color: 'var(--text-muted)' }}>
-      {t('ReactUI.LoadingAnalytics', 'Loading analytics…')}
-    </div>
+    <PageHeader
+      title={t('ReactUI.DashboardTitle', 'Backup Analytics Dashboard')}
+      desc={t('ReactUI.DashboardDesc', 'Overview of backup configurations and execution statistics')}
+    />
   )
+}
+
+function Spinner() {
+  const { t } = useTranslation()
+  return <CenteredMessage>{t('ReactUI.LoadingAnalytics', 'Loading analytics…')}</CenteredMessage>
 }
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
 
-function computeExecutionsByMonth(history: BackupRequest[]) {
+function computeExecutionsByMonth(history: BackupRequest[], language: string) {
   const map = new Map<string, number>()
   for (const r of history) {
     const m = r.startedDate.slice(0, 7) // "2024-12"
@@ -250,23 +257,13 @@ function computeExecutionsByMonth(history: BackupRequest[]) {
   return Array.from(map.entries())
     .sort(([a], [b]) => a.localeCompare(b))
     .slice(-12)
-    .map(([month, count]) => ({ month: month.slice(2), count })) // "24-12"
+    .map(([month, count]) => ({
+      month: new Date(`${month}-01T00:00:00`).toLocaleDateString(language, { month: 'short', year: '2-digit' }),
+      count,
+    }))
 }
 
 function shortDate(iso: string) {
   const d = new Date(iso)
   return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}`
-}
-
-function fmtDuration(ms: number) {
-  if (ms < 1000)    return `${Math.round(ms)}ms`
-  if (ms < 60_000)  return `${(ms / 1000).toFixed(1)}s`
-  return `${(ms / 60_000).toFixed(2)} min`
-}
-
-function fmtBytes(bytes: number) {
-  if (!bytes) return '0 B'
-  const k = 1024, sizes = ['B', 'KB', 'MB', 'GB', 'TB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`
 }

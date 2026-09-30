@@ -217,7 +217,8 @@ function createWindow(startMinimized: boolean): void {
   })
 
   if (!app.isPackaged) {
-    mainWindow.loadURL('http://localhost:5173')
+    // electron-vite exposes the actual dev server URL (the port shifts when 5173 is taken)
+    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'] ?? 'http://localhost:5173')
     mainWindow.webContents.openDevTools()
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
@@ -244,7 +245,20 @@ ipcMain.handle('dialog:openFolder', async () => {
 
 ipcMain.handle('shell:openPath', (_event, path: string) => shell.openPath(path))
 
+// A second launch just brings the existing window forward instead of opening another tray app
+if (!app.requestSingleInstanceLock()) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    if (!mainWindow) return
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.show()
+    mainWindow.focus()
+  })
+}
+
 app.whenReady().then(async () => {
+  if (!app.hasSingleInstanceLock()) return
   try {
     // Reuse a backend that is already running (external/debugged one or leftover instance)
     if (!BACKEND_EXTERNAL && !(await isApiUp())) spawnJavaBackend()

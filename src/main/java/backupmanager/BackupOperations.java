@@ -3,10 +3,14 @@ package backupmanager;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -16,12 +20,12 @@ import backupmanager.Entities.BackupRequest;
 import backupmanager.Entities.ConfigurationBackup;
 import backupmanager.Entities.TimeInterval;
 import backupmanager.Entities.ZippingContext;
+import backupmanager.Enums.BackupStatus;
 import backupmanager.Enums.BackupTriggerType;
 import backupmanager.Enums.ErrorType;
 import backupmanager.Helpers.BackupHelper;
 import static backupmanager.Helpers.BackupHelper.dateForfolderNameFormatter;
 import backupmanager.Managers.ExceptionManager;
-import backupmanager.Services.RunningBackupService;
 import backupmanager.Services.ZippingThread;
 import backupmanager.Utils.FolderUtils;
 import backupmanager.database.Repositories.BackupConfigurationRepository;
@@ -30,15 +34,40 @@ import backupmanager.database.Repositories.BackupRequestRepository;
 public class BackupOperations {
     private static final Logger logger = LoggerFactory.getLogger(BackupOperations.class);
 
-    public static void requestSingleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
-        if (BackupRequestRepository.isAnyBackupRunning()) {
-            logger.warn("A backup is already running. Skipping this request (triggeredBy={}).", triggeredBy);
-            return;
-        }
-        singleBackup(context, triggeredBy);
+    // Set from the moment a backup is accepted until its outcome is recorded. The DB row only exists
+    // after the source has been scanned (which can take a while on big folders), so the DB alone
+    // can't stop a second backup from starting during that window.
+    private static final AtomicBoolean backupInFlight = new AtomicBoolean(false);
+
+    // After a failed/interrupted automatic run, retry after this delay (or the interval, if shorter)
+    // instead of on every scheduler tick.
+    private static final Duration FAILED_RUN_RETRY_DELAY = Duration.ofHours(1);
+
+    public static boolean isBackupInFlight() {
+        return backupInFlight.get() || BackupRequestRepository.isAnyBackupRunning();
     }
 
-    private static void singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
+    /** @return true if the backup was started */
+    public static boolean requestSingleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
+        if (!backupInFlight.compareAndSet(false, true)) {
+            logger.warn("A backup is already running. Skipping this request (triggeredBy={}).", triggeredBy);
+            return false;
+        }
+        boolean submitted = false;
+        try {
+            if (BackupRequestRepository.isAnyBackupRunning()) {
+                logger.warn("A backup is already running. Skipping this request (triggeredBy={}).", triggeredBy);
+                return false;
+            }
+            submitted = singleBackup(context, triggeredBy);
+            return submitted;
+        } finally {
+            if (!submitted) backupInFlight.set(false);
+        }
+    }
+
+    /** @return true if the zip task was submitted (it then releases the in-flight flag itself) */
+    private static boolean singleBackup(ZippingContext context, BackupTriggerType triggeredBy) {
         if (context.execution().backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
 
         logger.info("Event --> manual backup started");
@@ -48,7 +77,7 @@ public class BackupOperations {
             String path2 = context.execution().backup().getDestinationPath();
 
             if(!checkInputCorrect(context.execution().backup().getName(), path1, path2))
-                return;
+                return false;
 
             LocalDateTime dateNow = LocalDateTime.now();
             String date = dateNow.format(dateForfolderNameFormatter);
@@ -58,14 +87,15 @@ public class BackupOperations {
 
             logger.info("date backup: " + date);
 
-            executeBackup(context, triggeredBy, path1, path2);
+            return executeBackup(context, triggeredBy, path1, path2);
         } catch (Exception ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            return false;
         }
     }
 
-    public static void executeBackup(ZippingContext context, BackupTriggerType triggeredBy, String path1, String path2) {
+    public static boolean executeBackup(ZippingContext context, BackupTriggerType triggeredBy, String path1, String path2) {
         File sourceFile = new File(path1.trim());
         File outputFile = new File((path2+".zip").trim());
 
@@ -73,7 +103,7 @@ public class BackupOperations {
 
         createBackupRequest(context, triggeredBy, sourceFile, outputFile, totalFilesCount);
 
-        ZippingThread.zipDirectory(sourceFile, outputFile, context, totalFilesCount);
+        return ZippingThread.zipDirectory(sourceFile, outputFile, context, totalFilesCount);
     }
 
     private static void createBackupRequest(ZippingContext context, BackupTriggerType triggeredBy, File sourceFile, File outputFile, int totalFilesCount) {
@@ -88,42 +118,82 @@ public class BackupOperations {
         return fileName;
     }
 
-    private static void updateAfterBackup(String path1, String path2, ZippingContext context) {
-        if (context.execution().backup() == null) throw new IllegalArgumentException("Backup cannot be null!");
-        if (path1 == null) throw new IllegalArgumentException("Initial path cannot be null!");
-        if (path2 == null) throw new IllegalArgumentException("Destination path cannot be null!");
-
-        logger.info("Backup completed!");
-
-        // next day backup update
-        if (context.execution().backup().isAutomatic()) {
-            TimeInterval time = context.execution().backup().getTimeIntervalBackup();
-            if (time != null) {
-                LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(time);
-                context.execution().backup().setNextBackupDate(nextDateBackup);
-                logger.info("Next date backup setted to: " + nextDateBackup);
-            }
+    // Re-reads the configuration instead of saving the snapshot taken when the run started, so
+    // edits made while the backup was running (rename, notes, auto toggle...) aren't overwritten.
+    private static ConfigurationBackup updateAfterSuccessfulBackup(int backupId) {
+        ConfigurationBackup fresh = BackupConfigurationRepository.getBackupById(backupId);
+        if (fresh == null) {
+            logger.warn("Backup configuration {} was deleted while its backup was running", backupId);
+            return null;
         }
-        context.execution().backup().setLastBackupDate(LocalDateTime.now());
-        context.execution().backup().setCount(context.execution().backup().getCount()+1);
 
+        if (fresh.isAutomatic() && fresh.getTimeIntervalBackup() != null) {
+            LocalDateTime nextDateBackup = BackupHelper.getNexDateBackup(fresh.getTimeIntervalBackup());
+            fresh.setNextBackupDate(nextDateBackup);
+            logger.info("Next date backup setted to: " + nextDateBackup);
+        }
+        fresh.setLastBackupDate(LocalDateTime.now());
+        fresh.setCount(fresh.getCount() + 1);
+        BackupHelper.updateBackup(fresh);
+
+        logger.info("Backup :\"" + fresh.getName() + "\" updated after the backup");
+        return fresh;
+    }
+
+    // Without this, an automatic backup that keeps failing would be retried on every scheduler tick
+    public static void postponeAfterFailedRun(int backupId) {
+        ConfigurationBackup fresh = BackupConfigurationRepository.getBackupById(backupId);
+        if (fresh == null || !fresh.isAutomatic() || fresh.getTimeIntervalBackup() == null) return;
+
+        TimeInterval ti = fresh.getTimeIntervalBackup();
+        Duration interval = Duration.ofDays(ti.days()).plusHours(ti.hours()).plusMinutes(ti.minutes());
+        Duration delay = interval.compareTo(FAILED_RUN_RETRY_DELAY) < 0 ? interval : FAILED_RUN_RETRY_DELAY;
+        fresh.setNextBackupDate(LocalDateTime.now().plus(delay));
+        BackupHelper.updateBackup(fresh);
+        logger.info("Automatic backup \"{}\" did not complete, next attempt at {}", fresh.getName(), fresh.getNextBackupDate());
+    }
+
+    /**
+     * Records the final result of a run. Called exactly once per submitted zip task, after the
+     * output stream has been closed, so the file on disk is either complete or safe to delete.
+     */
+    public static void completeBackup(ZippingContext context, String outputZipPath, ZippingThread.Outcome outcome, String errorMessage) {
+        int backupId = context.execution().backup().getId();
         try {
-            List<ConfigurationBackup> backups = BackupConfigurationRepository.getBackupList();
+            BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(backupId);
+            LocalDateTime now = LocalDateTime.now();
 
-            for (ConfigurationBackup b : backups) {
-                if (b.getName().equals(context.execution().backup().getName())) {
-                    b.updateBackup(context.execution().backup());
-                    break;
+            if (outcome == ZippingThread.Outcome.SUCCESS) {
+                logger.info("Backup completed!");
+                Long zippedSize = new File(outputZipPath).isFile() ? FolderUtils.calculateFileOrFolderSize(outputZipPath) : null;
+                if (request != null) {
+                    BackupRequestRepository.updateBackupRequestByRequestId(request.backupRequestId(), new BackupRequest(
+                        request.backupRequestId(), request.backupConfigurationId(), request.startedDate(), now,
+                        BackupStatus.FINISHED, 100, request.triggeredBy(), durationMs(request, now), request.outputPath(),
+                        request.unzippedTargetSize(), zippedSize, request.filesCount(), null));
                 }
+                ConfigurationBackup fresh = updateAfterSuccessfulBackup(backupId);
+                if (fresh != null) deleteOldBackupsIfNecessary(backupId, fresh.getMaxToKeep(), outputZipPath);
+            } else {
+                BackupHelper.deletePartialBackup(outputZipPath);
+                if (request != null) {
+                    String message = outcome == ZippingThread.Outcome.INTERRUPTED ? "Interrupted" : errorMessage;
+                    BackupRequestRepository.updateBackupRequestByRequestId(request.backupRequestId(), new BackupRequest(
+                        request.backupRequestId(), request.backupConfigurationId(), request.startedDate(), now,
+                        BackupStatus.TERMINATED, request.progress(), request.triggeredBy(), durationMs(request, now), request.outputPath(),
+                        request.unzippedTargetSize(), null, request.filesCount(), message));
+                }
+                postponeAfterFailedRun(backupId);
             }
-
-            BackupHelper.updateBackup(context.execution().backup());
-
-            logger.info("Backup :\"" + context.execution().backup().getName() + "\" updated after the backup");
-        } catch (IllegalArgumentException ex) {
-            logger.error("An error occurred: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        } catch (RuntimeException ex) {
+            logger.error("Failed to record the outcome of backup {}: {}", backupId, ex.getMessage(), ex);
+        } finally {
+            backupInFlight.set(false);
         }
+    }
+
+    private static long durationMs(BackupRequest request, LocalDateTime end) {
+        return Duration.between(request.startedDate(), end).toMillis();
     }
 
     public static boolean checkInputCorrect(String backupName, String path1, String path2) {
@@ -145,29 +215,19 @@ public class BackupOperations {
         return true;
     }
 
-    public static void reEnableButtonsAndTable(ZippingContext context) {
-        RunningBackupService.updateBackupStatusAfterCompletitionByBackupConfigurationId(context.execution().backup().getId());
-    }
-
     public static void updateProgressPercentage(int value, String path1, String path2, ZippingContext context, String fileProcessed, int filesCopiedSoFar, int totalFilesCount) {
-        if (value == 0 || value == 25 || value == 50 || value == 75 || value == 100)
-            logger.info("Zipping progress: " + value + "%");
+        // 100% is only reported once the run is actually complete (see completeBackup): the file
+        // count taken before zipping can differ from what actually gets visited
+        int progress = Math.max(0, Math.min(99, value));
+        if (progress == 0 || progress == 25 || progress == 50 || progress == 75)
+            logger.info("Zipping progress: " + progress + "%");
 
         BackupRequest request = BackupRequestRepository.getLastBackupInProgressByConfigurationId(context.execution().backup().getId());
-        if (request != null) {
-
-            if (value < 100)
-                BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), value);
-            else if (value == 100) {
-                RunningBackupService.updateBackupZippedFolderSizeById(request.backupRequestId(), path2);
-
-                updateAfterBackup(path1, path2, context);
-                deleteOldBackupsIfNecessary(context.execution().backup().getMaxToKeep(), path2);
-            }
-        }
+        if (request != null && request.progress() != progress)
+            BackupRequestRepository.updateRequestProgressByRequestId(request.backupRequestId(), progress);
     }
 
-    private static void deleteOldBackupsIfNecessary(int maxBackupsToKeep, String destinationPath) {
+    private static void deleteOldBackupsIfNecessary(int backupId, int maxBackupsToKeep, String destinationPath) {
 
         logger.info("Deleting old backups if necessary");
 
@@ -188,7 +248,16 @@ public class BackupOperations {
         // regex: baseName + "_" + timestamp
         String regex = Pattern.quote(baseName) + "_\\d{2}-\\d{2}-\\d{4}T\\d{2}-\\d{2}-\\d{2}\\.zip";
 
-        File[] matchingFiles = folder.listFiles((dir, name) -> name.matches(regex));
+        // Two configurations whose source folders share a name and whose destination is the same
+        // produce identically-prefixed files: never count (or delete) files that the history
+        // records as another configuration's output.
+        Set<String> otherConfigsOutputs = BackupRequestRepository.getRequestBackups().stream()
+            .filter(r -> r.backupConfigurationId() != backupId && r.outputPath() != null)
+            .map(r -> new File(r.outputPath()).getAbsolutePath().toLowerCase())
+            .collect(Collectors.toSet());
+
+        File[] matchingFiles = folder.listFiles((dir, name) -> name.matches(regex)
+            && !otherConfigsOutputs.contains(new File(dir, name).getAbsolutePath().toLowerCase()));
 
         if (matchingFiles == null) {
             logger.warn("Error during deleting old backups: none matching files");

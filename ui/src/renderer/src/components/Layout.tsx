@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, Database, ScrollText, Settings, Sun, Moon, Github, CreditCard, Loader, CheckCircle, Lock, ChevronsLeft, ChevronsRight } from 'lucide-react'
+import { useState } from 'react'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import {
+  LayoutDashboard, Database, History, Settings, Sun, Moon, CreditCard, Loader,
+  Lock, ChevronsLeft, ChevronsRight, Bug, Globe, UserRound,
+} from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { useConfig } from '../context/ConfigContext'
 import { useSubscription } from '../context/SubscriptionContext'
 import { useTranslation } from '../context/TranslationContext'
-import { historyApi, backupApi } from '../services/api'
+import { useBackupRuns } from '../context/BackupRunsContext'
+import { authApi } from '../services/api'
 
-interface Toast { id: number; text: string }
+interface NavItem { to: string; label: string; icon: React.ElementType; locked?: boolean; badge?: number }
 
 export default function Layout() {
   const { theme, toggle } = useTheme()
@@ -16,6 +20,10 @@ export default function Layout() {
   const m = cfg.menuItems
   const { isLocked: subscriptionLocked } = useSubscription()
   const { t } = useTranslation()
+  const { running, backups } = useBackupRuns()
+  const navigate = useNavigate()
+
+  const { data: user } = useQuery({ queryKey: ['user'], queryFn: authApi.getUser, staleTime: Infinity })
 
   const [collapsed, setCollapsed] = useState(() => {
     try { return localStorage.getItem('sidebarCollapsed') === 'true' } catch { return false }
@@ -28,62 +36,24 @@ export default function Layout() {
     })
   }
 
-  const [toasts, setToasts] = useState<Toast[]>([])
-  const addToast = (text: string) => {
-    const id = Date.now()
-    setToasts(prev => [...prev, { id, text }])
-    setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 4000)
-  }
-
-  const { data: backups = [] } = useQuery({
-    queryKey: ['backups'],
-    queryFn: backupApi.getAll,
-    refetchInterval: 5000,
-  })
-
-  // Dedicated running endpoint — only returns IN_PROGRESS records, much lighter than full history
-  const { data: running = [] } = useQuery({
-    queryKey: ['running-backups'],
-    queryFn: historyApi.getRunning,
-    refetchInterval: 2000,
-  })
-
-  // Detect completions by watching each backup's lastBackupDate rather than diffing the
-  // running-list poll — a fast backup can start and finish between two 2s polls of that list
-  // and would otherwise never be seen as "running" at all, so no toast would ever fire for it.
-  const prevLastBackupDatesRef = useRef<Map<number, string | null> | null>(null)
-
-  useEffect(() => {
-    const prev = prevLastBackupDatesRef.current
-
-    if (prev) {
-      for (const backup of backups) {
-        const prevDate = prev.get(backup.id)
-        if (prevDate !== undefined && prevDate !== backup.lastBackupDate && backup.lastBackupDate) {
-          addToast(t('ReactUI.BackupCompletedToast', 'Backup "{name}" completed').replace('{name}', backup.name))
-        }
-      }
-    }
-
-    prevLastBackupDatesRef.current = new Map(backups.map(b => [b.id, b.lastBackupDate]))
-  }, [backups]) // eslint-disable-line react-hooks/exhaustive-deps
-
   const mainNav = [
-    m.BackupList !== false && { to: '/backups',   label: t('ReactUI.NavBackupConfigurations', 'Backup Configurations'), icon: Database },
-    m.Dashboard  !== false && { to: '/dashboard', label: t('ReactUI.NavDashboard', 'Dashboard'),                        icon: LayoutDashboard, locked: subscriptionLocked },
-  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType; locked?: boolean }[]
+    m.BackupList !== false && { to: '/backups', label: t('ReactUI.NavBackupConfigurations', 'Backup Configurations'), icon: Database, badge: running.length || undefined },
+    m.Dashboard !== false && { to: '/dashboard', label: t('ReactUI.NavDashboard', 'Dashboard'), icon: LayoutDashboard, locked: subscriptionLocked },
+    m.History !== false && { to: '/history', label: t('ReactUI.NavHistory', 'History'), icon: History },
+  ].filter(Boolean) as NavItem[]
 
   const otherNav = [
-    m.History !== false && { to: '/history',      label: t('ReactUI.NavHistory', 'History'),           icon: ScrollText },
     { to: '/subscription', label: t('ReactUI.NavSubscription', 'Subscription'), icon: CreditCard },
-    m.Settings !== false && { to: '/settings',    label: t('ReactUI.NavSettings', 'Settings'),          icon: Settings },
-  ].filter(Boolean) as { to: string; label: string; icon: React.ElementType; locked?: boolean }[]
+    m.Settings !== false && { to: '/settings', label: t('ReactUI.NavSettings', 'Settings'), icon: Settings },
+  ].filter(Boolean) as NavItem[]
+
+  const nameOf = (configId: number) => backups.find(b => b.id === configId)?.name ?? `#${configId}`
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'var(--bg-0)' }}>
       {/* ── Sidebar ──────────────────────────────────────────────── */}
       <aside style={{
-        width: collapsed ? 60 : 220, flexShrink: 0,
+        width: collapsed ? 60 : 224, flexShrink: 0,
         background: 'var(--bg-1)',
         borderRight: '1px solid var(--border)',
         display: 'flex', flexDirection: 'column',
@@ -91,177 +61,138 @@ export default function Layout() {
         transition: 'width 0.15s ease',
         overflow: 'hidden',
       }}>
-        {/* Logo / app name */}
         <div style={{
-          padding: collapsed ? '18px 0 14px' : '18px 16px 14px',
+          height: 60, padding: collapsed ? 0 : '0 16px',
           borderBottom: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', gap: 10,
           justifyContent: collapsed ? 'center' : 'flex-start',
+          flexShrink: 0,
         }}>
-          <img
-            src="/icon.png"
-            alt=""
-            style={{ width: 30, height: 30, borderRadius: 8, flexShrink: 0, objectFit: 'contain' }}
-          />
+          <img src="/icon.png" alt="" style={{ width: 28, height: 28, borderRadius: 7, flexShrink: 0, objectFit: 'contain' }} />
           {!collapsed && (
             <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
               <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text)' }}>Backup Manager</div>
-              {cfg.email && (
-                <div style={{ fontSize: 10, color: 'var(--text-dim)' }}>{cfg.email}</div>
-              )}
+              {cfg.version && <div style={{ fontSize: 10, color: 'var(--text-dim)' }}>v{cfg.version}</div>}
             </div>
           )}
         </div>
 
-        {/* Navigation */}
-        <nav style={{ flex: 1, padding: '8px 6px', overflowY: 'auto', overflowX: 'hidden' }}>
-          {!collapsed && <div className="section-label" style={{ padding: '12px 10px 6px' }}>Main</div>}
-          {mainNav.map(({ to, label, icon: Icon, locked }) => (
-            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} locked={locked} collapsed={collapsed} />
-          ))}
+        <nav style={{ flex: 1, padding: '8px 8px', overflowY: 'auto', overflowX: 'hidden' }}>
+          {!collapsed && <div className="section-label" style={{ padding: '10px 10px 6px' }}>{t('ReactUI.NavSectionMain', 'Main')}</div>}
+          {mainNav.map(item => <SidebarLink key={item.to} item={item} collapsed={collapsed} />)}
 
-          {!collapsed && <div className="section-label" style={{ padding: '16px 10px 6px' }}>Other</div>}
-          {otherNav.map(({ to, label, icon: Icon }) => (
-            <SidebarLink key={to} to={to} label={label} icon={<Icon size={15} />} collapsed={collapsed} />
-          ))}
+          {collapsed
+            ? <div style={{ height: 1, background: 'var(--border)', margin: '10px 8px' }} />
+            : <div className="section-label" style={{ padding: '16px 10px 6px' }}>{t('ReactUI.NavSectionOther', 'Other')}</div>}
+          {otherNav.map(item => <SidebarLink key={item.to} item={item} collapsed={collapsed} />)}
         </nav>
 
-        {/* Footer */}
-        <div style={{
-          borderTop: '1px solid var(--border)',
-          padding: '10px',
-          display: 'flex', alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'space-between',
-          flexDirection: collapsed ? 'column' : 'row',
-          gap: collapsed ? 6 : 0,
-        }}>
-          {!collapsed && <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>{cfg.version ? `v${cfg.version}` : ''}</span>}
-          <div style={{ display: 'flex', gap: 4, flexDirection: collapsed ? 'column' : 'row' }}>
-            {!collapsed && (
-              <IconBtn title={t('ReactUI.GithubTooltip', 'GitHub')} onClick={() => {}}>
-                <Github size={14} />
-              </IconBtn>
+        {/* Footer: user + quick actions */}
+        <div style={{ borderTop: '1px solid var(--border)', padding: 8, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {user && !collapsed && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 6px', minWidth: 0 }} title={user.email}>
+              <div style={{
+                width: 26, height: 26, borderRadius: '50%', flexShrink: 0,
+                background: 'var(--accent-soft)', color: 'var(--accent)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 11, fontWeight: 700,
+              }}>
+                {initials(user.name, user.surname) || <UserRound size={13} />}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div className="truncate" style={{ fontSize: 12, fontWeight: 600 }}>{user.name} {user.surname}</div>
+                <div className="truncate" style={{ fontSize: 10, color: 'var(--text-dim)' }}>{user.email}</div>
+              </div>
+            </div>
+          )}
+          <div style={{
+            display: 'flex', gap: 2,
+            flexDirection: collapsed ? 'column' : 'row',
+            alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start',
+          }}>
+            {cfg.links.issuePage && m.BugReport !== false && (
+              <a className="icon-btn" href={cfg.links.issuePage} target="_blank" rel="noreferrer" title={t('ReactUI.ReportBug', 'Report a bug')}>
+                <Bug size={15} />
+              </a>
             )}
-            <IconBtn title={t('ReactUI.ToggleThemeTooltip', 'Toggle theme')} onClick={toggle}>
-              {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-            </IconBtn>
-            <IconBtn title={collapsed ? t('ReactUI.ExpandSidebar', 'Espandi sidebar') : t('ReactUI.CollapseSidebar', 'Comprimi sidebar')} onClick={toggleCollapsed}>
-              {collapsed ? <ChevronsRight size={14} /> : <ChevronsLeft size={14} />}
-            </IconBtn>
+            {cfg.links.infoPage && m.InfoPage !== false && (
+              <a className="icon-btn" href={cfg.links.infoPage} target="_blank" rel="noreferrer" title={t('ReactUI.ProjectPage', 'Project page')}>
+                <Globe size={15} />
+              </a>
+            )}
+            <button className="icon-btn" title={t('ReactUI.ToggleThemeTooltip', 'Toggle theme')} onClick={toggle}>
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+            {!collapsed && <div style={{ flex: 1 }} />}
+            <button
+              className="icon-btn"
+              title={collapsed ? t('ReactUI.ExpandSidebar', 'Expand sidebar') : t('ReactUI.CollapseSidebar', 'Collapse sidebar')}
+              onClick={toggleCollapsed}
+            >
+              {collapsed ? <ChevronsRight size={15} /> : <ChevronsLeft size={15} />}
+            </button>
           </div>
         </div>
       </aside>
 
       {/* ── Content ───────────────────────────────────────────────── */}
-      <main style={{
-        flex: 1, overflow: 'auto',
-        background: 'var(--bg-1)',
-        padding: '20px 24px',
-        display: 'flex', flexDirection: 'column',
-      }}>
+      <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', background: 'var(--bg-1)' }}>
         {running.length > 0 && (
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            background: 'rgba(33,150,243,.12)',
-            border: '1px solid rgba(33,150,243,.3)',
-            borderRadius: 6, padding: '8px 14px',
-            marginBottom: 14, fontSize: 12, color: 'var(--accent)',
-          }}>
+          <button
+            onClick={() => navigate('/backups')}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0,
+              background: 'var(--accent-soft)', color: 'var(--accent)',
+              border: 'none', borderBottom: '1px solid var(--border)',
+              padding: '8px 24px', fontSize: 12, fontFamily: 'inherit',
+              cursor: 'pointer', textAlign: 'left',
+            }}
+          >
             <Loader size={13} className="spin" />
-            {running.length === 1
-              ? t('ReactUI.BackupProgressToast', 'Backup in progress… ({percent}%)').replace('{percent}', String(running[0].progress ?? 0))
-              : t('ReactUI.BackupsRunningToast', '{count} backups running').replace('{count}', String(running.length))}
-          </div>
+            <span style={{ fontWeight: 500 }}>
+              {running.length === 1
+                ? t('ReactUI.BackupProgressNamed', 'Backing up "{name}"… {percent}%')
+                    .replace('{name}', nameOf(running[0].backupConfigurationId))
+                    .replace('{percent}', String(running[0].progress ?? 0))
+                : t('ReactUI.BackupsRunningToast', '{count} backups running').replace('{count}', String(running.length))}
+            </span>
+            {running.length === 1 && (
+              <div className="progress" style={{ maxWidth: 160 }}>
+                <div style={{ width: `${Math.min(100, running[0].progress ?? 0)}%` }} />
+              </div>
+            )}
+          </button>
         )}
-        <Outlet />
+        <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '22px 28px' }}>
+          <Outlet />
+        </div>
       </main>
-
-      {/* ── Toast stack ───────────────────────────────────────────── */}
-      <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9999, display: 'flex', flexDirection: 'column-reverse', gap: 8, pointerEvents: 'none' }}>
-        {toasts.map(t => (
-          <div key={t.id} style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            background: 'var(--bg-2)',
-            border: '1px solid var(--border)',
-            borderRadius: 8, padding: '10px 16px',
-            fontSize: 13, color: 'var(--text)',
-            boxShadow: '0 4px 16px rgba(0,0,0,.25)',
-            minWidth: 260, maxWidth: 380,
-            animation: 'slideInRight 0.2s ease',
-          }}>
-            <CheckCircle size={15} color="var(--success)" style={{ flexShrink: 0 }} />
-            {t.text}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
 
-function SidebarLink({ to, label, icon, locked, collapsed }: {
-  to: string; label: string; icon: React.ReactNode; locked?: boolean; collapsed?: boolean
-}) {
+function SidebarLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const { t } = useTranslation()
+  const { to, label, icon: Icon, locked, badge } = item
   const lockedSuffix = t('ReactUI.LockedNavSuffix', 'Pro feature, subscription expired')
-  const tooltip = collapsed
-    ? (locked ? `${label} — ${lockedSuffix}` : label)
-    : (locked ? `${label} — ${lockedSuffix}` : undefined)
+  const tooltip = locked ? `${label} — ${lockedSuffix}` : collapsed ? label : undefined
 
   return (
-    <NavLink
-      to={to}
-      title={tooltip}
-      style={({ isActive }) => ({
-        display: 'flex', alignItems: 'center', gap: 9,
-        padding: collapsed ? '9px 0' : '7px 10px',
-        justifyContent: collapsed ? 'center' : 'flex-start',
-        borderRadius: 6,
-        marginBottom: 1,
-        fontSize: 13,
-        fontWeight: isActive ? 600 : 400,
-        textDecoration: 'none',
-        background: isActive ? 'rgba(33,150,243,.15)' : 'transparent',
-        color: isActive ? 'var(--accent)' : 'var(--text-muted)',
-        transition: 'background 0.12s, color 0.12s',
-      })}
-    >
-      {({ isActive }) => (
-        <>
-          <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-dim)', flexShrink: 0, position: 'relative' }}>
-            {icon}
-            {locked && collapsed && (
-              <Lock size={9} color="var(--text-dim)" style={{ position: 'absolute', bottom: -3, right: -5 }} />
-            )}
-          </span>
-          {!collapsed && <span style={{ flex: 1, whiteSpace: 'nowrap' }}>{label}</span>}
-          {locked && !collapsed && <Lock size={11} color="var(--text-dim)" style={{ flexShrink: 0 }} />}
-        </>
-      )}
+    <NavLink to={to} title={tooltip} className={({ isActive }) => `nav-link${isActive ? ' active' : ''}${collapsed ? ' collapsed' : ''}`}>
+      <span className="nav-icon">
+        <Icon size={16} />
+        {collapsed && locked && <Lock size={9} style={{ position: 'absolute', bottom: -3, right: -5 }} />}
+        {collapsed && badge && (
+          <span style={{ position: 'absolute', top: -3, right: -4, width: 7, height: 7, borderRadius: '50%', background: 'var(--accent)' }} />
+        )}
+      </span>
+      {!collapsed && <span className="truncate" style={{ flex: 1 }}>{label}</span>}
+      {!collapsed && locked && <Lock size={11} color="var(--text-dim)" style={{ flexShrink: 0 }} />}
+      {!collapsed && badge && <span className="nav-badge">{badge}</span>}
     </NavLink>
   )
 }
 
-function IconBtn({ title, onClick, children }: { title: string; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      title={title}
-      onClick={onClick}
-      style={{
-        background: 'none', border: 'none', cursor: 'pointer',
-        color: 'var(--text-muted)', padding: '4px 6px', borderRadius: 4,
-        display: 'flex', alignItems: 'center',
-        transition: 'color 0.12s, background 0.12s',
-      }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-3)'
-        ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--text)'
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLButtonElement).style.background = 'none'
-        ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)'
-      }}
-    >
-      {children}
-    </button>
-  )
+function initials(name?: string, surname?: string) {
+  return `${name?.[0] ?? ''}${surname?.[0] ?? ''}`.toUpperCase()
 }

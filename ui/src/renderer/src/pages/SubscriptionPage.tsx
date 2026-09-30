@@ -5,6 +5,7 @@ import { useConfig } from '../context/ConfigContext'
 import { useTranslation } from '../context/TranslationContext'
 import { subscriptionApi } from '../services/api'
 import type { SubscriptionInfo } from '../types'
+import { Alert, Modal, PageHeader } from '../components/ui'
 
 export default function SubscriptionPage() {
   const cfg = useConfig()
@@ -18,25 +19,22 @@ export default function SubscriptionPage() {
   const [confirming, setConfirming] = useState(false)
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      {/* Header */}
-      <div className="page-header">
-        <div>
-          <div className="page-title">{t('ReactUI.SubscriptionTitle', 'Subscription')}</div>
-          <div className="page-desc">{t('ReactUI.SubscriptionDesc', 'Stato reale della subscription e dei backup automatici')}</div>
-        </div>
-      </div>
+    <div className="page page-narrow">
+      <PageHeader
+        title={t('ReactUI.SubscriptionTitle', 'Subscription')}
+        desc={t('ReactUI.SubscriptionDesc', 'Real subscription status and automatic backups')}
+      />
 
       {/* Current status */}
       {isLoading ? (
         <div className="card" style={{ padding: '18px 22px', color: 'var(--text-muted)', fontSize: 13 }}>
-          Caricamento…
+          {t('ReactUI.LoadingText', 'Loading…')}
         </div>
       ) : sub ? (
         <SubscriptionBanner sub={sub} onRequestRenewal={() => setConfirming(true)} />
       ) : (
         <div className="card" style={{ padding: '18px 22px', color: 'var(--error)', fontSize: 13 }}>
-          Impossibile recuperare lo stato della subscription.
+          {t('ReactUI.SubscriptionLoadFailed', 'Unable to retrieve the subscription status.')}
         </div>
       )}
 
@@ -45,19 +43,19 @@ export default function SubscriptionPage() {
         <div style={{ display: 'flex', justifyContent: 'center', gap: 10 }}>
           {cfg.links.donatePaypal && cfg.menuItems.PaypalDonate !== false && (
             <a href={cfg.links.donatePaypal} target="_blank" rel="noreferrer" className="btn btn-ghost" style={{ fontSize: 12 }}>
-              ❤️ Donate via PayPal
+              ❤️ {t('ReactUI.DonatePaypal', 'Donate via PayPal')}
             </a>
           )}
           {cfg.links.donateBuymeacoffee && cfg.menuItems.BuymeacoffeeDonate !== false && (
             <a href={cfg.links.donateBuymeacoffee} target="_blank" rel="noreferrer" className="btn btn-ghost" style={{ fontSize: 12 }}>
-              ☕ Buy me a coffee
+              ☕ {t('ReactUI.BuyMeACoffee', 'Buy me a coffee')}
             </a>
           )}
         </div>
       )}
       <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
-        {t('General.ContactUs', 'Questions? Contact us')} at{' '}
-        <a href={`mailto:${cfg.email || 'dennisturco@gmail.com'}`} style={{ color: 'var(--accent)', textDecoration: 'none' }}>
+        {t('ReactUI.QuestionsContactUs', 'Questions? Write to')}{' '}
+        <a href={`mailto:${cfg.email || 'dennisturco@gmail.com'}`}>
           {cfg.email || 'dennisturco@gmail.com'}
         </a>
       </p>
@@ -80,22 +78,22 @@ const BANNER_BY_STATUS: Record<SubscriptionInfo['status'], {
   titleKey: string; titleFallback: string; badgeKey: string; badgeFallback: string
 }> = {
   NONE: {
-    icon: <Shield size={20} />, color: 'var(--accent)', bg: 'rgba(33,150,243,.07)',
+    icon: <Shield size={20} />, color: 'var(--accent)', bg: 'var(--accent-soft)',
     titleKey: 'ReactUI.BannerTitleNone', titleFallback: 'Subscription non richiesta',
     badgeKey: 'ReactUI.BannerBadgeNone', badgeFallback: 'Non richiesta',
   },
   ACTIVE: {
-    icon: <Shield size={20} />, color: 'var(--success)', bg: 'rgba(90,173,78,.08)',
+    icon: <Shield size={20} />, color: 'var(--success)', bg: 'var(--success-soft)',
     titleKey: 'ReactUI.BannerTitleActive', titleFallback: 'Subscription attiva',
     badgeKey: 'ReactUI.BannerBadgeActive', badgeFallback: 'Attiva',
   },
   EXPIRATION: {
-    icon: <AlertTriangle size={20} />, color: 'var(--warning)', bg: 'rgba(232,167,53,.1)',
+    icon: <AlertTriangle size={20} />, color: 'var(--warning)', bg: 'var(--warning-soft)',
     titleKey: 'ReactUI.BannerTitleExpiration', titleFallback: 'Subscription in scadenza',
     badgeKey: 'ReactUI.BannerBadgeExpiration', badgeFallback: 'In scadenza',
   },
   EXPIRED: {
-    icon: <AlertOctagon size={20} />, color: 'var(--error)', bg: 'rgba(224,82,82,.1)',
+    icon: <AlertOctagon size={20} />, color: 'var(--error)', bg: 'var(--error-soft)',
     titleKey: 'ReactUI.BannerTitleExpired', titleFallback: 'Subscription scaduta',
     badgeKey: 'ReactUI.BannerBadgeExpired', badgeFallback: 'Scaduta',
   },
@@ -129,7 +127,7 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{
             width: 40, height: 40, borderRadius: 10,
-            background: `${cfg.color}22`,
+            background: `color-mix(in srgb, ${cfg.color} 16%, transparent)`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: cfg.color, flexShrink: 0,
           }}>
@@ -145,7 +143,7 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
             </div>
           </div>
         </div>
-        <span className="badge" style={{ fontSize: 12, padding: '4px 12px', background: `${cfg.color}22`, color: cfg.color, flexShrink: 0 }}>
+        <span className="badge" style={{ fontSize: 12, padding: '4px 12px', background: `color-mix(in srgb, ${cfg.color} 16%, transparent)`, color: cfg.color, flexShrink: 0 }}>
           {t(cfg.badgeKey, cfg.badgeFallback)}
         </span>
       </div>
@@ -153,7 +151,7 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
       {/* What an active subscription unlocks */}
       <div style={{
         display: 'flex', flexWrap: 'wrap', gap: 16,
-        borderTop: `1px solid ${cfg.color}33`, paddingTop: 12,
+        borderTop: `1px solid color-mix(in srgb, ${cfg.color} 25%, transparent)`, paddingTop: 12,
       }}>
         <BenefitItem enabled={sub.status !== 'EXPIRED'} label={t('ReactUI.BenefitAutoBackups', 'Backup automatici')} />
         <BenefitItem enabled={sub.status !== 'EXPIRED'} label={t('ReactUI.BenefitAnalyticsDashboard', 'Dashboard Analytics')} />
@@ -165,7 +163,7 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8,
           fontSize: 12, color: 'var(--text-muted)',
-          borderTop: `1px solid ${cfg.color}33`, paddingTop: 12,
+          borderTop: `1px solid color-mix(in srgb, ${cfg.color} 25%, transparent)`, paddingTop: 12,
         }}>
           <span>{t('ReactUI.DurationLabel', 'Durata')}:</span>
           <strong style={{ color: 'var(--text)' }}>{from ?? '—'}</strong>
@@ -176,7 +174,7 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
 
       {/* Renewal request — only when expired */}
       {sub.status === 'EXPIRED' && (
-        <div style={{ borderTop: `1px solid ${cfg.color}33`, paddingTop: 12 }}>
+        <div style={{ borderTop: `1px solid color-mix(in srgb, ${cfg.color} 25%, transparent)`, paddingTop: 12 }}>
           <button className="btn btn-primary" onClick={onRequestRenewal}>
             <Mail size={13} /> {t('ReactUI.RequestRenewalButton', 'Richiedi rinnovo')}
           </button>
@@ -196,46 +194,41 @@ function RenewalConfirmModal({ onClose }: { onClose: () => void }) {
     onSuccess: () => setSent(true),
   })
 
+  if (sent) {
+    return (
+      <Modal
+        title={t('ReactUI.ModalTitleSent', 'Richiesta inviata')}
+        onClose={onClose}
+        width={420}
+        footer={<button type="button" className="btn btn-primary" onClick={onClose}>{t('General.CloseButton', 'Close')}</button>}
+      >
+        <p className="text-muted" style={{ lineHeight: 1.6 }}>
+          {t('ReactUI.ModalBodySent', "La richiesta di rinnovo è stata inviata all'assistenza. Verrai ricontattato al più presto.")}
+        </p>
+      </Modal>
+    )
+  }
+
   return (
-    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="modal-box" style={{ maxWidth: 420 }}>
-        {!sent ? (
-          <>
-            <div className="modal-title">{t('ReactUI.ModalTitleRequest', 'Richiedi rinnovo subscription')}</div>
-            <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 6 }}>
-              {t('ReactUI.ModalBodyRequest', "Verrà inviata un'email all'assistenza con i tuoi dati utente e lo stato attuale della subscription, per richiedere un prolungamento del rinnovo.")}
-            </p>
-            {mutation.isError && (
-              <div style={{ fontSize: 12, color: 'var(--error)', background: 'rgba(224,82,82,.1)',
-                border: '1px solid rgba(224,82,82,.25)', borderRadius: 5, padding: '7px 10px', marginBottom: 6 }}>
-                {t('ReactUI.ModalSendError', 'Invio non riuscito. Riprova più tardi.')}
-              </div>
-            )}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 8 }}>
-              <button type="button" className="btn btn-ghost" onClick={onClose} disabled={mutation.isPending}>
-                {t('General.CancelButton', 'Annulla')}
-              </button>
-              <button
-                type="button" className="btn btn-primary"
-                onClick={() => mutation.mutate()}
-                disabled={mutation.isPending}
-              >
-                <Send size={13} /> {mutation.isPending ? t('ReactUI.ModalSending', 'Invio…') : t('ReactUI.ModalConfirmSend', 'Conferma e invia')}
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="modal-title">{t('ReactUI.ModalTitleSent', 'Richiesta inviata')}</div>
-            <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14 }}>
-              {t('ReactUI.ModalBodySent', "La richiesta di rinnovo è stata inviata all'assistenza. Verrai ricontattato al più presto.")}
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button type="button" className="btn btn-primary" onClick={onClose}>{t('General.CloseButton', 'Chiudi')}</button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+    <Modal
+      title={t('ReactUI.ModalTitleRequest', 'Richiedi rinnovo subscription')}
+      onClose={onClose}
+      width={420}
+      footer={
+        <>
+          <button type="button" className="btn btn-ghost" onClick={onClose} disabled={mutation.isPending}>
+            {t('General.CancelButton', 'Cancel')}
+          </button>
+          <button type="button" className="btn btn-primary" onClick={() => mutation.mutate()} disabled={mutation.isPending}>
+            <Send size={13} /> {mutation.isPending ? t('ReactUI.ModalSending', 'Invio…') : t('ReactUI.ModalConfirmSend', 'Conferma e invia')}
+          </button>
+        </>
+      }
+    >
+      <p className="text-muted" style={{ lineHeight: 1.6 }}>
+        {t('ReactUI.ModalBodyRequest', "Verrà inviata un'email all'assistenza con i tuoi dati utente e lo stato attuale della subscription, per richiedere un prolungamento del rinnovo.")}
+      </p>
+      {mutation.isError && <Alert kind="error">{t('ReactUI.ModalSendError', 'Invio non riuscito. Riprova più tardi.')}</Alert>}
+    </Modal>
   )
 }

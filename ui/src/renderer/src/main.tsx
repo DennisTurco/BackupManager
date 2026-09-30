@@ -5,6 +5,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ConfigProvider } from './context/ConfigContext'
 import { TranslationProvider } from './context/TranslationContext'
 import { SubscriptionProvider } from './context/SubscriptionContext'
+import { ToastProvider } from './context/ToastContext'
 import App from './App'
 import './index.css'
 
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ConfigProvider>
           <TranslationProvider>
             <SubscriptionProvider>
-              <App />
+              <ToastProvider>
+                <App />
+              </ToastProvider>
             </SubscriptionProvider>
           </TranslationProvider>
         </ConfigProvider>

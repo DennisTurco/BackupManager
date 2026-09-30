@@ -6,6 +6,7 @@ export interface MenuItem {
   type?: 'separator'
   checked?: boolean
   disabled?: boolean
+  danger?: boolean
   onClick?: () => void
   submenu?: MenuItem[]
 }
@@ -39,8 +40,8 @@ export function ContextMenu({ x, y, items, onClose }: Props) {
     if (!ref.current) return
     const { width, height } = ref.current.getBoundingClientRect()
     setPos({
-      left: x + width > window.innerWidth  ? x - width  : x,
-      top:  y + height > window.innerHeight ? y - height : y,
+      left: Math.max(4, x + width > window.innerWidth - 4 ? x - width : x),
+      top:  Math.max(4, y + height > window.innerHeight - 4 ? y - height : y),
     })
   }, [x, y])
 
@@ -67,7 +68,7 @@ function MenuPanel({ items, onClose }: { items: MenuItem[]; onClose: () => void 
       borderRadius: 6,
       padding: '3px 0',
       minWidth: 190,
-      boxShadow: '0 8px 24px rgba(0,0,0,.45)',
+      boxShadow: 'var(--shadow-md)',
       userSelect: 'none',
     }}>
       {items.map((item, i) => {
@@ -101,7 +102,7 @@ function MenuRow({ item, onClose }: { item: MenuItem; onClose: () => void }) {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '5px 14px',
         fontSize: 13,
-        color: item.disabled ? 'var(--text-dim)' : 'var(--text)',
+        color: item.disabled ? 'var(--text-dim)' : item.danger ? 'var(--error)' : 'var(--text)',
         cursor: item.disabled ? 'default' : 'pointer',
         borderRadius: 4,
         margin: '0 3px',

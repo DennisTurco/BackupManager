@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Save, Sun, Moon, Monitor } from 'lucide-react'
-import { settingsApi } from '../services/api'
+import { Sun, Moon, Monitor, Check, Loader } from 'lucide-react'
+import { settingsApi, translationsApi } from '../services/api'
 import { useTheme } from '../context/ThemeContext'
 import { useTranslation } from '../context/TranslationContext'
+import { useToast } from '../context/ToastContext'
+import { CenteredMessage, NumField, PageHeader, PathField, Segmented, Switch } from '../components/ui'
 
-const LANGUAGES = [
+// Used only if the backend language list can't be fetched
+const FALLBACK_LANGUAGES = [
   { code: 'en', label: 'English' },
   { code: 'it', label: 'Italiano' },
   { code: 'fr', label: 'Français' },
@@ -15,234 +18,139 @@ const LANGUAGES = [
 
 export default function SettingsPage() {
   const { t } = useTranslation()
+  const { toast } = useToast()
   const { mode, setMode } = useTheme()
   const qc = useQueryClient()
-  const [saved, setSaved] = useState(false)
 
-  const { data: settings, isLoading } = useQuery({
-    queryKey: ['settings'],
-    queryFn: settingsApi.get,
+  const { data: settings, isLoading } = useQuery({ queryKey: ['settings'], queryFn: settingsApi.get })
+  const { data: languages = FALLBACK_LANGUAGES } = useQuery({
+    queryKey: ['languages'],
+    queryFn: translationsApi.getLanguages,
+    staleTime: Infinity,
   })
 
   const [form, setForm] = useState<Record<string, string>>({})
   useEffect(() => { if (settings) setForm(settings) }, [settings])
 
+  const [savedAt, setSavedAt] = useState<number | null>(null)
+  const savedTimer = useRef<ReturnType<typeof setTimeout>>()
+
+  // Settings save as soon as they change (text fields on blur) — no separate Save button
   const mutation = useMutation({
-    mutationFn: (data: Record<string, string>) => settingsApi.update(data),
+    mutationFn: (patch: Record<string, string>) => settingsApi.update(patch),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['settings'] })
-      setSaved(true)
-      setTimeout(() => setSaved(false), 2500)
-    }
+      setSavedAt(Date.now())
+      clearTimeout(savedTimer.current)
+      savedTimer.current = setTimeout(() => setSavedAt(null), 2000)
+    },
+    onError: () => toast(t('ReactUI.SaveFailed', 'Save failed'), 'error'),
   })
 
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }))
-
-  if (isLoading) {
-    return (
-      <div style={{ color: 'var(--text-muted)', padding: 32, textAlign: 'center' }}>
-        {t('ReactUI.LoadingSettings', 'Loading settings…')}
-      </div>
-    )
+  const commit = (k: string, v: string) => {
+    if ((settings?.[k] ?? '') === v) return
+    set(k, v)
+    mutation.mutate({ [k]: v })
   }
 
+  if (isLoading) return <CenteredMessage>{t('ReactUI.LoadingSettings', 'Loading settings…')}</CenteredMessage>
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* Header */}
-      <div className="page-header">
-        <div>
-          <div className="page-title">{t('ReactUI.SettingsTitle', 'Settings')}</div>
-          <div className="page-desc">{t('ReactUI.SettingsDesc', 'Application preferences and configuration')}</div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {saved && (
-            <span style={{ fontSize: 12, color: 'var(--success)' }}>{t('ReactUI.SavedText', 'Saved!')}</span>
-          )}
-          <button
-            className="btn btn-primary"
-            onClick={() => mutation.mutate(form)}
-            disabled={mutation.isPending}
-          >
-            <Save size={13} />
-            {mutation.isPending ? 'Saving…' : t('General.SaveButton', 'Save changes')}
-          </button>
-        </div>
-      </div>
+    <div className="page page-narrow">
+      <PageHeader
+        title={t('ReactUI.SettingsTitle', 'Settings')}
+        desc={t('ReactUI.SettingsDesc', 'Application preferences and configuration')}
+        actions={
+          mutation.isPending
+            ? <span className="text-muted" style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}><Loader size={12} className="spin" />{t('ReactUI.SavingText', 'Saving…')}</span>
+            : savedAt
+              ? <span style={{ fontSize: 12, color: 'var(--success)', display: 'flex', alignItems: 'center', gap: 6 }}><Check size={13} />{t('ReactUI.SavedText', 'Saved!')}</span>
+              : <span className="text-dim" style={{ fontSize: 12 }}>{t('ReactUI.AutoSaveHint', 'Changes are saved automatically')}</span>
+        }
+      />
 
-      {/* Appearance */}
       <Section title={t('ReactUI.SectionAppearance', 'Appearance')}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-          <ThemeCard
-            icon={<Sun size={18} />}
-            label={t('ReactUI.ThemeLight', 'Light')}
-            active={mode === 'light'}
-            onClick={() => setMode('light')}
+        <Row label={t('ReactUI.ThemeLabel', 'Theme')}>
+          <Segmented
+            value={mode}
+            onChange={setMode}
+            options={[
+              { value: 'light', label: t('ReactUI.ThemeLight', 'Light'), icon: <Sun size={13} /> },
+              { value: 'dark', label: t('ReactUI.ThemeDark', 'Dark'), icon: <Moon size={13} /> },
+              { value: 'system', label: t('ReactUI.ThemeSystem', 'System'), icon: <Monitor size={13} /> },
+            ]}
           />
-          <ThemeCard
-            icon={<Moon size={18} />}
-            label={t('ReactUI.ThemeDark', 'Dark')}
-            active={mode === 'dark'}
-            onClick={() => setMode('dark')}
+        </Row>
+        <Row label={t('ReactUI.SectionLanguage', 'Language')}>
+          <select className="input" style={{ width: 220 }} value={form['LANGUAGE'] ?? 'en'}
+            onChange={e => commit('LANGUAGE', e.target.value)}>
+            {languages.map(l => <option key={l.code} value={l.code}>{l.label}</option>)}
+          </select>
+        </Row>
+      </Section>
+
+      <Section title={t('ReactUI.SectionBackupDefaults', 'Backup defaults')}
+        desc={t('ReactUI.BackupDefaultsDesc', 'Pre-filled values when you create a new backup configuration.')}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 14 }}>
+          <PathField
+            label={t('ReactUI.DefaultDestPathLabel', 'Default destination path')}
+            value={form['DEFAULT_DESTINATION_PATH'] ?? ''}
+            onChange={v => set('DEFAULT_DESTINATION_PATH', v)}
+            onCommit={v => commit('DEFAULT_DESTINATION_PATH', v)}
+            placeholder="D:\Backups"
           />
-          <ThemeCard
-            icon={<Monitor size={18} />}
-            label={t('ReactUI.ThemeSystem', 'System')}
-            active={mode === 'system'}
-            onClick={() => setMode('system')}
+          <NumField
+            label={t('ReactUI.DefaultMaxToKeepLabel', 'Default max backups to keep')}
+            value={Number(form['DEFAULT_MAX_TO_KEEP'] ?? 5)}
+            onChange={v => set('DEFAULT_MAX_TO_KEEP', String(Math.max(1, v)))}
+            onBlur={() => commit('DEFAULT_MAX_TO_KEEP', form['DEFAULT_MAX_TO_KEEP'] ?? '5')}
+            min={1}
           />
         </div>
       </Section>
 
-      {/* Language */}
-      <Section title={t('ReactUI.SectionLanguage', 'Language')}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
-          {LANGUAGES.map(lang => (
-            <button
-              key={lang.code}
-              onClick={() => set('LANGUAGE', lang.code)}
-              style={{
-                padding: '10px 0',
-                borderRadius: 6,
-                border: `1px solid ${form['LANGUAGE'] === lang.code ? 'var(--accent)' : 'var(--border)'}`,
-                background: form['LANGUAGE'] === lang.code ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
-                color: form['LANGUAGE'] === lang.code ? 'var(--accent)' : 'var(--text-muted)',
-                fontWeight: form['LANGUAGE'] === lang.code ? 600 : 400,
-                fontSize: 13,
-                cursor: 'pointer',
-                transition: 'all 0.12s',
-              }}
-            >
-              {lang.label}
-            </button>
-          ))}
-        </div>
-      </Section>
-
-      {/* Backup settings */}
-      <Section title={t('ReactUI.SectionBackupDefaults', 'Backup defaults')}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-          <FormField label={t('ReactUI.DefaultDestPathLabel', 'Default destination path')} value={form['DEFAULT_DESTINATION_PATH'] ?? ''}
-            onChange={v => set('DEFAULT_DESTINATION_PATH', v)} placeholder="/backups" />
-          <NumField label={t('ReactUI.DefaultMaxToKeepLabel', 'Default max backups to keep')} value={Number(form['DEFAULT_MAX_TO_KEEP'] ?? 5)}
-            onChange={v => set('DEFAULT_MAX_TO_KEEP', String(v))} min={1} />
-        </div>
-      </Section>
-
-      {/* Notifications */}
       <Section title={t('ReactUI.SectionNotifications', 'Notifications')}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <Toggle
-            label={t('ReactUI.NotifyOnComplete', 'Show notification on backup completion')}
-            checked={form['NOTIFY_ON_COMPLETE'] === 'true'}
-            onChange={v => set('NOTIFY_ON_COMPLETE', String(v))}
-          />
-          <Toggle
-            label={t('ReactUI.NotifyOnFailure', 'Show notification on backup failure')}
-            checked={form['NOTIFY_ON_FAILURE'] !== 'false'}
-            onChange={v => set('NOTIFY_ON_FAILURE', String(v))}
-          />
-          <Toggle
-            label={t('ReactUI.StartMinimized', 'Start minimized to system tray')}
-            checked={form['START_MINIMIZED'] === 'true'}
-            onChange={v => set('START_MINIMIZED', String(v))}
-          />
-        </div>
+        <Switch
+          label={t('ReactUI.NotifyOnComplete', 'Show notification on backup completion')}
+          checked={form['NOTIFY_ON_COMPLETE'] === 'true'}
+          onChange={v => commit('NOTIFY_ON_COMPLETE', String(v))}
+        />
+        <Switch
+          label={t('ReactUI.NotifyOnFailure', 'Show notification on backup failure')}
+          checked={form['NOTIFY_ON_FAILURE'] !== 'false'}
+          onChange={v => commit('NOTIFY_ON_FAILURE', String(v))}
+        />
+      </Section>
+
+      <Section title={t('ReactUI.SectionStartup', 'Startup')}>
+        <Switch
+          label={t('ReactUI.StartMinimized', 'Start minimized to system tray')}
+          checked={form['START_MINIMIZED'] === 'true'}
+          onChange={v => commit('START_MINIMIZED', String(v))}
+        />
       </Section>
     </div>
   )
 }
 
-/* ─── Sub-components ─────────────────────────────────────────────────────── */
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
   return (
-    <div className="card" style={{ padding: '16px 20px' }}>
-      <div className="section-label" style={{ marginBottom: 14, fontSize: 11 }}>{title}</div>
+    <section className="card" style={{ padding: '16px 20px' }}>
+      <div style={{ marginBottom: 12 }}>
+        <div style={{ fontSize: 14, fontWeight: 600 }}>{title}</div>
+        {desc && <div className="field-hint" style={{ marginTop: 2 }}>{desc}</div>}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>{children}</div>
+    </section>
+  )
+}
+
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, minHeight: 34 }}>
+      <span style={{ fontSize: 13 }}>{label}</span>
       {children}
     </div>
-  )
-}
-
-function ThemeCard({ icon, label, active, onClick, disabled }: {
-  icon: React.ReactNode; label: string; active: boolean; onClick?: () => void; disabled?: boolean
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      style={{
-        padding: '16px 0',
-        borderRadius: 8,
-        border: `1px solid ${active ? 'var(--accent)' : 'var(--border)'}`,
-        background: active ? 'rgba(33,150,243,.12)' : 'var(--bg-3)',
-        color: active ? 'var(--accent)' : 'var(--text-muted)',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1,
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-        fontSize: 13, fontWeight: active ? 600 : 400,
-        transition: 'all 0.12s',
-      }}
-    >
-      {icon}
-      {label}
-      {active && (
-        <span style={{
-          width: 6, height: 6, borderRadius: '50%',
-          background: 'var(--accent)',
-        }} />
-      )}
-    </button>
-  )
-}
-
-function FormField({ label, value, onChange, placeholder }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string
-}) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label className="section-label">{label}</label>
-      <input className="input" value={value} placeholder={placeholder}
-        onChange={e => onChange(e.target.value)} />
-    </div>
-  )
-}
-
-function NumField({ label, value, onChange, min }: {
-  label: string; value: number; onChange: (v: number) => void; min?: number
-}) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label className="section-label">{label}</label>
-      <input className="input" type="number" value={value} min={min}
-        onChange={e => onChange(Number(e.target.value))} />
-    </div>
-  )
-}
-
-function Toggle({ label, checked, onChange }: {
-  label: string; checked: boolean; onChange: (v: boolean) => void
-}) {
-  return (
-    <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}>
-      <div
-        onClick={() => onChange(!checked)}
-        style={{
-          width: 34, height: 18, borderRadius: 9,
-          background: checked ? 'var(--accent)' : 'var(--bg-4)',
-          position: 'relative', flexShrink: 0,
-          cursor: 'pointer',
-          transition: 'background 0.18s',
-        }}
-      >
-        <div style={{
-          position: 'absolute', top: 2, left: checked ? 18 : 2,
-          width: 14, height: 14, borderRadius: '50%',
-          background: '#fff',
-          transition: 'left 0.18s',
-          boxShadow: '0 1px 3px rgba(0,0,0,.4)',
-        }} />
-      </div>
-      <span style={{ fontSize: 13, color: 'var(--text)' }}>{label}</span>
-    </label>
   )
 }

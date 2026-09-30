@@ -52,30 +52,28 @@ public class BackupRoutes {
     private static void create(Context ctx) {
         BackupRequest req = ctx.bodyAsClass(BackupRequest.class);
 
-        if (!Files.exists(Path.of(req.targetPath()))) {
-            ctx.status(422).json(new ErrorMsg("Source path does not exist: " + req.targetPath()));
-            return;
-        }
-        if (!Files.exists(Path.of(req.destinationPath()))) {
-            ctx.status(422).json(new ErrorMsg("Destination path does not exist: " + req.destinationPath()));
-            return;
-        }
-        if (req.targetPath().equals(req.destinationPath())) {
-            ctx.status(422).json(new ErrorMsg("Source and destination paths cannot be the same"));
+        Validation v = validate(req, null);
+        if (v.error() != null) {
+            ctx.status(v.status()).json(new ErrorMsg(v.error()));
             return;
         }
 
-        TimeInterval ti = (req.automatic() && req.timeIntervalBackup() != null)
-            ? new TimeInterval(req.timeIntervalBackup().days(), req.timeIntervalBackup().hours(), req.timeIntervalBackup().minutes())
-            : null;
+        TimeInterval ti = v.interval();
         LocalDateTime nextDate = (req.automatic() && ti != null) ? BackupHelper.getNexDateBackup(ti) : null;
         ConfigurationBackup backup = new ConfigurationBackup(
-            req.name(), req.targetPath(), req.destinationPath(),
+            req.name().trim(), req.targetPath(), req.destinationPath(),
             null, req.automatic(), nextDate, ti,
             req.notes(), LocalDateTime.now(), LocalDateTime.now(), 0, req.maxToKeep()
         );
         BackupConfigurationRepository.insertBackup(backup);
-        ctx.status(201).json(backup);
+
+        // Return the stored row (with its id); a failed insert must not look like a success
+        ConfigurationBackup saved = BackupConfigurationRepository.getBackupByName(backup.getName());
+        if (saved == null) {
+            ctx.status(500).json(new ErrorMsg("Unable to save the backup configuration"));
+            return;
+        }
+        ctx.status(201).json(saved);
     }
 
     private static void update(Context ctx) {
@@ -85,23 +83,14 @@ public class BackupRoutes {
 
         BackupRequest req = ctx.bodyAsClass(BackupRequest.class);
 
-        // Validate paths exist before saving
-        if (!Files.exists(Path.of(req.targetPath()))) {
-            ctx.status(422).json(new ErrorMsg("Source path does not exist: " + req.targetPath()));
-            return;
-        }
-        if (!Files.exists(Path.of(req.destinationPath()))) {
-            ctx.status(422).json(new ErrorMsg("Destination path does not exist: " + req.destinationPath()));
-            return;
-        }
-        if (req.targetPath().equals(req.destinationPath())) {
-            ctx.status(422).json(new ErrorMsg("Source and destination paths cannot be the same"));
+        Validation v = validate(req, id);
+        if (v.error() != null) {
+            ctx.status(v.status()).json(new ErrorMsg(v.error()));
             return;
         }
 
-        TimeInterval ti = (req.automatic() && req.timeIntervalBackup() != null)
-            ? new TimeInterval(req.timeIntervalBackup().days(), req.timeIntervalBackup().hours(), req.timeIntervalBackup().minutes())
-            : null;
+        // The interval is kept even when automatic backups are off, so turning them back on restores it
+        TimeInterval ti = v.interval();
         // Recompute nextBackupDate when automatic is being turned on or the interval changed
         LocalDateTime nextDate;
         if (!req.automatic()) {
@@ -119,7 +108,7 @@ public class BackupRoutes {
                 : existing.getNextBackupDate();
         }
         ConfigurationBackup updated = new ConfigurationBackup(
-            id, req.name(), req.targetPath(), req.destinationPath(),
+            id, req.name().trim(), req.targetPath(), req.destinationPath(),
             existing.getLastBackupDate(), req.automatic(), nextDate, ti,
             req.notes(), existing.getCreationDate(), LocalDateTime.now(),
             existing.getCount(), req.maxToKeep()
@@ -145,7 +134,7 @@ public class BackupRoutes {
         ConfigurationBackup backup = BackupConfigurationRepository.getBackupById(id);
         if (backup == null) throw new NotFoundResponse("Backup not found: " + id);
 
-        if (BackupRequestRepository.isAnyBackupRunning()) {
+        if (BackupOperations.isBackupInFlight()) {
             ctx.status(409).json(new ErrorMsg("A backup is already running"));
             return;
         }
@@ -200,6 +189,48 @@ public class BackupRoutes {
         }
 
         ctx.status(202).json(new ErrorMsg("Backup interruption requested"));
+    }
+
+    private record Validation(int status, String error, TimeInterval interval) {
+        static Validation fail(int status, String error) { return new Validation(status, error, null); }
+    }
+
+    /** Shared checks for create/update. {@code currentId} is null when creating. */
+    private static Validation validate(BackupRequest req, Integer currentId) {
+        if (req.name() == null || req.name().isBlank())
+            return Validation.fail(422, "Backup name is required");
+        if (req.targetPath() == null || req.targetPath().isBlank() || req.destinationPath() == null || req.destinationPath().isBlank())
+            return Validation.fail(422, "Source and destination paths are required");
+        if (!Files.exists(Path.of(req.targetPath())))
+            return Validation.fail(422, "Source path does not exist: " + req.targetPath());
+        if (!Files.exists(Path.of(req.destinationPath())))
+            return Validation.fail(422, "Destination path does not exist: " + req.destinationPath());
+        if (req.targetPath().equals(req.destinationPath()))
+            return Validation.fail(422, "Source and destination paths cannot be the same");
+        // A destination inside the source would zip previous backups (and the zip being written) into each new one
+        Path source = Path.of(req.targetPath()).toAbsolutePath().normalize();
+        if (Files.isDirectory(source) && Path.of(req.destinationPath()).toAbsolutePath().normalize().startsWith(source))
+            return Validation.fail(422, "The destination folder cannot be inside the source folder");
+        if (req.maxToKeep() < 1)
+            return Validation.fail(422, "Max backups to keep must be at least 1");
+
+        ConfigurationBackup sameName = BackupConfigurationRepository.getBackupByName(req.name().trim());
+        if (sameName != null && (currentId == null || sameName.getId() != currentId))
+            return Validation.fail(409, "A backup named \"" + req.name().trim() + "\" already exists");
+
+        TimeInterval ti = null;
+        TimeIntervalDto dto = req.timeIntervalBackup();
+        if (dto != null && (dto.days() != 0 || dto.hours() != 0 || dto.minutes() != 0)) {
+            try {
+                ti = new TimeInterval(dto.days(), dto.hours(), dto.minutes());
+            } catch (IllegalArgumentException e) {
+                return Validation.fail(422, e.getMessage());
+            }
+        }
+        if (req.automatic() && ti == null)
+            return Validation.fail(422, "Automatic backups need a time interval");
+
+        return new Validation(200, null, ti);
     }
 
     public record BackupRequest(

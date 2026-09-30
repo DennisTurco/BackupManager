@@ -1,445 +1,351 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Plus, Play, Pencil, Trash2, Search, X, ChevronUp, FolderOpen, ArrowUp, ArrowDown, ChevronsUpDown, StopCircle, CheckCircle2 } from 'lucide-react'
-import { backupApi, historyApi, settingsApi } from '../services/api'
-import type { BackupConfig, CreateBackupPayload, TimeInterval } from '../types'
-import { ContextMenu } from '../components/ContextMenu'
+import {
+  Plus, Play, Pencil, Search, X, ArrowUp, ArrowDown, ChevronsUpDown, Square,
+  MoreHorizontal, Download, ArrowRight, CalendarClock, Hand,
+} from 'lucide-react'
+import { backupApi, exportApi, historyApi, settingsApi, downloadBlob } from '../services/api'
+import type { BackupConfig, BackupRequest, CreateBackupPayload, TimeInterval } from '../types'
+import { ContextMenu, type MenuItem } from '../components/ContextMenu'
+import { Alert, ConfirmDialog, Modal, NumField, PageHeader, PathField, RunStatusBadge, Switch, TextField } from '../components/ui'
 import { useTranslation } from '../context/TranslationContext'
+import { useBackupRuns } from '../context/BackupRunsContext'
+import { useToast } from '../context/ToastContext'
+import { useConfig } from '../context/ConfigContext'
+import {
+  apiErrorMessage, fmtBytes, fmtDateTime, fmtDuration, fmtInterval, fmtRelative,
+  hasValidInterval, intervalTotalMinutes,
+} from '../utils/format'
 
-declare global {
-  interface Window {
-    electron?: {
-      openFolder: () => Promise<string | null>
-      openPath:   (path: string) => Promise<string>
-    }
-  }
-}
-
-interface CtxState { x: number; y: number; backup: BackupConfig }
-
-type SortKey = 'name' | 'targetPath' | 'destinationPath' | 'lastBackupDate' | 'automatic' | 'nextBackupDate' | 'interval' | 'maxToKeep'
+type SortKey = 'name' | 'paths' | 'status' | 'schedule' | 'maxToKeep'
 
 function compareBackups(a: BackupConfig, b: BackupConfig, key: SortKey): number {
   switch (key) {
-    case 'name':            return a.name.localeCompare(b.name)
-    case 'targetPath':      return a.targetPath.localeCompare(b.targetPath)
-    case 'destinationPath': return a.destinationPath.localeCompare(b.destinationPath)
-    case 'lastBackupDate':  return (a.lastBackupDate ?? '').localeCompare(b.lastBackupDate ?? '')
-    case 'nextBackupDate':  return (a.nextBackupDate ?? '').localeCompare(b.nextBackupDate ?? '')
-    case 'automatic':       return Number(a.automatic) - Number(b.automatic)
-    case 'maxToKeep':       return a.maxToKeep - b.maxToKeep
-    case 'interval':        return intervalTotalMinutes(a.timeIntervalBackup) - intervalTotalMinutes(b.timeIntervalBackup)
+    case 'name':      return a.name.localeCompare(b.name)
+    case 'paths':     return a.targetPath.localeCompare(b.targetPath)
+    case 'status':    return (a.lastBackupDate ?? '').localeCompare(b.lastBackupDate ?? '')
+    // automatic backups first, ordered by next run; manual ones last
+    case 'schedule':  return a.automatic !== b.automatic
+      ? Number(b.automatic) - Number(a.automatic)
+      : (a.nextBackupDate ?? '').localeCompare(b.nextBackupDate ?? '')
+    case 'maxToKeep': return a.maxToKeep - b.maxToKeep
   }
 }
 
+const toPayload = (b: BackupConfig, patch: Partial<CreateBackupPayload> = {}): CreateBackupPayload => ({
+  name: b.name,
+  targetPath: b.targetPath,
+  destinationPath: b.destinationPath,
+  automatic: b.automatic,
+  timeIntervalBackup: b.timeIntervalBackup,
+  notes: b.notes ?? '',
+  maxToKeep: b.maxToKeep,
+  ...patch,
+})
+
+interface MenuState { x: number; y: number; backup: BackupConfig }
+
 export default function BackupTablePage() {
   const qc = useQueryClient()
-  const { t } = useTranslation()
-  const [search, setSearch]       = useState('')
-  const [selected, setSelected]   = useState<BackupConfig | null>(null)
-  const [editing, setEditing]     = useState<BackupConfig | null>(null)
-  const [creating, setCreating]   = useState(false)
-  const [renaming, setRenaming]   = useState<BackupConfig | null>(null)
-  const [ctx, setCtx]             = useState<CtxState | null>(null)
+  const { t, language } = useTranslation()
+  const { toast } = useToast()
+  const cfg = useConfig()
+  const { backups, backupsLoading, progressById, busyIds, trackRun } = useBackupRuns()
 
-  const { data: backups = [], isLoading } = useQuery({
-    queryKey: ['backups'],
-    queryFn: backupApi.getAll,
-    refetchInterval: 5000,
-  })
-
-  // Poll running backups often so the in-progress bar stays responsive
-  const { data: running = [] } = useQuery({
-    queryKey: ['backups-running'],
-    queryFn: historyApi.getRunning,
-    refetchInterval: 1000,
-  })
-  const progressByConfigId = useMemo(() => {
-    const map = new Map<number, number>()
-    for (const r of running) map.set(r.backupConfigurationId, r.progress)
-    return map
-  }, [running])
-
-  // A backup just finished for this config — force-refresh its row (lastBackupDate, count, …)
-  const prevRunningIds = usePrevious(new Set(running.map(r => r.backupConfigurationId)))
-  useEffect(() => {
-    const currentIds = new Set(running.map(r => r.backupConfigurationId))
-    const justFinished = [...(prevRunningIds ?? [])].some(id => !currentIds.has(id))
-    if (justFinished) qc.invalidateQueries({ queryKey: ['backups'] })
-  }, [running]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Backups triggered by this client, keyed by id → trigger timestamp. A fast backup can start
-  // and finish between two polls of `backups-running`, so it never appears as "running" at all —
-  // relying only on that poll would leave the user with zero feedback. Instead, once triggered we
-  // actively confirm completion by checking history directly, independent of the running-list poll.
-  const [pendingRuns, setPendingRuns] = useState<Record<number, number>>({})
-  const [runResult, setRunResult] = useState<{ name: string; ok: boolean } | null>(null)
-
-  // Ids considered "busy" for disabling actions — either server-confirmed running or
-  // locally triggered and not yet confirmed complete.
-  const busyIds = useMemo(() => {
-    const set = new Set(progressByConfigId.keys())
-    for (const id of Object.keys(pendingRuns)) set.add(Number(id))
-    return set
-  }, [progressByConfigId, pendingRuns])
-
-  useEffect(() => {
-    const ids = Object.keys(pendingRuns).map(Number)
-    if (ids.length === 0) return
-
-    const poll = async () => {
-      for (const id of ids) {
-        const triggeredAt = pendingRuns[id]
-        // Give up after 3 minutes so a stuck/unreachable request doesn't poll forever
-        if (Date.now() - triggeredAt > 3 * 60_000) {
-          setPendingRuns(prev => { const next = { ...prev }; delete next[id]; return next })
-          continue
-        }
-        try {
-          const history = await historyApi.getByConfig(id)
-          const latest = history
-            .filter(r => new Date(r.startedDate).getTime() >= triggeredAt - 2000)
-            .sort((a, b) => new Date(b.startedDate).getTime() - new Date(a.startedDate).getTime())[0]
-
-          if (latest && latest.status !== 'IN_PROGRESS') {
-            setPendingRuns(prev => { const next = { ...prev }; delete next[id]; return next })
-            const backup = backups.find(b => b.id === id)
-            setRunResult({ name: backup?.name ?? String(id), ok: latest.status === 'FINISHED' })
-            setTimeout(() => setRunResult(null), 5000)
-            qc.invalidateQueries({ queryKey: ['backups'] })
-          }
-        } catch {
-          // network hiccup — try again on the next tick
-        }
-      }
-    }
-
-    const interval = setInterval(poll, 400)
-    return () => clearInterval(interval)
-  }, [pendingRuns]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Keep selected row in sync when data refreshes (TanStack Query v5 removed onSuccess)
-  useEffect(() => {
-    setSelected(prev => {
-      if (!prev) return prev
-      const fresh = backups.find(b => b.id === prev.id)
-      return fresh ?? prev
-    })
-  }, [backups])
-
-  const filtered = useMemo(() => {
-    const q = search.toLowerCase()
-    return q ? backups.filter(b =>
-      b.name.toLowerCase().includes(q) ||
-      b.targetPath.toLowerCase().includes(q) ||
-      b.destinationPath.toLowerCase().includes(q)
-    ) : backups
-  }, [backups, search])
-
+  const [search, setSearch]         = useState('')
+  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [editing, setEditing]       = useState<BackupConfig | null>(null)
+  const [creating, setCreating]     = useState(false)
+  const [renaming, setRenaming]     = useState<BackupConfig | null>(null)
+  const [deleting, setDeleting]     = useState<BackupConfig | null>(null)
+  const [menu, setMenu]             = useState<MenuState | null>(null)
   const [sort, setSort] = useState<{ key: SortKey; dir: 'asc' | 'desc' }>({ key: 'name', dir: 'asc' })
-  const toggleSort = (key: SortKey) => {
-    setSort(prev => prev.key === key ? { key, dir: prev.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' })
-  }
+
+  const selected = backups.find(b => b.id === selectedId) ?? null
+
+  // Full history powers the "last result" badge of every row and the detail panel
+  const { data: history = [] } = useQuery({
+    queryKey: ['history'],
+    queryFn: historyApi.getAll,
+    refetchInterval: 15_000,
+  })
+  const runsByConfig = useMemo(() => {
+    const map = new Map<number, BackupRequest[]>()
+    for (const r of history) {
+      const list = map.get(r.backupConfigurationId) ?? []
+      list.push(r)
+      map.set(r.backupConfigurationId, list)
+    }
+    for (const list of map.values()) {
+      list.sort((a, b) => new Date(b.startedDate).getTime() - new Date(a.startedDate).getTime())
+    }
+    return map
+  }, [history])
+
   const sorted = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    const filtered = q
+      ? backups.filter(b =>
+          b.name.toLowerCase().includes(q) ||
+          b.targetPath.toLowerCase().includes(q) ||
+          b.destinationPath.toLowerCase().includes(q) ||
+          (b.notes ?? '').toLowerCase().includes(q))
+      : backups
     const factor = sort.dir === 'asc' ? 1 : -1
     return [...filtered].sort((a, b) => factor * compareBackups(a, b, sort.key))
-  }, [filtered, sort])
+  }, [backups, search, sort])
 
-  const [runError, setRunError] = useState<string | null>(null)
+  const toggleSort = (key: SortKey) =>
+    setSort(prev => prev.key === key ? { key, dir: prev.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' })
+
+  const invalidateBackups = () => qc.invalidateQueries({ queryKey: ['backups'] })
+
   const runMutation = useMutation({
     mutationFn: (id: number) => backupApi.run(id),
-    onSuccess: (_data, id) => {
-      setRunError(null)
-      setPendingRuns(prev => ({ ...prev, [id]: Date.now() }))
-      qc.invalidateQueries({ queryKey: ['backups'] })
-    },
-    onError: (err: unknown) => {
-      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-      setRunError(msg ?? t('ReactUI.FailedToStartBackup', 'Failed to start backup'))
-      setTimeout(() => setRunError(null), 5000)
-    }
-  })
-  const deleteMutation = useMutation({
-    mutationFn: (id: number) => backupApi.delete(id),
-    onSuccess: () => { setSelected(null); qc.invalidateQueries({ queryKey: ['backups'] }) }
+    onSuccess: (_d, id) => trackRun(id),
+    onError: err => toast(apiErrorMessage(err) ?? t('ReactUI.FailedToStartBackup', 'Failed to start backup'), 'error'),
   })
   const interruptMutation = useMutation({
     mutationFn: (id: number) => backupApi.interrupt(id),
     onSuccess: () => {
-      setRunError(null)
       qc.invalidateQueries({ queryKey: ['backups-running'] })
-      qc.invalidateQueries({ queryKey: ['backups'] })
+      invalidateBackups()
     },
-    onError: (err: unknown) => {
-      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-      setRunError(msg ?? t('ReactUI.FailedToInterruptBackup', 'Failed to interrupt backup'))
-      setTimeout(() => setRunError(null), 5000)
-    }
+    onError: err => toast(apiErrorMessage(err) ?? t('ReactUI.FailedToInterruptBackup', 'Failed to interrupt backup'), 'error'),
+  })
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => backupApi.delete(id),
+    onSuccess: (_d, id) => {
+      if (selectedId === id) setSelectedId(null)
+      invalidateBackups()
+    },
+    onError: err => toast(apiErrorMessage(err) ?? t('ReactUI.DeleteFailed', 'Delete failed'), 'error'),
   })
   const duplicateMutation = useMutation({
-    mutationFn: (b: BackupConfig) => backupApi.create({
-      name: `${b.name} (copy)`,
-      targetPath: b.targetPath,
-      destinationPath: b.destinationPath,
-      automatic: b.automatic,
-      timeIntervalBackup: b.timeIntervalBackup,
-      notes: b.notes ?? '',
-      maxToKeep: b.maxToKeep,
-    }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['backups'] })
+    mutationFn: (b: BackupConfig) => backupApi.create(toPayload(b, { name: `${b.name} (copy)`, automatic: false })),
+    onSuccess: created => { invalidateBackups(); setSelectedId(created.id) },
+    onError: err => toast(apiErrorMessage(err) ?? t('ReactUI.SaveFailed', 'Save failed'), 'error'),
   })
   const toggleAutoMutation = useMutation({
-    mutationFn: (b: BackupConfig) => backupApi.update(b.id, {
-      name: b.name,
-      targetPath: b.targetPath,
-      destinationPath: b.destinationPath,
-      automatic: !b.automatic,
-      timeIntervalBackup: b.timeIntervalBackup,
-      notes: b.notes ?? '',
-      maxToKeep: b.maxToKeep,
-    }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['backups'] })
+    mutationFn: (b: BackupConfig) => backupApi.update(b.id, toPayload(b, { automatic: !b.automatic })),
+    onSuccess: invalidateBackups,
+    onError: err => toast(apiErrorMessage(err) ?? t('ReactUI.SaveFailed', 'Save failed'), 'error'),
   })
 
-  const buildMenu = (b: BackupConfig) => [
-    { label: t('General.EditButton', 'Edit'),     onClick: () => setEditing(b), disabled: busyIds.has(b.id) },
-    { label: t('General.DeleteButton', 'Delete'), onClick: () => { if (confirm(t('ReactUI.DeleteConfirm', 'Delete "{name}"?').replace('{name}', b.name))) deleteMutation.mutate(b.id) }, disabled: busyIds.has(b.id) },
-    { label: t('ReactUI.MenuDuplicate', 'Duplicate'), onClick: () => duplicateMutation.mutate(b) },
-    { label: t('ReactUI.MenuRename', 'Rename'),       onClick: () => setRenaming(b) },
-    { type: 'separator' as const },
-    { label: t('ReactUI.MenuOpenSourcePath', 'Open source path'),      onClick: () => window.electron?.openPath(b.targetPath),      disabled: !window.electron },
-    { label: t('ReactUI.MenuOpenDestPath', 'Open destination path'), onClick: () => window.electron?.openPath(b.destinationPath), disabled: !window.electron },
-    { type: 'separator' as const },
-    {
-      label: t('General.Backup', 'Backup'),
-      submenu: [
-        { label: t('ReactUI.MenuRunSingleBackup', 'Run single backup'), onClick: () => runMutation.mutate(b.id), disabled: busyIds.has(b.id) },
-        {
-          label: t('ReactUI.MenuAutoBackup', 'Auto backup'),
-          checked: b.automatic,
-          onClick: () => {
-            if (!b.automatic && !hasValidInterval(b.timeIntervalBackup)) {
-              setEditing(b)   // force user to set an interval first
-            } else {
-              toggleAutoMutation.mutate(b)
-            }
-          }
-        },
-        { label: t('ReactUI.MenuInterruptBackup', 'Interrupt backup process'), onClick: () => interruptMutation.mutate(b.id), disabled: !busyIds.has(b.id) },
-      ]
-    },
-    { type: 'separator' as const },
-    {
-      label: t('ReactUI.MenuCopyText', 'Copy text'),
-      submenu: [
-        { label: t('ReactUI.MenuCopyName', 'Copy backup name'),      onClick: () => navigator.clipboard.writeText(b.name) },
-        { label: t('ReactUI.MenuCopySourcePath', 'Copy source path'),      onClick: () => navigator.clipboard.writeText(b.targetPath) },
-        { label: t('ReactUI.MenuCopyDestPath', 'Copy destination path'), onClick: () => navigator.clipboard.writeText(b.destinationPath) },
-      ]
-    },
-  ]
-
-  const handleRightClick = (e: React.MouseEvent, b: BackupConfig) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setCtx({ x: e.clientX, y: e.clientY, backup: b })
+  const exportCsv = async () => {
+    try {
+      downloadBlob(await exportApi.backupsCsv(), 'backups.csv')
+    } catch {
+      toast(t('ReactUI.ExportFailed', 'Export failed'), 'error')
+    }
   }
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 0 }}>
-      {/* Header */}
-      <div className="page-header" style={{ marginBottom: 10 }}>
-        <div>
-          <div className="page-title">{t('ReactUI.BackupListTitle', 'Elenco backup')}</div>
-          <div className="page-desc">{t('ReactUI.BackupListDesc', 'Gestisci e monitora le configurazioni di backup, inclusa la creazione, modifica, pianificazione ed esecuzione.')}</div>
-        </div>
-      </div>
+  const openPath = async (path: string) => {
+    const err = await window.electron?.openPath(path)
+    if (err) toast(err, 'error')
+  }
 
-      {/* Toolbar: search + action buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 6,
-          background: 'var(--bg-3)', border: '1px solid var(--border)',
-          borderRadius: 6, padding: '0 10px', width: 260, flexShrink: 0,
-        }}>
+  const toggleAuto = (b: BackupConfig) => {
+    // Enabling needs an interval first — open the editor so the user can set one
+    if (!b.automatic && !hasValidInterval(b.timeIntervalBackup)) setEditing(b)
+    else toggleAutoMutation.mutate(b)
+  }
+
+  const buildMenu = (b: BackupConfig): MenuItem[] => {
+    const busy = busyIds.has(b.id)
+    return [
+      busy
+        ? { label: t('ReactUI.MenuInterruptBackup', 'Interrupt backup process'), onClick: () => interruptMutation.mutate(b.id), danger: true }
+        : { label: t('ReactUI.MenuRunSingleBackup', 'Run single backup'), onClick: () => runMutation.mutate(b.id) },
+      { label: t('ReactUI.MenuAutoBackup', 'Auto backup'), checked: b.automatic, onClick: () => toggleAuto(b) },
+      { type: 'separator' },
+      { label: t('General.EditButton', 'Edit'), onClick: () => setEditing(b), disabled: busy },
+      { label: t('ReactUI.MenuRename', 'Rename'), onClick: () => setRenaming(b) },
+      { label: t('ReactUI.MenuDuplicate', 'Duplicate'), onClick: () => duplicateMutation.mutate(b) },
+      { type: 'separator' },
+      { label: t('ReactUI.MenuOpenSourcePath', 'Open source path'), onClick: () => openPath(b.targetPath), disabled: !window.electron },
+      { label: t('ReactUI.MenuOpenDestPath', 'Open destination path'), onClick: () => openPath(b.destinationPath), disabled: !window.electron },
+      {
+        label: t('ReactUI.MenuCopyText', 'Copy text'),
+        submenu: [
+          { label: t('ReactUI.MenuCopyName', 'Copy backup name'), onClick: () => navigator.clipboard.writeText(b.name) },
+          { label: t('ReactUI.MenuCopySourcePath', 'Copy source path'), onClick: () => navigator.clipboard.writeText(b.targetPath) },
+          { label: t('ReactUI.MenuCopyDestPath', 'Copy destination path'), onClick: () => navigator.clipboard.writeText(b.destinationPath) },
+        ],
+      },
+      { type: 'separator' },
+      { label: t('General.DeleteButton', 'Delete'), onClick: () => setDeleting(b), disabled: busy, danger: true },
+    ]
+  }
+
+  const modalOpen = creating || !!editing || !!renaming || !!deleting
+
+  // Keyboard shortcuts on the selected row: Enter = edit, Delete = delete, Esc = deselect
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (modalOpen || menu) return
+      const tag = (e.target as HTMLElement).tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+      if (!selected) return
+      if (e.key === 'Escape') setSelectedId(null)
+      else if (e.key === 'Enter' && !busyIds.has(selected.id)) setEditing(selected)
+      else if (e.key === 'Delete' && !busyIds.has(selected.id)) setDeleting(selected)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [selected, busyIds, modalOpen, menu])
+
+  const colSpan = 6
+
+  return (
+    <div className="page page-fill">
+      <PageHeader
+        title={t('ReactUI.BackupListTitle', 'Backup List')}
+        desc={t('ReactUI.BackupListDesc', 'Manage and monitor backup configurations, including creation, editing, scheduling and execution.')}
+        actions={
+          <>
+            {cfg.menuItems.Export !== false && (
+              <button className="btn btn-ghost" onClick={exportCsv} disabled={backups.length === 0}>
+                <Download size={13} /> {t('ReactUI.ExportCsv', 'Export CSV')}
+              </button>
+            )}
+            <button className="btn btn-primary" onClick={() => setCreating(true)}>
+              <Plus size={14} /> {t('ReactUI.NewBackupButton', 'New backup')}
+            </button>
+          </>
+        }
+      />
+
+      <div className="toolbar">
+        <div className="search-box" style={{ width: 300 }}>
           <Search size={13} color="var(--text-dim)" />
           <input
             value={search} onChange={e => setSearch(e.target.value)}
-            placeholder={t('General.QuickSearch', 'Cerca…')}
-            style={{ flex: 1, background: 'none', border: 'none', outline: 'none',
-              color: 'var(--text)', fontSize: 13, padding: '6px 0' }}
+            placeholder={t('General.QuickSearch', 'Quick search')}
           />
           {search && (
-            <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex' }}>
-              <X size={13} />
-            </button>
+            <button className="icon-btn" style={{ padding: 2 }} onClick={() => setSearch('')}><X size={13} /></button>
           )}
         </div>
-
-        <div style={{ flex: 1 }} />
-
-        <button className="btn btn-primary" onClick={() => setCreating(true)}>
-          <Plus size={13} /> {t('General.CreateButton', 'Crea')}
-        </button>
-        <button
-          className="btn btn-ghost"
-          disabled={!selected || busyIds.has(selected.id)}
-          onClick={() => selected && setEditing(selected)}
-          title={selected && busyIds.has(selected.id) ? t('ReactUI.BackupInProgress', 'Backup in progress') : undefined}
-        >
-          <Pencil size={13} /> {t('General.EditButton', 'Modifica')}
-        </button>
-        <button
-          className="btn btn-ghost"
-          disabled={!selected || busyIds.has(selected.id)}
-          style={selected ? { color: 'var(--error)' } : {}}
-          onClick={() => {
-            if (selected && confirm(t('ReactUI.DeleteConfirm', 'Delete "{name}"?').replace('{name}', selected.name)))
-              deleteMutation.mutate(selected.id)
-          }}
-          title={selected && busyIds.has(selected.id) ? t('ReactUI.BackupInProgress', 'Backup in progress') : undefined}
-        >
-          <Trash2 size={13} /> {t('General.DeleteButton', 'Elimina')}
-        </button>
-        <button
-          className="btn btn-ghost"
-          disabled={!selected || busyIds.has(selected.id)}
-          style={selected ? { color: 'var(--success)' } : {}}
-          onClick={() => selected && runMutation.mutate(selected.id)}
-          title={selected && busyIds.has(selected.id) ? t('ReactUI.BackupAlreadyInProgress', 'Backup already in progress') : t('ReactUI.RunBackupNow', 'Run backup now')}
-        >
-          <Play size={13} /> {t('ReactUI.RunButton', 'Avvia')}
-        </button>
-        <button
-          className="btn btn-ghost"
-          disabled={!selected || !busyIds.has(selected.id)}
-          style={selected && busyIds.has(selected.id) ? { color: 'var(--error)' } : {}}
-          onClick={() => selected && interruptMutation.mutate(selected.id)}
-          title={t('ReactUI.MenuInterruptBackup', 'Interrupt backup process')}
-        >
-          <StopCircle size={13} /> {t('ReactUI.StopButton', 'Interrompi')}
-        </button>
+        <span className="text-dim" style={{ fontSize: 12 }}>
+          {search
+            ? t('ReactUI.FilteredCount', '{shown} of {total}').replace('{shown}', String(sorted.length)).replace('{total}', String(backups.length))
+            : t('ReactUI.ConfigCount', '{count} configurations').replace('{count}', String(backups.length))}
+        </span>
       </div>
 
-      {/* Run error banner */}
-      {runError && (
-        <div style={{
-          fontSize: 12, color: 'var(--error)',
-          background: 'rgba(224,82,82,.1)', border: '1px solid rgba(224,82,82,.25)',
-          borderRadius: 6, padding: '7px 12px', marginBottom: 8,
-        }}>
-          {runError}
-        </div>
-      )}
-
-      {/* Run result banner — covers backups that finish before the running-poll ever catches them */}
-      {runResult && (
-        <div style={{
-          fontSize: 12, color: runResult.ok ? 'var(--success)' : 'var(--error)',
-          background: runResult.ok ? 'rgba(90,173,78,.1)' : 'rgba(224,82,82,.1)',
-          border: `1px solid ${runResult.ok ? 'rgba(90,173,78,.25)' : 'rgba(224,82,82,.25)'}`,
-          borderRadius: 6, padding: '7px 12px', marginBottom: 8,
-        }}>
-          {runResult.ok
-            ? t('ReactUI.BackupRunSuccess', 'Backup "{name}" completed successfully').replace('{name}', runResult.name)
-            : t('ReactUI.BackupRunFailedResult', 'Backup "{name}" failed').replace('{name}', runResult.name)}
-        </div>
-      )}
-
-      {/* Table */}
-      <div className="card" style={{ overflow: 'hidden', flex: 1, minHeight: 0 }}>
-        <div style={{ overflowX: 'auto', height: '100%' }}>
+      <div className="card" style={{ overflow: 'hidden', flex: 1, minHeight: 160 }}>
+        <div className="table-wrap">
           <table className="data-table">
             <thead>
               <tr>
-                <SortableHeader label={t('ReactUI.ColName', 'Nome del Backup')} sortKey="name" sort={sort} onSort={toggleSort} />
-                <SortableHeader label={t('ReactUI.ColSourcePath', 'Percorso Iniziale')} sortKey="targetPath" sort={sort} onSort={toggleSort} />
-                <SortableHeader label={t('ReactUI.ColDestPath', 'Percorso di Destinazione')} sortKey="destinationPath" sort={sort} onSort={toggleSort} />
-                <th style={{ width: 140 }}>{t('ReactUI.ColStatus', 'Stato')}</th>
-                <SortableHeader label={t('ReactUI.ColLastBackup', 'Ultimo Backup')} sortKey="lastBackupDate" sort={sort} onSort={toggleSort} nowrap />
-                <SortableHeader label={t('ReactUI.ColAutoBackup', 'Auto')} sortKey="automatic" sort={sort} onSort={toggleSort} align="center" />
-                <SortableHeader label={t('ReactUI.ColNextDate', 'Data del Prossimo')} sortKey="nextBackupDate" sort={sort} onSort={toggleSort} nowrap />
-                <SortableHeader
-                  label={t('ReactUI.ColInterval', 'Intervallo')}
-                  tooltip={t('ReactUI.ColIntervalFormatHint', 'Formato: gg.HH:mm')}
-                  sortKey="interval" sort={sort} onSort={toggleSort}
-                />
-                <SortableHeader label={t('ReactUI.ColMaxToKeep', 'Numero massimo')} sortKey="maxToKeep" sort={sort} onSort={toggleSort} align="center" />
+                <SortableHeader label={t('ReactUI.ColName', 'Backup Name')} sortKey="name" sort={sort} onSort={toggleSort} />
+                <SortableHeader label={t('ReactUI.ColPaths', 'Source → Destination')} sortKey="paths" sort={sort} onSort={toggleSort} />
+                <SortableHeader label={t('ReactUI.ColStatus', 'Status')} sortKey="status" sort={sort} onSort={toggleSort} width={170} />
+                <SortableHeader label={t('ReactUI.ColSchedule', 'Schedule')} sortKey="schedule" sort={sort} onSort={toggleSort} width={210} />
+                <SortableHeader label={t('ReactUI.ColMaxToKeep', 'Max to Keep')} sortKey="maxToKeep" sort={sort} onSort={toggleSort} align="center" width={90} />
+                <th style={{ width: 100 }} />
               </tr>
             </thead>
             <tbody>
-              {isLoading ? (
-                <tr><td colSpan={9} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>{t('ReactUI.LoadingText', 'Caricamento…')}</td></tr>
+              {backupsLoading ? (
+                <tr><td colSpan={colSpan} className="centered-message">{t('ReactUI.LoadingText', 'Loading…')}</td></tr>
               ) : sorted.length === 0 ? (
-                <tr><td colSpan={9} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>
-                  {search ? t('ReactUI.NoResults', 'Nessun risultato.') : t('ReactUI.NoBackupConfigs', 'Nessuna configurazione di backup.')}
+                <tr><td colSpan={colSpan}>
+                  {search
+                    ? <div className="centered-message">{t('ReactUI.NoResults', 'No results.')}</div>
+                    : <EmptyState onCreate={() => setCreating(true)} />}
                 </td></tr>
-              ) : sorted.map(b => (
-                <tr
-                  key={b.id}
-                  className={selected?.id === b.id ? 'selected' : ''}
-                  onClick={() => setSelected(selected?.id === b.id ? null : b)}
-                  onDoubleClick={() => { if (!busyIds.has(b.id)) setEditing(b) }}
-                  onContextMenu={e => handleRightClick(e, b)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <td style={{ fontWeight: 500 }}>{b.name}</td>
-                  <td style={{ color: 'var(--text-muted)', maxWidth: 160 }}>
-                    <Truncated text={b.targetPath} />
-                  </td>
-                  <td style={{ color: 'var(--text-muted)', maxWidth: 160 }}>
-                    <Truncated text={b.destinationPath} />
-                  </td>
-                  <td>
-                    <ProgressCell progress={progressByConfigId.get(b.id) ?? (pendingRuns[b.id] !== undefined ? 0 : undefined)} />
-                  </td>
-                  <td style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-                    {b.lastBackupDate ? fmtDate(b.lastBackupDate) : ''}
-                  </td>
-                  <td>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {b.automatic && <CheckCircle2 size={15} style={{ color: 'var(--success)' }} />}
-                    </div>
-                  </td>
-                  <td style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-                    {b.nextBackupDate ? fmtDate(b.nextBackupDate) : ''}
-                  </td>
-                  <td style={{ color: 'var(--text-muted)' }}>
-                    {b.timeIntervalBackup ? fmtInterval(b.timeIntervalBackup) : ''}
-                  </td>
-                  <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-                    {b.maxToKeep}
-                  </td>
-                </tr>
-              ))}
+              ) : sorted.map(b => {
+                const busy = busyIds.has(b.id)
+                return (
+                  <tr
+                    key={b.id}
+                    className={selectedId === b.id ? 'selected' : ''}
+                    onClick={() => setSelectedId(selectedId === b.id ? null : b.id)}
+                    onDoubleClick={() => { if (!busy) setEditing(b) }}
+                    onContextMenu={e => { e.preventDefault(); setMenu({ x: e.clientX, y: e.clientY, backup: b }) }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td style={{ maxWidth: 220 }}>
+                      <div className="truncate" style={{ fontWeight: 600 }} title={b.name}>{b.name}</div>
+                      {b.notes && <div className="cell-sub truncate" title={b.notes}>{b.notes}</div>}
+                    </td>
+                    <td style={{ maxWidth: 360 }}>
+                      <div className="truncate" title={b.targetPath}>{b.targetPath}</div>
+                      <div className="cell-sub truncate" title={b.destinationPath} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                        <ArrowRight size={10} style={{ flexShrink: 0 }} />
+                        <span className="truncate">{b.destinationPath}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <StatusCell
+                        busy={busy}
+                        progress={progressById.get(b.id)}
+                        lastRun={runsByConfig.get(b.id)?.[0]}
+                        lastBackupDate={b.lastBackupDate}
+                        language={language}
+                      />
+                    </td>
+                    <td>
+                      <ScheduleCell backup={b} language={language} />
+                    </td>
+                    <td style={{ textAlign: 'center' }} className="text-muted">{b.maxToKeep}</td>
+                    <td onClick={e => e.stopPropagation()} onDoubleClick={e => e.stopPropagation()}>
+                      <div className="row-actions">
+                        {busy ? (
+                          <button className="icon-btn danger" title={t('ReactUI.StopButton', 'Stop')}
+                            onClick={() => interruptMutation.mutate(b.id)}>
+                            <Square size={14} />
+                          </button>
+                        ) : (
+                          <button className="icon-btn success" title={t('ReactUI.RunBackupNow', 'Run backup now')}
+                            onClick={() => runMutation.mutate(b.id)}>
+                            <Play size={15} />
+                          </button>
+                        )}
+                        <button className="icon-btn" title={t('General.EditButton', 'Edit')} disabled={busy}
+                          onClick={() => setEditing(b)}>
+                          <Pencil size={14} />
+                        </button>
+                        <button className="icon-btn" title={t('ReactUI.MoreActions', 'More actions')}
+                          onClick={e => {
+                            const r = e.currentTarget.getBoundingClientRect()
+                            setMenu({ x: r.right - 190, y: r.bottom + 4, backup: b })
+                          }}>
+                          <MoreHorizontal size={15} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Detail panel */}
       {selected && (
         <DetailPanel
           backup={selected}
-          onClose={() => setSelected(null)}
+          runs={runsByConfig.get(selected.id) ?? []}
+          onClose={() => setSelectedId(null)}
         />
       )}
 
-      {/* Context menu */}
-      {ctx && (
-        <ContextMenu
-          x={ctx.x} y={ctx.y}
-          items={buildMenu(ctx.backup)}
-          onClose={() => setCtx(null)}
-        />
+      {menu && (
+        <ContextMenu x={menu.x} y={menu.y} items={buildMenu(menu.backup)} onClose={() => setMenu(null)} />
       )}
 
-      {/* Modals */}
       {(creating || editing) && (
         <BackupFormModal
           initial={editing ?? undefined}
           onClose={() => { setCreating(false); setEditing(null) }}
-          onSaved={() => { setCreating(false); setEditing(null); qc.invalidateQueries({ queryKey: ['backups'] }) }}
+          onSaved={saved => {
+            setCreating(false); setEditing(null)
+            setSelectedId(saved.id)
+            invalidateBackups()
+          }}
         />
       )}
 
@@ -447,121 +353,205 @@ export default function BackupTablePage() {
         <RenameModal
           backup={renaming}
           onClose={() => setRenaming(null)}
-          onSaved={() => { setRenaming(null); qc.invalidateQueries({ queryKey: ['backups'] }) }}
+          onSaved={() => { setRenaming(null); invalidateBackups() }}
+        />
+      )}
+
+      {deleting && (
+        <ConfirmDialog
+          title={t('ReactUI.DeleteModalTitle', 'Delete backup configuration')}
+          message={t('ReactUI.DeleteConfirm', 'Delete "{name}"?').replace('{name}', deleting.name)
+            + ' ' + t('ReactUI.DeleteConfirmNote', 'Backup files already created are not removed.')}
+          confirmLabel={t('General.DeleteButton', 'Delete')}
+          danger
+          onConfirm={() => deleteMutation.mutate(deleting.id)}
+          onClose={() => setDeleting(null)}
         />
       )}
     </div>
   )
 }
 
-/* ─── Detail panel ───────────────────────────────────────────────────────── */
-function DetailPanel({ backup, onClose }: {
-  backup: BackupConfig; onClose: () => void
+/* ─── Cells ──────────────────────────────────────────────────────────────── */
+
+function StatusCell({ busy, progress, lastRun, lastBackupDate, language }: {
+  busy: boolean; progress: number | undefined; lastRun: BackupRequest | undefined
+  lastBackupDate: string | null; language: string
 }) {
   const { t } = useTranslation()
-  const fields: Array<[string, string]> = [
-    [t('ReactUI.DetailName', 'Backup Name'), backup.name],
-    [t('ReactUI.DetailSourcePath', 'Source Path'), backup.targetPath],
-    [t('ReactUI.DetailDestPath', 'Destination Path'), backup.destinationPath],
-    [t('ReactUI.DetailLastBackup', 'Last Backup'), backup.lastBackupDate ? fmtDate(backup.lastBackupDate) : '—'],
-    [t('ReactUI.DetailNextBackup', 'Next Backup'), backup.nextBackupDate ? fmtDate(backup.nextBackupDate) : '—'],
-    [t('ReactUI.DetailInterval', 'Time Interval'), backup.timeIntervalBackup ? fmtInterval(backup.timeIntervalBackup) : '—'],
-    [t('ReactUI.DetailCreationDate', 'Creation Date'), backup.creationDate ? fmtDate(backup.creationDate) : '—'],
-    [t('ReactUI.DetailCount', 'Backup Count'), String(backup.count)],
-    [t('ReactUI.DetailMaxToKeep', 'Max to Keep'), String(backup.maxToKeep)],
-    ...(backup.notes ? [[t('ReactUI.DetailNotes', 'Notes'), backup.notes] as [string, string]] : []),
-  ]
-
+  if (busy) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className={`progress${progress === undefined ? ' indeterminate' : ''}`}>
+          <div style={{ width: `${Math.min(100, Math.max(0, progress ?? 0))}%` }} />
+        </div>
+        <span className="text-muted" style={{ fontSize: 11, minWidth: 30, textAlign: 'right' }}>
+          {progress !== undefined ? `${progress}%` : '…'}
+        </span>
+      </div>
+    )
+  }
+  const when = lastRun?.completionDate ?? lastRun?.startedDate ?? lastBackupDate
+  if (!when) return <span className="badge badge-muted">{t('ReactUI.StatusNeverRun', 'Never run')}</span>
+  const failed = lastRun?.status === 'TERMINATED'
   return (
-    <div style={{
-      marginTop: 8, flexShrink: 0,
-      border: '1px solid var(--border)',
-      borderRadius: 6,
-      background: 'var(--bg-2)',
-      padding: '10px 14px',
-      position: 'relative',
-      minHeight: 70,
-    }}>
-      <button
-        onClick={onClose}
-        title={t('General.CloseButton', 'Chiudi')}
-        style={{
-          position: 'absolute', top: 8, right: 8,
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: 'var(--text-muted)', display: 'flex', padding: 2,
-        }}
-      >
-        <ChevronUp size={14} />
-      </button>
-      <p style={{ fontSize: 12, color: 'var(--text)', lineHeight: 1.7, paddingRight: 20 }}>
-        {fields.map(([label, value], i) => (
-          <span key={label}>
-            <strong style={{ color: 'var(--text)' }}>{label}:</strong>{' '}
-            <span style={{ color: 'var(--text-muted)' }}>{value}</span>
-            {i < fields.length - 1 ? '. ' : '.'}
-          </span>
-        ))}
-      </p>
+    <div>
+      <span className={`badge ${failed ? 'badge-error' : 'badge-success'}`}>
+        {failed ? t('ReactUI.StatusFailed', 'Failed') : t('ReactUI.StatusCompleted', 'Completed')}
+      </span>
+      <div className="cell-sub" title={fmtDateTime(when)}>{fmtRelative(when, language)}</div>
     </div>
   )
 }
 
-/* ─── Rename modal ───────────────────────────────────────────────────────── */
-function RenameModal({ backup, onClose, onSaved }: {
-  backup: BackupConfig; onClose: () => void; onSaved: () => void
-}) {
+function ScheduleCell({ backup, language }: { backup: BackupConfig; language: string }) {
   const { t } = useTranslation()
-  const [name, setName]     = useState(backup.name)
-  const [loading, setLoading] = useState(false)
-  const [error, setError]   = useState<string | null>(null)
-
-  const save = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim()) return
-    setLoading(true); setError(null)
-    try {
-      await backupApi.update(backup.id, {
-        name: name.trim(),
-        targetPath: backup.targetPath,
-        destinationPath: backup.destinationPath,
-        automatic: backup.automatic,
-        timeIntervalBackup: backup.timeIntervalBackup,
-        notes: backup.notes ?? '',
-        maxToKeep: backup.maxToKeep,
-      })
-      onSaved()
-    } catch {
-      setError(t('ReactUI.RenameFailed', 'Rename failed'))
-    } finally { setLoading(false) }
+  if (!backup.automatic) {
+    return (
+      <span className="text-dim" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 12 }}>
+        <Hand size={12} /> {t('ReactUI.ScheduleManual', 'Manual')}
+      </span>
+    )
   }
+  return (
+    <div>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 12, color: 'var(--accent)', fontWeight: 500, whiteSpace: 'nowrap' }}>
+        <CalendarClock size={12} />
+        {t('ReactUI.ScheduleEvery', 'Every {interval}').replace('{interval}', fmtInterval(backup.timeIntervalBackup))}
+      </span>
+      {backup.nextBackupDate && (
+        <div className="cell-sub" title={fmtDateTime(backup.nextBackupDate)}>
+          {t('ReactUI.NextRunPrefix', 'Next')}: {fmtRelative(backup.nextBackupDate, language)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function EmptyState({ onCreate }: { onCreate: () => void }) {
+  const { t } = useTranslation()
+  return (
+    <div className="centered-message" style={{ flexDirection: 'column', gap: 12, padding: '56px 16px' }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>{t('ReactUI.NoBackupConfigs', 'No backup configurations.')}</div>
+      <div style={{ maxWidth: 380 }}>{t('ReactUI.EmptyStateHint', 'Create your first configuration: choose a folder to protect and where to save its backups.')}</div>
+      <button className="btn btn-primary" onClick={onCreate}><Plus size={14} /> {t('ReactUI.NewBackupButton', 'New backup')}</button>
+    </div>
+  )
+}
+
+function SortableHeader({ label, sortKey, sort, onSort, align, width }: {
+  label: string; sortKey: SortKey; sort: { key: SortKey; dir: 'asc' | 'desc' }
+  onSort: (key: SortKey) => void; align?: 'center'; width?: number
+}) {
+  const active = sort.key === sortKey
+  return (
+    <th className="sortable" onClick={() => onSort(sortKey)} style={{ textAlign: align, width }}
+      aria-sort={active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: active ? 'var(--text)' : undefined }}>
+        {label}
+        {active
+          ? (sort.dir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />)
+          : <ChevronsUpDown size={11} color="var(--text-dim)" />}
+      </span>
+    </th>
+  )
+}
+
+/* ─── Detail panel ───────────────────────────────────────────────────────── */
+
+function DetailPanel({ backup, runs, onClose }: { backup: BackupConfig; runs: BackupRequest[]; onClose: () => void }) {
+  const { t } = useTranslation()
+  const fields: Array<[string, string]> = [
+    [t('ReactUI.DetailSourcePath', 'Source Path'), backup.targetPath],
+    [t('ReactUI.DetailDestPath', 'Destination Path'), backup.destinationPath],
+    [t('ReactUI.DetailLastBackup', 'Last Backup'), fmtDateTime(backup.lastBackupDate) || '—'],
+    [t('ReactUI.DetailNextBackup', 'Next Backup'), backup.automatic ? (fmtDateTime(backup.nextBackupDate) || '—') : '—'],
+    [t('ReactUI.DetailInterval', 'Time Interval'), backup.timeIntervalBackup && hasValidInterval(backup.timeIntervalBackup) ? fmtInterval(backup.timeIntervalBackup) : '—'],
+    [t('ReactUI.DetailCount', 'Backup Count'), String(backup.count)],
+    [t('ReactUI.DetailMaxToKeep', 'Max to Keep'), String(backup.maxToKeep)],
+    [t('ReactUI.DetailCreationDate', 'Creation Date'), fmtDateTime(backup.creationDate) || '—'],
+  ]
 
   return (
-    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="modal-box" style={{ maxWidth: 380 }}>
-        <div className="modal-title">{t('ReactUI.RenameModalTitle', 'Rename backup')}</div>
-        <form onSubmit={save} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <label className="section-label">{t('ReactUI.NameLabel', 'Name')}</label>
-            <input className="input" autoFocus value={name} onChange={e => setName(e.target.value)} required />
-          </div>
-          {error && (
-            <div style={{ fontSize: 12, color: 'var(--error)' }}>{error}</div>
-          )}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-            <button type="button" className="btn btn-ghost" onClick={onClose}>{t('General.CancelButton', 'Cancel')}</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Saving…' : t('ReactUI.RenameButton', 'Rename')}
-            </button>
-          </div>
-        </form>
+    <div className="card" style={{ flexShrink: 0, padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 14, maxHeight: '42%', overflow: 'auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ fontWeight: 700, fontSize: 14 }} className="truncate">{backup.name}</div>
+        <button className="icon-btn" onClick={onClose} title={t('General.CloseButton', 'Close')}><X size={14} /></button>
+      </div>
+
+      <dl className="kv-grid">
+        {fields.map(([label, value]) => (
+          <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+        ))}
+      </dl>
+
+      {backup.notes && (
+        <div>
+          <div className="text-dim" style={{ fontSize: 11, marginBottom: 2 }}>{t('ReactUI.DetailNotes', 'Notes')}</div>
+          <div style={{ fontSize: 13, whiteSpace: 'pre-wrap' }}>{backup.notes}</div>
+        </div>
+      )}
+
+      <div>
+        <div className="section-label" style={{ marginBottom: 8 }}>{t('ReactUI.RecentRuns', 'Recent runs')}</div>
+        {runs.length === 0 ? (
+          <div className="text-dim" style={{ fontSize: 12 }}>{t('ReactUI.NoRunsYet', 'No runs yet.')}</div>
+        ) : (
+          <table className="data-table" style={{ fontSize: 12 }}>
+            <tbody>
+              {runs.slice(0, 5).map(r => (
+                <tr key={r.backupRequestId}>
+                  <td style={{ padding: '6px 8px', width: 110 }}><RunStatusBadge status={r.status} /></td>
+                  <td style={{ padding: '6px 8px' }} className="text-muted">{fmtDateTime(r.startedDate)}</td>
+                  <td style={{ padding: '6px 8px' }} className="text-muted">{fmtDuration(r.durationMs)}</td>
+                  <td style={{ padding: '6px 8px' }} className="text-muted">{r.zippedTargetSize ? fmtBytes(r.zippedTargetSize) : ''}</td>
+                  <td style={{ padding: '6px 8px', color: 'var(--error)', maxWidth: 260 }} className="truncate" title={r.errorMessage ?? ''}>{r.errorMessage ?? ''}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   )
 }
 
-/* ─── Form modal ─────────────────────────────────────────────────────────── */
+/* ─── Rename modal ───────────────────────────────────────────────────────── */
+
+function RenameModal({ backup, onClose, onSaved }: { backup: BackupConfig; onClose: () => void; onSaved: () => void }) {
+  const { t } = useTranslation()
+  const [name, setName] = useState(backup.name)
+  const mutation = useMutation({
+    mutationFn: () => backupApi.update(backup.id, toPayload(backup, { name: name.trim() })),
+    onSuccess: onSaved,
+  })
+
+  return (
+    <Modal
+      title={t('ReactUI.RenameModalTitle', 'Rename backup')}
+      onClose={onClose}
+      width={400}
+      footer={
+        <>
+          <button type="button" className="btn btn-ghost" onClick={onClose}>{t('General.CancelButton', 'Cancel')}</button>
+          <button type="submit" form="rename-form" className="btn btn-primary" disabled={mutation.isPending || !name.trim()}>
+            {t('ReactUI.RenameButton', 'Rename')}
+          </button>
+        </>
+      }
+    >
+      <form id="rename-form" onSubmit={e => { e.preventDefault(); if (name.trim()) mutation.mutate() }}>
+        <TextField label={t('ReactUI.NameLabel', 'Name')} value={name} onChange={setName} autoFocus required />
+      </form>
+      {mutation.isError && <Alert kind="error">{apiErrorMessage(mutation.error) ?? t('ReactUI.RenameFailed', 'Rename failed')}</Alert>}
+    </Modal>
+  )
+}
+
+/* ─── Create / edit modal ────────────────────────────────────────────────── */
+
 function BackupFormModal({ initial, onClose, onSaved }: {
-  initial?: BackupConfig; onClose: () => void; onSaved: () => void
+  initial?: BackupConfig; onClose: () => void; onSaved: (saved: BackupConfig) => void
 }) {
   const { t } = useTranslation()
   const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: settingsApi.get })
@@ -575,8 +565,7 @@ function BackupFormModal({ initial, onClose, onSaved }: {
     maxToKeep: initial?.maxToKeep ?? 5,
   })
 
-  // Apply the user's configured defaults once, only for a brand-new backup and only if
-  // the field hasn't already been touched (dialogs are freshly mounted each time they open).
+  // Apply the user's configured defaults once, only for a brand-new backup
   useEffect(() => {
     if (initial || !settings) return
     setForm(f => ({
@@ -586,12 +575,8 @@ function BackupFormModal({ initial, onClose, onSaved }: {
     }))
   }, [settings]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  const set = <K extends keyof CreateBackupPayload>(k: K, v: CreateBackupPayload[K]) =>
-    setForm(f => ({ ...f, [k]: v }))
-
+  const set = <K extends keyof CreateBackupPayload>(k: K, v: CreateBackupPayload[K]) => setForm(f => ({ ...f, [k]: v }))
   const setTi = (field: keyof TimeInterval, val: number) =>
     setForm(f => ({
       ...f,
@@ -599,223 +584,94 @@ function BackupFormModal({ initial, onClose, onSaved }: {
         days: f.timeIntervalBackup?.days ?? 0,
         hours: f.timeIntervalBackup?.hours ?? 0,
         minutes: f.timeIntervalBackup?.minutes ?? 0,
-        [field]: val,
-      }
+        [field]: Math.max(0, val),
+      },
     }))
 
-  const save = async (e: React.FormEvent) => {
+  const mutation = useMutation({
+    mutationFn: () => {
+      // Keep the interval around even when disabling automatic runs, so re-enabling restores it
+      const payload = { ...form, name: form.name.trim() }
+      return initial ? backupApi.update(initial.id, payload) : backupApi.create(payload)
+    },
+    onSuccess: onSaved,
+    onError: err => setError(apiErrorMessage(err) ?? (err instanceof Error ? err.message : t('ReactUI.SaveFailed', 'Save failed'))),
+  })
+
+  const submit = (e: React.FormEvent) => {
     e.preventDefault()
     if (form.automatic && !hasValidInterval(form.timeIntervalBackup)) {
       setError(t('ReactUI.SetIntervalError', 'Set a time interval before enabling automatic backup.'))
       return
     }
-    setLoading(true); setError(null)
-    try {
-      if (initial) await backupApi.update(initial.id, form)
-      else         await backupApi.create(form)
-      onSaved()
-    } catch (err: unknown) {
-      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-      setError(msg ?? (err instanceof Error ? err.message : t('ReactUI.SaveFailed', 'Save failed')))
-    } finally { setLoading(false) }
+    setError(null)
+    mutation.mutate()
   }
 
+  const totalMin = intervalTotalMinutes(form.timeIntervalBackup)
+
   return (
-    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <div className="modal-box">
-        <div className="modal-title">{initial ? `${t('ReactUI.EditModalTitlePrefix', 'Edit —')} ${initial.name}` : t('ReactUI.NewBackupModalTitle', 'New backup configuration')}</div>
-
-        <form onSubmit={save} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <FormRow>
-            <Field label={t('ReactUI.NameRequiredLabel', 'Name *')} value={form.name} onChange={v => set('name', v)} placeholder="My Documents" required />
-          </FormRow>
-          <FormRow>
-            <PathField label={t('ReactUI.SourcePathRequiredLabel', 'Source path *')} value={form.targetPath} onChange={v => set('targetPath', v)} placeholder="/home/user/documents" required />
-          </FormRow>
-          <FormRow>
-            <PathField label={t('ReactUI.DestPathRequiredLabel', 'Destination path *')} value={form.destinationPath} onChange={v => set('destinationPath', v)} placeholder="/backups/documents" required />
-          </FormRow>
-          <FormRow cols={2}>
-            <Field label={t('ReactUI.NotesLabel', 'Notes')} value={form.notes} onChange={v => set('notes', v)} placeholder="Optional description" />
-            <NumField label={t('ReactUI.MaxBackupsToKeepLabel', 'Max backups to keep')} value={form.maxToKeep} onChange={v => set('maxToKeep', v)} min={1} />
-          </FormRow>
-
-          <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', userSelect: 'none' }}>
-            <input type="checkbox" checked={form.automatic} onChange={e => {
-              set('automatic', e.target.checked)
-              if (!e.target.checked) set('timeIntervalBackup', null)
-            }} style={{ accentColor: 'var(--accent)', width: 15, height: 15 }} />
-            <span style={{ fontSize: 13, color: 'var(--text)' }}>{t('ReactUI.EnableAutoBackupLabel', 'Enable automatic backup')}</span>
-          </label>
-
-          {form.automatic && (
-            <div style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', borderRadius: 6, padding: 14 }}>
-              <div className="section-label" style={{ marginBottom: 10 }}>{t('ReactUI.TimeIntervalLabel', 'Time interval')}</div>
-              <FormRow cols={3}>
-                <NumField label={t('ReactUI.DaysLabel', 'Days')}    value={form.timeIntervalBackup?.days ?? 0}    onChange={v => setTi('days', v)}    min={0} />
-                <NumField label={t('ReactUI.HoursLabel', 'Hours')}   value={form.timeIntervalBackup?.hours ?? 0}   onChange={v => setTi('hours', v)}   min={0} max={23} />
-                <NumField label={t('ReactUI.MinutesLabel', 'Minutes')} value={form.timeIntervalBackup?.minutes ?? 0} onChange={v => setTi('minutes', v)} min={0} max={59} />
-              </FormRow>
-            </div>
-          )}
-
-          {form.automatic && !hasValidInterval(form.timeIntervalBackup) && (
-            <div style={{ fontSize: 12, color: 'var(--warning)', background: 'rgba(232,167,53,.1)',
-              border: '1px solid rgba(232,167,53,.3)', borderRadius: 5, padding: '7px 10px' }}>
-              {t('ReactUI.SetIntervalWarning', 'Set a time interval (days / hours / minutes) before enabling automatic backup.')}
-            </div>
-          )}
-          {form.automatic && hasValidInterval(form.timeIntervalBackup) && intervalTotalMinutes(form.timeIntervalBackup) < 5 && (
-            <div style={{ fontSize: 12, color: 'var(--warning)', background: 'rgba(232,167,53,.1)',
-              border: '1px solid rgba(232,167,53,.3)', borderRadius: 5, padding: '7px 10px' }}>
-              {t('ReactUI.ShortIntervalWarningPart1', 'Warning: interval is very short')} ({intervalTotalMinutes(form.timeIntervalBackup)} min). {t('ReactUI.ShortIntervalWarningPart2', 'A low interval may impact system performance.')}
-            </div>
-          )}
-
-          {error && (
-            <div style={{ fontSize: 12, color: 'var(--error)', background: 'rgba(224,82,82,.1)',
-              border: '1px solid rgba(224,82,82,.25)', borderRadius: 5, padding: '7px 10px' }}>
-              {error}
-            </div>
-          )}
-
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 4 }}>
-            <button type="button" className="btn btn-ghost" onClick={onClose}>{t('General.CancelButton', 'Cancel')}</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Saving…' : t('General.SaveButton', 'Save')}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
-}
-
-/* ─── Shared form atoms ──────────────────────────────────────────────────── */
-function FormRow({ children, cols = 1 }: { children: React.ReactNode; cols?: number }) {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 12 }}>
-      {children}
-    </div>
-  )
-}
-function Field({ label, value, onChange, placeholder, required }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string; required?: boolean
-}) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label className="section-label">{label}</label>
-      <input className="input" value={value} placeholder={placeholder} required={required}
-        onChange={e => onChange(e.target.value)} />
-    </div>
-  )
-}
-function PathField({ label, value, onChange, placeholder, required }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string; required?: boolean
-}) {
-  const { t } = useTranslation()
-  const browse = async () => {
-    const path = await window.electron?.openFolder()
-    if (path) onChange(path)
-  }
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label className="section-label">{label}</label>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <input className="input" value={value} placeholder={placeholder} required={required}
-          onChange={e => onChange(e.target.value)} style={{ flex: 1 }} />
-        {window.electron && (
-          <button type="button" className="btn btn-ghost" onClick={browse}
-            style={{ padding: '5px 9px', flexShrink: 0 }} title={t('ReactUI.BrowseFolderTooltip', 'Browse folder')}>
-            <FolderOpen size={14} />
+    <Modal
+      title={initial ? `${t('ReactUI.EditModalTitlePrefix', 'Edit —')} ${initial.name}` : t('ReactUI.NewBackupModalTitle', 'New backup configuration')}
+      onClose={onClose}
+      width={560}
+      footer={
+        <>
+          <button type="button" className="btn btn-ghost" onClick={onClose}>{t('General.CancelButton', 'Cancel')}</button>
+          <button type="submit" form="backup-form" className="btn btn-primary" disabled={mutation.isPending}>
+            {t('General.SaveButton', 'Save')}
           </button>
-        )}
-      </div>
-    </div>
-  )
-}
-function NumField({ label, value, onChange, min, max }: {
-  label: string; value: number; onChange: (v: number) => void; min?: number; max?: number
-}) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <label className="section-label">{label}</label>
-      <input className="input" type="number" value={value} min={min} max={max}
-        onChange={e => onChange(Number(e.target.value))} />
-    </div>
-  )
-}
-function ProgressCell({ progress }: { progress: number | undefined }) {
-  if (progress === undefined) {
-    return <span style={{ color: 'var(--text-dim)' }}>—</span>
-  }
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <div style={{
-        flex: 1, height: 6, borderRadius: 3, overflow: 'hidden',
-        background: 'var(--bg-3)', border: '1px solid var(--border)',
-      }}>
-        <div style={{
-          width: `${Math.min(100, Math.max(0, progress))}%`, height: '100%',
-          background: 'var(--accent)', transition: 'width .3s ease',
-        }} />
-      </div>
-      <span style={{ fontSize: 11, color: 'var(--text-muted)', minWidth: 30, textAlign: 'right' }}>
-        {progress}%
-      </span>
-    </div>
-  )
-}
-function usePrevious<T>(value: T): T | undefined {
-  const ref = useRef<T>()
-  useEffect(() => { ref.current = value })
-  return ref.current
-}
-function SortableHeader({ label, sortKey, sort, onSort, align, nowrap, tooltip }: {
-  label: string; sortKey: SortKey; sort: { key: SortKey; dir: 'asc' | 'desc' }; onSort: (key: SortKey) => void
-  align?: 'center' | 'left'; nowrap?: boolean; tooltip?: string
-}) {
-  const active = sort.key === sortKey
-  return (
-    <th
-      onClick={() => onSort(sortKey)}
-      style={{ cursor: 'pointer', userSelect: 'none', textAlign: align, whiteSpace: nowrap ? 'nowrap' : undefined }}
-      title={tooltip ?? label}
+        </>
+      }
     >
-      <span style={{
-        display: 'inline-flex', alignItems: 'center', gap: 4,
-        justifyContent: align === 'center' ? 'center' : 'flex-start',
-        color: active ? 'var(--text)' : undefined,
-      }}>
-        {label}
-        {active
-          ? (sort.dir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />)
-          : <ChevronsUpDown size={11} color="var(--text-dim)" />}
-      </span>
-    </th>
+      <form id="backup-form" onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <TextField label={t('ReactUI.NameRequiredLabel', 'Name *')} value={form.name} onChange={v => set('name', v)}
+          placeholder="My Documents" required autoFocus={!initial} />
+        <PathField label={t('ReactUI.SourcePathRequiredLabel', 'Source path *')} value={form.targetPath}
+          onChange={v => set('targetPath', v)} placeholder="C:\Users\me\Documents" required />
+        <PathField label={t('ReactUI.DestPathRequiredLabel', 'Destination path *')} value={form.destinationPath}
+          onChange={v => set('destinationPath', v)} placeholder="D:\Backups" required />
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 160px', gap: 12 }}>
+          <div className="field">
+            <label className="field-label" htmlFor="backup-notes">{t('ReactUI.NotesLabel', 'Notes')}</label>
+            <textarea id="backup-notes" className="input" rows={2} value={form.notes}
+              onChange={e => set('notes', e.target.value)} />
+          </div>
+          <NumField label={t('ReactUI.MaxBackupsToKeepLabel', 'Max backups to keep')} value={form.maxToKeep}
+            onChange={v => set('maxToKeep', Math.max(1, v))} min={1} />
+        </div>
+
+        <div style={{ background: 'var(--bg-3)', border: '1px solid var(--border)', borderRadius: 8, padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <Switch
+            label={t('ReactUI.EnableAutoBackupLabel', 'Enable automatic backup')}
+            checked={form.automatic}
+            onChange={v => set('automatic', v)}
+          />
+          {form.automatic && (
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                <NumField label={t('ReactUI.DaysLabel', 'Days')} value={form.timeIntervalBackup?.days ?? 0} onChange={v => setTi('days', v)} min={0} />
+                <NumField label={t('ReactUI.HoursLabel', 'Hours')} value={form.timeIntervalBackup?.hours ?? 0} onChange={v => setTi('hours', v)} min={0} max={23} />
+                <NumField label={t('ReactUI.MinutesLabel', 'Minutes')} value={form.timeIntervalBackup?.minutes ?? 0} onChange={v => setTi('minutes', v)} min={0} max={59} />
+              </div>
+              {!hasValidInterval(form.timeIntervalBackup) ? (
+                <Alert kind="warning">{t('ReactUI.SetIntervalWarning', 'Set a time interval (days / hours / minutes) before enabling automatic backup.')}</Alert>
+              ) : totalMin < 5 ? (
+                <Alert kind="warning">
+                  {t('ReactUI.ShortIntervalWarningPart1', 'Warning: interval is very short')} ({totalMin} min). {t('ReactUI.ShortIntervalWarningPart2', 'A low interval may impact system performance.')}
+                </Alert>
+              ) : (
+                <div className="field-hint">
+                  {t('ReactUI.ScheduleEvery', 'Every {interval}').replace('{interval}', fmtInterval(form.timeIntervalBackup))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {error && <Alert kind="error">{error}</Alert>}
+      </form>
+    </Modal>
   )
-}
-function Truncated({ text }: { text: string }) {
-  return (
-    <span title={text} style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>
-      {text}
-    </span>
-  )
-}
-
-/* ─── Formatters ─────────────────────────────────────────────────────────── */
-function fmtDate(iso: string) { return new Date(iso).toLocaleString() }
-function fmtInterval(t: { days: number; hours: number; minutes: number }) {
-  return `${t.days}.${t.hours}:${String(t.minutes).padStart(2, '0')}`
-}
-
-/* ─── Helpers ────────────────────────────────────────────────────────────── */
-function hasValidInterval(ti: { days: number; hours: number; minutes: number } | null | undefined): boolean {
-  if (!ti) return false
-  return ti.days > 0 || ti.hours > 0 || ti.minutes > 0
-}
-
-function intervalTotalMinutes(ti: { days: number; hours: number; minutes: number } | null | undefined): number {
-  if (!ti) return 0
-  return ti.days * 1440 + ti.hours * 60 + ti.minutes
 }

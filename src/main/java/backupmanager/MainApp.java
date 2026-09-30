@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.Configurations;
 import backupmanager.Enums.ConfigKey;
-import backupmanager.Enums.SubscriptionStatus;
-import backupmanager.Helpers.SubscriptionHelper;
 import backupmanager.Managers.ExceptionManager;
 import backupmanager.Managers.LanguageManager;
 import backupmanager.Services.BackgroundService;
@@ -69,15 +67,10 @@ public class MainApp {
         try {
             BackupOperations.deletePotentiallyIncompletedBackupsFromLastExecution();
 
+            // Automatic backups run unless a subscription is required and none is valid (checked by
+            // the scheduler on every cycle) — manual backups via the REST API stay available either way.
             BackgroundService backgroundService = new BackgroundService();
-            // Automatic backups run unless a subscription is required and none is valid —
-            // manual backups (triggered via the REST API) stay available either way.
-            SubscriptionStatus subscriptionStatus = SubscriptionHelper.getSubscriptionStatus();
-            if (subscriptionStatus != SubscriptionStatus.EXPIRED) {
-                backgroundService.start();
-            } else {
-                logger.warn("Subscription expired — automatic backup scheduler not started");
-            }
+            backgroundService.start();
 
             ApiServer apiServer = new ApiServer();
             apiServer.start();

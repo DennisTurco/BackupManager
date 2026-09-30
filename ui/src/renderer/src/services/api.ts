@@ -83,6 +83,19 @@ export const configApi = {
 // ── Logs ──────────────────────────────────────────────────────────────────────
 
 export const logsApi = {
-  get: () =>
-    axios.get<string>('http://localhost:7089/api/logs', { responseType: 'text' }).then((r) => r.data)
+  get: () => client.get<string>('/api/logs', { responseType: 'text' }).then((r) => r.data)
+}
+
+export const exportApi = {
+  backupsCsv: () => client.get<Blob>('/api/backups/export.csv', { responseType: 'blob' }).then((r) => r.data)
+}
+
+/** Saves a blob through the browser download flow (never navigates the Electron window) */
+export function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
