@@ -10,10 +10,9 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 
 * 📁 Automatic backup of folders and subfolders
 * 🕒 Flexible scheduling for recurring backups
-* 🖱️ Simple GUI with tray icon support
+* 🖱️ Electron desktop app with tray icon support
 * 📝 Detailed logs and backup history
 * 🎨 Light/Dark themes and multilingual support (EN, IT, DE, ES, FR)
-* 🪟 Auto-start with the operating system (configurable)
 
 ## Screenshots and Videos
 
@@ -29,22 +28,111 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 | ------------------------ | ------------------------ |
 | ![image7](./docs/imgs/Home3.png) | . |
 
+## Architecture
+
+```
+BackupManager/
+├── src/main/java/backupmanager/   # Java backend (Maven), headless — no GUI
+│   ├── api/                       # REST API layer (Javalin 6 on port 7089)
+│   │   └── routes/                # BackupRoutes, AnalyticsRoutes, SettingsRoutes, LogRoutes, AuthRoutes
+│   ├── Services/                  # BackgroundService (scheduler), backup engine
+│   ├── Repositories/              # SQLite persistence via JDBC
+│   └── MainApp.java               # Entry point — always starts the REST API server
+└── ui/                            # Electron + React + TypeScript frontend
+    ├── src/main/index.ts          # Electron main — spawns Java JAR with --api-server flag
+    ├── src/preload/index.ts       # Exposes env.apiBase to the renderer
+    └── src/renderer/src/          # React app (Vite)
+        ├── pages/                 # BackupTablePage, DashboardPage, HistoryPage, SettingsPage
+        ├── services/api.ts        # Axios client for all REST endpoints
+        └── context/ThemeContext   # Dark / light theme
+```
+
+**Runtime flow:** Electron spawns `java -jar BackupManager.jar --api-server` → Java starts Javalin REST server on `http://localhost:7089` → React renderer calls the API via Axios.
+
+## Local Development Setup
+
+### Prerequisites
+
+| Tool | Version |
+|------|---------|
+| JDK  | 21+     |
+| Maven | 3.9+   |
+| Node.js | 20+  |
+| npm  | 10+     |
+
+### 1 — Build the Java backend
+
+```bash
+mvn clean package -DskipTests
+```
+
+This produces `target/backupmanager-jar-with-dependencies.jar`.
+
+### 2 — Run the REST API server standalone (optional, for UI-only dev)
+
+```bash
+java -jar target/backupmanager-jar-with-dependencies.jar --api-server
+```
+
+The API will be available at `http://localhost:7089/api/status`. Keep this terminal open.
+
+### 3 — Start the React + Electron UI
+
+```bash
+cd ui
+npm install
+npm run dev
+```
+
+This opens Electron in development mode with hot-reload. `npm run dev` rebuilds the backend JAR first when the Java sources changed, then Electron spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`). If a backend is already answering on port 7089 (e.g. you started it in step 2 or from the IDE debugger), Electron reuses it instead of starting a second one.
+
+### 4 — Build the Windows installer
+
+```bash
+# Build Java JAR first
+./mvnw.cmd clean package -DskipTests
+
+# Then package the Electron app (bundles the JAR and the JRE inside)
+cd ui
+npm run dist:win
+```
+
+Then compile `installer/BackupManager_installer.iss` (standard) or `installer/BackupManager_installer_demo.iss` (demo) with Inno Setup. Full guide: [docs/installer.md](./docs/installer.md).
+
+### Available npm scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Electron + Vite dev server with HMR |
+| `npm run build` | Compile TypeScript + Vite bundle |
+| `npm run preview` | Preview the built renderer in a browser |
+| `npm run dist` | Build distributable (via electron-builder) |
+| `npm run dist:win` | Package the Windows app into `release/win-unpacked` for the Inno Setup installer |
+
+### Code quality — Java
+
+```bash
+mvn clean verify
+```
+
+Runs Checkstyle, SpotBugs and unit tests. The build fails on any violation.
+
 ## Code Documentation
 
 $\rightarrow$ [Code technical documentation](./code_documentation.md)
 
 ## Important Notes
 
-* If, for any reason, the setup program doesn't add the application to the startup registry (`regedit`), you can manually run "add_to_startup.bat" located in the installation folder by double-clicking it.
-* This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
+* The Java backend is fully headless — it has no window of its own and no standalone `.exe`. It's always launched by the Electron app (`spawnJavaBackend` in `ui/src/main/index.ts`), which also owns the tray icon.
+* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray.
 
 ## Platforms
 
 | Platform | Availability |
 | --- | --- |
 | Windows | ✅ |
-| Linux | ❌ |
-| MacOS | ❌ |
+| Linux | ✅ (via Electron) |
+| MacOS | ✅ (via Electron) |
 
 ## Supported Languages
 

@@ -67,19 +67,6 @@ CREATE TABLE IF NOT EXISTS "SchemaVersion" (
     "Version" INTEGER PRIMARY KEY
 );
 
--- Table: Emails
--- Payload: could contains a json text with the error, backupId, context
-CREATE TABLE IF NOT EXISTS "Emails" (
-	"EmailId" INTEGER PRIMARY KEY AUTOINCREMENT,
-	"Type" INTEGER NOT NULL,
-	"InsertDate" INTEGER NOT NULL,
-	"AppVersion" TEXT NOT NULL,
-	"Payload" TEXT
-);
-CREATE INDEX idx_emails_type_date
-ON Emails(Type, InsertDate);
-
-
 -- Table: Subscriptions
 -- i don't want to bind this table to the user table because the subscription is global
 CREATE TABLE IF NOT EXISTS "Subscriptions" (

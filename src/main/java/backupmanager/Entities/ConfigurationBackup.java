@@ -91,16 +91,24 @@ public class ConfigurationBackup {
     }
 
     public String toCsvString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s,%d",
-            name,
-            targetPath,
-            destinationPath,
-            lastBackupDate != null ? lastBackupDate.toString() : "",
-            automatic,
-            nextBackupDate != null ? nextBackupDate.toString() : "",
-            timeIntervalBackup != null ? timeIntervalBackup.toString() : "",
-            maxToKeep
+        return String.join(",",
+            csv(name),
+            csv(targetPath),
+            csv(destinationPath),
+            csv(lastBackupDate != null ? lastBackupDate.toString() : ""),
+            csv(String.valueOf(automatic)),
+            csv(nextBackupDate != null ? nextBackupDate.toString() : ""),
+            csv(timeIntervalBackup != null ? timeIntervalBackup.toString() : ""),
+            String.valueOf(maxToKeep)
         );
+    }
+
+    // RFC 4180: quote fields containing separators, quotes or line breaks
+    private static String csv(String value) {
+        if (value == null) return "";
+        if (value.contains(",") || value.contains("\"") || value.contains("\n") || value.contains("\r"))
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        return value;
     }
 
     public Object[] toTableRow() {

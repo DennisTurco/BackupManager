@@ -1,17 +1,10 @@
 package backupmanager.Services;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
 
 import backupmanager.Entities.BackupAnalyticsSnapshot;
 import backupmanager.Entities.BackupRequest;
@@ -45,11 +38,14 @@ public class BackupAnalyticsService {
 
         double avgCompressionRate = computeCompressionRate(requests);
 
+        // Only count requests whose output file is still actually present on disk — the history
+        // table keeps a row for every run ever made, including ones long since removed by the
+        // "max backups to keep" retention policy, so summing all of them would massively
+        // overstate real disk usage.
         long diskUsage = requests.stream()
-                .mapToLong(r ->
-                        r.zippedTargetSize() != null ?
-                                r.zippedTargetSize() :
-                                0)
+                .filter(r -> r.zippedTargetSize() != null && r.outputPath() != null)
+                .filter(r -> new File(r.outputPath()).exists())
+                .mapToLong(BackupRequest::zippedTargetSize)
                 .sum();
 
         Map<LocalDate, Double> durationTrend =
@@ -62,60 +58,6 @@ public class BackupAnalyticsService {
                                 )));
 
         return new BackupAnalyticsSnapshot(total, successCount, failedCount, successRate, avgDuration, avgCompressionRate, diskUsage, durationTrend);
-    }
-
-    public static CategoryDataset buildRequestsPerMonthDataset(List<BackupRequest> requests, String title) {
-
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        LocalDate now = LocalDate.now();
-        LocalDate oneYearAgo = now.minusMonths(11).withDayOfMonth(1);
-
-        Map<String, Long> map = requests.stream()
-                .filter(r -> r.startedDate() != null && !r.startedDate().toLocalDate().isBefore(oneYearAgo))
-                .collect(Collectors.groupingBy(
-                        r -> {
-                            LocalDate d = r.startedDate().toLocalDate();
-                            return d.getYear() + "-" + String.format("%02d", d.getMonthValue());
-                        },
-                        Collectors.counting()
-                ));
-
-        List<String> last12Months = IntStream.rangeClosed(0, 11)
-                .mapToObj(i -> {
-                    LocalDate month = oneYearAgo.plusMonths(i);
-                    return month.getYear() + "-" + String.format("%02d", month.getMonthValue());
-                })
-                .toList();
-
-        for (String month : last12Months) {
-            dataset.addValue(map.getOrDefault(month, 0L), title, month);
-        }
-
-        return dataset;
-    }
-
-    public static XYDataset buildDurationTrendDataset(Map<LocalDate, Double> trendMap, String title) {
-
-        TimeSeries series = new TimeSeries(title);
-
-        LocalDate today = LocalDate.now();
-        LocalDate thirtyDaysAgo = today.minusDays(29);
-
-        trendMap.entrySet().stream()
-            .filter(entry -> !entry.getKey().isBefore(thirtyDaysAgo))
-            .sorted(Map.Entry.comparingByKey())
-            .forEach(entry -> {
-                LocalDate date = entry.getKey();
-                Double value = entry.getValue();
-
-                series.add(
-                    new Day(date.getDayOfMonth(), date.getMonthValue(), date.getYear()),
-                    value
-                );
-            });
-
-        return new TimeSeriesCollection(series);
     }
 
     public static double computeCompressionRate(List<BackupRequest> requests) {
@@ -133,9 +75,5 @@ public class BackupAnalyticsService {
             return 0;
 
         return (double) totalZipped / totalUnzipped;
-    }
-
-    public static double convertAvgDurationinMinutes(BackupAnalyticsSnapshot snapshot) {
-        return snapshot.avgDurationMs() / 60000.0;
     }
 }

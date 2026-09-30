@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backupmanager.Email.EmailSender;
 import backupmanager.Entities.User;
 import backupmanager.Enums.LanguagesEnum;
 import backupmanager.Managers.LanguageManager;
@@ -33,11 +32,6 @@ public class LoginService {
         UserRepository.insertUser(user);
     }
 
-    public void createUserAndSendEmail(User user) {
-        createNewUser(user);
-        sendRegistrationEmail(user);
-    }
-
     private void setLanguageBasedOnPcLanguage() {
         Locale defaultLocale = Locale.getDefault();
         String language = defaultLocale.getLanguage();
@@ -54,10 +48,5 @@ public class LoginService {
             default -> languageValue = LanguagesEnum.getDefault();
         }
         LanguageManager.setLanguage(languageValue);
-    }
-
-    private void sendRegistrationEmail(User user) {
-        EmailSender.sendUserCreationEmail(user);
-        EmailSender.sendConfirmEmailToUser(user);
     }
 }

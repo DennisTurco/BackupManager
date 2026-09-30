@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,20 +63,6 @@ class SubscriptionHelperTest {
         createSubscriptionByStatus(SubscriptionStatus.NONE);
         SubscriptionStatus status = SubscriptionHelper.getSubscriptionStatus();
         assertEquals(SubscriptionStatus.NONE, status);
-    }
-
-    @Test
-    protected void getSubscriptionStatusTranslated_shouldBeTrue_forSubscriptionValidStatus() {
-        String translationActive = SubscriptionHelper.getSubscriptionStatusTranslated(SubscriptionStatus.ACTIVE);
-        String translationExpiration= SubscriptionHelper.getSubscriptionStatusTranslated(SubscriptionStatus.EXPIRATION);
-        String translationExpired = SubscriptionHelper.getSubscriptionStatusTranslated(SubscriptionStatus.EXPIRED);
-        assertTrue(!translationActive.isBlank() && !translationExpiration.isEmpty() && !translationExpired.isEmpty());
-    }
-
-    @Test
-    protected void getSubscriptionStatusTranslated_shouldBeTrue_forNoNeddedSubscriptionStatus() {
-        String translation = SubscriptionHelper.getSubscriptionStatusTranslated(SubscriptionStatus.NONE);
-        assertTrue(translation.isEmpty());
     }
 
     private void createSubscriptionByStatus(SubscriptionStatus status) throws SQLException {

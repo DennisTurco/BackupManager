@@ -8,7 +8,12 @@
 --
 -- Order: BackupConfigurations first (BackupRequests FK references it),
 --        then BackupRequests, then Subscriptions (independent).
--- FK enforcement stays ON. DROP TABLE does not trigger child-row checks in SQLite.
+-- Foreign keys MUST be off while tables are recreated: with them on, DROP TABLE runs an implicit
+-- DELETE that fires the old ON DELETE CASCADE and wipes every BackupRequests row before it is copied.
+-- PRAGMA foreign_keys is a no-op inside a transaction, so it is set before BEGIN and restored after COMMIT.
+-- (SQLite "Making Other Kinds Of Table Schema Changes" procedure.)
+
+PRAGMA foreign_keys = OFF;
 
 BEGIN;
 
@@ -91,3 +96,5 @@ FROM Subscriptions;
 INSERT OR IGNORE INTO SchemaVersion VALUES (6);
 
 COMMIT;
+
+PRAGMA foreign_keys = ON;

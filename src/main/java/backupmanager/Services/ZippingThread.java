@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.ClosedByInterruptException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
@@ -26,16 +28,22 @@ public class ZippingThread {
 
     private static final Logger logger = LoggerFactory.getLogger(ZippingThread.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static volatile Future<?> currentTask;
 
-    public static void zipDirectory(File sourceFile, File outputFile, ZippingContext context, int totalFilesCount) {
+    public enum Outcome { SUCCESS, INTERRUPTED, FAILED }
+
+    /** @return true if the zip task was submitted, false if it could not even start */
+    public static boolean zipDirectory(File sourceFile, File outputFile, ZippingContext context, int totalFilesCount) {
         logger.info("Starting zipping process");
 
         String sourceDirectoryPath = sourceFile.getAbsolutePath();
         String outupZipPath = outputFile.getAbsolutePath();
 
         if (!sourceFile.exists()) {
-            handleError("Source directory does not exist: " + sourceDirectoryPath, ErrorType.ZippingIOError, context);
-            return;
+            logger.error("Source directory does not exist: {}", sourceDirectoryPath);
+            BackupOperations.setError(ErrorType.ZippingIOError, context.execution().backup().getName());
+            BackupOperations.completeBackup(context, outupZipPath, Outcome.FAILED, "Source path does not exist: " + sourceDirectoryPath);
+            return false;
         }
 
         AtomicInteger copiedFilesCount = new AtomicInteger(0);
@@ -46,7 +54,9 @@ public class ZippingThread {
             executorService = Executors.newSingleThreadExecutor();  // Recreate the executor
         }
 
-        executorService.submit(() -> {
+        currentTask = executorService.submit(() -> {
+            Outcome outcome = Outcome.FAILED;
+            String error = null;
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(outupZipPath))) {
                 Path sourceDir = Paths.get(sourceDirectoryPath);
 
@@ -55,24 +65,26 @@ public class ZippingThread {
                 else
                     Files.walkFileTree(sourceDir, new ZipFileVisitor(sourceDir, outputFile, zipOut, copiedFilesCount, totalFilesCount, context));
 
-            } catch (IOException e) {
-                logger.error("I/O error occurred while zipping directory \"" + sourceDirectoryPath + "\"" + e.getMessage(), e);
-                handleError("I/O error occurred", ErrorType.ZippingIOError, context);
+                outcome = Thread.currentThread().isInterrupted() ? Outcome.INTERRUPTED : Outcome.SUCCESS;
+            } catch (ClosedByInterruptException e) {
+                // interrupting a thread blocked on NIO file I/O surfaces as this exception
+                outcome = Outcome.INTERRUPTED;
+            } catch (IOException | RuntimeException e) {
+                // e.g. a file locked by another program, disk full, access denied
+                logger.error("Error while zipping \"" + sourceDirectoryPath + "\": " + e.getMessage(), e);
+                BackupOperations.setError(ErrorType.ZippingIOError, context.execution().backup().getName());
+                error = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
             } finally {
-                finalizeProcess(context);
+                // The ZipOutputStream is closed by now (try-with-resources runs before finally), so
+                // the output file is complete or can safely be deleted. Thread.interrupted() clears the
+                // flag — this is a pooled single-thread executor, so leaving it set would make the
+                // *next* submitted backup look interrupted too.
+                if (Thread.interrupted() && outcome == Outcome.SUCCESS) outcome = Outcome.INTERRUPTED;
+                logger.info("Finalizing zipping process: {}", outcome);
+                BackupOperations.completeBackup(context, outupZipPath, outcome, error);
             }
         });
-    }
-
-    private static void handleError(String message, ErrorType errorType, ZippingContext context) {
-        logger.error(message);
-        BackupOperations.setError(errorType, context.ui().trayIcon(), context.execution().backup() != null ? context.execution().backup().getName() : null);
-        BackupOperations.reEnableButtonsAndTable(context);
-    }
-
-    private static void finalizeProcess(ZippingContext context) {
-        logger.info("Finalizing zipping process");
-        BackupOperations.reEnableButtonsAndTable(context);
+        return true;
     }
 
     private static void addFileToZip(String sourceDirectoryPath, String destinationDirectoryPath, ZipOutputStream zipOut, Path file, String zipEntryName, AtomicInteger copiedFilesCount, int totalFilesCount, ZippingContext context) throws IOException {        
@@ -128,5 +140,22 @@ public class ZippingThread {
 
     public static boolean isInterrupted() {
         return executorService.isShutdown() || executorService.isTerminated();
+    }
+
+    /**
+     * Interrupts the currently running zip task, if any. The task itself checks
+     * Thread.interrupted() between files/directories (see ZipFileVisitor) and stops
+     * cleanly, marking the backup request as TERMINATED and removing the partial file.
+     *
+     * @return true if a running task was found and interrupted, false if nothing was running.
+     */
+    public static boolean interruptCurrentTask() {
+        Future<?> task = currentTask;
+        if (task != null && !task.isDone()) {
+            logger.info("Interrupting current zipping task");
+            task.cancel(true);
+            return true;
+        }
+        return false;
     }
 }

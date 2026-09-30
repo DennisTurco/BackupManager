@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import backupmanager.Entities.ZippingContext;
-import backupmanager.Services.RunningBackupService;
 
 public class ZipFileVisitor extends SimpleFileVisitor<Path> {
     private static final Logger logger = LoggerFactory.getLogger(ZipFileVisitor.class);
@@ -87,9 +86,9 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         return FileVisitResult.CONTINUE;
     }
 
+    // The run's final status is recorded by ZippingThread once the zip stream is closed
     private boolean isZippingThreadInterrupted() {
         if (Thread.currentThread().isInterrupted()) {
-            RunningBackupService.updateBackupStatusAfterForceTerminationByBackupConfigurationId(context.execution().backup().getId());
             logger.info("Zipping process manually interrupted");
             return true;
         }

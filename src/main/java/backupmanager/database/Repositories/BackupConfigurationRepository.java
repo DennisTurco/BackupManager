@@ -93,7 +93,12 @@ public class BackupConfigurationRepository {
     }
 
     public static void deleteBackup(int backupId) throws BackupDeletionException {
-        String sql = "UPDATE BackupConfigurations SET DeletedAt = ? WHERE BackupId = ?";
+        // BackupName is UNIQUE and soft-deleted rows stay in the table: suffix the name so it can be reused
+        String sql = """
+            UPDATE BackupConfigurations
+            SET DeletedAt = ?, BackupName = BackupName || ' (deleted #' || BackupId || ')'
+            WHERE BackupId = ? AND DeletedAt IS NULL
+            """;
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -154,7 +159,7 @@ public class BackupConfigurationRepository {
     }
 
     public static ConfigurationBackup getBackupById(int backupId) {
-        String sql = SELECT_ALL_COLUMNS + " WHERE BackupId = ?";
+        String sql = SELECT_ALL_COLUMNS + " WHERE BackupId = ? AND DeletedAt IS NULL";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, backupId);

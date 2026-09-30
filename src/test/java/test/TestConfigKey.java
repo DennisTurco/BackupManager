@@ -20,7 +20,6 @@ public class TestConfigKey {
     private final String ISSUE_PAGE_LINK = "https://github.com/DennisTurco/BackupManager/issues";
     private final String INFO_PAGE_LINK = "https://github.com/DennisTurco/BackupManager";
     private final String SHARD_WEBSITE = "https://www.shardpc.it/";
-    private final String LOGO_IMG = "/res/img/logo.png";
     private final String SHARE_LINK = "https://github.com/DennisTurco/BackupManager/releases";
     private final String EMAIL = "assistenza@shardpc.it";
 
@@ -42,7 +41,6 @@ public class TestConfigKey {
         assertEquals(INFO_PAGE_LINK, ConfigKey.INFO_PAGE_LINK.getValue());
         assertEquals(EMAIL, ConfigKey.EMAIL.getValue());
         assertEquals(SHARD_WEBSITE, ConfigKey.SHARD_WEBSITE.getValue());
-        assertEquals(LOGO_IMG, ConfigKey.LOGO_IMG.getValue());
         assertEquals(SHARE_LINK, ConfigKey.SHARE_LINK.getValue());
     }
 
@@ -56,7 +54,6 @@ public class TestConfigKey {
                   "INFO_PAGE_LINK": "%s",
                   "EMAIL": "%s",
                   "SHARD_WEBSITE": "%s",
-                  "LOGO_IMG": "%s",
                   "SHARE_LINK": "%s"
                 }
                 """,
@@ -67,7 +64,6 @@ public class TestConfigKey {
                 INFO_PAGE_LINK,
                 EMAIL,
                 SHARD_WEBSITE,
-                LOGO_IMG,
                 SHARE_LINK);
 
         createFileAndLoad(jsonContent);

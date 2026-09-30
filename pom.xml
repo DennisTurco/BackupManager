@@ -11,58 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <name>Central Portal Snapshots</name>
-            <id>central-portal-snapshots</id>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
-        <dependency>
-            <groupId>io.github.dj-raven</groupId>
-            <artifactId>modal-dialog</artifactId>
-            <version>2.6.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.dj-raven</groupId>
-            <artifactId>swing-datetime-picker</artifactId>
-            <version>2.1.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.dj-raven</groupId>
-            <artifactId>swing-color-picker</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.dj-raven</groupId>
-            <artifactId>swing-pack</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>1.5.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.formdev</groupId>
-            <artifactId>flatlaf-intellij-themes</artifactId>
-            <version>3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.formdev</groupId>
-            <artifactId>flatlaf-fonts-roboto</artifactId>
-            <version>2.137</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fifesoft</groupId>
-            <artifactId>rsyntaxtextarea</artifactId>
-            <version>3.4.0</version>
-        </dependency>
-
         <!-- Dependency for json -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -102,19 +51,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE220</version>
-        </dependency>
-
-        <!-- Timing Framework -->
-        <dependency>
-            <groupId>com.kenai.nbpwr</groupId>
-            <artifactId>org-jdesktop-animation-timing</artifactId>
-            <version>1.0-201002281504</version>
-        </dependency>
-
         <!--LOGGING-->
         <!-- SLF4J API -->
         <dependency>
@@ -130,11 +66,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>jakarta.mail</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
             <version>2.1.0</version>
@@ -145,8 +76,16 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.2.0</version>
         </dependency>
+
+        <!-- Javalin HTTP server for REST API -->
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>6.3.0</version>
+        </dependency>
     </dependencies>
     <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>

@@ -3,6 +3,7 @@ package backupmanager.database;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.TreeMap;
@@ -22,6 +23,7 @@ public class ProductionDatabaseInitializer extends DatabaseInitializer {
         MIGRATIONS.put(4, "/db/004_add_missing_index.sql");
         MIGRATIONS.put(5, "/db/005_soft_delete.sql");
         MIGRATIONS.put(6, "/db/006_schema_fixes.sql");
+        MIGRATIONS.put(7, "/db/007_drop_emails.sql");
     }
 
     public static void init() throws Exception {
@@ -41,6 +43,9 @@ public class ProductionDatabaseInitializer extends DatabaseInitializer {
                 try {
                     runSql(conn, "/db/001_schema.sql");
                     runSql(conn, "/db/002_seed.sql");
+                    // 001_schema.sql already contains every migration's changes: mark them as applied,
+                    // otherwise the next start would re-run them (005 fails on the duplicate DeletedAt column)
+                    markMigrationsApplied(conn);
 
                     if (isDemoInstall) {
                         logger.info("Demo marker detected — applying demo configuration");
@@ -64,6 +69,15 @@ public class ProductionDatabaseInitializer extends DatabaseInitializer {
             } else {
                 logger.info("Database already exists: {}", dbPath);
                 applyPendingMigrations(conn);
+            }
+        }
+    }
+
+    private static void markMigrationsApplied(Connection conn) throws Exception {
+        try (PreparedStatement st = conn.prepareStatement("INSERT OR IGNORE INTO SchemaVersion VALUES (?)")) {
+            for (int version : MIGRATIONS.keySet()) {
+                st.setInt(1, version);
+                st.executeUpdate();
             }
         }
     }

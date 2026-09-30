@@ -2,22 +2,23 @@
 
 ## Application Startup Flow
 
+The app is Electron-only: there is no Swing GUI or standalone `.exe` anymore. Electron always spawns the Java backend headless (`java -jar backupmanager-jar-with-dependencies.jar --api-server`) and owns the window + tray icon itself.
+
 ```mermaid
 graph TD
-  A(((PC Startup))) --> B[Initialize Database]
-  B --> J{Subscription Needed?}
+  A(((Electron app starts))) --> B[Spawn Java backend --api-server]
+  B --> C[Java: Initialize Database]
+  C --> F[Start Background Service]
+  F --> M[REST API server starts]
 
-  J -->|Yes| C{Subscription Valid?}
-  J -->|No| F[Start Background Service]
+  F --> G[Every cycle: subscription needed and expired?]
+  G -->|Yes| L[Skip automatic backups — manual backups still work]
+  G -->|No| H[Run due automatic backups]
 
-  C -->|Yes| D[Start Tray Icon]
-  C -->|No| E[Show Expired Notification]
-
-  D --> F[Start Background Service]
-  F --> G[Auto Backup Scheduler]
-
-  D -->|User Click| H[Open GUI]
-  D -->|Exit| I[Shutdown Application]
+  M --> N[Electron waits for /api/status, then opens window + tray icon]
+  N --> O[Electron polls /api/subscription/status → native OS notification if expiring/expired]
+  N -->|User closes window| P[Stays running in tray]
+  N -->|Tray: Exit| Q[Shutdown Electron + Java backend]
 ```
 
 ## Link
@@ -62,7 +63,7 @@ To dynamically change the log level, edit the level value in the `<root>` tag:
 
 ### [BackgroundService](../../java/backupmanager/Services/BackgroundService.java)
 
-This service starts automatically when the PC boots.
+This service starts automatically when the Electron app (and its Java backend) starts.
 
 Responsibilities:
 
@@ -70,21 +71,9 @@ Responsibilities:
 * Run periodic backup checks
 * Prevent concurrent backup executions
 
-### [BackupObserver](../../java/backupmanager/Services/BackupObserver.java)
+### How the React UI stays in sync with running backups
 
-This observer continuously monitors active backups.
-
-Why is it necessary?
-
-If a backup is triggered by the BackgroundService and the user later opens the GUI, two separate application instances may exist.
-
-Because of this, a simple in-memory check is not reliable.
-
-The observer ensures that:
-
-* Running backups are detected
-* The GUI reflects the real execution state
-* Duplicate backups are prevented
+There is only ever one Java process (the API server), so there is no multi-instance state to reconcile like there used to be with the Swing GUI + background service running as separate processes. The React frontend polls `GET /api/backups/running` (backed directly by the `BackupRequests` table) every second while a backup is in progress, so the progress bar and table state always reflect the database, not any in-memory UI state.
 
 ## Subscription logic
 
@@ -111,7 +100,7 @@ To improve user experience, Backup Manager warns the user 7 days before expirati
 This value is configurable and stored inside the application configuration.
 When the threshold is reached:
 
-* A warning notification is displayed.
+* A native OS notification is shown by the Electron app (see `checkSubscriptionStatus` in `ui/src/main/index.ts`), polling `GET /api/subscription/status`.
 * Automatic backups continue to function until the expiration date.
 
 ### Useful Queries

@@ -1,1 +1,0 @@
-java -jar ./target/BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar --background
