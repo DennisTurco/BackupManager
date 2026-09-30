@@ -240,6 +240,7 @@
         "ThemeLabel": "Theme",
         "TriggerScheduler": "Scheduled",
         "TriggerUser": "Manual",
-        "WelcomeText": "Welcome! Create your profile to get started."
+        "WelcomeText": "Welcome! Create your profile to get started.",
+        "RenewalMailHint": "Opens your email program with the renewal request already filled in."
     }
 }

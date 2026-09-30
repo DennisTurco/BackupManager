@@ -44,8 +44,7 @@ export const translationsApi = {
 }
 
 export const subscriptionApi = {
-  getStatus: () => client.get<SubscriptionInfo>('/api/subscription/status').then((r) => r.data),
-  requestRenewal: () => client.post('/api/subscription/request-renewal').then((r) => r.data)
+  getStatus: () => client.get<SubscriptionInfo>('/api/subscription/status').then((r) => r.data)
 }
 
 export const analyticsApi = {

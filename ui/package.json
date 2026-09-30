@@ -1,6 +1,6 @@
 {
   "name": "backup-manager-ui",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "BackupManager desktop UI — Electron + React + TypeScript",
   "main": "./out/main/index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "preview": "electron-vite preview",
-    "dist": "npm run build && electron-builder"
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win dir"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
@@ -51,12 +52,12 @@
         "to": "src/main/resources"
       },
       {
-        "from": "../config.enc",
-        "to": "config.enc"
-      },
-      {
         "from": "resources/icon.ico",
         "to": "icon.ico"
+      },
+      {
+        "from": "../jre",
+        "to": "jre"
       }
     ],
     "linux": {
@@ -67,8 +68,9 @@
     },
     "win": {
       "target": [
-        "nsis"
-      ]
+        "dir"
+      ],
+      "icon": "resources/icon.ico"
     },
     "mac": {
       "target": [

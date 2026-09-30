@@ -93,18 +93,24 @@ public class BackupConfigurationRepository {
     }
 
     public static void deleteBackup(int backupId) throws BackupDeletionException {
-        String sql = "DELETE FROM BackupConfigurations WHERE BackupId = ?";
+        // BackupName is UNIQUE and soft-deleted rows stay in the table: suffix the name so it can be reused
+        String sql = """
+            UPDATE BackupConfigurations
+            SET DeletedAt = ?, BackupName = BackupName || ' (deleted #' || BackupId || ')'
+            WHERE BackupId = ? AND DeletedAt IS NULL
+            """;
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, backupId);
+            stmt.setLong(1, System.currentTimeMillis());
+            stmt.setInt(2, backupId);
             stmt.executeUpdate();
 
-            logger.info("Backup deleted succesfully");
+            logger.info("Backup soft-deleted successfully (id={})", backupId);
 
         } catch (SQLException e) {
             String error = "Backup configuration deleting error: " + e.getMessage();
-            logger.error(error);
+            logger.error("{}", error, e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
             throw new BackupDeletionException(error, e);
         }
@@ -137,9 +143,10 @@ public class BackupConfigurationRepository {
 
     public static List<ConfigurationBackup> getBackupList() {
         List<ConfigurationBackup> backups = new ArrayList<>();
+        String sql = SELECT_ALL_COLUMNS + " WHERE DeletedAt IS NULL";
         try (
             Connection conn = Database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(SELECT_ALL_COLUMNS);
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
         ) {
             while (rs.next()) {
@@ -152,7 +159,7 @@ public class BackupConfigurationRepository {
     }
 
     public static ConfigurationBackup getBackupById(int backupId) {
-        String sql = SELECT_ALL_COLUMNS + " WHERE BackupId = ?";
+        String sql = SELECT_ALL_COLUMNS + " WHERE BackupId = ? AND DeletedAt IS NULL";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, backupId);
@@ -167,7 +174,7 @@ public class BackupConfigurationRepository {
     }
 
     public static ConfigurationBackup getBackupByName(String backupName) {
-        String sql = SELECT_ALL_COLUMNS + " WHERE BackupName = ?";
+        String sql = SELECT_ALL_COLUMNS + " WHERE BackupName = ? AND DeletedAt IS NULL";
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, backupName);

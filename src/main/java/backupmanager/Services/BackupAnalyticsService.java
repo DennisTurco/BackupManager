@@ -50,7 +50,7 @@ public class BackupAnalyticsService {
 
         Map<LocalDate, Double> durationTrend =
                 requests.stream()
-                        .filter(r -> r.durationMs() != null)
+                        .filter(r -> r.durationMs() != null && r.startedDate() != null)
                         .collect(Collectors.groupingBy(
                                 r -> r.startedDate().toLocalDate(),
                                 Collectors.averagingDouble(

@@ -240,6 +240,7 @@
         "ThemeLabel": "Tema",
         "TriggerScheduler": "Pianificato",
         "TriggerUser": "Manuale",
-        "WelcomeText": "Benvenuto! Crea il tuo profilo per iniziare."
+        "WelcomeText": "Benvenuto! Crea il tuo profilo per iniziare.",
+        "RenewalMailHint": "Apre il tuo programma di posta con la richiesta di rinnovo già compilata."
     }
 }

@@ -18,8 +18,9 @@ CREATE TABLE IF NOT EXISTS "BackupConfigurations" (
 	"CreationDate" INTEGER NOT NULL,
 	"LastUpdateDate" INTEGER NOT NULL,
 	"BackupCount" INTEGER NOT NULL DEFAULT 0,
-	"MaxToKeep"	INTEGER NOT NULL DEFAULT 1,
-	"Notes"	TEXT
+	"MaxToKeep"	INTEGER NOT NULL DEFAULT 1 CHECK("MaxToKeep" >= 1),
+	"Notes"	TEXT,
+	"DeletedAt" INTEGER DEFAULT NULL
 );
 
 -- Table: BackupRequests
@@ -38,10 +39,12 @@ CREATE TABLE IF NOT EXISTS "BackupRequests" (
 	"ZippedTargetSize" INTEGER,
 	"FilesCount" INTEGER DEFAULT NULL,
 	"ErrorMessage" TEXT DEFAULT NULL,
-	FOREIGN KEY("BackupConfigurationId") REFERENCES "BackupConfigurations"("BackupId") ON DELETE CASCADE
+	FOREIGN KEY("BackupConfigurationId") REFERENCES "BackupConfigurations"("BackupId") ON DELETE RESTRICT
 );
 CREATE INDEX IF NOT EXISTS idx_backup_status_started
 ON BackupRequests(Status, StartedDate DESC);
+CREATE INDEX IF NOT EXISTS idx_backup_config_id
+ON BackupRequests(BackupConfigurationId);
 
 -- Table: Configurations
 CREATE TABLE IF NOT EXISTS "Configurations" (
@@ -64,19 +67,6 @@ CREATE TABLE IF NOT EXISTS "SchemaVersion" (
     "Version" INTEGER PRIMARY KEY
 );
 
--- Table: Emails
--- Payload: could contains a json text with the error, backupId, context
-CREATE TABLE IF NOT EXISTS "Emails" (
-	"EmailId" INTEGER PRIMARY KEY AUTOINCREMENT,
-	"Type" INTEGER NOT NULL,
-	"InsertDate" INTEGER NOT NULL,
-	"AppVersion" TEXT NOT NULL,
-	"Payload" TEXT
-);
-CREATE INDEX idx_emails_type_date
-ON Emails(Type, InsertDate);
-
-
 -- Table: Subscriptions
 -- i don't want to bind this table to the user table because the subscription is global
 CREATE TABLE IF NOT EXISTS "Subscriptions" (
@@ -84,7 +74,7 @@ CREATE TABLE IF NOT EXISTS "Subscriptions" (
 	"InsertDate" INTEGER NOT NULL,
 	"StartDate" INTEGER NOT NULL UNIQUE,
 	"EndDate" INTEGER NOT NULL,
-	"CreationType" INTEGER NOT NULL,
+	"CreationType" TEXT NOT NULL,
 	CHECK("StartDate" <= "EndDate")
 );
 

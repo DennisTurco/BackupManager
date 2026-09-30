@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import { Shield, AlertTriangle, AlertOctagon, Mail, Send, Check, Lock } from 'lucide-react'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { Shield, AlertTriangle, AlertOctagon, Mail, Check, Lock } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 import { useConfig } from '../context/ConfigContext'
 import { useTranslation } from '../context/TranslationContext'
-import { subscriptionApi } from '../services/api'
-import type { SubscriptionInfo } from '../types'
-import { Alert, Modal, PageHeader } from '../components/ui'
+import { authApi, subscriptionApi } from '../services/api'
+import type { SubscriptionInfo, User } from '../types'
+import { PageHeader } from '../components/ui'
 
 export default function SubscriptionPage() {
   const cfg = useConfig()
@@ -16,7 +15,8 @@ export default function SubscriptionPage() {
     refetchInterval: 60_000,
   })
 
-  const [confirming, setConfirming] = useState(false)
+  const { data: user } = useQuery({ queryKey: ['user'], queryFn: authApi.getUser, staleTime: Infinity })
+  const supportEmail = cfg.email || 'dennisturco@gmail.com'
 
   return (
     <div className="page page-narrow">
@@ -31,7 +31,7 @@ export default function SubscriptionPage() {
           {t('ReactUI.LoadingText', 'Loading…')}
         </div>
       ) : sub ? (
-        <SubscriptionBanner sub={sub} onRequestRenewal={() => setConfirming(true)} />
+        <SubscriptionBanner sub={sub} renewalHref={renewalMailto(supportEmail, sub, user, cfg.version)} />
       ) : (
         <div className="card" style={{ padding: '18px 22px', color: 'var(--error)', fontSize: 13 }}>
           {t('ReactUI.SubscriptionLoadFailed', 'Unable to retrieve the subscription status.')}
@@ -55,14 +55,8 @@ export default function SubscriptionPage() {
       )}
       <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
         {t('ReactUI.QuestionsContactUs', 'Questions? Write to')}{' '}
-        <a href={`mailto:${cfg.email || 'dennisturco@gmail.com'}`}>
-          {cfg.email || 'dennisturco@gmail.com'}
-        </a>
+        <a href={`mailto:${supportEmail}`} target="_blank" rel="noreferrer">{supportEmail}</a>
       </p>
-
-      {confirming && (
-        <RenewalConfirmModal onClose={() => setConfirming(false)} />
-      )}
     </div>
   )
 }
@@ -110,7 +104,7 @@ function BenefitItem({ enabled, label }: { enabled: boolean; label: string }) {
   )
 }
 
-function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; onRequestRenewal: () => void }) {
+function SubscriptionBanner({ sub, renewalHref }: { sub: SubscriptionInfo; renewalHref: string }) {
   const { t } = useTranslation()
   const cfg = BANNER_BY_STATUS[sub.status]
   const from = fmtDate(sub.validFrom)
@@ -175,60 +169,31 @@ function SubscriptionBanner({ sub, onRequestRenewal }: { sub: SubscriptionInfo; 
       {/* Renewal request — only when expired */}
       {sub.status === 'EXPIRED' && (
         <div style={{ borderTop: `1px solid color-mix(in srgb, ${cfg.color} 25%, transparent)`, paddingTop: 12 }}>
-          <button className="btn btn-primary" onClick={onRequestRenewal}>
-            <Mail size={13} /> {t('ReactUI.RequestRenewalButton', 'Richiedi rinnovo')}
-          </button>
+          <a className="btn btn-primary" href={renewalHref} target="_blank" rel="noreferrer">
+            <Mail size={13} /> {t('ReactUI.RequestRenewalButton', 'Request renewal')}
+          </a>
+          <div className="field-hint" style={{ marginTop: 6 }}>
+            {t('ReactUI.RenewalMailHint', 'Opens your email program with the renewal request already filled in.')}
+          </div>
         </div>
       )}
     </div>
   )
 }
 
-/* ─── Renewal confirmation modal ─────────────────────────────────────────── */
+/* ─── Renewal request ────────────────────────────────────────────────────── */
 
-function RenewalConfirmModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation()
-  const [sent, setSent] = useState(false)
-  const mutation = useMutation({
-    mutationFn: subscriptionApi.requestRenewal,
-    onSuccess: () => setSent(true),
-  })
-
-  if (sent) {
-    return (
-      <Modal
-        title={t('ReactUI.ModalTitleSent', 'Richiesta inviata')}
-        onClose={onClose}
-        width={420}
-        footer={<button type="button" className="btn btn-primary" onClick={onClose}>{t('General.CloseButton', 'Close')}</button>}
-      >
-        <p className="text-muted" style={{ lineHeight: 1.6 }}>
-          {t('ReactUI.ModalBodySent', "La richiesta di rinnovo è stata inviata all'assistenza. Verrai ricontattato al più presto.")}
-        </p>
-      </Modal>
-    )
-  }
-
-  return (
-    <Modal
-      title={t('ReactUI.ModalTitleRequest', 'Richiedi rinnovo subscription')}
-      onClose={onClose}
-      width={420}
-      footer={
-        <>
-          <button type="button" className="btn btn-ghost" onClick={onClose} disabled={mutation.isPending}>
-            {t('General.CancelButton', 'Cancel')}
-          </button>
-          <button type="button" className="btn btn-primary" onClick={() => mutation.mutate()} disabled={mutation.isPending}>
-            <Send size={13} /> {mutation.isPending ? t('ReactUI.ModalSending', 'Invio…') : t('ReactUI.ModalConfirmSend', 'Conferma e invia')}
-          </button>
-        </>
-      }
-    >
-      <p className="text-muted" style={{ lineHeight: 1.6 }}>
-        {t('ReactUI.ModalBodyRequest', "Verrà inviata un'email all'assistenza con i tuoi dati utente e lo stato attuale della subscription, per richiedere un prolungamento del rinnovo.")}
-      </p>
-      {mutation.isError && <Alert kind="error">{t('ReactUI.ModalSendError', 'Invio non riuscito. Riprova più tardi.')}</Alert>}
-    </Modal>
-  )
+// The app doesn't send emails itself: the request opens in the user's own mail client
+function renewalMailto(to: string, sub: SubscriptionInfo, user: User | undefined, version: string) {
+  const subject = 'BackupManager - Subscription renewal request'
+  const body = [
+    'Hello, I would like to renew my BackupManager subscription.',
+    '',
+    user ? `Name: ${user.name} ${user.surname}` : null,
+    user ? `Email: ${user.email}` : null,
+    `Subscription status: ${sub.status}`,
+    sub.validUntil ? `Valid until: ${sub.validUntil}` : null,
+    version ? `App version: ${version}` : null,
+  ].filter(line => line !== null).join('\n')
+  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }

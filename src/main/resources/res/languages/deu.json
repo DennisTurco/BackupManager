@@ -240,6 +240,7 @@
         "ThemeLabel": "Design",
         "TriggerScheduler": "Geplant",
         "TriggerUser": "Manuell",
-        "WelcomeText": "Willkommen! Erstelle dein Profil, um loszulegen."
+        "WelcomeText": "Willkommen! Erstelle dein Profil, um loszulegen.",
+        "RenewalMailHint": "Öffnet dein E-Mail-Programm mit der bereits ausgefüllten Verlängerungsanfrage."
     }
 }

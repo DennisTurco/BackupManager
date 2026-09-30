@@ -240,6 +240,7 @@
         "ThemeLabel": "Thème",
         "TriggerScheduler": "Planifiée",
         "TriggerUser": "Manuelle",
-        "WelcomeText": "Bienvenue ! Créez votre profil pour commencer."
+        "WelcomeText": "Bienvenue ! Créez votre profil pour commencer.",
+        "RenewalMailHint": "Ouvre votre logiciel de messagerie avec la demande de renouvellement déjà remplie."
     }
 }

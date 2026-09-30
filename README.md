@@ -84,19 +84,20 @@ npm install
 npm run dev
 ```
 
-This opens Electron in development mode with hot-reload. Electron automatically spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`); if you are already running the JAR manually (step 2), comment out that call to avoid a port conflict.
+This opens Electron in development mode with hot-reload. `npm run dev` rebuilds the backend JAR first when the Java sources changed, then Electron spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`). If a backend is already answering on port 7089 (e.g. you started it in step 2 or from the IDE debugger), Electron reuses it instead of starting a second one.
 
-### 4 — Build a distributable package
+### 4 — Build the Windows installer
 
 ```bash
 # Build Java JAR first
-mvn clean package -DskipTests
+./mvnw.cmd clean package -DskipTests
 
-# Then package Electron app (bundles the JAR inside)
+# Then package the Electron app (bundles the JAR and the JRE inside)
 cd ui
-npm run build
-npm run dist   # or: npm run package
+npm run dist:win
 ```
+
+Then compile `installer/BackupManager_installer.iss` (standard) or `installer/BackupManager_installer_demo.iss` (demo) with Inno Setup. Full guide: [docs/installer.md](./docs/installer.md).
 
 ### Available npm scripts
 
@@ -106,6 +107,7 @@ npm run dist   # or: npm run package
 | `npm run build` | Compile TypeScript + Vite bundle |
 | `npm run preview` | Preview the built renderer in a browser |
 | `npm run dist` | Build distributable (via electron-builder) |
+| `npm run dist:win` | Package the Windows app into `release/win-unpacked` for the Inno Setup installer |
 
 ### Code quality — Java
 
@@ -122,7 +124,7 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 ## Important Notes
 
 * The Java backend is fully headless — it has no window of its own and no standalone `.exe`. It's always launched by the Electron app (`spawnJavaBackend` in `ui/src/main/index.ts`), which also owns the tray icon.
-* Automatic backups only run while the Electron app is running (in the tray or foreground). There is currently no OS-level auto-start-on-boot entry configured by the installer — if you need that, add the app to your OS startup manually.
+* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray.
 
 ## Platforms
 
@@ -144,12 +146,29 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 
 ## Code Quality
 
-This project enforces automatic code quality checks during the Maven verify phase.
-Running the following command will execute formatting checks, static analysis, and tests:
+This project uses automated code quality analysis on every Pull Request targeting `master`.
+The analysis runs the following tools and posts a summary comment directly on the PR:
 
-`mvn clean verify`
+| Tool | What it checks |
+|------|---------------|
+| JaCoCo | Test coverage (line & branch) |
+| SpotBugs + find-sec-bugs | Bugs and security vulnerabilities |
+| PMD | Code complexity and style violations |
+| CPD | Code duplication (blocks > 100 tokens) |
 
-If any rule is violated, the build will fail.
+To run the analysis locally:
+
+```powershell
+./analyze.ps1
+```
+
+Or run individual checks:
+
+```powershell
+./mvnw clean verify "-Dmaven.test.failure.ignore=true"   # tests + coverage
+./mvnw spotbugs:spotbugs                                  # bug analysis
+./mvnw pmd:pmd pmd:cpd                                    # complexity + duplication
+```
 
 ## Licence
 

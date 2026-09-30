@@ -32,3 +32,6 @@ ui/.vite/
 *.iml
 .DS_Store
 Thumbs.db
+
+# Inno Setup output
+installer/Output/

@@ -15,13 +15,17 @@ public class DatabaseInitializer {
         try (InputStream is = DatabaseInitializer.class.getResourceAsStream(resource)) {
             if (is == null) return;
 
-            String sql = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            String[] statements = sql.split(";"); // split for every command
+            String raw = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            // Strip single-line comments before splitting on ';' to avoid false splits
+            // caused by semicolons inside comment text (e.g. "-- note; detail").
+            String sql = raw.lines()
+                    .filter(line -> !line.stripLeading().startsWith("--"))
+                    .collect(java.util.stream.Collectors.joining("\n"));
 
-            try (Statement st = conn.createStatement()) {
-                for (String statement : statements) {
-                    String trimmed = statement.trim();
-                    if (!trimmed.isEmpty()) {
+            for (String statement : sql.split(";")) {
+                String trimmed = statement.trim();
+                if (!trimmed.isEmpty()) {
+                    try (Statement st = conn.createStatement()) {
                         st.execute(trimmed);
                     }
                 }

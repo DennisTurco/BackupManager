@@ -48,10 +48,5 @@
     "value": 7,
     "type": "int",
     "description": "Number of days before subscription expiration to show a warning."
-  },
-  "CriticalEmailMinWaitDays": {
-    "value": 7,
-    "type": "int",
-    "description": "Minimum number of days that must elapse before the same user can trigger another critical error email."
   }
 }

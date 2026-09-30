@@ -42,7 +42,7 @@ public class AuthRoutes {
             return;
         }
         User user = new User(req.name(), req.surname(), req.email());
-        loginService.createUserAndSendEmail(user);
+        loginService.createNewUser(user);
         ctx.status(201).json(user);
     }
 

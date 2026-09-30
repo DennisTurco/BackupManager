@@ -271,7 +271,9 @@ app.whenReady().then(async () => {
   }
 
   const settings = await getSettings()
-  createWindow(settings.START_MINIMIZED === 'true')
+  // --background is passed by the Windows autostart entry the installer creates: start in the tray
+  const startInBackground = process.argv.includes('--background')
+  createWindow(startInBackground || settings.START_MINIMIZED === 'true')
   createTray()
 
   checkSubscriptionStatus()

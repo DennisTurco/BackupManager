@@ -52,7 +52,7 @@ private static final Logger logger = LoggerFactory.getLogger(ConfigurationReposi
             logger.info("Configuration {} updated succesfully with value {}", code, value);
 
         } catch (SQLException e) {
-            logger.error("Configuration updating error: " + e.getMessage());
+            logger.error("Configuration updating error: {}", e.getMessage(), e);
         }
     }
 }

@@ -35,11 +35,19 @@ public class BackupRequestRepository {
         LocalDateTime completionDate = SqlHelper.toLocalDateTime(rs.getLong("CompletionDate"));
         BackupStatus status = BackupStatus.fromCode(rs.getInt("Status"));
         int progress = rs.getInt("Progress");
-        BackupTriggerType triggeredBy = BackupTriggerType.fromCode(rs.getInt("TriggeredBy"));
-        Long durationMs = rs.getLong("DurationMs");
+
+        int triggeredByCode = rs.getInt("TriggeredBy");
+        BackupTriggerType triggeredBy = rs.wasNull() ? null : BackupTriggerType.fromCode(triggeredByCode);
+
+        long durationMsRaw = rs.getLong("DurationMs");
+        Long durationMs = rs.wasNull() ? null : durationMsRaw;
+
         String outputPath = rs.getString("OutputPath");
         long unzippedTargetSize = rs.getLong("UnzippedTargetSize");
-        long zippedTargetSize = rs.getLong("ZippedTargetSize");
+
+        long zippedRaw = rs.getLong("ZippedTargetSize");
+        Long zippedTargetSize = rs.wasNull() ? null : zippedRaw;
+
         int filesCount = rs.getInt("FilesCount");
         String errorMessage = rs.getString("ErrorMessage");
         return new BackupRequest(backupRequestId, backupConfigurationId, startedDate, completionDate, status, progress, triggeredBy, durationMs, outputPath, unzippedTargetSize, zippedTargetSize, filesCount, errorMessage);
