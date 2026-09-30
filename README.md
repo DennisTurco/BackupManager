@@ -14,38 +14,14 @@ Each backup is carefully saved, and the program maintains a detailed log of all 
 * 📝 Detailed logs and backup history
 * 🎨 Light/Dark themes and multilingual support (EN, IT, DE, ES, FR)
 
-## Screenshots and Videos
+## Screenshots
 
-![gif](./docs/imgs/BackupManagerPresentation.gif)
-
-| ![image1](./docs/imgs/AutoBackup.png) | ![image2](./docs/imgs/BackupList.png) |
+| ![image1](./docs/imgs/image1.png) | ![image2](./docs/imgs/image2.png) |
 | ------------------------ | ------------------------ |
-| ![image3](./docs/imgs/CompletedBackup.png) | ![image4](./docs/imgs/ThemeLanguage.png) |
+| ![image3](./docs/imgs/image3.png) | ![image4](./docs/imgs/image4.png) |
 
-### Multi theme
-
-| ![image5](./docs/imgs/Home.png) | ![image6](./docs/imgs/Home2.png) |
-| ------------------------ | ------------------------ |
-| ![image7](./docs/imgs/Home3.png) | . |
 
 ## Architecture
-
-```
-BackupManager/
-├── src/main/java/backupmanager/   # Java backend (Maven), headless — no GUI
-│   ├── api/                       # REST API layer (Javalin 6 on port 7089)
-│   │   └── routes/                # BackupRoutes, AnalyticsRoutes, SettingsRoutes, LogRoutes, AuthRoutes
-│   ├── Services/                  # BackgroundService (scheduler), backup engine
-│   ├── Repositories/              # SQLite persistence via JDBC
-│   └── MainApp.java               # Entry point — always starts the REST API server
-└── ui/                            # Electron + React + TypeScript frontend
-    ├── src/main/index.ts          # Electron main — spawns Java JAR with --api-server flag
-    ├── src/preload/index.ts       # Exposes env.apiBase to the renderer
-    └── src/renderer/src/          # React app (Vite)
-        ├── pages/                 # BackupTablePage, DashboardPage, HistoryPage, SettingsPage
-        ├── services/api.ts        # Axios client for all REST endpoints
-        └── context/ThemeContext   # Dark / light theme
-```
 
 **Runtime flow:** Electron spawns `java -jar BackupManager.jar --api-server` → Java starts Javalin REST server on `http://localhost:7089` → React renderer calls the API via Axios.
 
@@ -60,7 +36,7 @@ BackupManager/
 | Node.js | 20+  |
 | npm  | 10+     |
 
-### 1 — Build the Java backend
+### 1. Build the Java backend
 
 ```bash
 mvn clean package -DskipTests
@@ -68,7 +44,7 @@ mvn clean package -DskipTests
 
 This produces `target/backupmanager-jar-with-dependencies.jar`.
 
-### 2 — Run the REST API server standalone (optional, for UI-only dev)
+### 2. Run the REST API server standalone (optional, for UI-only dev)
 
 ```bash
 java -jar target/backupmanager-jar-with-dependencies.jar --api-server
@@ -76,7 +52,7 @@ java -jar target/backupmanager-jar-with-dependencies.jar --api-server
 
 The API will be available at `http://localhost:7089/api/status`. Keep this terminal open.
 
-### 3 — Start the React + Electron UI
+### 3. Start the React + Electron UI
 
 ```bash
 cd ui
@@ -86,7 +62,7 @@ npm run dev
 
 This opens Electron in development mode with hot-reload. `npm run dev` rebuilds the backend JAR first when the Java sources changed, then Electron spawns the Java backend (`spawnJavaBackend` in `src/main/index.ts`). If a backend is already answering on port 7089 (e.g. you started it in step 2 or from the IDE debugger), Electron reuses it instead of starting a second one.
 
-### 4 — Build the Windows installer
+### 4. Build the Windows installer
 
 ```bash
 # Build Java JAR first
