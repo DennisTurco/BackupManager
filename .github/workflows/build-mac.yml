@@ -1,0 +1,82 @@
+# Builds the macOS installers (.dmg for Apple Silicon and Intel) on every
+# push/merge to master, or manually: Actions tab > "Build macOS installers"
+# > Run workflow.
+# The app is ad-hoc signed only (no Apple Developer ID / notarization yet).
+name: Build macOS installers
+
+on:
+  push:
+    branches: [master]
+    # Docs-only changes don't need new installers
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+
+# A newer push to master supersedes a build still running for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-mac:
+    # Apple Silicon runner; the Intel JRE is cross-linked from x64 jmods below
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Intel JDK, only used as the source of x64 jmods for jlink. Installed
+      # first so the arm64 JDK below ends up as the active JAVA_HOME.
+      - id: jdk-x64
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          architecture: x64
+
+      # Same major the backend is compiled for (pom.xml: maven.compiler.target 21)
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          architecture: aarch64
+          cache: maven
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Build Java backend
+        run: mvn -B package -DskipTests
+
+      # macOS counterparts of the Windows jre/ folder, picked up by
+      # package.json > build.mac.extraResources ("../jre-mac-${arch}").
+      - name: Create macOS JREs
+        run: |
+          JLINK_OPTS="--strip-debug --no-man-pages --no-header-files --compress=zip-6"
+          jlink --add-modules ALL-MODULE-PATH $JLINK_OPTS --output jre-mac-arm64
+          jlink --module-path "${{ steps.jdk-x64.outputs.path }}/jmods" \
+            --add-modules ALL-MODULE-PATH $JLINK_OPTS --output jre-mac-x64
+          file jre-mac-arm64/bin/java jre-mac-x64/bin/java
+
+      - name: Install frontend dependencies
+        working-directory: ui
+        run: npm ci
+
+      - name: Build frontend and Electron main
+        working-directory: ui
+        run: npm run build
+
+      - name: Package macOS installers
+        working-directory: ui
+        run: npx electron-builder --mac --publish never
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BackupManager-mac
+          path: ui/release/*.dmg
+          if-no-files-found: error

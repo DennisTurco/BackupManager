@@ -2,6 +2,8 @@
   "name": "backup-manager-ui",
   "version": "3.0.0",
   "description": "BackupManager desktop UI — Electron + React + TypeScript",
+  "author": "Dennis Turco",
+  "homepage": "https://github.com/DennisTurco/BackupManager",
   "main": "./out/main/index.js",
   "scripts": {
     "predev": "node scripts/prepare-dev.mjs --backend",
@@ -11,7 +13,9 @@
     "build": "electron-vite build",
     "preview": "electron-vite preview",
     "dist": "npm run build && electron-builder",
-    "dist:win": "npm run build && electron-builder --win dir"
+    "dist:win": "npm run build && electron-builder --win dir",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:mac": "npm run build && electron-builder --mac"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
@@ -41,6 +45,7 @@
   "build": {
     "appId": "io.github.dj-raven.backupmanager",
     "productName": "BackupManager",
+    "afterPack": "build/linux-after-pack.cjs",
     "directories": {
       "output": "release"
     },
@@ -58,25 +63,74 @@
         "to": "icon.ico"
       },
       {
-        "from": "../jre",
-        "to": "jre"
+        "from": "resources/icon.png",
+        "to": "icon.png"
       }
     ],
     "linux": {
       "target": [
         "AppImage",
         "deb"
+      ],
+      "executableName": "backupmanager",
+      "icon": "resources/icon-512.png",
+      "category": "Utility",
+      "maintainer": "Dennis Turco <d.turco@dotblue.it>",
+      "synopsis": "Automatic and manual backups of files and folders",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "extraResources": [
+        {
+          "from": "../jre-linux",
+          "to": "jre"
+        }
       ]
     },
     "win": {
       "target": [
         "dir"
       ],
-      "icon": "resources/icon.ico"
+      "icon": "resources/icon.ico",
+      "extraResources": [
+        {
+          "from": "../jre",
+          "to": "jre"
+        }
+      ]
     },
     "mac": {
       "target": [
-        "dmg"
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icon-512.png",
+      "category": "public.app-category.utilities",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "extraResources": [
+        {
+          "from": "../jre-mac-${arch}",
+          "to": "jre"
+        }
+      ]
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0",
+        "libayatana-appindicator3-1 | libappindicator3-1"
       ]
     }
   }

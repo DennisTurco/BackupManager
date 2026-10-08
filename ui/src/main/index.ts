@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog, Notification } from 'electron'
 import { join } from 'path'
-import { existsSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import { homedir } from 'os'
 import { spawn, ChildProcess } from 'child_process'
 
 const API_PORT = 7089
@@ -184,11 +185,89 @@ async function checkBackupCompletions(): Promise<void> {
   }
 }
 
+// nativeImage reads .ico only on Windows: Linux and macOS need the PNG
 function appIcon(): Electron.NativeImage {
+  const iconName = process.platform === 'win32' ? 'icon.ico' : 'icon.png'
   const iconFile = app.isPackaged
-    ? join(process.resourcesPath, 'icon.ico')
-    : join(__dirname, '../../resources/icon.ico')
+    ? join(process.resourcesPath, iconName)
+    : join(__dirname, '../../resources', iconName)
   return nativeImage.createFromPath(iconFile)
+}
+
+// The tray image is shown at its pixel size in the macOS menu bar (no automatic scaling like on
+// Windows/Linux): shrink it to the standard 18pt height, with a 2x representation for Retina
+function trayIcon(): Electron.NativeImage {
+  const icon = appIcon()
+  if (process.platform !== 'darwin') return icon
+  const image = nativeImage.createEmpty()
+  for (const scaleFactor of [1, 2]) {
+    const resized = icon.resize({ height: 18 * scaleFactor, quality: 'best' })
+    image.addRepresentation({ scaleFactor, buffer: resized.toPNG() })
+  }
+  return image
+}
+
+// Counterpart of the autostart entry the Windows installer creates: added once, on the first
+// launch, so removing it from the system's startup apps is respected afterwards
+function ensureAutostart(): void {
+  if (process.platform === 'win32' || !app.isPackaged) return
+  const marker = join(app.getPath('userData'), 'autostart-configured')
+  if (existsSync(marker)) return
+  try {
+    if (process.platform === 'darwin') {
+      app.setLoginItemSettings({ openAtLogin: true })
+    } else {
+      writeLinuxAutostartEntry()
+    }
+    writeFileSync(marker, '')
+  } catch (err) {
+    console.error('Unable to create the autostart entry:', err)
+  }
+}
+
+// Electron's login item API is Windows/macOS only: Linux desktops follow the XDG autostart spec
+function writeLinuxAutostartEntry(): void {
+  const configHome = process.env.XDG_CONFIG_HOME || join(homedir(), '.config')
+  const autostartDir = join(configHome, 'autostart')
+  // An AppImage runs from a temporary mount: the stable path is the .AppImage file itself.
+  // Packaged builds run as "<name>.bin" behind the sandbox-detecting launcher script
+  // (build/linux-after-pack.cjs): autostart goes through the launcher too.
+  const exe = process.env.APPIMAGE ?? process.execPath.replace(/\.bin$/, '')
+  mkdirSync(autostartDir, { recursive: true })
+  writeFileSync(
+    join(autostartDir, 'backupmanager.desktop'),
+    [
+      '[Desktop Entry]',
+      'Type=Application',
+      'Name=BackupManager',
+      `Exec="${exe}" --background`,
+      // Installed by the .deb under the executable name (an AppImage has none: the entry just has no icon)
+      'Icon=backupmanager',
+      'X-GNOME-Autostart-enabled=true',
+      'Terminal=false',
+      ''
+    ].join('\n')
+  )
+}
+
+// macOS keeps a running app in the Dock even with every window hidden: BackupManager should look
+// like a tray-only app while it runs in the background, so the Dock icon follows the window
+function updateDockVisibility(): void {
+  if (process.platform !== 'darwin') return
+  if (mainWindow && !mainWindow.isDestroyed() && mainWindow.isVisible()) {
+    void app.dock.show()
+  } else {
+    app.dock.hide()
+  }
+}
+
+function showMainWindow(): void {
+  if (!mainWindow) return
+  // macOS: bring the Dock icon back before showing, otherwise the window can open behind other apps
+  if (process.platform === 'darwin') void app.dock.show()
+  if (mainWindow.isMinimized()) mainWindow.restore()
+  mainWindow.show()
+  mainWindow.focus()
 }
 
 function createWindow(startMinimized: boolean): void {
@@ -216,6 +295,9 @@ function createWindow(startMinimized: boolean): void {
     mainWindow?.hide()
   })
 
+  mainWindow.on('show', updateDockVisibility)
+  mainWindow.on('hide', updateDockVisibility)
+
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url)
     return { action: 'deny' }
@@ -231,16 +313,16 @@ function createWindow(startMinimized: boolean): void {
 }
 
 function createTray(): void {
-  tray = new Tray(appIcon())
+  tray = new Tray(trayIcon())
   tray.setToolTip('BackupManager')
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: 'Open', click: () => mainWindow?.show() },
+      { label: 'Open', click: showMainWindow },
       { type: 'separator' },
       { label: 'Quit', click: () => { mainWindow?.destroy(); app.quit() } }
     ])
   )
-  tray.on('double-click', () => mainWindow?.show())
+  tray.on('double-click', showMainWindow)
 }
 
 ipcMain.handle('dialog:openFolder', async () => {
@@ -254,12 +336,9 @@ ipcMain.handle('shell:openPath', (_event, path: string) => shell.openPath(path))
 if (!app.requestSingleInstanceLock()) {
   app.quit()
 } else {
-  app.on('second-instance', () => {
-    if (!mainWindow) return
-    if (mainWindow.isMinimized()) mainWindow.restore()
-    mainWindow.show()
-    mainWindow.focus()
-  })
+  app.on('second-instance', showMainWindow)
+  // macOS: clicking the app in the Dock/Finder while it runs in the tray
+  app.on('activate', showMainWindow)
 }
 
 app.whenReady().then(async () => {
@@ -280,10 +359,17 @@ app.whenReady().then(async () => {
   }
 
   const settings = await getSettings()
-  // --background is passed by the Windows autostart entry the installer creates: start in the tray
-  const startInBackground = process.argv.includes('--background')
-  createWindow(startInBackground || settings.START_MINIMIZED === 'true')
+  // --background is passed by the autostart entry (Windows installer / Linux .desktop file): start in
+  // the tray. macOS login items get no arguments, there the OS tells whether it was a login launch
+  const startInBackground =
+    process.argv.includes('--background') ||
+    (process.platform === 'darwin' && app.getLoginItemSettings().wasOpenedAtLogin)
+  const startHidden = startInBackground || settings.START_MINIMIZED === 'true'
+  createWindow(startHidden)
+  // Started hidden: no "show" event will fire, hide the Dock icon now
+  if (startHidden) updateDockVisibility()
   createTray()
+  ensureAutostart()
 
   checkSubscriptionStatus()
   setInterval(checkSubscriptionStatus, 6 * 60 * 60 * 1000) // re-check every 6 hours

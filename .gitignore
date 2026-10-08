@@ -1,6 +1,8 @@
 # ── Java / Maven ──────────────────────────────────────────────────────────────
 /target/
 /jre/
+/jre-linux/
+/jre-mac-*/
 BackupManager.exe
 /Output
 

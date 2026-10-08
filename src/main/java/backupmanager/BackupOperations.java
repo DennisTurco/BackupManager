@@ -83,7 +83,7 @@ public class BackupOperations {
             String date = dateNow.format(dateForfolderNameFormatter);
             String name1 = new File(path1).getName();
             name1 = removeExtension(name1);
-            path2 = path2 + "\\" + name1 + "_" + date;
+            path2 = new File(path2, name1 + "_" + date).getPath();
 
             logger.info("date backup: " + date);
 
@@ -253,11 +253,11 @@ public class BackupOperations {
         // records as another configuration's output.
         Set<String> otherConfigsOutputs = BackupRequestRepository.getRequestBackups().stream()
             .filter(r -> r.backupConfigurationId() != backupId && r.outputPath() != null)
-            .map(r -> new File(r.outputPath()).getAbsolutePath().toLowerCase())
+            .map(r -> normalizeForComparison(new File(r.outputPath())))
             .collect(Collectors.toSet());
 
         File[] matchingFiles = folder.listFiles((dir, name) -> name.matches(regex)
-            && !otherConfigsOutputs.contains(new File(dir, name).getAbsolutePath().toLowerCase()));
+            && !otherConfigsOutputs.contains(normalizeForComparison(new File(dir, name))));
 
         if (matchingFiles == null) {
             logger.warn("Error during deleting old backups: none matching files");
@@ -290,6 +290,14 @@ public class BackupOperations {
         for (int i = matchingFiles.length - maxBackupsToKeep; i < matchingFiles.length; i++) {
             logger.info(" - {}", matchingFiles[i].getName());
         }
+    }
+
+    // Windows paths are case-insensitive, Linux/macOS ones are not ("Foo.zip" and "foo.zip" are two files)
+    private static final boolean CASE_INSENSITIVE_PATHS = System.getProperty("os.name", "").toLowerCase().startsWith("windows");
+
+    private static String normalizeForComparison(File file) {
+        String path = file.getAbsolutePath();
+        return CASE_INSENSITIVE_PATHS ? path.toLowerCase() : path;
     }
 
     // if last execution stopped brutally we have to delete the partial backups

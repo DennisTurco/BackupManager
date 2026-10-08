@@ -85,6 +85,13 @@ npm run dist:win
 
 Then compile `installer/BackupManager_installer.iss` (standard) or `installer/BackupManager_installer_demo.iss` (demo) with Inno Setup. Full guide: [docs/installer.md](./docs/installer.md).
 
+### 5. Build the Linux and macOS installers
+
+Run the "Build Linux installers" / "Build macOS installers" GitHub Actions manually (Actions tab > Run workflow); they also run on every push to `master` and upload the installers as workflow artifacts.
+
+* **Linux** (AppImage + .deb): on a Linux machine put a Linux JRE in `jre-linux/` (e.g. `jlink --add-modules ALL-MODULE-PATH --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jre-linux`), build the JAR and run `npm run dist:linux` from `ui/`
+* **macOS** (.dmg for Apple Silicon and Intel): on a Mac put the JREs in `jre-mac-arm64/` and `jre-mac-x64/` and run `npm run dist:mac` from `ui/`. The app is only ad-hoc signed (no Developer ID / notarization): on first launch right-click the app > Open
+
 ### Available npm scripts
 
 | Script | Description |
@@ -94,6 +101,8 @@ Then compile `installer/BackupManager_installer.iss` (standard) or `installer/Ba
 | `npm run preview` | Preview the built renderer in a browser |
 | `npm run dist` | Build distributable (via electron-builder) |
 | `npm run dist:win` | Package the Windows app into `release/win-unpacked` for the Inno Setup installer |
+| `npm run dist:linux` | Build the Linux installers (AppImage + .deb) into `release/` (needs `jre-linux/`) |
+| `npm run dist:mac` | Build the macOS installers (.dmg) into `release/` (needs `jre-mac-arm64/` and `jre-mac-x64/`) |
 
 ### Code quality — Java
 
@@ -110,7 +119,7 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 ## Important Notes
 
 * The Java backend is fully headless — it has no window of its own and no standalone `.exe`. It's always launched by the Electron app (`spawnJavaBackend` in `ui/src/main/index.ts`), which also owns the tray icon.
-* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray.
+* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray. On Linux and macOS the app adds the equivalent entry itself on its first launch (`~/.config/autostart/backupmanager.desktop` / login item); remove it from the system's startup apps to disable it.
 
 ## Platforms
 
@@ -119,6 +128,12 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 | Windows | ✅ |
 | Linux | ✅ (via Electron) |
 | MacOS | ✅ (via Electron) |
+
+### Installing on Linux
+
+* **Ubuntu, Debian, Mint and derivatives**: download the `.deb` and install it with a double click, or with `sudo apt install ./BackupManager-<version>-amd64.deb`. BackupManager then appears in the applications menu.
+* **Other distributions**: download the `.AppImage`, make it executable (`chmod +x BackupManager-<version>-x86_64.AppImage`) and run it.
+  If it doesn't start and mentions `libfuse.so.2`, install FUSE 2: `sudo apt install libfuse2` (`libfuse2t64` on Ubuntu 24.04+), or the equivalent package of your distribution.
 
 ## Supported Languages
 

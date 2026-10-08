@@ -40,7 +40,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
 
-        String relative = sourceDir.relativize(dir).toString();
+        String relative = toZipEntryName(sourceDir.relativize(dir));
         if (relative.isEmpty()) {
             return FileVisitResult.CONTINUE;
         }
@@ -58,7 +58,7 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
         if (isZippingThreadInterrupted())
             return FileVisitResult.TERMINATE;
 
-        String zipEntryName = sourceDir.relativize(file).toString();
+        String zipEntryName = toZipEntryName(sourceDir.relativize(file));
         logger.debug("Adding file to zip: " + zipEntryName);
 
         zipOut.putNextEntry(new ZipEntry(zipEntryName));
@@ -93,5 +93,11 @@ public class ZipFileVisitor extends SimpleFileVisitor<Path> {
             return true;
         }
         return false;
+    }
+
+    // The zip format requires "/" as separator: Path.toString() would give "\" on Windows,
+    // which other tools (and Linux unzip) show as part of the file name
+    private static String toZipEntryName(Path relative) {
+        return relative.toString().replace(relative.getFileSystem().getSeparator(), "/");
     }
 }
