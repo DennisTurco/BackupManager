@@ -31,6 +31,8 @@ public class ApiServer {
 
         app = Javalin.create(config -> {
             config.jsonMapper(new JavalinJackson(mapper, false));
+            // Local API for the Electron UI only: not reachable from other machines on the network
+            config.jetty.defaultHost = "127.0.0.1";
             config.bundledPlugins.enableCors(cors ->
                 cors.addRule(rule -> rule.anyHost())
             );

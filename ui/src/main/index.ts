@@ -1,11 +1,12 @@
-import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog, Notification } from 'electron'
+import { app, BrowserWindow, Tray, Menu, nativeImage, shell, ipcMain, dialog, Notification, powerMonitor } from 'electron'
 import { join } from 'path'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { homedir } from 'os'
 import { spawn, ChildProcess } from 'child_process'
 
 const API_PORT = 7089
-const API_BASE = `http://localhost:${API_PORT}`
+// The backend listens on the IPv4 loopback only: "localhost" may resolve to ::1 first
+const API_BASE = `http://127.0.0.1:${API_PORT}`
 const ROOT_DIR = app.isPackaged ? process.resourcesPath : join(__dirname, '../../..')
 const JAR_PATH = app.isPackaged
   ? join(process.resourcesPath, 'backend.jar')
@@ -25,6 +26,12 @@ let mainWindow: BrowserWindow | null = null
 let tray: Tray | null = null
 let javaProcess: ChildProcess | null = null
 let javaExitCode: number | null = null
+// Set once the app is quitting (Quit menu, Cmd+Q, OS shutdown/logout): the window must then really
+// close instead of hiding in the tray, and the backend exiting is expected rather than a crash
+let isQuitting = false
+// The backend we spawned answered at least once: from then on, its exit is a crash to recover from
+let backendStarted = false
+const backendRestartTimes: number[] = []
 
 // Prefer the bundled JRE, then JAVA_HOME, then whatever `java` is on PATH
 function resolveJavaExecutable(): string {
@@ -40,10 +47,19 @@ function spawnJavaBackend(): void {
   }
 
   const sandboxArgs = SANDBOX_HOME ? [`-Duser.home=${SANDBOX_HOME}`] : []
-  javaProcess = spawn(resolveJavaExecutable(), [...sandboxArgs, '-jar', JAR_PATH, '--api-server'], {
-    cwd: ROOT_DIR,
-    stdio: ['ignore', 'pipe', 'pipe']
-  })
+  // --exit-with-parent: the backend exits when our end of its stdin closes, so it can't outlive the
+  // app as an orphan even if Electron crashes or is killed
+  const child = spawn(
+    resolveJavaExecutable(),
+    [...sandboxArgs, '-jar', JAR_PATH, '--api-server', '--exit-with-parent'],
+    {
+      cwd: ROOT_DIR,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      // Windows: java.exe is a console program, without this it opens a console window
+      windowsHide: true
+    }
+  )
+  javaProcess = child
 
   javaProcess.stdout?.on('data', (data) => process.stdout.write(`[java] ${data}`))
   javaProcess.stderr?.on('data', (data) => process.stderr.write(`[java] ${data}`))
@@ -55,7 +71,45 @@ function spawnJavaBackend(): void {
   javaProcess.on('exit', (code) => {
     console.log(`Java backend exited with code ${code}`)
     javaExitCode = code ?? -1
+    if (javaProcess === child) javaProcess = null
+    if (backendStarted && !isQuitting) restartCrashedBackend()
   })
+}
+
+// The app keeps running in the tray, possibly for weeks: if the backend dies, automatic backups
+// would silently stop. Restart it, but give up on a crash loop instead of respawning forever.
+function restartCrashedBackend(): void {
+  const now = Date.now()
+  const recent = backendRestartTimes.filter((t) => now - t < 10 * 60 * 1000)
+  if (recent.length >= 3) {
+    new Notification({
+      title: 'BackupManager — Backend stopped',
+      body: 'The backup service stopped unexpectedly. Restart BackupManager to resume automatic backups.',
+      icon: appIcon()
+    }).show()
+    return
+  }
+  backendRestartTimes.splice(0, backendRestartTimes.length, ...recent, now)
+
+  setTimeout(async () => {
+    if (isQuitting) return
+    try {
+      javaExitCode = null
+      if (!(await isApiUp())) spawnJavaBackend()
+      await waitForApi(30_000)
+      console.log('Java backend restarted')
+    } catch (err) {
+      console.error('Unable to restart the Java backend:', err)
+    }
+  }, 2000)
+}
+
+function stopJavaBackend(): void {
+  if (!javaProcess) return
+  // Closing stdin makes the backend exit on its own, running its shutdown hooks (see --exit-with-parent)
+  javaProcess.stdin?.end()
+  // SIGTERM is graceful too on Linux/macOS; on Windows kill() is a hard TerminateProcess, so rely on stdin
+  if (process.platform !== 'win32') javaProcess.kill()
 }
 
 async function isApiUp(): Promise<boolean> {
@@ -212,16 +266,66 @@ function trayIcon(): Electron.NativeImage {
 function ensureAutostart(): void {
   if (process.platform === 'win32' || !app.isPackaged) return
   const marker = join(app.getPath('userData'), 'autostart-configured')
-  if (existsSync(marker)) return
+  if (existsSync(marker)) {
+    if (process.platform === 'darwin') migrateMacLoginItem()
+    return
+  }
   try {
     if (process.platform === 'darwin') {
-      app.setLoginItemSettings({ openAtLogin: true })
+      writeMacLaunchAgent()
     } else {
       writeLinuxAutostartEntry()
     }
     writeFileSync(marker, '')
   } catch (err) {
     console.error('Unable to create the autostart entry:', err)
+  }
+}
+
+// Same value as build.appId in package.json, i.e. the bundle identifier of the macOS app
+const MAC_BUNDLE_ID = 'io.github.dennisturco.backupmanager'
+
+// A login item (app.setLoginItemSettings) gets no arguments, and from macOS 13 on
+// wasOpenedAtLogin is always false, so the app couldn't tell a login launch from a manual one.
+// A LaunchAgent can pass --background. It starts the app through LaunchServices by bundle id
+// rather than by path, so it keeps working if the app is moved, or was first opened from the
+// DMG or from a translocated (quarantined) copy. "-g" keeps it from taking the focus.
+function writeMacLaunchAgent(): void {
+  const agentsDir = join(homedir(), 'Library', 'LaunchAgents')
+  const args = ['/usr/bin/open', '-g', '-b', MAC_BUNDLE_ID, '--args', '--background']
+  mkdirSync(agentsDir, { recursive: true })
+  writeFileSync(
+    join(agentsDir, `${MAC_BUNDLE_ID}.plist`),
+    [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">',
+      '<plist version="1.0">',
+      '<dict>',
+      '  <key>Label</key>',
+      `  <string>${MAC_BUNDLE_ID}</string>`,
+      '  <key>ProgramArguments</key>',
+      '  <array>',
+      ...args.map((arg) => `    <string>${arg}</string>`),
+      '  </array>',
+      // Started once at login; no KeepAlive: "open" exits right away, and quitting from the tray must stick
+      '  <key>RunAtLoad</key>',
+      '  <true/>',
+      '</dict>',
+      '</plist>',
+      ''
+    ].join('\n')
+  )
+}
+
+// Earlier macOS builds registered a login item instead: replace it with the LaunchAgent, unless the
+// user had already turned it off (then neither is enabled, as they chose)
+function migrateMacLoginItem(): void {
+  if (!app.getLoginItemSettings().openAtLogin) return
+  try {
+    writeMacLaunchAgent()
+    app.setLoginItemSettings({ openAtLogin: false })
+  } catch (err) {
+    console.error('Unable to replace the login item with a LaunchAgent:', err)
   }
 }
 
@@ -291,8 +395,17 @@ function createWindow(startMinimized: boolean): void {
   })
 
   mainWindow.on('close', (e) => {
+    if (isQuitting) return
     e.preventDefault()
     mainWindow?.hide()
+  })
+
+  // Windows shutdown/restart/sign-out doesn't go through before-quit: a window that keeps cancelling
+  // its close would show up as "this app is preventing shutdown"
+  mainWindow.on('session-end', () => {
+    isQuitting = true
+    stopJavaBackend()
+    app.quit()
   })
 
   mainWindow.on('show', updateDockVisibility)
@@ -319,10 +432,13 @@ function createTray(): void {
     Menu.buildFromTemplate([
       { label: 'Open', click: showMainWindow },
       { type: 'separator' },
-      { label: 'Quit', click: () => { mainWindow?.destroy(); app.quit() } }
+      { label: 'Quit', click: () => app.quit() }
     ])
   )
   tray.on('double-click', showMainWindow)
+  // Windows users expect a single click on the tray icon to open the app (right click opens the menu).
+  // Linux AppIndicators only support the menu; on macOS a click opens the menu.
+  if (process.platform === 'win32') tray.on('click', showMainWindow)
 }
 
 ipcMain.handle('dialog:openFolder', async () => {
@@ -336,10 +452,17 @@ ipcMain.handle('shell:openPath', (_event, path: string) => shell.openPath(path))
 if (!app.requestSingleInstanceLock()) {
   app.quit()
 } else {
-  app.on('second-instance', showMainWindow)
+  app.on('second-instance', (_event, argv) => {
+    // An autostart launch while the app is already running in the tray shouldn't pop the window up
+    if (!argv.includes('--background')) showMainWindow()
+  })
   // macOS: clicking the app in the Dock/Finder while it runs in the tray
   app.on('activate', showMainWindow)
 }
+
+// Windows only shows notifications for an app whose ID matches its Start Menu shortcut
+// (AppUserModelID in installer/BackupManager_common.iss); same value as build.appId in package.json
+if (process.platform === 'win32') app.setAppUserModelId('io.github.dennisturco.backupmanager')
 
 app.whenReady().then(async () => {
   if (!app.hasSingleInstanceLock()) return
@@ -351,6 +474,7 @@ app.whenReady().then(async () => {
     }
     if (!BACKEND_EXTERNAL && !(await isApiUp())) spawnJavaBackend()
     await waitForApi(BACKEND_EXTERNAL ? 90_000 : 30_000)
+    backendStarted = javaProcess !== null
   } catch (err) {
     console.error(err)
     dialog.showErrorBox('BackupManager — backend unavailable', String((err as Error).message ?? err))
@@ -359,11 +483,9 @@ app.whenReady().then(async () => {
   }
 
   const settings = await getSettings()
-  // --background is passed by the autostart entry (Windows installer / Linux .desktop file): start in
-  // the tray. macOS login items get no arguments, there the OS tells whether it was a login launch
-  const startInBackground =
-    process.argv.includes('--background') ||
-    (process.platform === 'darwin' && app.getLoginItemSettings().wasOpenedAtLogin)
+  // --background is passed by the autostart entry (Windows installer / Linux .desktop file /
+  // macOS LaunchAgent): start in the tray
+  const startInBackground = process.argv.includes('--background')
   const startHidden = startInBackground || settings.START_MINIMIZED === 'true'
   createWindow(startHidden)
   // Started hidden: no "show" event will fire, hide the Dock icon now
@@ -376,11 +498,15 @@ app.whenReady().then(async () => {
 
   checkBackupCompletions()
   setInterval(checkBackupCompletions, 3000)
+
+  // Linux/macOS shutdown or logout: quit cleanly instead of being killed with the backend mid-write
+  powerMonitor.on('shutdown', () => app.quit())
 })
 
 app.on('before-quit', () => {
+  isQuitting = true
   mainWindow?.destroy()
-  javaProcess?.kill()
+  stopJavaBackend()
 })
 
 app.on('window-all-closed', () => {

@@ -9,7 +9,7 @@ import type {
 } from '../types'
 
 const client = axios.create({
-  baseURL: 'http://localhost:7089',
+  baseURL: 'http://127.0.0.1:7089',
   headers: { 'Content-Type': 'application/json' }
 })
 

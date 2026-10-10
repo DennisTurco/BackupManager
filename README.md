@@ -119,7 +119,7 @@ $\rightarrow$ [Code technical documentation](./code_documentation.md)
 ## Important Notes
 
 * The Java backend is fully headless — it has no window of its own and no standalone `.exe`. It's always launched by the Electron app (`spawnJavaBackend` in `ui/src/main/index.ts`), which also owns the tray icon.
-* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray. On Linux and macOS the app adds the equivalent entry itself on its first launch (`~/.config/autostart/backupmanager.desktop` / login item); remove it from the system's startup apps to disable it.
+* Automatic backups only run while the Electron app is running (in the tray or foreground). The Windows installer adds a per-user "start with Windows" entry (selected by default) that launches the app hidden in the tray. On Linux and macOS the app adds the equivalent entry itself on its first launch (`~/.config/autostart/backupmanager.desktop` / `~/Library/LaunchAgents/io.github.dennisturco.backupmanager.plist`, listed under System Settings > General > Login Items > "Allow in the Background"); remove or turn it off there to disable it.
 
 ## Platforms
 

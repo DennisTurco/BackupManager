@@ -24,7 +24,28 @@ public class MainApp {
         dataInit();
 
         logger.info("Starting API server");
+        if (Arrays.asList(args).contains("--exit-with-parent")) exitWithParent();
         runApiServer();
+    }
+
+    // Electron passes --exit-with-parent and keeps our stdin open: it reaches EOF when the Electron
+    // process ends in any way (quit, crash, killed from the task manager), so the backend never
+    // outlives the app as an orphan that keeps the JAR locked and port 7089 taken. System.exit
+    // also runs the shutdown hooks, unlike the hard kill that is the only option on Windows.
+    private static void exitWithParent() {
+        Thread watcher = new Thread(() -> {
+            try {
+                while (System.in.read() != -1) {
+                    // ignore any input, only the end of the stream matters
+                }
+            } catch (IOException ignored) {
+                // a broken pipe means the parent is gone as well
+            }
+            logger.info("Parent process ended, shutting down");
+            System.exit(0);
+        }, "Parent-Watcher");
+        watcher.setDaemon(true);
+        watcher.start();
     }
 
     private static void dataInit() {

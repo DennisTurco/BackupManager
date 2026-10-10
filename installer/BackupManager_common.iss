@@ -27,6 +27,8 @@
 #define AppURL       "https://www.shardpc.it/"
 #define AppSupportURL "https://github.com/DennisTurco/BackupManager"
 #define AppExeName   "BackupManager.exe"
+; Must match app.setAppUserModelId in ui/src/main/index.ts, or Windows drops the app's notifications
+#define AppUserModelID "io.github.dennisturco.backupmanager"
 #ifndef SourceDir
   #define SourceDir  "..\ui\release\win-unpacked"
 #endif
@@ -99,7 +101,7 @@ Type: files; Name: "{app}\README.md"
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"
+Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"; AppUserModelID: "{#AppUserModelID}"
 Name: "{group}\{cm:UninstallProgram,{#AppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon
 

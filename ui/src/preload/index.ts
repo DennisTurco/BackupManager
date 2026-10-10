@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 contextBridge.exposeInMainWorld('env', {
-  apiBase: 'http://localhost:7089'
+  apiBase: 'http://127.0.0.1:7089'
 })
 
 contextBridge.exposeInMainWorld('electron', {
