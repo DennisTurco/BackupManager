@@ -85,6 +85,8 @@ npm run dist:win
 
 Then compile `installer/BackupManager_installer.iss` (standard) or `installer/BackupManager_installer_demo.iss` (demo) with Inno Setup. Full guide: [docs/installer.md](./docs/installer.md).
 
+The "Build Windows installers" GitHub Action does all of this on a Windows runner (on every push to `master`, or manually from the Actions tab) and uploads both installers as workflow artifacts.
+
 ### 5. Build the Linux and macOS installers
 
 Run the "Build Linux installers" / "Build macOS installers" GitHub Actions manually (Actions tab > Run workflow); they also run on every push to `master` and upload the installers as workflow artifacts.

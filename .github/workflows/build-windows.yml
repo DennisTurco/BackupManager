@@ -1,0 +1,74 @@
+# Builds the Windows installers (Inno Setup, standard + demo edition) on every
+# push/merge to master, or manually: Actions tab > "Build Windows installers"
+# > Run workflow. Same steps as docs/installer.md, on a Windows runner.
+name: Build Windows installers
+
+on:
+  push:
+    branches: [master]
+    # Docs-only changes don't need new installers
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+
+# A newer push to master supersedes a build still running for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same major the backend is compiled for (pom.xml: maven.compiler.target 21)
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Build Java backend
+        run: mvn -B package -DskipTests
+
+      # The jre\ folder picked up by package.json > build.win.extraResources ("../jre")
+      - name: Create Windows JRE
+        run: jlink --add-modules ALL-MODULE-PATH --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jre
+
+      - name: Install frontend dependencies
+        working-directory: ui
+        run: npm ci
+
+      - name: Build frontend and Electron main
+        working-directory: ui
+        run: npm run build
+
+      # "dir" target: ui\release\win-unpacked\, which the Inno Setup scripts wrap
+      - name: Package Electron app
+        working-directory: ui
+        run: npx electron-builder --win --publish never
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Compile standard installer
+        run: '& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" installer\BackupManager_installer.iss'
+
+      - name: Compile demo installer
+        run: '& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" installer\BackupManager_installer_demo.iss'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BackupManager-windows
+          path: installer/Output/*.exe
+          if-no-files-found: error

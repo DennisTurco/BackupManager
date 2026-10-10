@@ -17,6 +17,11 @@ const BACKEND_EXTERNAL = !!process.env.BACKEND_EXTERNAL
 // fresh database/logs there and Electron uses a fresh profile — i.e. a simulated first launch
 const SANDBOX_HOME = app.isPackaged ? undefined : process.env.BM_SANDBOX_HOME
 if (SANDBOX_HOME) app.setPath('userData', join(SANDBOX_HOME, 'electron-profile'))
+// Releases up to 3.0.0 were named "backup-manager-ui": keep using their profile (theme, autostart marker…)
+const LEGACY_USER_DATA = join(app.getPath('appData'), 'backup-manager-ui')
+if (!SANDBOX_HOME && existsSync(LEGACY_USER_DATA) && !existsSync(app.getPath('userData'))) {
+  app.setPath('userData', LEGACY_USER_DATA)
+}
 
 if (process.env.REMOTE_DEBUGGING_PORT) {
   app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUGGING_PORT)

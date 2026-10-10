@@ -64,7 +64,7 @@ export default function Layout() {
           justifyContent: collapsed ? 'center' : 'flex-start',
           flexShrink: 0,
         }}>
-          <img src="/icon.png" alt="" style={{ width: 28, height: 28, borderRadius: 7, flexShrink: 0, objectFit: 'contain' }} />
+          <img src="./icon.png" alt="" style={{ width: 28, height: 28, borderRadius: 7, flexShrink: 0, objectFit: 'contain' }} />
           {!collapsed && (
             <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
               <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text)' }}>Backup Manager</div>

@@ -1,7 +1,9 @@
 {
-  "name": "backup-manager-ui",
+  "name": "backupmanager",
+  "productName": "BackupManager",
+  "desktopName": "backupmanager.desktop",
   "version": "3.0.0",
-  "description": "BackupManager desktop UI — Electron + React + TypeScript",
+  "description": "Automatic and manual backups of files and folders",
   "author": "Dennis Turco",
   "homepage": "https://github.com/DennisTurco/BackupManager",
   "main": "./out/main/index.js",
@@ -120,6 +122,10 @@
       ]
     },
     "deb": {
+      "fpm": [
+        "--replaces=backup-manager-ui",
+        "--conflicts=backup-manager-ui"
+      ],
       "depends": [
         "libgtk-3-0",
         "libnotify4",

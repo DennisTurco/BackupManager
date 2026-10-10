@@ -70,13 +70,17 @@ public class LanguageManager {
         return current;
     }
 
-    // Java takes this from the Windows regional format, which normally matches the display language
+    // The DISPLAY locale follows the OS interface language (Windows display language, macOS preferred
+    // language, LANG/LC_MESSAGES on Linux), not the regional format; English when it isn't translated
     private static LanguagesEnum detectPcLanguage() {
-        LanguagesEnum detected = fromCodeOrNull(Locale.getDefault().getLanguage());
+        LanguagesEnum detected = fromCodeOrNull(Locale.getDefault(Locale.Category.DISPLAY).getLanguage());
         return detected != null ? detected : LanguagesEnum.getDefault();
     }
 
     private static LanguagesEnum readLegacyPreference() {
+        // The old Swing app was only released for Windows: elsewhere the preferences can only be
+        // leftovers of running it from the sources, not a choice to carry over
+        if (!System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows")) return null;
         try {
             String fileName = Preferences.userRoot().node(LEGACY_PREFERENCES_NODE).get(LEGACY_PREFERENCES_KEY, null);
             if (fileName == null) return null;
