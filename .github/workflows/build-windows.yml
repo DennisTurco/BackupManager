@@ -1,19 +1,12 @@
-# Builds the Windows installers (Inno Setup, standard + demo edition) on every
-# push/merge to master, or manually: Actions tab > "Build Windows installers"
-# > Run workflow. Same steps as docs/installer.md, on a Windows runner.
+# Builds the Windows installers (Inno Setup, standard + demo edition) only when
+# started manually: Actions tab > "Build Windows installers" > Run workflow.
+# Same steps as docs/installer.md, on a Windows runner.
 name: Build Windows installers
 
 on:
-  push:
-    branches: [master]
-    # Docs-only changes don't need new installers
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - ".github/ISSUE_TEMPLATE/**"
   workflow_dispatch:
 
-# A newer push to master supersedes a build still running for an older one
+# A newer run on the same branch supersedes a build still running for an older one
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
